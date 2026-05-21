@@ -1,0 +1,88 @@
+{#
+    Tabler Alert — main component, shadcn-style.
+
+    Every prop has a matching block whose default renders the corresponding
+    sub-component wrapping the prop value. Override any block to take full
+    control while still leveraging the sub-component (and its attributes):
+
+        <twig:Tabler:Alert type="success" title="Saved!">
+            <twig:block name="title">
+                <twig:Tabler:Alert:Title class="my-extra">Custom!</twig:Tabler:Alert:Title>
+            </twig:block>
+        </twig:Tabler:Alert>
+
+    Or replace the default `content` block to compose freely:
+
+        <twig:Tabler:Alert type="success">
+            <twig:Tabler:Alert:Icon><i class="ti ti-check"></i></twig:Tabler:Alert:Icon>
+            <twig:Tabler:Alert:Title>Saved!</twig:Tabler:Alert:Title>
+            <twig:Tabler:Alert:Description>Your changes are live.</twig:Tabler:Alert:Description>
+        </twig:Tabler:Alert>
+
+    Props:
+      type         — primary | secondary | success | danger | warning | info
+      style        — default | important
+      icon         — optional icon HTML/SVG (rendered via Alert:Icon's `.alert-icon` wrapper)
+      title        — optional title; mirrored by the `title` block
+      description  — optional description; mirrored by the `description` block
+      dismissible  — show a close button; mirrored by the `dismiss` block
+
+    Note: `icon` is rendered with `|raw`. Treat the value as developer-controlled.
+#}
+{% props
+    type = 'info',
+    style = 'default',
+    icon = null,
+    title = null,
+    description = null,
+    dismissible = false,
+%}
+
+{% set alert = html_cva(
+    base: 'alert',
+    variants: {
+        type: {
+            primary: 'alert-primary',
+            secondary: 'alert-secondary',
+            success: 'alert-success',
+            danger: 'alert-danger',
+            warning: 'alert-warning',
+            info: 'alert-info',
+        },
+        style: {
+            default: '',
+            important: 'alert-important',
+        },
+        dismissible: {
+            true: 'alert-dismissible',
+            false: '',
+        },
+    },
+    compound_variants: [
+        {style: ['important'], class: 'text-white'},
+    ],
+) %}
+
+{# Capture title/description blocks so we can decide whether to render the wrapping <div> based on actual output (not just props). #}
+{% set title_html %}{% block title %}
+    {%- if title is not null -%}<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>{%- endif -%}
+{% endblock %}{% endset %}
+
+{% set description_html %}{% block description %}
+    {%- if description is not null -%}<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>{%- endif -%}
+{% endblock %}{% endset %}
+
+{% set wrapper_class = alert.apply({type: type, style: style, dismissible: dismissible}, attributes.render('class')) %}
+<div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
+    {% block content %}
+        {% block icon %}
+            {%- if icon is not null -%}<twig:Tabler:Alert:Icon>{{ icon|raw }}</twig:Tabler:Alert:Icon>{%- endif -%}
+        {% endblock %}
+        {%- if (title_html ~ description_html)|trim -%}
+            <div>{{ title_html|raw }}{{ description_html|raw }}</div>
+        {%- endif -%}
+    {% endblock %}
+    {% block dismiss %}
+        {%- if dismissible -%}<twig:Tabler:Alert:Dismiss />{%- endif -%}
+    {% endblock %}
+</div>

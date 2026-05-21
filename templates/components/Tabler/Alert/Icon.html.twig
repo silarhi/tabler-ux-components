@@ -1,0 +1,12 @@
+{#
+    Alert icon — the leading visual of an alert.
+
+    Slot-only: the consumer brings their own icon (Tabler Icons font, ux-icons,
+    inline SVG, FontAwesome — anything that renders inside the wrapper).
+
+    Usage:
+      <twig:Tabler:Alert:Icon>
+          <i class="ti ti-check"></i>
+      </twig:Tabler:Alert:Icon>
+#}
+<div {{ attributes.defaults({class: 'alert-icon'}) }}>{%- block content %}{% endblock -%}</div>

@@ -1,0 +1,17 @@
+{#
+    Alert dismiss button — the close button for dismissible alerts.
+
+    Rendered automatically by the Alert component when its `dismissible` prop
+    is true, or callable directly when overriding the `dismiss` block:
+
+        <twig:Tabler:Alert dismissible>
+            <twig:block name="dismiss">
+                <twig:Tabler:Alert:Dismiss class="my-extra" />
+            </twig:block>
+        </twig:Tabler:Alert>
+#}
+<a {{ attributes.defaults({
+    class: 'btn-close',
+    'data-bs-dismiss': 'alert',
+    'aria-label': 'close',
+}) }}></a>
