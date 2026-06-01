@@ -1,0 +1,10 @@
+{#
+    Offcanvas header — the top bar of an offcanvas panel.
+
+    Usage:
+        <twig:Tabler:Offcanvas:Header>
+            <twig:Tabler:Offcanvas:Title>Filters</twig:Tabler:Offcanvas:Title>
+            <twig:Tabler:Offcanvas:Close />
+        </twig:Tabler:Offcanvas:Header>
+#}
+<div {{ attributes.defaults({class: 'offcanvas-header'}) }}>{%- block content %}{% endblock -%}</div>

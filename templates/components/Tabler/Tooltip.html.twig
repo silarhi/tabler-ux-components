@@ -1,0 +1,20 @@
+{#
+    Tabler Tooltip — wraps content with Bootstrap's tooltip data API.
+
+    All-in-one:
+        <twig:Tabler:Tooltip title="More info">
+            <twig:Tabler:Button>Hover me</twig:Tabler:Button>
+        </twig:Tabler:Tooltip>
+
+    Requires Bootstrap's tooltip JS to be initialised.
+
+    Props:
+      title      — tooltip text
+      placement  — top (default) | bottom | left | right
+#}
+{% props
+    title,
+    placement = 'top',
+%}
+
+<span data-bs-toggle="tooltip" data-bs-placement="{{ placement }}" data-bs-title="{{ title }}" {{ attributes }}>{%- block content %}{% endblock -%}</span>

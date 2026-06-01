@@ -1,0 +1,33 @@
+{#
+    Tabler Tabs — the tab bar (nav). Pair with <twig:Tabler:Tabs:Content>.
+
+    Composed:
+        <twig:Tabler:Tabs>
+            <twig:Tabler:Tabs:Item target="home" active>Home</twig:Tabler:Tabs:Item>
+            <twig:Tabler:Tabs:Item target="profile">Profile</twig:Tabler:Tabs:Item>
+        </twig:Tabler:Tabs>
+        <twig:Tabler:Tabs:Content>
+            <twig:Tabler:Tabs:Pane id="home" active>Home content</twig:Tabler:Tabs:Pane>
+            <twig:Tabler:Tabs:Pane id="profile">Profile content</twig:Tabler:Tabs:Pane>
+        </twig:Tabler:Tabs:Content>
+
+    Props:
+      pills  — pill style (nav-pills) instead of underlined tabs
+      card   — card-header tab style (card-header-tabs)
+#}
+{% props
+    pills = false,
+    card = false,
+%}
+
+{% set tabs = html_cva(
+    base: 'nav',
+    variants: {
+        pills: {true: 'nav-pills', false: 'nav-tabs'},
+        card: {true: 'card-header-tabs', false: ''},
+    },
+) %}
+
+<ul class="{{ tabs.apply({pills: pills, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</ul>

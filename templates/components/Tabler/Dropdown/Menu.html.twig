@@ -1,0 +1,25 @@
+{#
+    Dropdown menu — the panel of items.
+
+    Usage:
+        <twig:Tabler:Dropdown:Menu>
+            <twig:Tabler:Dropdown:Item href="/edit">Edit</twig:Tabler:Dropdown:Item>
+        </twig:Tabler:Dropdown:Menu>
+
+    Props:
+      end  — align the menu to the end (dropdown-menu-end)
+#}
+{% props
+    end = false,
+%}
+
+{% set menu = html_cva(
+    base: 'dropdown-menu',
+    variants: {
+        end: {true: 'dropdown-menu-end', false: ''},
+    },
+) %}
+
+<div class="{{ menu.apply({end: end}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</div>

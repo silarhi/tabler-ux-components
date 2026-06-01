@@ -1,0 +1,35 @@
+{#
+    Timeline event — one entry in a <twig:Tabler:Timeline>.
+
+    All-in-one:
+        <twig:Tabler:Timeline:Event title="Backup completed" time="1 day ago" text="Download the latest backup." />
+
+    Composed (the `content` block wraps the whole event):
+        <twig:Tabler:Timeline:Event title="Backup completed" time="1 day ago">
+            <twig:block name="icon"><twig:Tabler:Icon name="check" /></twig:block>
+            Download the <a href="#">latest backup</a>.
+        </twig:Tabler:Timeline:Event>
+
+    Props:
+      title  — optional event heading
+      time   — optional timestamp shown on the right
+      text   — optional body text; mirrored by the `body` block
+#}
+{% props
+    title = null,
+    time = null,
+    text = null,
+%}
+
+<li {{ attributes.defaults({class: 'timeline-event'}) }}>
+    {% block content %}
+        <twig:Tabler:Timeline:Event:Icon>{% block icon %}{% endblock %}</twig:Tabler:Timeline:Event:Icon>
+        <div class="card timeline-event-card">
+            <div class="card-body">
+                {%- if time is not null -%}<div class="text-secondary float-end">{{ time }}</div>{%- endif -%}
+                {%- if title is not null -%}<h4>{{ title }}</h4>{%- endif -%}
+                {% block body %}{%- if text is not null -%}{{ text }}{%- endif -%}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</li>

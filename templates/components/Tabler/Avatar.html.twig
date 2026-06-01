@@ -1,0 +1,40 @@
+{#
+    Tabler Avatar — image, initials, or icon.
+
+    All-in-one:
+        <twig:Tabler:Avatar image="/avatars/jane.jpg" />
+        <twig:Tabler:Avatar variant="primary" size="lg">JL</twig:Tabler:Avatar>
+        <twig:Tabler:Avatar rounded><i class="ti ti-user"></i></twig:Tabler:Avatar>
+
+    Props:
+      size     — xs | sm | md (default) | lg | xl
+      variant    — tinted background for initials (bg-{variant}-lt)
+      rounded  — circular avatar (rounded-circle)
+      image    — background image URL
+#}
+{% props
+    size = 'md',
+    variant = null,
+    rounded = false,
+    image = null,
+%}
+
+{% set avatar = html_cva(
+    base: 'avatar',
+    variants: {
+        size: {xs: 'avatar-xs', sm: 'avatar-sm', md: '', lg: 'avatar-lg', xl: 'avatar-xl'},
+        variant: {
+            primary: 'bg-primary-lt',
+            secondary: 'bg-secondary-lt',
+            success: 'bg-success-lt',
+            danger: 'bg-danger-lt',
+            warning: 'bg-warning-lt',
+            info: 'bg-info-lt',
+            dark: 'bg-dark-lt',
+            light: 'bg-light-lt',
+        },
+        rounded: {true: 'rounded-circle', false: ''},
+    },
+) %}
+
+<span class="{{ avatar.apply({size: size, variant: variant, rounded: rounded}, attributes.render('class')) }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>

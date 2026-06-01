@@ -1,0 +1,43 @@
+{#
+    Tabler Divider — a horizontal rule with optional centered text.
+
+    All-in-one:
+        <twig:Tabler:Divider />
+        <twig:Tabler:Divider>See also</twig:Tabler:Divider>
+        <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
+
+    Props:
+      position  — start | center (default) | end (text alignment)
+      variant     — primary | secondary | success | danger | warning | info | dark | light
+
+    With no content it renders a plain <hr>; with content it renders a `.hr-text`.
+#}
+{% props
+    position = 'center',
+    variant = null,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set divider = html_cva(
+    base: 'hr-text',
+    variants: {
+        position: {start: 'hr-text-start', center: '', end: 'hr-text-end'},
+        variant: {
+            primary: 'text-primary',
+            secondary: 'text-secondary',
+            success: 'text-success',
+            danger: 'text-danger',
+            warning: 'text-warning',
+            info: 'text-info',
+            dark: 'text-dark',
+            light: 'text-light',
+        },
+    },
+) %}
+
+{% if label|trim %}
+    <div class="{{ divider.apply({position: position, variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</div>
+{% else %}
+    <hr {{ attributes.defaults({class: 'hr'}) }}>
+{% endif %}

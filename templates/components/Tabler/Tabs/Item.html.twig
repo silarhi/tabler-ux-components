@@ -1,0 +1,27 @@
+{#
+    Tabs item — one tab in a <twig:Tabler:Tabs>.
+
+    Usage:
+        <twig:Tabler:Tabs:Item target="home" active>Home</twig:Tabler:Tabs:Item>
+
+    Props:
+      target  — id of the pane this tab activates (without #)
+      active  — the initially-selected tab
+#}
+{% props
+    target,
+    active = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set link = html_cva(
+    base: 'nav-link',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+<li class="nav-item" role="presentation">
+    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+</li>

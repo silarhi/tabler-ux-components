@@ -1,0 +1,12 @@
+{#
+    Tabler Datagrid — a responsive grid of title/value pairs.
+
+    Composed:
+        <twig:Tabler:Datagrid>
+            <twig:Tabler:Datagrid:Item title="Registrar">Third Party</twig:Tabler:Datagrid:Item>
+            <twig:Tabler:Datagrid:Item title="Port">3306</twig:Tabler:Datagrid:Item>
+        </twig:Tabler:Datagrid>
+#}
+<div {{ attributes.defaults({class: 'datagrid'}) }}>
+    {% block content %}{% endblock %}
+</div>

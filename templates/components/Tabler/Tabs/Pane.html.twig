@@ -1,0 +1,23 @@
+{#
+    Tabs pane — the content panel for one tab.
+
+    Usage:
+        <twig:Tabler:Tabs:Pane id="home" active>Home content</twig:Tabler:Tabs:Pane>
+
+    Props:
+      id      — must match the target of its <twig:Tabler:Tabs:Item>
+      active  — the initially-visible pane
+#}
+{% props
+    id,
+    active = false,
+%}
+
+{% set pane = html_cva(
+    base: 'tab-pane',
+    variants: {
+        active: {true: 'active show', false: ''},
+    },
+) %}
+
+<div class="{{ pane.apply({active: active}, attributes.render('class')) }}" id="{{ id }}" role="tabpanel" {{ attributes.without('class', 'id') }}>{%- block content %}{% endblock -%}</div>

@@ -1,0 +1,31 @@
+{#
+    Tabler Pagination — page navigation.
+
+    Composed:
+        <twig:Tabler:Pagination>
+            <twig:Tabler:Pagination:Item href="?page=1" disabled>«</twig:Tabler:Pagination:Item>
+            <twig:Tabler:Pagination:Item href="?page=1">1</twig:Tabler:Pagination:Item>
+            <twig:Tabler:Pagination:Item href="?page=2" active>2</twig:Tabler:Pagination:Item>
+            <twig:Tabler:Pagination:Item href="?page=3">3</twig:Tabler:Pagination:Item>
+        </twig:Tabler:Pagination>
+
+    Props:
+      outline  — outline style (pagination-outline)
+      circle   — circular page links (pagination-circle)
+#}
+{% props
+    outline = false,
+    circle = false,
+%}
+
+{% set pagination = html_cva(
+    base: 'pagination',
+    variants: {
+        outline: {true: 'pagination-outline', false: ''},
+        circle: {true: 'pagination-circle', false: ''},
+    },
+) %}
+
+<ul class="{{ pagination.apply({outline: outline, circle: circle}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</ul>

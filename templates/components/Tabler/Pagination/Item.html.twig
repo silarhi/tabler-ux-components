@@ -1,0 +1,36 @@
+{#
+    Pagination item — one page link in a <twig:Tabler:Pagination>.
+
+    Usage:
+        <twig:Tabler:Pagination:Item href="?page=2">2</twig:Tabler:Pagination:Item>
+        <twig:Tabler:Pagination:Item href="?page=2" active>2</twig:Tabler:Pagination:Item>
+        <twig:Tabler:Pagination:Item disabled>«</twig:Tabler:Pagination:Item>
+
+    Props:
+      href      — link target
+      active    — current page
+      disabled  — non-interactive page
+#}
+{% props
+    href = null,
+    active = false,
+    disabled = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'page-item',
+    variants: {
+        active: {true: 'active', false: ''},
+        disabled: {true: 'disabled', false: ''},
+    },
+) %}
+
+<li class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
+    {%- if disabled -%}
+        <span class="page-link">{{ label|raw }}</span>
+    {%- else -%}
+        <a class="page-link" href="{{ href ?? '#' }}">{{ label|raw }}</a>
+    {%- endif -%}
+</li>
