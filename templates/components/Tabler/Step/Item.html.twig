@@ -1,0 +1,30 @@
+{#
+    Step item — one step in a <twig:Tabler:Step>.
+
+    Usage:
+        <twig:Tabler:Step:Item href="#">Step 1</twig:Tabler:Step:Item>
+        <twig:Tabler:Step:Item active>Current</twig:Tabler:Step:Item>
+
+    Props:
+      href    — link target; when omitted renders a non-link <span>
+      active  — marks the current step
+#}
+{% props
+    href = null,
+    active = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'step-item',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+{% if href is not null %}
+    <a href="{{ href }}" class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+{% else %}
+    <span class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</span>
+{% endif %}

@@ -1,0 +1,59 @@
+{#
+    Tabler Badge — main component, shadcn-style.
+
+    Renders a <span> by default, or an <a> when `href` is set.
+
+    All-in-one:
+        <twig:Tabler:Badge variant="success">New</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="primary" light pill>3</twig:Tabler:Badge>
+        <twig:Tabler:Badge href="/tags/php" variant="azure">PHP</twig:Tabler:Badge>
+
+    Props:
+      variant  — primary | secondary | success | danger | warning | info | dark | light
+      light  — soft/tinted variant (bg-{variant}-lt)
+      pill   — fully rounded corners
+      size   — sm | md (default) | lg
+      href   — when set, renders <a href> instead of <span>
+#}
+{% props
+    variant = 'primary',
+    light = false,
+    pill = false,
+    size = 'md',
+    href = null,
+%}
+
+{% set badge = html_cva(
+    base: 'badge',
+    variants: {
+        size: {sm: 'badge-sm', md: '', lg: 'badge-lg'},
+        pill: {true: 'badge-pill', false: ''},
+    },
+    compound_variants: [
+        {light: [false], variant: ['primary'], class: 'text-bg-primary'},
+        {light: [false], variant: ['secondary'], class: 'text-bg-secondary'},
+        {light: [false], variant: ['success'], class: 'text-bg-success'},
+        {light: [false], variant: ['danger'], class: 'text-bg-danger'},
+        {light: [false], variant: ['warning'], class: 'text-bg-warning'},
+        {light: [false], variant: ['info'], class: 'text-bg-info'},
+        {light: [false], variant: ['dark'], class: 'text-bg-dark'},
+        {light: [false], variant: ['light'], class: 'text-bg-light'},
+        {light: [true], variant: ['primary'], class: 'bg-primary-lt text-primary-lt-fg'},
+        {light: [true], variant: ['secondary'], class: 'bg-secondary-lt text-secondary-lt-fg'},
+        {light: [true], variant: ['success'], class: 'bg-success-lt text-success-lt-fg'},
+        {light: [true], variant: ['danger'], class: 'bg-danger-lt text-danger-lt-fg'},
+        {light: [true], variant: ['warning'], class: 'bg-warning-lt text-warning-lt-fg'},
+        {light: [true], variant: ['info'], class: 'bg-info-lt text-info-lt-fg'},
+        {light: [true], variant: ['dark'], class: 'bg-dark-lt text-dark-lt-fg'},
+        {light: [true], variant: ['light'], class: 'bg-light-lt text-light-lt-fg'},
+    ],
+) %}
+
+{% set classes = badge.apply({size: size, pill: pill, light: light, variant: variant}, attributes.render('class')) %}
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% if href is not null %}
+    <a href="{{ href }}" class="{{ classes }}" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+{% else %}
+    <span class="{{ classes }}" {{ attributes.without('class') }}>{{- label|raw -}}</span>
+{% endif %}

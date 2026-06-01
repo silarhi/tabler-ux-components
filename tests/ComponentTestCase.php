@@ -56,9 +56,15 @@ abstract class ComponentTestCase extends KernelTestCase
 
     private static function normalizeHtml(string $html): string
     {
-        // Strip whitespace between tags, collapse remaining runs, trim.
-        $html = preg_replace('/>\s+</', '><', $html) ?? $html;
+        // Treat all whitespace adjacent to tags as insignificant (collapse runs,
+        // drop whitespace between/around tag boundaries). Applied to both the
+        // expected and actual strings, so comparisons stay structural without
+        // being sensitive to template indentation or nested-component newlines.
         $html = preg_replace('/\s+/', ' ', $html) ?? $html;
+        $html = preg_replace('/>\s+</', '><', $html) ?? $html;
+        $html = preg_replace('/\s+(\/?>)/', '$1', $html) ?? $html;
+        $html = preg_replace('/>\s+/', '>', $html) ?? $html;
+        $html = preg_replace('/\s+</', '<', $html) ?? $html;
 
         return trim($html);
     }

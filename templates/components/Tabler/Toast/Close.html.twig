@@ -1,0 +1,7 @@
+{#
+    Toast close button — dismisses the toast via Bootstrap's data API.
+
+    Usage:
+        <twig:Tabler:Toast:Close />
+#}
+<button type="button" {{ attributes.defaults({class: 'ms-2 btn-close', 'data-bs-dismiss': 'toast', 'aria-label': 'Close'}) }}></button>

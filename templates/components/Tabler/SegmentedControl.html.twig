@@ -1,0 +1,27 @@
+{#
+    Tabler SegmentedControl — a compact segmented toggle (nav-segmented).
+
+    Composed:
+        <twig:Tabler:SegmentedControl>
+            <twig:Tabler:SegmentedControl:Item active>Day</twig:Tabler:SegmentedControl:Item>
+            <twig:Tabler:SegmentedControl:Item>Week</twig:Tabler:SegmentedControl:Item>
+            <twig:Tabler:SegmentedControl:Item>Month</twig:Tabler:SegmentedControl:Item>
+        </twig:Tabler:SegmentedControl>
+
+    Props:
+      fullWidth — stretch to the container width (w-100)
+#}
+{% props
+    fullWidth = false,
+%}
+
+{% set segmented = html_cva(
+    base: 'nav nav-segmented',
+    variants: {
+        fullWidth: {true: 'w-100', false: ''},
+    },
+) %}
+
+<nav class="{{ segmented.apply({fullWidth: fullWidth}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</nav>

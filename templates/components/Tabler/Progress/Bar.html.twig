@@ -1,0 +1,41 @@
+{#
+    Progress bar — a single fill inside a <twig:Tabler:Progress>.
+
+    Usage:
+        <twig:Tabler:Progress:Bar value="38" variant="primary" />
+        <twig:Tabler:Progress:Bar indeterminate />
+
+    Props:
+      value          — 0–100 percentage (sets width + aria values)
+      variant          — primary | secondary | success | danger | warning | info | dark | light
+      label          — visually-hidden label
+      indeterminate  — animated indeterminate bar (ignores `value`)
+#}
+{% props
+    value = null,
+    variant = 'primary',
+    label = null,
+    indeterminate = false,
+%}
+
+{% set bar = html_cva(
+    base: 'progress-bar',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+        },
+        indeterminate: {true: 'progress-bar-indeterminate', false: ''},
+    },
+) %}
+
+<div class="{{ bar.apply({variant: variant, indeterminate: indeterminate}, attributes.render('class')) }}" role="progressbar"{% if not indeterminate and value is not null %} style="width: {{ value }}%" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"{% endif %} {{ attributes.without('class', 'style') }}>
+    {%- if label -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
+    {%- block content %}{% endblock -%}
+</div>

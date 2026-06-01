@@ -1,0 +1,38 @@
+{#
+    Card status — a colored accent bar on one edge of a card.
+
+    The Card component renders this from its `status`/`statusPosition` props,
+    or use it directly:
+      <twig:Tabler:Card:Status variant="success" position="start" />
+
+    Props:
+      variant     — primary | secondary | success | danger | warning | info | dark | light
+      position  — top (default) | bottom | start
+#}
+{% props
+    variant = 'primary',
+    position = 'top',
+%}
+
+{% set status = html_cva(
+    base: '',
+    variants: {
+        position: {
+            top: 'card-status-top',
+            bottom: 'card-status-bottom',
+            start: 'card-status-start',
+        },
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+        },
+    },
+) %}
+
+<div class="{{ status.apply({position: position, variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}></div>

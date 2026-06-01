@@ -1,0 +1,33 @@
+{#
+    Tracking block — a single segment in a <twig:Tabler:Tracking>.
+
+    Usage:
+        <twig:Tabler:Tracking:Block variant="success" />
+        <twig:Tabler:Tracking:Block variant="danger" tooltip="Downtime" />
+
+    Props:
+      variant    — primary | secondary | success | danger | warning | info | dark | light
+      tooltip  — optional tooltip text (Bootstrap tooltip data API)
+#}
+{% props
+    variant = null,
+    tooltip = null,
+%}
+
+{% set block = html_cva(
+    base: 'tracking-block',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+        },
+    },
+) %}
+
+<div class="{{ block.apply({variant: variant}, attributes.render('class')) }}"{% if tooltip is not null %} data-bs-toggle="tooltip" data-bs-title="{{ tooltip }}"{% endif %} {{ attributes.without('class') }}></div>

@@ -1,0 +1,37 @@
+{#
+    Tabler Empty — an empty-state placeholder.
+
+    All-in-one:
+        <twig:Tabler:Empty title="No results found" subtitle="Try adjusting your search." />
+
+    Composed:
+        <twig:Tabler:Empty>
+            <twig:Tabler:Empty:Icon><twig:Tabler:Icon name="mood-empty" /></twig:Tabler:Empty:Icon>
+            <twig:Tabler:Empty:Title>Nothing here yet</twig:Tabler:Empty:Title>
+            <twig:Tabler:Empty:Subtitle>Create your first item to get started.</twig:Tabler:Empty:Subtitle>
+            <twig:Tabler:Empty:Action>
+                <twig:Tabler:Button variant="primary">New item</twig:Tabler:Button>
+            </twig:Tabler:Empty:Action>
+        </twig:Tabler:Empty>
+
+    Props:
+      title     — mirrored by the `title` block
+      subtitle  — mirrored by the `subtitle` block
+#}
+{% props
+    title = null,
+    subtitle = null,
+%}
+
+<div {{ attributes.defaults({class: 'empty'}) }}>
+    {% block content %}
+        {% block icon %}{% endblock %}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:Empty:Title>{{ title }}</twig:Tabler:Empty:Title>{%- endif -%}
+        {% endblock %}
+        {% block subtitle %}
+            {%- if subtitle is not null -%}<twig:Tabler:Empty:Subtitle>{{ subtitle }}</twig:Tabler:Empty:Subtitle>{%- endif -%}
+        {% endblock %}
+        {% block action %}{% endblock %}
+    {% endblock %}
+</div>

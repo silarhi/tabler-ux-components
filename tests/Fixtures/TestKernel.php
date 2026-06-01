@@ -82,6 +82,12 @@ final class TestKernel extends Kernel
             'default_path' => '%kernel.project_dir%/tests/Fixtures/templates',
             'strict_variables' => true,
         ]);
+
+        // ux-twig-component v3 requires both nodes to be explicitly configured.
+        $container->extension('twig_component', [
+            'anonymous_template_directory' => 'components',
+            'defaults' => [],
+        ]);
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void

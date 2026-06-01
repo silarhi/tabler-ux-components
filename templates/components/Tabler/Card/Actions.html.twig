@@ -1,0 +1,9 @@
+{#
+    Card actions — a cluster of actions (buttons, links) aligned in the header.
+
+    Usage:
+      <twig:Tabler:Card:Actions>
+          <twig:Tabler:Button variant="primary" size="sm">Edit</twig:Tabler:Button>
+      </twig:Tabler:Card:Actions>
+#}
+<div {{ attributes.defaults({class: 'card-actions'}) }}>{%- block content %}{% endblock -%}</div>

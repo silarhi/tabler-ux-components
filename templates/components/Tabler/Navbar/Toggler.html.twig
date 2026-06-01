@@ -1,0 +1,16 @@
+{#
+    Navbar toggler — the responsive collapse button.
+
+    Usage:
+        <twig:Tabler:Navbar:Toggler target="navbar-menu" />
+
+    Props:
+      target  — id of the <twig:Tabler:Navbar:Nav collapse> it controls (without #)
+#}
+{% props
+    target,
+%}
+
+<button {{ attributes.defaults({class: 'navbar-toggler'}) }} type="button" data-bs-toggle="collapse" data-bs-target="#{{ target }}" aria-controls="{{ target }}" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>

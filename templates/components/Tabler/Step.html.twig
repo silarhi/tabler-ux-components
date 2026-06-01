@@ -1,0 +1,30 @@
+{#
+    Tabler Step — a horizontal (or vertical) progress stepper.
+
+    Composed:
+        <twig:Tabler:Step>
+            <twig:Tabler:Step:Item href="#">Step 1</twig:Tabler:Step:Item>
+            <twig:Tabler:Step:Item href="#" active>Step 2</twig:Tabler:Step:Item>
+            <twig:Tabler:Step:Item>Step 3</twig:Tabler:Step:Item>
+        </twig:Tabler:Step>
+
+    Props:
+      counter   — numbered steps (steps-counter)
+      vertical  — vertical layout (steps-vertical)
+#}
+{% props
+    counter = false,
+    vertical = false,
+%}
+
+{% set steps = html_cva(
+    base: 'steps',
+    variants: {
+        counter: {true: 'steps-counter', false: ''},
+        vertical: {true: 'steps-vertical', false: ''},
+    },
+) %}
+
+<div class="{{ steps.apply({counter: counter, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</div>

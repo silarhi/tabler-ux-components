@@ -1,0 +1,32 @@
+{#
+    Navbar item — one entry in a <twig:Tabler:Navbar:Nav>.
+
+    Usage:
+        <twig:Tabler:Navbar:Item href="/" icon="home" active>Home</twig:Tabler:Navbar:Item>
+
+    Props:
+      href    — link target (defaults to #)
+      active  — marks the current page
+      icon    — optional leading Tabler icon name
+#}
+{% props
+    href = null,
+    active = false,
+    icon = null,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'nav-item',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+<li class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
+    <a class="nav-link" href="{{ href ?? '#' }}">
+        {%- if icon is not null -%}<span class="nav-link-icon"><twig:Tabler:Icon name="{{ icon }}" /></span>{%- endif -%}
+        <span class="nav-link-title">{{ label|raw }}</span>
+    </a>
+</li>

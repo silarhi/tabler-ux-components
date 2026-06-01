@@ -1,0 +1,11 @@
+{#
+    Tabs content — the container for tab panes.
+
+    Usage:
+        <twig:Tabler:Tabs:Content>
+            <twig:Tabler:Tabs:Pane id="home" active>…</twig:Tabler:Tabs:Pane>
+        </twig:Tabler:Tabs:Content>
+#}
+<div {{ attributes.defaults({class: 'tab-content'}) }}>
+    {% block content %}{% endblock %}
+</div>
