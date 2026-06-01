@@ -1,0 +1,22 @@
+{#
+    Navbar brand — the logo / app name in a navbar.
+
+    Renders an <a> when `href` is set, otherwise a <span>.
+
+    Usage:
+        <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
+
+    Props:
+      href  — link target (usually the home page)
+#}
+{% props
+    href = null,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% if href is not null %}
+    <a href="{{ href }}" {{ attributes.defaults({class: 'navbar-brand'}).without('href') }}>{{- label|raw -}}</a>
+{% else %}
+    <span {{ attributes.defaults({class: 'navbar-brand'}) }}>{{- label|raw -}}</span>
+{% endif %}

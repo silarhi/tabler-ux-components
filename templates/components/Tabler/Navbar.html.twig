@@ -1,0 +1,43 @@
+{#
+    Tabler Navbar — a responsive navigation header.
+
+    Composed:
+        <twig:Tabler:Navbar>
+            <twig:Tabler:Navbar:Toggler target="navbar-menu" />
+            <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
+            <twig:Tabler:Navbar:Nav id="navbar-menu" collapse>
+                <twig:Tabler:Navbar:Item href="/" icon="home" active>Home</twig:Tabler:Navbar:Item>
+                <twig:Tabler:Navbar:Item href="/profile" icon="user">Profile</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Nav>
+        </twig:Tabler:Navbar>
+
+    Props:
+      expand     — sm | md (default) | lg | xl | none (when the menu un-collapses)
+      dark       — dark theme (navbar-dark)
+      container  — container width suffix: xl (default) | fluid | lg | …
+#}
+{% props
+    expand = 'md',
+    dark = false,
+    container = 'xl',
+%}
+
+{% set navbar = html_cva(
+    base: 'navbar d-print-none',
+    variants: {
+        expand: {
+            sm: 'navbar-expand-sm',
+            md: 'navbar-expand-md',
+            lg: 'navbar-expand-lg',
+            xl: 'navbar-expand-xl',
+            none: '',
+        },
+        dark: {true: 'navbar-dark', false: ''},
+    },
+) %}
+
+<header class="{{ navbar.apply({expand: expand, dark: dark}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    <div class="container-{{ container }}">
+        {% block content %}{% endblock %}
+    </div>
+</header>

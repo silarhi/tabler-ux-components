@@ -1,0 +1,12 @@
+{#
+    Tabler Prose — a typographic wrapper for freeform / markdown-rendered HTML.
+
+    Usage:
+        <twig:Tabler:Prose>
+            <h1>Title</h1>
+            <p>Body copy with <strong>emphasis</strong>…</p>
+        </twig:Tabler:Prose>
+#}
+<div {{ attributes.defaults({class: 'prose'}) }}>
+    {% block content %}{% endblock %}
+</div>

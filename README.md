@@ -362,6 +362,38 @@ Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`), `Dropdown:Menu` (`end`
 </twig:Tabler:SwitchIcon>
 ```
 
+### Layout: PageHeader / Navbar / Prose
+
+```twig
+{# Page header #}
+<twig:Tabler:PageHeader pretitle="Overview" title="Dashboard">
+    <twig:block name="actions">
+        <twig:Tabler:PageHeader:Actions>
+            <twig:Tabler:Button variant="primary">New</twig:Tabler:Button>
+        </twig:Tabler:PageHeader:Actions>
+    </twig:block>
+</twig:Tabler:PageHeader>
+
+{# Navbar #}
+<twig:Tabler:Navbar>
+    <twig:Tabler:Navbar:Toggler target="navbar-menu" />
+    <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
+    <twig:Tabler:Navbar:Nav id="navbar-menu" collapse>
+        <twig:Tabler:Navbar:Item href="/" icon="home" active>Home</twig:Tabler:Navbar:Item>
+        <twig:Tabler:Navbar:Item href="/profile" icon="user">Profile</twig:Tabler:Navbar:Item>
+    </twig:Tabler:Navbar:Nav>
+</twig:Tabler:Navbar>
+
+{# Prose — wraps freeform/markdown HTML with Tabler typography #}
+<twig:Tabler:Prose>{{ article.html|raw }}</twig:Tabler:Prose>
+```
+
+- **PageHeader** — props `pretitle`, `title`; sub-components `PageHeader:Pretitle`, `PageHeader:Title`, `PageHeader:Actions`.
+- **Navbar** — props `expand` (sm/md/lg/xl/none), `dark`, `container`; sub-components `Navbar:Brand`, `Navbar:Toggler`, `Navbar:Nav` (`collapse`, `id`), `Navbar:Item` (`href`, `active`, `icon`).
+- **Prose** — a `.prose` typography wrapper.
+
+> **ux-twig-component v3**: configure `twig_component.defaults` and `anonymous_template_directory` in your app (v3 made both required). On v2 they are optional.
+
 ## Design pattern
 
 Each component follows the shadcn composition layout:
@@ -424,6 +456,7 @@ compound_variants: [
 - [x] Icon, Ribbon, Placeholder, Tooltip, Popover, Table
 - [x] Empty, Tracking, SwitchIcon, Step, Timeline
 - [x] Tabs, Toast, Offcanvas, SegmentedControl, Datagrid
+- [x] PageHeader, Navbar, Prose (from Tabler's layout/base sections)
 
 **Not included** (require third-party JavaScript libraries): Chart, Carousel, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
 
