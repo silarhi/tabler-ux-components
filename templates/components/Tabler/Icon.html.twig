@@ -1,0 +1,43 @@
+{#
+    Tabler Icon — renders a Tabler icon via the icon webfont (@tabler/icons-webfont).
+
+    All-in-one:
+        <twig:Tabler:Icon name="check" />
+        <twig:Tabler:Icon name="heart" variant="danger" />
+        <twig:Tabler:Icon name="refresh" animation="rotate" />
+
+    Props:
+      name       — Tabler icon name (without the `ti-` prefix)
+      variant      — primary | secondary | success | danger | warning | info | dark | light
+      animation  — pulse | tada | rotate
+
+    Requires the @tabler/icons-webfont stylesheet to be loaded.
+#}
+{% props
+    name,
+    variant = null,
+    animation = null,
+%}
+
+{% set icon = html_cva(
+    base: 'ti',
+    variants: {
+        variant: {
+            primary: 'text-primary',
+            secondary: 'text-secondary',
+            success: 'text-success',
+            danger: 'text-danger',
+            warning: 'text-warning',
+            info: 'text-info',
+            dark: 'text-dark',
+            light: 'text-light',
+        },
+        animation: {
+            pulse: 'icon-pulse',
+            tada: 'icon-tada',
+            rotate: 'icon-rotate',
+        },
+    },
+) %}
+
+<i class="{{ icon.apply({variant: variant, animation: animation}, 'ti-' ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>

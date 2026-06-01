@@ -1,0 +1,72 @@
+{#
+    Tabler Card — main component, shadcn-style.
+
+    Renders a <div> by default, or an <a> when `href` is set.
+
+    The `content` block wraps the entire card body (status, header, body, footer),
+    so composing it replaces everything — while each named sub-block stays
+    individually overridable.
+
+    All-in-one:
+        <twig:Tabler:Card title="Stats" text="42 active users" footer="Updated today" />
+        <twig:Tabler:Card title="Revenue" status="success" size="sm" text="$12,400" />
+
+    Composed (full control):
+        <twig:Tabler:Card status="danger">
+            <twig:Tabler:Card:Header>
+                <twig:Tabler:Card:Title>Danger zone</twig:Tabler:Card:Title>
+                <twig:Tabler:Card:Actions>
+                    <twig:Tabler:Button variant="danger" size="sm">Delete</twig:Tabler:Button>
+                </twig:Tabler:Card:Actions>
+            </twig:Tabler:Card:Header>
+            <twig:Tabler:Card:Body>This action cannot be undone.</twig:Tabler:Card:Body>
+            <twig:Tabler:Card:Footer>Last edited 3 days ago</twig:Tabler:Card:Footer>
+        </twig:Tabler:Card>
+
+    Props:
+      size            — sm | md (default) | lg (padding)
+      status          — variant of the status border (primary, success, danger, …)
+      statusPosition  — top (default) | bottom | start
+      title           — optional title; mirrored by the `header` block
+      text            — optional body text; mirrored by the `body` block
+      footer          — optional footer text; mirrored by the `footer` block
+      href            — when set, renders <a href> instead of <div>
+#}
+{% props
+    size = 'md',
+    status = null,
+    statusPosition = 'top',
+    title = null,
+    text = null,
+    footer = null,
+    href = null,
+%}
+
+{% set card = html_cva(
+    base: 'card',
+    variants: {
+        size: {sm: 'card-sm', md: '', lg: 'card-lg'},
+    },
+) %}
+
+{% set classes = card.apply({size: size}, attributes.render('class')) %}
+{% set tag = href is not null ? 'a' : 'div' %}
+
+<{{ tag }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>
+    {% block content %}
+        {%- if status is not null -%}
+            <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
+        {%- endif -%}
+        {% block header %}
+            {%- if title is not null -%}
+                <twig:Tabler:Card:Header><twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title></twig:Tabler:Card:Header>
+            {%- endif -%}
+        {% endblock %}
+        {% block body %}
+            {%- if text is not null -%}<twig:Tabler:Card:Body>{{ text }}</twig:Tabler:Card:Body>{%- endif -%}
+        {% endblock %}
+        {% block footer %}
+            {%- if footer is not null -%}<twig:Tabler:Card:Footer>{{ footer }}</twig:Tabler:Card:Footer>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</{{ tag }}>

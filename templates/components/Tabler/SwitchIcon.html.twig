@@ -1,0 +1,43 @@
+{#
+    Tabler SwitchIcon — a button that toggles between two icons.
+
+    All-in-one (icon names via <twig:Tabler:Icon>):
+        <twig:Tabler:SwitchIcon iconA="moon" iconB="sun" animation="fade" />
+
+    Composed (the `content` block wraps the whole button):
+        <twig:Tabler:SwitchIcon animation="fade">
+            <twig:Tabler:SwitchIcon:A><twig:Tabler:Icon name="moon" /></twig:Tabler:SwitchIcon:A>
+            <twig:Tabler:SwitchIcon:B><twig:Tabler:Icon name="sun" /></twig:Tabler:SwitchIcon:B>
+        </twig:Tabler:SwitchIcon>
+
+    Requires Tabler's switch-icon JS (data-bs-toggle="switch-icon").
+
+    Props:
+      animation — fade | scale | flip | slide-up
+      iconA     — name of the first icon; mirrored by the `a` block
+      iconB     — name of the second icon; mirrored by the `b` block
+#}
+{% props
+    animation = null,
+    iconA = null,
+    iconB = null,
+%}
+
+{% set switch = html_cva(
+    base: 'switch-icon',
+    variants: {
+        animation: {
+            fade: 'switch-icon-fade',
+            scale: 'switch-icon-scale',
+            flip: 'switch-icon-flip',
+            'slide-up': 'switch-icon-slide-up',
+        },
+    },
+) %}
+
+<button class="{{ switch.apply({animation: animation}, attributes.render('class')) }}" data-bs-toggle="switch-icon" {{ attributes.without('class') }}>
+    {% block content %}
+        {% block a %}<twig:Tabler:SwitchIcon:A>{%- if iconA is not null -%}<twig:Tabler:Icon name="{{ iconA }}" />{%- endif -%}</twig:Tabler:SwitchIcon:A>{% endblock %}
+        {% block b %}<twig:Tabler:SwitchIcon:B>{%- if iconB is not null -%}<twig:Tabler:Icon name="{{ iconB }}" />{%- endif -%}</twig:Tabler:SwitchIcon:B>{% endblock %}
+    {% endblock %}
+</button>

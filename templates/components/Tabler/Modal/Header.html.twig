@@ -1,0 +1,10 @@
+{#
+    Modal header — the top bar of a modal, usually holding the title and close button.
+
+    Usage:
+      <twig:Tabler:Modal:Header>
+          <twig:Tabler:Modal:Title>Title</twig:Tabler:Modal:Title>
+          <twig:Tabler:Modal:Close />
+      </twig:Tabler:Modal:Header>
+#}
+<div {{ attributes.defaults({class: 'modal-header'}) }}>{%- block content %}{% endblock -%}</div>

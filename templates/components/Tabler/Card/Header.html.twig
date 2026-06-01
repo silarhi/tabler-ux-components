@@ -1,0 +1,9 @@
+{#
+    Card header — the top section of a card, separated by a horizontal line.
+
+    Usage:
+      <twig:Tabler:Card:Header>
+          <twig:Tabler:Card:Title>Title</twig:Tabler:Card:Title>
+      </twig:Tabler:Card:Header>
+#}
+<div {{ attributes.defaults({class: 'card-header'}) }}>{%- block content %}{% endblock -%}</div>

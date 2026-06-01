@@ -1,0 +1,45 @@
+{#
+    Tabler Progress — a progress bar track.
+
+    All-in-one (single bar):
+        <twig:Tabler:Progress value="38" />
+        <twig:Tabler:Progress value="57" variant="success" size="sm" label="57% complete" />
+        <twig:Tabler:Progress indeterminate size="sm" />
+
+    Composed (stacked bars):
+        <twig:Tabler:Progress>
+            <twig:Tabler:Progress:Bar value="30" variant="primary" />
+            <twig:Tabler:Progress:Bar value="20" variant="success" />
+        </twig:Tabler:Progress>
+
+    Props:
+      value          — 0–100 percentage for the single-bar shortcut
+      variant          — bar variant for the single-bar shortcut
+      size           — sm | md (default)
+      label          — visually-hidden label for the single bar
+      indeterminate  — render an indeterminate single bar
+#}
+{% props
+    value = null,
+    variant = 'primary',
+    size = 'md',
+    label = null,
+    indeterminate = false,
+%}
+
+{% set progress = html_cva(
+    base: 'progress',
+    variants: {
+        size: {sm: 'progress-sm', md: ''},
+    },
+) %}
+
+<div class="{{ progress.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}
+        {%- if indeterminate -%}
+            <twig:Tabler:Progress:Bar variant="{{ variant }}" indeterminate />
+        {%- elseif value is not null -%}
+            <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" label="{{ label }}" />
+        {%- endif -%}
+    {% endblock %}
+</div>

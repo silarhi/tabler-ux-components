@@ -1,0 +1,35 @@
+{#
+    Dropdown toggle — the button/link that opens the menu.
+
+    Usage:
+        <twig:Tabler:Dropdown:Toggle variant="primary">Menu</twig:Tabler:Dropdown:Toggle>
+
+    Props:
+      variant     — button color (primary, secondary, …); omit for a plain `.btn`
+      noCaret     — hide the dropdown caret
+#}
+{% props
+    variant = null,
+    noCaret = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set toggle = html_cva(
+    base: 'btn',
+    variants: {
+        variant: {
+            primary: 'btn-primary',
+            secondary: 'btn-secondary',
+            success: 'btn-success',
+            danger: 'btn-danger',
+            warning: 'btn-warning',
+            info: 'btn-info',
+            dark: 'btn-dark',
+            light: 'btn-light',
+        },
+        noCaret: {true: '', false: 'dropdown-toggle'},
+    },
+) %}
+
+<a href="#" class="{{ toggle.apply({variant: variant, noCaret: noCaret}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>

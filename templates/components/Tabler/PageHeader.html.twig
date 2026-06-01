@@ -1,0 +1,37 @@
+{#
+    Tabler PageHeader — a page title block with optional pretitle and actions.
+
+    All-in-one:
+        <twig:Tabler:PageHeader pretitle="Overview" title="Dashboard" />
+
+    Composed (the `content` block wraps the whole header):
+        <twig:Tabler:PageHeader title="Dashboard">
+            <twig:Tabler:PageHeader:Actions>
+                <twig:Tabler:Button variant="primary">New</twig:Tabler:Button>
+            </twig:Tabler:PageHeader:Actions>
+        </twig:Tabler:PageHeader>
+
+    Props:
+      pretitle  — small overline above the title; mirrored by the `pretitle` block
+      title     — page title; mirrored by the `title` block
+#}
+{% props
+    pretitle = null,
+    title = null,
+%}
+
+<div {{ attributes.defaults({class: 'page-header d-print-none'}) }}>
+    {% block content %}
+        <div class="row align-items-center">
+            <div class="col">
+                {% block pretitle %}
+                    {%- if pretitle is not null -%}<twig:Tabler:PageHeader:Pretitle>{{ pretitle }}</twig:Tabler:PageHeader:Pretitle>{%- endif -%}
+                {% endblock %}
+                {% block title %}
+                    {%- if title is not null -%}<twig:Tabler:PageHeader:Title>{{ title }}</twig:Tabler:PageHeader:Title>{%- endif -%}
+                {% endblock %}
+            </div>
+            {% block actions %}{% endblock %}
+        </div>
+    {% endblock %}
+</div>

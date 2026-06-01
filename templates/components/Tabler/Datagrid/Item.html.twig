@@ -1,0 +1,33 @@
+{#
+    Datagrid item — one title/value pair in a <twig:Tabler:Datagrid>.
+
+    All-in-one:
+        <twig:Tabler:Datagrid:Item title="Registrar" text="Third Party" />
+
+    Composed (the `content` block wraps the whole item):
+        <twig:Tabler:Datagrid:Item>
+            <twig:Tabler:Datagrid:Item:Title>Registrar</twig:Tabler:Datagrid:Item:Title>
+            <twig:Tabler:Datagrid:Item:Content>
+                <twig:Tabler:Avatar size="xs">JL</twig:Tabler:Avatar> Third Party
+            </twig:Tabler:Datagrid:Item:Content>
+        </twig:Tabler:Datagrid:Item>
+
+    Props:
+      title  — mirrored by the `title` block
+      text   — mirrored by the `body` block
+#}
+{% props
+    title = null,
+    text = null,
+%}
+
+<div {{ attributes.defaults({class: 'datagrid-item'}) }}>
+    {% block content %}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:Datagrid:Item:Title>{{ title }}</twig:Tabler:Datagrid:Item:Title>{%- endif -%}
+        {% endblock %}
+        {% block body %}
+            {%- if text is not null -%}<twig:Tabler:Datagrid:Item:Content>{{ text }}</twig:Tabler:Datagrid:Item:Content>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</div>

@@ -1,0 +1,28 @@
+{#
+    Tabler Timeline — a vertical feed of events.
+
+    Composed:
+        <twig:Tabler:Timeline>
+            <twig:Tabler:Timeline:Event title="+1150 followers" time="10 hrs ago">
+                <twig:block name="icon"><twig:Tabler:Icon name="user" /></twig:block>
+                Keep it up!
+            </twig:Tabler:Timeline:Event>
+        </twig:Tabler:Timeline>
+
+    Props:
+      simple — compact, icon-less style (timeline-simple)
+#}
+{% props
+    simple = false,
+%}
+
+{% set timeline = html_cva(
+    base: 'timeline',
+    variants: {
+        simple: {true: 'timeline-simple', false: ''},
+    },
+) %}
+
+<ul class="{{ timeline.apply({simple: simple}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</ul>

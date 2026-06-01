@@ -1,0 +1,47 @@
+{#
+    Tabler Table — a styled table, optionally wrapped for horizontal scrolling.
+
+    All-in-one:
+        <twig:Tabler:Table hover striped>
+            <thead><tr><th>Name</th><th>Role</th></tr></thead>
+            <tbody><tr><td>Jane</td><td>Admin</td></tr></tbody>
+        </twig:Tabler:Table>
+
+    Props:
+      responsive  — wrap in .table-responsive (default true)
+      vcenter     — vertically center cells (table-vcenter)
+      striped     — zebra striping (table-striped)
+      hover       — row hover highlight (table-hover)
+      bordered    — cell borders (table-bordered)
+      cards       — card-style rows (table-cards)
+#}
+{% props
+    responsive = true,
+    vcenter = false,
+    striped = false,
+    hover = false,
+    bordered = false,
+    cards = false,
+%}
+
+{% set table = html_cva(
+    base: 'table',
+    variants: {
+        vcenter: {true: 'table-vcenter', false: ''},
+        striped: {true: 'table-striped', false: ''},
+        hover: {true: 'table-hover', false: ''},
+        bordered: {true: 'table-bordered', false: ''},
+        cards: {true: 'table-cards', false: ''},
+    },
+) %}
+
+{% set classes = table.apply({vcenter: vcenter, striped: striped, hover: hover, bordered: bordered, cards: cards}, attributes.render('class')) %}
+{%- set inner -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% if responsive %}
+    <div class="table-responsive">
+        <table class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</table>
+    </div>
+{% else %}
+    <table class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</table>
+{% endif %}

@@ -1,0 +1,28 @@
+{#
+    Modal status — a colored accent bar at the top of a modal dialog.
+
+    The Modal component renders this from its `status` prop, or use it directly:
+      <twig:Tabler:Modal:Status variant="danger" />
+
+    Props:
+      variant — primary | secondary | success | danger | warning | info | dark | light
+#}
+{% props variant = 'primary' %}
+
+{% set status = html_cva(
+    base: 'modal-status',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+        },
+    },
+) %}
+
+<div class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}></div>

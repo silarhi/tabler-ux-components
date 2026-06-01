@@ -1,0 +1,17 @@
+{#
+    Tabler Dropdown — a Bootstrap dropdown wrapper.
+
+    Composed:
+        <twig:Tabler:Dropdown>
+            <twig:Tabler:Dropdown:Toggle variant="primary">Menu</twig:Tabler:Dropdown:Toggle>
+            <twig:Tabler:Dropdown:Menu>
+                <twig:Tabler:Dropdown:Header>Actions</twig:Tabler:Dropdown:Header>
+                <twig:Tabler:Dropdown:Item href="/edit">Edit</twig:Tabler:Dropdown:Item>
+                <twig:Tabler:Dropdown:Divider />
+                <twig:Tabler:Dropdown:Item href="/delete">Delete</twig:Tabler:Dropdown:Item>
+            </twig:Tabler:Dropdown:Menu>
+        </twig:Tabler:Dropdown>
+#}
+<div {{ attributes.defaults({class: 'dropdown'}) }}>
+    {% block content %}{% endblock %}
+</div>
