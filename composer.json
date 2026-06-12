@@ -1,8 +1,8 @@
 {
     "name": "silarhi/tabler-ux-components",
     "description": "Tabler-flavored Twig UX components for Symfony, following the shadcn composition pattern.",
-    "type": "symfony-bundle",
     "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "symfony",
         "symfony-ux",
@@ -29,6 +29,7 @@
         "twig/twig": "^3.12 || ^4.0"
     },
     "require-dev": {
+        "ergebnis/composer-normalize": "^2.52",
         "friendsofphp/php-cs-fixer": "^3.95.3",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.2.1",
@@ -37,20 +38,6 @@
         "phpunit/phpunit": "^11.5.55 || ^12 || ^13.1.13",
         "rector/rector": "^2.4.5",
         "vincentlanglet/twig-cs-fixer": "^3.14"
-    },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        },
-        "bump-after-update": "dev",
-        "sort-packages": true,
-        "allow-plugins": {
-            "phpstan/extension-installer": true
-        }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "test:coverage": "phpunit"
     },
     "autoload": {
         "psr-4": {
@@ -61,5 +48,20 @@
         "psr-4": {
             "Silarhi\\TablerUxComponents\\Tests\\": "tests/"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "bump-after-update": "dev",
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:coverage": "phpunit"
     }
 }
