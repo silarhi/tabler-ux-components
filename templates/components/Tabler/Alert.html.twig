@@ -21,7 +21,7 @@
 
     Props:
       variant      — primary | secondary | success | danger | warning | info
-      style        — default | important
+      important    — filled/solid style (alert-important)
       icon         — optional icon HTML/SVG (rendered via Alert:Icon's `.alert-icon` wrapper)
       title        — optional title; mirrored by the `title` block
       description  — optional description; mirrored by the `description` block
@@ -31,7 +31,7 @@
 #}
 {% props
     variant = 'info',
-    style = 'default',
+    important = false,
     icon = null,
     title = null,
     description = null,
@@ -49,9 +49,9 @@
             warning: 'alert-warning',
             info: 'alert-info',
         },
-        style: {
-            default: '',
-            important: 'alert-important',
+        important: {
+            true: 'alert-important',
+            false: '',
         },
         dismissible: {
             true: 'alert-dismissible',
@@ -59,7 +59,7 @@
         },
     },
     compound_variants: [
-        {style: ['important'], class: 'text-white'},
+        {important: [true], class: 'text-white'},
     ],
 ) %}
 
@@ -72,7 +72,7 @@
     {%- if description is not null -%}<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>{%- endif -%}
 {% endblock %}{% endset %}
 
-{% set wrapper_class = alert.apply({variant: variant, style: style, dismissible: dismissible}, attributes.render('class')) %}
+{% set wrapper_class = alert.apply({variant: variant, important: important, dismissible: dismissible}, attributes.render('class')) %}
 <div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
     {% block content %}
         {% block icon %}

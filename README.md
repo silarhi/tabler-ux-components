@@ -54,7 +54,7 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 | Prop          | Type     | Default     | Description                                                  |
 | ------------- | -------- | ----------- | ------------------------------------------------------------ |
 | `variant`     | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
-| `style`       | string   | `'default'` | `default` or `important` (filled background)                 |
+| `important`   | bool     | `false`     | Filled/solid background (`alert-important`)                  |
 | `title`       | string?  | `null`      | Optional title; skip when using `<twig:Alert:Title>`         |
 | `description` | string?  | `null`      | Optional description; skip when using `<twig:Alert:Description>` |
 | `dismissible` | bool     | `false`     | Adds a Bootstrap close button                                |
@@ -480,16 +480,16 @@ Variants are declared with `html_cva()`, which mirrors shadcn's CVA:
     base: 'alert',
     variants: {
         variant: { success: 'alert-success', danger: 'alert-danger', ... },
-        style: { default: '', important: 'alert-important' },
+        important: { true: 'alert-important', false: '' },
         dismissible: { true: 'alert-dismissible', false: '' },
     },
     compound_variants: [
-        { style: ['important'], class: 'text-white' },
+        { important: [true], class: 'text-white' },
     ],
 ) %}
 
 {# `html_cva` converts boolean recipe values to the string keys 'true'/'false' #}
-<div class="{{ alert.apply({variant, style, dismissible}, attributes.render('class')) }}">
+<div class="{{ alert.apply({variant, important, dismissible}, attributes.render('class')) }}">
 ```
 
 When two axes both emit a color-dependent class (e.g. Button's `appearance` × `variant`, Badge's `light` × `variant`), the classes live entirely in `compound_variants` so only one wins:

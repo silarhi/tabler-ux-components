@@ -92,9 +92,9 @@ final class AlertTest extends ComponentTestCase
             HTML, $html);
     }
 
-    public function testImportantStyleAppliesCompoundVariant(): void
+    public function testImportantAppliesCompoundVariant(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert variant="success" style="important" title="Done" />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="success" important title="Done" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success alert-important text-white" role="alert">
@@ -103,6 +103,14 @@ final class AlertTest extends ComponentTestCase
                 </div>
             </div>
             HTML, $html);
+    }
+
+    public function testForwardsStyleAttributeToRoot(): void
+    {
+        // `style` is no longer a prop, so a CSS `style` attribute is forwarded.
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="info" style="margin: 0" />');
+
+        self::assertHtmlSame('<div class="alert alert-info" role="alert" style="margin: 0"></div>', $html);
     }
 
     public function testComposedModeReplacesContent(): void
