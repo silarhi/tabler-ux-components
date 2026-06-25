@@ -1,0 +1,48 @@
+{#
+    Carousel indicators — the strip of slide buttons.
+
+    Pass `count` to auto-generate buttons (first one active), or compose
+    <twig:Tabler:Carousel:Indicator> children for full control (e.g. thumbnails).
+
+    Usage:
+        <twig:Tabler:Carousel:Indicators target="hero" count="3" />
+
+        <twig:Tabler:Carousel:Indicators target="hero" appearance="dots">
+            <twig:Tabler:Carousel:Indicator target="hero" slideTo="0" active />
+            <twig:Tabler:Carousel:Indicator target="hero" slideTo="1" />
+        </twig:Tabler:Carousel:Indicators>
+
+    Props:
+      target      — id of the carousel these indicators control
+      count       — when set, auto-render this many indicator buttons
+      appearance  — default | dots | thumb
+      vertical    — stack indicators vertically (carousel-indicators-vertical)
+#}
+{% props
+    target = null,
+    count = null,
+    appearance = 'default',
+    vertical = false,
+%}
+
+{% set indicators = html_cva(
+    base: 'carousel-indicators',
+    variants: {
+        appearance: {
+            default: '',
+            dots: 'carousel-indicators-dot',
+            thumb: 'carousel-indicators-thumb',
+        },
+        vertical: {true: 'carousel-indicators-vertical', false: ''},
+    },
+) %}
+
+<div class="{{ indicators.apply({appearance: appearance, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- if count is not null -%}
+        {% for i in 0..(count - 1) %}
+            <twig:Tabler:Carousel:Indicator target="{{ target }}" slideTo="{{ i }}" active="{{ i == 0 }}" />
+        {% endfor %}
+    {%- else -%}
+        {% block content %}{% endblock %}
+    {%- endif -%}
+</div>

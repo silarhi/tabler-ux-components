@@ -1,0 +1,21 @@
+{#
+    Carousel caption — overlaid text for a slide. Place inside a Carousel:Item.
+
+    Usage:
+        <twig:Tabler:Carousel:Item active>
+            <img class="d-block w-100" src="/1.jpg" alt="">
+            <twig:Tabler:Carousel:Caption background>
+                <h3>Slide label</h3>
+                <p>Supporting copy for the slide.</p>
+            </twig:Tabler:Carousel:Caption>
+        </twig:Tabler:Carousel:Item>
+
+    Props:
+      background  — add a darkening overlay behind the caption (carousel-caption-background)
+#}
+{% props
+    background = false,
+%}
+
+{%- if background -%}<div class="carousel-caption-background"></div>{%- endif -%}
+<div class="{{ ('carousel-caption ' ~ attributes.render('class'))|trim }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>

@@ -1,0 +1,31 @@
+{#
+    Nav item — one link in a <twig:Tabler:Nav>.
+
+    Usage:
+        <twig:Tabler:Nav:Item href="/" active>Active</twig:Tabler:Nav:Item>
+        <twig:Tabler:Nav:Item disabled>Disabled</twig:Tabler:Nav:Item>
+
+    Props:
+      href      — link target; when omitted renders a non-link <a>
+      active    — marks the current item
+      disabled  — non-interactive item
+#}
+{% props
+    href = null,
+    active = false,
+    disabled = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set link = html_cva(
+    base: 'nav-link',
+    variants: {
+        active: {true: 'active', false: ''},
+        disabled: {true: 'disabled', false: ''},
+    },
+) %}
+
+<li class="nav-item">
+    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+</li>

@@ -1,0 +1,44 @@
+{#
+    Tabler Nav — a content navigation list (.nav). shadcn-style container.
+
+    For static navigation between sections/filters. For JS tab-switching with
+    panes use <twig:Tabler:Tabs>; for the app header use <twig:Tabler:Navbar>.
+
+    Composed:
+        <twig:Tabler:Nav variant="pills">
+            <twig:Tabler:Nav:Item href="/" active>Active</twig:Tabler:Nav:Item>
+            <twig:Tabler:Nav:Item href="/link">Link</twig:Tabler:Nav:Item>
+            <twig:Tabler:Nav:Item disabled>Disabled</twig:Tabler:Nav:Item>
+        </twig:Tabler:Nav>
+
+    Props:
+      variant    — default | tabs | pills | underline
+      vertical   — stack items in a column (flex-column)
+      fill       — items share the width proportionally (nav-fill)
+      justified  — items share the width equally (nav-justified)
+#}
+{% props
+    variant = 'default',
+    vertical = false,
+    fill = false,
+    justified = false,
+%}
+
+{% set nav = html_cva(
+    base: 'nav',
+    variants: {
+        variant: {
+            default: '',
+            tabs: 'nav-tabs',
+            pills: 'nav-pills',
+            underline: 'nav-underline',
+        },
+        vertical: {true: 'flex-column', false: ''},
+        fill: {true: 'nav-fill', false: ''},
+        justified: {true: 'nav-justified', false: ''},
+    },
+) %}
+
+<ul class="{{ nav.apply({variant: variant, vertical: vertical, fill: fill, justified: justified}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {% block content %}{% endblock %}
+</ul>

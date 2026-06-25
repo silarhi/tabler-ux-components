@@ -276,6 +276,65 @@ Props: `value`, `variant`, `size` (sm/md), `label`, `indeterminate`. Sub-compone
 
 Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`), `Dropdown:Menu` (`end`), `Dropdown:Item` (`href`, `active`, `disabled`), `Dropdown:Divider`, `Dropdown:Header`.
 
+### Carousel
+
+A Bootstrap 5 slideshow. Uses Bootstrap's own bundled JS (`data-bs-ride` / `data-bs-slide`) — the same mechanism as Modal and Dropdown, so **no third-party library is required**. Set an `id` for the controls and indicators to target.
+
+```twig
+{# all-in-one — auto indicators + controls #}
+<twig:Tabler:Carousel id="hero" controls indicators="3">
+    <twig:Tabler:Carousel:Item active><img class="d-block w-100" src="/1.jpg" alt=""></twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/3.jpg" alt=""></twig:Tabler:Carousel:Item>
+</twig:Tabler:Carousel>
+
+{# composed — thumbnail indicators + captions #}
+<twig:Tabler:Carousel id="gallery" fade>
+    <twig:block name="indicators">
+        <twig:Tabler:Carousel:Indicators target="gallery" appearance="thumb">
+            <twig:Tabler:Carousel:Indicator target="gallery" slideTo="0" image="/1.jpg" active />
+            <twig:Tabler:Carousel:Indicator target="gallery" slideTo="1" image="/2.jpg" />
+        </twig:Tabler:Carousel:Indicators>
+    </twig:block>
+    <twig:Tabler:Carousel:Item active>
+        <img class="d-block w-100" src="/1.jpg" alt="">
+        <twig:Tabler:Carousel:Caption background><h3>First slide</h3></twig:Tabler:Carousel:Caption>
+    </twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+</twig:Tabler:Carousel>
+```
+
+| Prop             | Type    | Default     | Description                                                  |
+| ---------------- | ------- | ----------- | ------------------------------------------------------------ |
+| `id`             | string? | `null`      | DOM id; **required** for controls/indicators to work         |
+| `fade`           | bool    | `false`     | Cross-fade instead of sliding (`carousel-fade`)              |
+| `ride`           | bool    | `true`      | Autoplay on load (`data-bs-ride="carousel"`)                 |
+| `controls`       | bool    | `false`     | Render prev/next controls; mirrored by the `controls` block  |
+| `indicators`     | int?    | `null`      | Number of slides → renders that many indicators; mirrored by the `indicators` block |
+| `indicatorStyle` | string  | `'default'` | `default` `dots` `thumb` (passed to `Carousel:Indicators`)   |
+| `vertical`       | bool    | `false`     | Place indicators vertically                                  |
+
+Sub-components: `Carousel:Item` (`active`), `Carousel:Indicators` (`target`, `count`, `appearance`, `vertical`), `Carousel:Indicator` (`target`, `slideTo`, `active`, `image`), `Carousel:Control` (`target`, `direction`, `label`), `Carousel:Caption` (`background`).
+
+Blocks: `indicators`, `controls` (override to compose them), plus the default slot for the slides.
+
+> To disable autoplay, `ride` must be a real boolean — use the `{% component %}` tag (`{% component 'Tabler:Carousel' with {id: 'x', ride: false} %}`); `ride="false"` in HTML syntax passes the truthy string `"false"`.
+
+### Nav
+
+A content navigation list (`.nav`) — for static section/filter navigation. For JS tab-switching with panes use `Tabs`; for the app header use `Navbar`.
+
+```twig
+<twig:Tabler:Nav variant="pills">
+    <twig:Tabler:Nav:Item href="/" active>Overview</twig:Tabler:Nav:Item>
+    <twig:Tabler:Nav:Item href="/activity">Activity</twig:Tabler:Nav:Item>
+    <twig:Tabler:Nav:Item disabled>Settings</twig:Tabler:Nav:Item>
+</twig:Tabler:Nav>
+```
+
+- **Nav** — `variant` (`default`/`tabs`/`pills`/`underline`), `vertical`, `fill`, `justified`.
+- **Nav:Item** — `href`, `active`, `disabled`.
+
 ### More components
 
 ```twig
@@ -456,9 +515,10 @@ compound_variants: [
 - [x] Icon, Ribbon, Placeholder, Tooltip, Popover, Table
 - [x] Empty, Tracking, SwitchIcon, Step, Timeline
 - [x] Tabs, Toast, Offcanvas, SegmentedControl, Datagrid
-- [x] PageHeader, Navbar, Prose (from Tabler's layout/base sections)
+- [x] Carousel (Bootstrap-native — uses Bootstrap's own bundled JS, no third-party lib)
+- [x] PageHeader, Navbar, Nav, Prose (from Tabler's layout/base sections)
 
-**Not included** (require third-party JavaScript libraries): Chart, Carousel, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
+**Not included** (require third-party JavaScript libraries): Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
 
 ## License
 

@@ -1,0 +1,31 @@
+{#
+    Carousel indicator — a single slide button inside <twig:Tabler:Carousel:Indicators>.
+
+    Usage:
+        <twig:Tabler:Carousel:Indicator target="hero" slideTo="0" active />
+        <twig:Tabler:Carousel:Indicator target="hero" slideTo="1" image="/thumb.jpg" />
+
+    Props:
+      target   — id of the carousel this button controls
+      slideTo  — zero-based index of the slide it jumps to
+      active   — marks the current slide
+      image    — thumbnail background (for `appearance="thumb"` indicators)
+#}
+{% props
+    target = null,
+    slideTo = 0,
+    active = false,
+    image = null,
+%}
+
+{%- set classes = ((image is not null ? 'ratio ratio-4x3 ' : '') ~ (active ? 'active' : '') ~ ' ' ~ attributes.render('class'))|trim -%}
+<button
+    type="button"
+    {% if target is not null %}data-bs-target="#{{ target }}"{% endif %}
+    data-bs-slide-to="{{ slideTo }}"
+    aria-label="Slide {{ slideTo + 1 }}"
+    {%- if active %} aria-current="true"{% endif %}
+    {%- if image is not null %} style="background-image: url({{ image }})"{% endif %}
+    {%- if classes %} class="{{ classes }}"{% endif %}
+    {{ attributes.without('class', 'style') }}
+></button>
