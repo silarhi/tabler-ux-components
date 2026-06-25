@@ -4,15 +4,20 @@
     All-in-one:
         <twig:Tabler:Timeline:Event title="Backup completed" time="1 day ago" text="Download the latest backup." />
 
-    Composed (the `content` block wraps the whole event):
+    Composed — `content` wraps the whole event (icon + card). Override `content`
+    to replace everything, or just the `icon` / `time` / `title` / `body` blocks:
         <twig:Tabler:Timeline:Event title="Backup completed" time="1 day ago">
-            <twig:block name="icon"><twig:Tabler:Icon name="check" /></twig:block>
-            Download the <a href="#">latest backup</a>.
+            <twig:block name="icon">
+                <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="check" /></twig:Tabler:Timeline:Event:Icon>
+            </twig:block>
+            <twig:block name="body">
+                <twig:Tabler:Timeline:Event:Body>Download the <a href="#">latest backup</a>.</twig:Tabler:Timeline:Event:Body>
+            </twig:block>
         </twig:Tabler:Timeline:Event>
 
-    Props:
-      title  — optional event heading
-      time   — optional timestamp shown on the right
+    Props (each mirrored by a same-named block rendering its sub-component):
+      title  — optional event heading; mirrored by the `title` block
+      time   — optional timestamp shown on the right; mirrored by the `time` block
       text   — optional body text; mirrored by the `body` block
 #}
 {% props
@@ -23,12 +28,18 @@
 
 <li {{ attributes.defaults({class: 'timeline-event'}) }}>
     {% block content %}
-        <twig:Tabler:Timeline:Event:Icon>{% block icon %}{% endblock %}</twig:Tabler:Timeline:Event:Icon>
+        {% block icon %}<twig:Tabler:Timeline:Event:Icon></twig:Tabler:Timeline:Event:Icon>{% endblock %}
         <div class="card timeline-event-card">
             <div class="card-body">
-                {%- if time is not null -%}<div class="text-secondary float-end">{{ time }}</div>{%- endif -%}
-                {%- if title is not null -%}<h4>{{ title }}</h4>{%- endif -%}
-                {% block body %}{%- if text is not null -%}{{ text }}{%- endif -%}{% endblock %}
+                {% block time %}
+                    {%- if time is not null -%}<twig:Tabler:Timeline:Event:Time>{{ time }}</twig:Tabler:Timeline:Event:Time>{%- endif -%}
+                {% endblock %}
+                {% block title %}
+                    {%- if title is not null -%}<twig:Tabler:Timeline:Event:Title>{{ title }}</twig:Tabler:Timeline:Event:Title>{%- endif -%}
+                {% endblock %}
+                {% block body %}
+                    {%- if text is not null -%}<twig:Tabler:Timeline:Event:Body>{{ text }}</twig:Tabler:Timeline:Event:Body>{%- endif -%}
+                {% endblock %}
             </div>
         </div>
     {% endblock %}

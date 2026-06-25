@@ -1,0 +1,67 @@
+{#
+    Tabler Carousel — a Bootstrap 5 slideshow. shadcn-style.
+
+    Uses Bootstrap's own bundled JS (data-bs-ride / data-bs-slide), the same
+    mechanism as Modal, Offcanvas and Dropdown — no third-party library.
+
+    All-in-one (auto indicators + controls; `id` is required for them to work):
+        <twig:Tabler:Carousel id="hero" controls indicators="3">
+            <twig:Tabler:Carousel:Item active><img class="d-block w-100" src="/1.jpg" alt=""></twig:Tabler:Carousel:Item>
+            <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+            <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/3.jpg" alt=""></twig:Tabler:Carousel:Item>
+        </twig:Tabler:Carousel>
+
+    Composed (full control — override the `indicators` / `controls` blocks):
+        <twig:Tabler:Carousel id="gallery" fade>
+            <twig:block name="indicators">
+                <twig:Tabler:Carousel:Indicators target="gallery" appearance="thumb">
+                    <twig:Tabler:Carousel:Indicator target="gallery" slideTo="0" image="/1.jpg" active />
+                    <twig:Tabler:Carousel:Indicator target="gallery" slideTo="1" image="/2.jpg" />
+                </twig:Tabler:Carousel:Indicators>
+            </twig:block>
+            <twig:Tabler:Carousel:Item active><img class="d-block w-100" src="/1.jpg" alt=""></twig:Tabler:Carousel:Item>
+            <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+        </twig:Tabler:Carousel>
+
+    Props:
+      id              — DOM id; required for controls/indicators to target the carousel
+      fade            — cross-fade between slides instead of sliding (carousel-fade)
+      ride            — autoplay on load (data-bs-ride="carousel"); default true
+      controls        — render prev/next controls; mirrored by the `controls` block
+      indicators      — number of slides; renders that many indicators; mirrored by the `indicators` block
+      indicatorStyle  — default | dots | thumb (passed to Carousel:Indicators)
+      vertical        — place indicators vertically (carousel-indicators-vertical)
+#}
+{% props
+    id = null,
+    fade = false,
+    ride = true,
+    controls = false,
+    indicators = null,
+    indicatorStyle = 'default',
+    vertical = false,
+%}
+
+{% set carousel = html_cva(
+    base: 'carousel slide',
+    variants: {
+        fade: {true: 'carousel-fade', false: ''},
+    },
+) %}
+
+<div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ carousel.apply({fade: fade}, attributes.render('class')) }}"{% if ride %} data-bs-ride="carousel"{% endif %} {{ attributes.without('class', 'id') }}>
+    {% block indicators %}
+        {%- if indicators is not null -%}
+            <twig:Tabler:Carousel:Indicators target="{{ id }}" count="{{ indicators }}" appearance="{{ indicatorStyle }}" vertical="{{ vertical }}" />
+        {%- endif -%}
+    {% endblock %}
+    <div class="carousel-inner">
+        {% block content %}{% endblock %}
+    </div>
+    {% block controls %}
+        {%- if controls -%}
+            <twig:Tabler:Carousel:Control target="{{ id }}" direction="prev" />
+            <twig:Tabler:Carousel:Control target="{{ id }}" direction="next" />
+        {%- endif -%}
+    {% endblock %}
+</div>

@@ -32,7 +32,7 @@ final class AlertTest extends ComponentTestCase
 
     public function testRendersAllInOneProps(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert type="success" title="Saved!" description="Your changes are live." />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="success" title="Saved!" description="Your changes are live." />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success" role="alert">
@@ -46,7 +46,7 @@ final class AlertTest extends ComponentTestCase
 
     public function testTitleOnlyStillWrapsInDiv(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert type="warning" title="Heads up" />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="warning" title="Heads up" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-warning" role="alert">
@@ -63,7 +63,7 @@ final class AlertTest extends ComponentTestCase
         // without fighting the HTML-attribute lexer (it would choke on `<`).
         $html = $this->renderComponent(
             <<<'TWIG'
-            {% component 'Tabler:Alert' with {type: 'danger', icon: icon, title: 'Error'} %}{% endcomponent %}
+            {% component 'Tabler:Alert' with {variant: 'danger', icon: icon, title: 'Error'} %}{% endcomponent %}
             TWIG,
             ['icon' => '<i class="ti ti-x"></i>'],
         );
@@ -80,7 +80,7 @@ final class AlertTest extends ComponentTestCase
 
     public function testDismissibleAddsClassAndCloseButton(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert type="info" title="Hi" dismissible />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="info" title="Hi" dismissible />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-info alert-dismissible" role="alert">
@@ -92,9 +92,9 @@ final class AlertTest extends ComponentTestCase
             HTML, $html);
     }
 
-    public function testImportantStyleAppliesCompoundVariant(): void
+    public function testImportantAppliesCompoundVariant(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert type="success" style="important" title="Done" />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="success" important title="Done" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success alert-important text-white" role="alert">
@@ -105,10 +105,18 @@ final class AlertTest extends ComponentTestCase
             HTML, $html);
     }
 
+    public function testForwardsStyleAttributeToRoot(): void
+    {
+        // `style` is no longer a prop, so a CSS `style` attribute is forwarded.
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="info" style="margin: 0" />');
+
+        self::assertHtmlSame('<div class="alert alert-info" role="alert" style="margin: 0"></div>', $html);
+    }
+
     public function testComposedModeReplacesContent(): void
     {
         $html = $this->renderComponent(<<<TWIG
-            <twig:Tabler:Alert type="success">
+            <twig:Tabler:Alert variant="success">
                 <twig:Tabler:Alert:Icon><i class="ti ti-check"></i></twig:Tabler:Alert:Icon>
                 <twig:Tabler:Alert:Title>Saved!</twig:Tabler:Alert:Title>
                 <twig:Tabler:Alert:Description>Your changes are <strong>live</strong>.</twig:Tabler:Alert:Description>
@@ -127,7 +135,7 @@ final class AlertTest extends ComponentTestCase
     public function testOverrideTitleBlockKeepsOtherProps(): void
     {
         $html = $this->renderComponent(<<<TWIG
-            <twig:Tabler:Alert type="info" title="Default" description="A description">
+            <twig:Tabler:Alert variant="info" title="Default" description="A description">
                 <twig:block name="title">
                     <twig:Tabler:Alert:Title class="display-6">Custom!</twig:Tabler:Alert:Title>
                 </twig:block>
@@ -146,7 +154,7 @@ final class AlertTest extends ComponentTestCase
 
     public function testConsumerClassMergesWithVariantClasses(): void
     {
-        $html = $this->renderComponent('<twig:Tabler:Alert type="success" title="Hi" class="shadow-sm mt-3" />');
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="success" title="Hi" class="shadow-sm mt-3" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success shadow-sm mt-3" role="alert">
@@ -161,7 +169,7 @@ final class AlertTest extends ComponentTestCase
     {
         $html = $this->renderComponent(
             <<<'TWIG'
-            {% component 'Tabler:Alert' with {type: 'info', icon: icon} %}{% endcomponent %}
+            {% component 'Tabler:Alert' with {variant: 'info', icon: icon} %}{% endcomponent %}
             TWIG,
             ['icon' => '<svg></svg>'],
         );
@@ -176,7 +184,7 @@ final class AlertTest extends ComponentTestCase
     /**
      * @return iterable<string, array{0: string, 1: string}>
      */
-    public static function typeVariantProvider(): iterable
+    public static function variantProvider(): iterable
     {
         yield 'primary' => ['primary', 'alert-primary'];
         yield 'secondary' => ['secondary', 'alert-secondary'];
@@ -186,10 +194,10 @@ final class AlertTest extends ComponentTestCase
         yield 'info' => ['info', 'alert-info'];
     }
 
-    #[DataProvider('typeVariantProvider')]
-    public function testEveryTypeVariantProducesItsClass(string $type, string $expectedClass): void
+    #[DataProvider('variantProvider')]
+    public function testEveryVariantProducesItsClass(string $variant, string $expectedClass): void
     {
-        $html = $this->renderComponent(sprintf('<twig:Tabler:Alert type="%s" />', $type));
+        $html = $this->renderComponent(sprintf('<twig:Tabler:Alert variant="%s" />', $variant));
 
         self::assertHtmlSame(
             sprintf('<div class="alert %s" role="alert"></div>', $expectedClass),

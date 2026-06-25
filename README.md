@@ -32,13 +32,13 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 #### All-in-one usage
 
 ```twig
-<twig:Tabler:Alert type="success" title="Saved!" description="Your changes are live." />
+<twig:Tabler:Alert variant="success" title="Saved!" description="Your changes are live." />
 ```
 
 #### Composed usage (with icon)
 
 ```twig
-<twig:Tabler:Alert type="success">
+<twig:Tabler:Alert variant="success">
     <twig:Tabler:Alert:Icon>
         <i class="ti ti-check"></i>
     </twig:Tabler:Alert:Icon>
@@ -53,8 +53,8 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 
 | Prop          | Type     | Default     | Description                                                  |
 | ------------- | -------- | ----------- | ------------------------------------------------------------ |
-| `type`        | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
-| `style`       | string   | `'default'` | `default` or `important` (filled background)                 |
+| `variant`     | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
+| `important`   | bool     | `false`     | Filled/solid background (`alert-important`)                  |
 | `title`       | string?  | `null`      | Optional title; skip when using `<twig:Alert:Title>`         |
 | `description` | string?  | `null`      | Optional description; skip when using `<twig:Alert:Description>` |
 | `dismissible` | bool     | `false`     | Adds a Bootstrap close button                                |
@@ -75,7 +75,7 @@ Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 Each prop has a matching block whose default renders the sub-component with the prop value. Override any block to take fine-grained control while still using the sub-component (and its attributes):
 
 ```twig
-<twig:Tabler:Alert type="success" title="Saved!">
+<twig:Tabler:Alert variant="success" title="Saved!">
     <twig:block name="title">
         <twig:Tabler:Alert:Title class="display-6">Custom heading</twig:Tabler:Alert:Title>
     </twig:block>
@@ -215,8 +215,8 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 <twig:Tabler:Spinner variant="primary" size="sm" />
 <twig:Tabler:Spinner type="grow" variant="success" />
 
-<twig:Tabler:Status variant="success">Online</twig:Tabler:Status>
-<twig:Tabler:Status variant="danger" dot animated>Live</twig:Tabler:Status>
+<twig:Tabler:Status variant="success" label="Online" />
+<twig:Tabler:Status variant="danger" dot animated label="Live" />
 
 <twig:Tabler:Divider>See also</twig:Tabler:Divider>
 <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
@@ -224,7 +224,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 
 - **Avatar** — `size` (xs–xl), `variant` (tinted bg for initials), `rounded`, `image`.
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
-- **Status** — `variant`, `dot`, `animated`.
+- **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks).
 - **Divider** — `position` (start/center/end), `variant`. Empty content → plain `<hr>`.
 
 ### Progress
@@ -276,6 +276,65 @@ Props: `value`, `variant`, `size` (sm/md), `label`, `indeterminate`. Sub-compone
 
 Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`), `Dropdown:Menu` (`end`), `Dropdown:Item` (`href`, `active`, `disabled`), `Dropdown:Divider`, `Dropdown:Header`.
 
+### Carousel
+
+A Bootstrap 5 slideshow. Uses Bootstrap's own bundled JS (`data-bs-ride` / `data-bs-slide`) — the same mechanism as Modal and Dropdown, so **no third-party library is required**. Set an `id` for the controls and indicators to target.
+
+```twig
+{# all-in-one — auto indicators + controls #}
+<twig:Tabler:Carousel id="hero" controls indicators="3">
+    <twig:Tabler:Carousel:Item active><img class="d-block w-100" src="/1.jpg" alt=""></twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/3.jpg" alt=""></twig:Tabler:Carousel:Item>
+</twig:Tabler:Carousel>
+
+{# composed — thumbnail indicators + captions #}
+<twig:Tabler:Carousel id="gallery" fade>
+    <twig:block name="indicators">
+        <twig:Tabler:Carousel:Indicators target="gallery" appearance="thumb">
+            <twig:Tabler:Carousel:Indicator target="gallery" slideTo="0" image="/1.jpg" active />
+            <twig:Tabler:Carousel:Indicator target="gallery" slideTo="1" image="/2.jpg" />
+        </twig:Tabler:Carousel:Indicators>
+    </twig:block>
+    <twig:Tabler:Carousel:Item active>
+        <img class="d-block w-100" src="/1.jpg" alt="">
+        <twig:Tabler:Carousel:Caption background><h3>First slide</h3></twig:Tabler:Carousel:Caption>
+    </twig:Tabler:Carousel:Item>
+    <twig:Tabler:Carousel:Item><img class="d-block w-100" src="/2.jpg" alt=""></twig:Tabler:Carousel:Item>
+</twig:Tabler:Carousel>
+```
+
+| Prop             | Type    | Default     | Description                                                  |
+| ---------------- | ------- | ----------- | ------------------------------------------------------------ |
+| `id`             | string? | `null`      | DOM id; **required** for controls/indicators to work         |
+| `fade`           | bool    | `false`     | Cross-fade instead of sliding (`carousel-fade`)              |
+| `ride`           | bool    | `true`      | Autoplay on load (`data-bs-ride="carousel"`)                 |
+| `controls`       | bool    | `false`     | Render prev/next controls; mirrored by the `controls` block  |
+| `indicators`     | int?    | `null`      | Number of slides → renders that many indicators; mirrored by the `indicators` block |
+| `indicatorStyle` | string  | `'default'` | `default` `dots` `thumb` (passed to `Carousel:Indicators`)   |
+| `vertical`       | bool    | `false`     | Place indicators vertically                                  |
+
+Sub-components: `Carousel:Item` (`active`), `Carousel:Indicators` (`target`, `count`, `appearance`, `vertical`), `Carousel:Indicator` (`target`, `slideTo`, `active`, `image`), `Carousel:Control` (`target`, `direction`, `label`), `Carousel:Caption` (`background`).
+
+Blocks: `indicators`, `controls` (override to compose them), plus the default slot for the slides.
+
+> To disable autoplay, `ride` must be a real boolean — use the `{% component %}` tag (`{% component 'Tabler:Carousel' with {id: 'x', ride: false} %}`); `ride="false"` in HTML syntax passes the truthy string `"false"`.
+
+### Nav
+
+A content navigation list (`.nav`) — for static section/filter navigation. For JS tab-switching with panes use `Tabs`; for the app header use `Navbar`.
+
+```twig
+<twig:Tabler:Nav variant="pills">
+    <twig:Tabler:Nav:Item href="/" active>Overview</twig:Tabler:Nav:Item>
+    <twig:Tabler:Nav:Item href="/activity">Activity</twig:Tabler:Nav:Item>
+    <twig:Tabler:Nav:Item disabled>Settings</twig:Tabler:Nav:Item>
+</twig:Tabler:Nav>
+```
+
+- **Nav** — `variant` (`default`/`tabs`/`pills`/`underline`), `vertical`, `fill`, `justified`.
+- **Nav:Item** — `href`, `active`, `disabled`.
+
 ### More components
 
 ```twig
@@ -313,9 +372,17 @@ Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`), `Dropdown:Menu` (`end`
     <twig:Tabler:Step:Item active>Two</twig:Tabler:Step:Item>
 </twig:Tabler:Step>
 
-{# Timeline #}
+{# Timeline — all-in-one, or compose with Timeline:Event:Title / :Time / :Body and an icon block #}
 <twig:Tabler:Timeline>
-    <twig:Tabler:Timeline:Event title="Backup done" time="1 day ago">Latest backup ready.</twig:Tabler:Timeline:Event>
+    <twig:Tabler:Timeline:Event title="Backup done" time="1 day ago" text="Latest backup ready." />
+    <twig:Tabler:Timeline:Event title="New release" time="2 days ago">
+        <twig:block name="icon">
+            <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="rocket" /></twig:Tabler:Timeline:Event:Icon>
+        </twig:block>
+        <twig:block name="body">
+            <twig:Tabler:Timeline:Event:Body>Shipped <strong>v2.0</strong>.</twig:Tabler:Timeline:Event:Body>
+        </twig:block>
+    </twig:Tabler:Timeline:Event>
 </twig:Tabler:Timeline>
 
 {# Tabs #}
@@ -414,17 +481,17 @@ Variants are declared with `html_cva()`, which mirrors shadcn's CVA:
 {% set alert = html_cva(
     base: 'alert',
     variants: {
-        type: { success: 'alert-success', danger: 'alert-danger', ... },
-        style: { default: '', important: 'alert-important' },
+        variant: { success: 'alert-success', danger: 'alert-danger', ... },
+        important: { true: 'alert-important', false: '' },
         dismissible: { true: 'alert-dismissible', false: '' },
     },
     compound_variants: [
-        { style: ['important'], class: 'text-white' },
+        { important: [true], class: 'text-white' },
     ],
 ) %}
 
 {# `html_cva` converts boolean recipe values to the string keys 'true'/'false' #}
-<div class="{{ alert.apply({type, style, dismissible}, attributes.render('class')) }}">
+<div class="{{ alert.apply({variant, important, dismissible}, attributes.render('class')) }}">
 ```
 
 When two axes both emit a color-dependent class (e.g. Button's `appearance` × `variant`, Badge's `light` × `variant`), the classes live entirely in `compound_variants` so only one wins:
@@ -456,9 +523,10 @@ compound_variants: [
 - [x] Icon, Ribbon, Placeholder, Tooltip, Popover, Table
 - [x] Empty, Tracking, SwitchIcon, Step, Timeline
 - [x] Tabs, Toast, Offcanvas, SegmentedControl, Datagrid
-- [x] PageHeader, Navbar, Prose (from Tabler's layout/base sections)
+- [x] Carousel (Bootstrap-native — uses Bootstrap's own bundled JS, no third-party lib)
+- [x] PageHeader, Navbar, Nav, Prose (from Tabler's layout/base sections)
 
-**Not included** (require third-party JavaScript libraries): Chart, Carousel, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
+**Not included** (require third-party JavaScript libraries): Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
 
 ## License
 

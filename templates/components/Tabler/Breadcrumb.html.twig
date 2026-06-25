@@ -25,8 +25,8 @@
     },
 ) %}
 
-<nav aria-label="breadcrumbs" {{ attributes.without('class') }}>
-    <ol class="{{ breadcrumb.apply({separator: separator, muted: muted}, attributes.render('class')) }}">
+<nav aria-label="breadcrumbs">
+    <ol class="{{ breadcrumb.apply({separator: separator, muted: muted}, attributes.render('class')) }}" {{ attributes.without('class') }}>
         {% block content %}{% endblock %}
     </ol>
 </nav>

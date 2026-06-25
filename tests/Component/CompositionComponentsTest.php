@@ -130,7 +130,39 @@ final class CompositionComponentsTest extends ComponentTestCase
             . '<div class="card timeline-event-card"><div class="card-body">'
             . '<div class="text-secondary float-end">1 day ago</div>'
             . '<h4>Backup done</h4>'
-            . 'Latest backup ready.'
+            . '<div class="text-secondary">Latest backup ready.</div>'
+            . '</div></div>'
+            . '</li>'
+            . '</ul>',
+            $html,
+        );
+    }
+
+    public function testTimelineEventComposed(): void
+    {
+        // The card scaffolding stays intact; the icon block is overridden and the
+        // body is supplied via the dedicated sub-component in the default slot.
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Timeline>
+                <twig:Tabler:Timeline:Event title="Backup done" time="1 day ago">
+                    <twig:block name="icon">
+                        <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="check" /></twig:Tabler:Timeline:Event:Icon>
+                    </twig:block>
+                    <twig:block name="body">
+                        <twig:Tabler:Timeline:Event:Body>Download the <a href="#">latest backup</a>.</twig:Tabler:Timeline:Event:Body>
+                    </twig:block>
+                </twig:Tabler:Timeline:Event>
+            </twig:Tabler:Timeline>
+            TWIG);
+
+        self::assertHtmlSame(
+            '<ul class="timeline">'
+            . '<li class="timeline-event">'
+            . '<div class="timeline-event-icon"><i class="ti ti-check"></i></div>'
+            . '<div class="card timeline-event-card"><div class="card-body">'
+            . '<div class="text-secondary float-end">1 day ago</div>'
+            . '<h4>Backup done</h4>'
+            . '<div class="text-secondary">Download the <a href="#">latest backup</a>.</div>'
             . '</div></div>'
             . '</li>'
             . '</ul>',

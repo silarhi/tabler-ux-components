@@ -1,0 +1,21 @@
+{#
+    Carousel item — one slide inside a <twig:Tabler:Carousel>.
+
+    Usage:
+        <twig:Tabler:Carousel:Item active><img class="d-block w-100" src="/1.jpg" alt=""></twig:Tabler:Carousel:Item>
+
+    Props:
+      active  — the initially-visible slide (exactly one item must be active)
+#}
+{% props
+    active = false,
+%}
+
+{% set item = html_cva(
+    base: 'carousel-item',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+<div class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>

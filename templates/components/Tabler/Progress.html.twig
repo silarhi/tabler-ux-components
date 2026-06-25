@@ -36,10 +36,12 @@
 
 <div class="{{ progress.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}
-        {%- if indeterminate -%}
-            <twig:Tabler:Progress:Bar variant="{{ variant }}" indeterminate />
-        {%- elseif value is not null -%}
-            <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" label="{{ label }}" />
-        {%- endif -%}
+        {% block bar %}
+            {%- if indeterminate -%}
+                <twig:Tabler:Progress:Bar variant="{{ variant }}" indeterminate />
+            {%- elseif value is not null -%}
+                <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" label="{{ label }}" />
+            {%- endif -%}
+        {% endblock %}
     {% endblock %}
 </div>

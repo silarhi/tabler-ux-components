@@ -36,6 +36,7 @@
 ) %}
 
 <div class="{{ bar.apply({variant: variant, indeterminate: indeterminate}, attributes.render('class')) }}" role="progressbar"{% if not indeterminate and value is not null %} style="width: {{ value }}%" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"{% endif %} {{ attributes.without('class', 'style') }}>
-    {%- if label -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
-    {%- block content %}{% endblock -%}
+    {%- block content -%}
+        {%- if label -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
+    {%- endblock -%}
 </div>
