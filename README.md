@@ -372,9 +372,15 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
     <twig:Tabler:Step:Item active>Two</twig:Tabler:Step:Item>
 </twig:Tabler:Step>
 
-{# Timeline #}
+{# Timeline — all-in-one, or compose with Timeline:Event:Title / :Time / :Body and an icon block #}
 <twig:Tabler:Timeline>
-    <twig:Tabler:Timeline:Event title="Backup done" time="1 day ago">Latest backup ready.</twig:Tabler:Timeline:Event>
+    <twig:Tabler:Timeline:Event title="Backup done" time="1 day ago" text="Latest backup ready." />
+    <twig:Tabler:Timeline:Event title="New release" time="2 days ago">
+        <twig:block name="icon">
+            <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="rocket" /></twig:Tabler:Timeline:Event:Icon>
+        </twig:block>
+        <twig:Tabler:Timeline:Event:Body>Shipped <strong>v2.0</strong>.</twig:Tabler:Timeline:Event:Body>
+    </twig:Tabler:Timeline:Event>
 </twig:Tabler:Timeline>
 
 {# Tabs #}
