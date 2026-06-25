@@ -32,13 +32,13 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 #### All-in-one usage
 
 ```twig
-<twig:Tabler:Alert type="success" title="Saved!" description="Your changes are live." />
+<twig:Tabler:Alert variant="success" title="Saved!" description="Your changes are live." />
 ```
 
 #### Composed usage (with icon)
 
 ```twig
-<twig:Tabler:Alert type="success">
+<twig:Tabler:Alert variant="success">
     <twig:Tabler:Alert:Icon>
         <i class="ti ti-check"></i>
     </twig:Tabler:Alert:Icon>
@@ -53,7 +53,7 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 
 | Prop          | Type     | Default     | Description                                                  |
 | ------------- | -------- | ----------- | ------------------------------------------------------------ |
-| `type`        | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
+| `variant`     | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
 | `style`       | string   | `'default'` | `default` or `important` (filled background)                 |
 | `title`       | string?  | `null`      | Optional title; skip when using `<twig:Alert:Title>`         |
 | `description` | string?  | `null`      | Optional description; skip when using `<twig:Alert:Description>` |
@@ -75,7 +75,7 @@ Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 Each prop has a matching block whose default renders the sub-component with the prop value. Override any block to take fine-grained control while still using the sub-component (and its attributes):
 
 ```twig
-<twig:Tabler:Alert type="success" title="Saved!">
+<twig:Tabler:Alert variant="success" title="Saved!">
     <twig:block name="title">
         <twig:Tabler:Alert:Title class="display-6">Custom heading</twig:Tabler:Alert:Title>
     </twig:block>
@@ -479,7 +479,7 @@ Variants are declared with `html_cva()`, which mirrors shadcn's CVA:
 {% set alert = html_cva(
     base: 'alert',
     variants: {
-        type: { success: 'alert-success', danger: 'alert-danger', ... },
+        variant: { success: 'alert-success', danger: 'alert-danger', ... },
         style: { default: '', important: 'alert-important' },
         dismissible: { true: 'alert-dismissible', false: '' },
     },
@@ -489,7 +489,7 @@ Variants are declared with `html_cva()`, which mirrors shadcn's CVA:
 ) %}
 
 {# `html_cva` converts boolean recipe values to the string keys 'true'/'false' #}
-<div class="{{ alert.apply({type, style, dismissible}, attributes.render('class')) }}">
+<div class="{{ alert.apply({variant, style, dismissible}, attributes.render('class')) }}">
 ```
 
 When two axes both emit a color-dependent class (e.g. Button's `appearance` × `variant`, Badge's `light` × `variant`), the classes live entirely in `compound_variants` so only one wins:

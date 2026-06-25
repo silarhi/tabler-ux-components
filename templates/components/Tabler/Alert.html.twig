@@ -5,7 +5,7 @@
     sub-component wrapping the prop value. Override any block to take full
     control while still leveraging the sub-component (and its attributes):
 
-        <twig:Tabler:Alert type="success" title="Saved!">
+        <twig:Tabler:Alert variant="success" title="Saved!">
             <twig:block name="title">
                 <twig:Tabler:Alert:Title class="my-extra">Custom!</twig:Tabler:Alert:Title>
             </twig:block>
@@ -13,14 +13,14 @@
 
     Or replace the default `content` block to compose freely:
 
-        <twig:Tabler:Alert type="success">
+        <twig:Tabler:Alert variant="success">
             <twig:Tabler:Alert:Icon><i class="ti ti-check"></i></twig:Tabler:Alert:Icon>
             <twig:Tabler:Alert:Title>Saved!</twig:Tabler:Alert:Title>
             <twig:Tabler:Alert:Description>Your changes are live.</twig:Tabler:Alert:Description>
         </twig:Tabler:Alert>
 
     Props:
-      type         — primary | secondary | success | danger | warning | info
+      variant      — primary | secondary | success | danger | warning | info
       style        — default | important
       icon         — optional icon HTML/SVG (rendered via Alert:Icon's `.alert-icon` wrapper)
       title        — optional title; mirrored by the `title` block
@@ -30,7 +30,7 @@
     Note: `icon` is rendered with `|raw`. Treat the value as developer-controlled.
 #}
 {% props
-    type = 'info',
+    variant = 'info',
     style = 'default',
     icon = null,
     title = null,
@@ -41,7 +41,7 @@
 {% set alert = html_cva(
     base: 'alert',
     variants: {
-        type: {
+        variant: {
             primary: 'alert-primary',
             secondary: 'alert-secondary',
             success: 'alert-success',
@@ -72,7 +72,7 @@
     {%- if description is not null -%}<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>{%- endif -%}
 {% endblock %}{% endset %}
 
-{% set wrapper_class = alert.apply({type: type, style: style, dismissible: dismissible}, attributes.render('class')) %}
+{% set wrapper_class = alert.apply({variant: variant, style: style, dismissible: dismissible}, attributes.render('class')) %}
 <div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
     {% block content %}
         {% block icon %}
