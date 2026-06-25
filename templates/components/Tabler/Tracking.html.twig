@@ -1,0 +1,13 @@
+{#
+    Tabler Tracking — a row of status blocks (e.g. uptime monitor).
+
+    Composed:
+        <twig:Tabler:Tracking>
+            <twig:Tabler:Tracking:Block variant="success" />
+            <twig:Tabler:Tracking:Block variant="success" />
+            <twig:Tabler:Tracking:Block variant="danger" />
+        </twig:Tabler:Tracking>
+#}
+<div {{ attributes.defaults({class: 'tracking'}) }}>
+    {% block content %}{% endblock %}
+</div>

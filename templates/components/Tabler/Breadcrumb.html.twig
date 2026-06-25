@@ -1,0 +1,32 @@
+{#
+    Tabler Breadcrumb — a navigation trail.
+
+    Composed:
+        <twig:Tabler:Breadcrumb>
+            <twig:Tabler:Breadcrumb:Item href="/">Home</twig:Tabler:Breadcrumb:Item>
+            <twig:Tabler:Breadcrumb:Item href="/library">Library</twig:Tabler:Breadcrumb:Item>
+            <twig:Tabler:Breadcrumb:Item active>Data</twig:Tabler:Breadcrumb:Item>
+        </twig:Tabler:Breadcrumb>
+
+    Props:
+      separator  — default | dots | arrows
+      muted      — muted style (breadcrumb-muted)
+#}
+{% props
+    separator = 'default',
+    muted = false,
+%}
+
+{% set breadcrumb = html_cva(
+    base: 'breadcrumb',
+    variants: {
+        separator: {default: '', dots: 'breadcrumb-dots', arrows: 'breadcrumb-arrows'},
+        muted: {true: 'breadcrumb-muted', false: ''},
+    },
+) %}
+
+<nav aria-label="breadcrumbs" {{ attributes.without('class') }}>
+    <ol class="{{ breadcrumb.apply({separator: separator, muted: muted}, attributes.render('class')) }}">
+        {% block content %}{% endblock %}
+    </ol>
+</nav>

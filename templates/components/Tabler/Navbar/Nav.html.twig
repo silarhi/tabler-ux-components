@@ -1,0 +1,24 @@
+{#
+    Navbar nav — the list of nav items. Optionally wrapped in a collapse panel.
+
+    Usage:
+        <twig:Tabler:Navbar:Nav id="navbar-menu" collapse>
+            <twig:Tabler:Navbar:Item href="/" active>Home</twig:Tabler:Navbar:Item>
+        </twig:Tabler:Navbar:Nav>
+
+    Props:
+      collapse  — wrap in `.collapse.navbar-collapse` (pairs with a Toggler)
+      id        — id targeted by the toggler (required when `collapse`)
+#}
+{% props
+    collapse = false,
+    id = null,
+%}
+
+{%- set list -%}<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{% block content %}{% endblock %}</ul>{%- endset -%}
+
+{% if collapse %}
+    <div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{{ list|raw }}</div>
+{% else %}
+    {{ list|raw }}
+{% endif %}

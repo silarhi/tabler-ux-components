@@ -1,0 +1,32 @@
+{#
+    Breadcrumb item — one crumb in a <twig:Tabler:Breadcrumb>.
+
+    Usage:
+        <twig:Tabler:Breadcrumb:Item href="/">Home</twig:Tabler:Breadcrumb:Item>
+        <twig:Tabler:Breadcrumb:Item active>Current</twig:Tabler:Breadcrumb:Item>
+
+    Props:
+      href    — link target; when omitted the crumb is plain text
+      active  — marks the current page (no link)
+#}
+{% props
+    href = null,
+    active = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'breadcrumb-item',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+<li class="{{ item.apply({active: active}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
+    {%- if href is not null and not active -%}
+        <a href="{{ href }}">{{ label|raw }}</a>
+    {%- else -%}
+        {{- label|raw -}}
+    {%- endif -%}
+</li>

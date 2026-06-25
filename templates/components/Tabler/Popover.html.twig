@@ -1,0 +1,22 @@
+{#
+    Tabler Popover — wraps content with Bootstrap's popover data API.
+
+    All-in-one:
+        <twig:Tabler:Popover title="Heads up" content="And some details here.">
+            <twig:Tabler:Button>Click me</twig:Tabler:Button>
+        </twig:Tabler:Popover>
+
+    Requires Bootstrap's popover JS to be initialised.
+
+    Props:
+      content    — popover body text
+      title      — optional popover heading
+      placement  — top (default) | bottom | left | right
+#}
+{% props
+    content,
+    title = null,
+    placement = 'top',
+%}
+
+<span data-bs-toggle="popover" data-bs-placement="{{ placement }}"{% if title is not null %} data-bs-title="{{ title }}"{% endif %} data-bs-content="{{ content }}" {{ attributes }}>{%- block content %}{% endblock -%}</span>

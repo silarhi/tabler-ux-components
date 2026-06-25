@@ -1,0 +1,22 @@
+{#
+    Status dot — the small leading indicator of a <twig:Tabler:Status>.
+
+    Usage:
+        <twig:Tabler:Status:Dot />
+        <twig:Tabler:Status:Dot animated />
+
+    Props:
+      animated — pulse animation (status-dot-animated)
+#}
+{% props
+    animated = false,
+%}
+
+{% set dot = html_cva(
+    base: 'status-dot',
+    variants: {
+        animated: {true: 'status-dot-animated', false: ''},
+    },
+) %}
+
+<span class="{{ dot.apply({animated: animated}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>

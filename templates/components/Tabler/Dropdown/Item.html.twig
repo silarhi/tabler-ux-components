@@ -1,0 +1,29 @@
+{#
+    Dropdown item — a single action in a dropdown menu.
+
+    Usage:
+        <twig:Tabler:Dropdown:Item href="/edit">Edit</twig:Tabler:Dropdown:Item>
+        <twig:Tabler:Dropdown:Item href="#" active>Selected</twig:Tabler:Dropdown:Item>
+
+    Props:
+      href      — link target (defaults to #)
+      active    — highlighted item
+      disabled  — non-interactive item
+#}
+{% props
+    href = null,
+    active = false,
+    disabled = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'dropdown-item',
+    variants: {
+        active: {true: 'active', false: ''},
+        disabled: {true: 'disabled', false: ''},
+    },
+) %}
+
+<a href="{{ href ?? '#' }}" class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>

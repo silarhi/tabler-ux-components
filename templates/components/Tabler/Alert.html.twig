@@ -78,11 +78,13 @@
         {% block icon %}
             {%- if icon is not null -%}<twig:Tabler:Alert:Icon>{{ icon|raw }}</twig:Tabler:Alert:Icon>{%- endif -%}
         {% endblock %}
-        {%- if (title_html ~ description_html)|trim -%}
-            <div>{{ title_html|raw }}{{ description_html|raw }}</div>
-        {%- endif -%}
-    {% endblock %}
-    {% block dismiss %}
-        {%- if dismissible -%}<twig:Tabler:Alert:Dismiss />{%- endif -%}
+        {% block body %}
+            {%- if (title_html ~ description_html)|trim -%}
+                <div>{{ title_html|raw }}{{ description_html|raw }}</div>
+            {%- endif -%}
+        {% endblock %}
+        {% block dismiss %}
+            {%- if dismissible -%}<twig:Tabler:Alert:Dismiss />{%- endif -%}
+        {% endblock %}
     {% endblock %}
 </div>

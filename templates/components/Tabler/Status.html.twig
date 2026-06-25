@@ -1,0 +1,40 @@
+{#
+    Tabler Status — a colored status label, optionally with a (animated) dot.
+
+    All-in-one:
+        <twig:Tabler:Status variant="success">Online</twig:Tabler:Status>
+        <twig:Tabler:Status variant="danger" dot animated>Live</twig:Tabler:Status>
+
+    Props:
+      variant     — primary | secondary | success | danger | warning | info | dark | light
+      dot       — show a leading status dot
+      animated  — pulse the dot (requires `dot`)
+#}
+{% props
+    variant = 'primary',
+    dot = false,
+    animated = false,
+%}
+
+{% set status = html_cva(
+    base: 'status',
+    variants: {
+        variant: {
+            primary: 'status-primary',
+            secondary: 'status-secondary',
+            success: 'status-success',
+            danger: 'status-danger',
+            warning: 'status-warning',
+            info: 'status-info',
+            dark: 'status-dark',
+            light: 'status-light',
+        },
+    },
+) %}
+
+<span class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- if dot -%}
+        {%- if animated -%}<twig:Tabler:Status:Dot animated />{%- else -%}<twig:Tabler:Status:Dot />{%- endif -%}
+    {%- endif -%}
+    {%- block content %}{% endblock -%}
+</span>

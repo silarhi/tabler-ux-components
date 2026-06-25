@@ -1,0 +1,23 @@
+{#
+    Segmented control item — one segment in a <twig:Tabler:SegmentedControl>.
+
+    Usage:
+        <twig:Tabler:SegmentedControl:Item active>Day</twig:Tabler:SegmentedControl:Item>
+
+    Props:
+      active  — the selected segment
+#}
+{% props
+    active = false,
+%}
+
+{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+
+{% set item = html_cva(
+    base: 'nav-link',
+    variants: {
+        active: {true: 'active', false: ''},
+    },
+) %}
+
+<button class="{{ item.apply({active: active}, attributes.render('class')) }}" role="tab" data-bs-toggle="tab" aria-selected="{{ active ? 'true' : 'false' }}"{% if not active %} tabindex="-1"{% endif %} {{ attributes.without('class') }}>{{- label|raw -}}</button>
