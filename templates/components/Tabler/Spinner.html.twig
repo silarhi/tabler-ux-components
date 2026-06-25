@@ -41,5 +41,7 @@
 ) %}
 
 <div class="{{ spinner.apply({type: type, variant: variant, size: size}, attributes.render('class')) }}" role="status" {{ attributes.without('class') }}>
-    {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
+    {%- block content -%}
+        {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
+    {%- endblock -%}
 </div>

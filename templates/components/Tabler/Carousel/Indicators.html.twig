@@ -38,11 +38,11 @@
 ) %}
 
 <div class="{{ indicators.apply({appearance: appearance, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {%- if count is not null -%}
-        {% for i in 0..(count - 1) %}
-            <twig:Tabler:Carousel:Indicator target="{{ target }}" slideTo="{{ i }}" active="{{ i == 0 }}" />
-        {% endfor %}
-    {%- else -%}
-        {% block content %}{% endblock %}
-    {%- endif -%}
+    {%- block content -%}
+        {%- if count is not null -%}
+            {% for i in 0..(count - 1) %}
+                <twig:Tabler:Carousel:Indicator target="{{ target }}" slideTo="{{ i }}" active="{{ i == 0 }}" />
+            {% endfor %}
+        {%- endif -%}
+    {%- endblock -%}
 </div>

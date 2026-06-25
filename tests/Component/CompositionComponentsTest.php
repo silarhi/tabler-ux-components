@@ -148,7 +148,9 @@ final class CompositionComponentsTest extends ComponentTestCase
                     <twig:block name="icon">
                         <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="check" /></twig:Tabler:Timeline:Event:Icon>
                     </twig:block>
-                    <twig:Tabler:Timeline:Event:Body>Download the <a href="#">latest backup</a>.</twig:Tabler:Timeline:Event:Body>
+                    <twig:block name="body">
+                        <twig:Tabler:Timeline:Event:Body>Download the <a href="#">latest backup</a>.</twig:Tabler:Timeline:Event:Body>
+                    </twig:block>
                 </twig:Tabler:Timeline:Event>
             </twig:Tabler:Timeline>
             TWIG);

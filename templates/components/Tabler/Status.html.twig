@@ -1,19 +1,27 @@
 {#
     Tabler Status — a colored status label, optionally with a (animated) dot.
 
-    All-in-one:
-        <twig:Tabler:Status variant="success">Online</twig:Tabler:Status>
-        <twig:Tabler:Status variant="danger" dot animated>Live</twig:Tabler:Status>
+    All-in-one (use the `label` prop so the dot and label both stay inside `content`):
+        <twig:Tabler:Status variant="success" label="Online" />
+        <twig:Tabler:Status variant="danger" dot animated label="Live" />
+
+    Composed (override `content`, or just the `dot` / `label` sub-blocks):
+        <twig:Tabler:Status variant="danger">
+            <twig:Tabler:Status:Dot animated />
+            Live
+        </twig:Tabler:Status>
 
     Props:
-      variant     — primary | secondary | success | danger | warning | info | dark | light
+      variant   — primary | secondary | success | danger | warning | info | dark | light
       dot       — show a leading status dot; mirrored by the `dot` block
       animated  — pulse the dot (requires `dot`)
+      label     — the status text; mirrored by the `label` block
 #}
 {% props
     variant = 'primary',
     dot = false,
     animated = false,
+    label = null,
 %}
 
 {% set status = html_cva(
@@ -33,10 +41,12 @@
 ) %}
 
 <span class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {%- block dot -%}
-        {%- if dot -%}
-            {%- if animated -%}<twig:Tabler:Status:Dot animated />{%- else -%}<twig:Tabler:Status:Dot />{%- endif -%}
-        {%- endif -%}
+    {%- block content -%}
+        {%- block dot -%}
+            {%- if dot -%}
+                {%- if animated -%}<twig:Tabler:Status:Dot animated />{%- else -%}<twig:Tabler:Status:Dot />{%- endif -%}
+            {%- endif -%}
+        {%- endblock -%}
+        {%- block label -%}{%- if label is not null -%}{{ label }}{%- endif -%}{%- endblock -%}
     {%- endblock -%}
-    {%- block content %}{% endblock -%}
 </span>

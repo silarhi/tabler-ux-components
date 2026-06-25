@@ -17,6 +17,8 @@
 %}
 
 <a class="{{ ('carousel-control-' ~ direction ~ ' ' ~ attributes.render('class'))|trim }}"{% if target is not null %} data-bs-target="#{{ target }}"{% endif %} role="button" data-bs-slide="{{ direction }}" {{ attributes.without('class') }}>
-    <span class="carousel-control-{{ direction }}-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">{{ label ?? (direction == 'prev' ? 'Previous' : 'Next') }}</span>
+    {%- block content -%}
+        <span class="carousel-control-{{ direction }}-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{{ label ?? (direction == 'prev' ? 'Previous' : 'Next') }}</span>
+    {%- endblock -%}
 </a>

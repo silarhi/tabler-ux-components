@@ -215,8 +215,8 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 <twig:Tabler:Spinner variant="primary" size="sm" />
 <twig:Tabler:Spinner type="grow" variant="success" />
 
-<twig:Tabler:Status variant="success">Online</twig:Tabler:Status>
-<twig:Tabler:Status variant="danger" dot animated>Live</twig:Tabler:Status>
+<twig:Tabler:Status variant="success" label="Online" />
+<twig:Tabler:Status variant="danger" dot animated label="Live" />
 
 <twig:Tabler:Divider>See also</twig:Tabler:Divider>
 <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
@@ -224,7 +224,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 
 - **Avatar** — `size` (xs–xl), `variant` (tinted bg for initials), `rounded`, `image`.
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
-- **Status** — `variant`, `dot`, `animated`.
+- **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks).
 - **Divider** — `position` (start/center/end), `variant`. Empty content → plain `<hr>`.
 
 ### Progress
@@ -379,7 +379,9 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
         <twig:block name="icon">
             <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="rocket" /></twig:Tabler:Timeline:Event:Icon>
         </twig:block>
-        <twig:Tabler:Timeline:Event:Body>Shipped <strong>v2.0</strong>.</twig:Tabler:Timeline:Event:Body>
+        <twig:block name="body">
+            <twig:Tabler:Timeline:Event:Body>Shipped <strong>v2.0</strong>.</twig:Tabler:Timeline:Event:Body>
+        </twig:block>
     </twig:Tabler:Timeline:Event>
 </twig:Tabler:Timeline>
 
