@@ -7,7 +7,7 @@
 
     Props:
       variant     — primary | secondary | success | danger | warning | info | dark | light
-      dot       — show a leading status dot
+      dot       — show a leading status dot; mirrored by the `dot` block
       animated  — pulse the dot (requires `dot`)
 #}
 {% props
@@ -33,8 +33,10 @@
 ) %}
 
 <span class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {%- if dot -%}
-        {%- if animated -%}<twig:Tabler:Status:Dot animated />{%- else -%}<twig:Tabler:Status:Dot />{%- endif -%}
-    {%- endif -%}
+    {%- block dot -%}
+        {%- if dot -%}
+            {%- if animated -%}<twig:Tabler:Status:Dot animated />{%- else -%}<twig:Tabler:Status:Dot />{%- endif -%}
+        {%- endif -%}
+    {%- endblock -%}
     {%- block content %}{% endblock -%}
 </span>
