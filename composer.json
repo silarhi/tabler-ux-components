@@ -54,6 +54,9 @@
             "ergebnis/composer-normalize": true,
             "phpstan/extension-installer": true
         },
+        "audit": {
+            "block-insecure": false
+        },
         "bump-after-update": "dev",
         "preferred-install": {
             "*": "dist"
