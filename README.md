@@ -1,5 +1,9 @@
 # Tabler UX Components
 
+![Build Status](https://github.com/silarhi/tabler-ux-components/actions/workflows/continuous-integration.yml/badge.svg)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsilarhi%2Ftabler-ux-components%2Fbadges%2Fcoverage.json)](https://github.com/silarhi/tabler-ux-components/actions/workflows/continuous-integration.yml)
+[![License](https://img.shields.io/github/license/silarhi/tabler-ux-components)](LICENSE)
+
 Tabler-flavored Twig UX components for Symfony, following the [shadcn/ui](https://ui.shadcn.com/) composition pattern: every component offers a single all-in-one entry point **and** dedicated sub-components for fine-grained composition.
 
 Built on:
