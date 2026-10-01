@@ -1,21 +1,86 @@
-# Tabler UX Components
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1&labelColor=1a1a2e">
+        <img src="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1" alt="License">
+    </picture>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/php-%3E%3D8.2-777bb4?style=for-the-badge&labelColor=1a1a2e">
+        <img src="https://img.shields.io/badge/php-%3E%3D8.2-777bb4?style=for-the-badge" alt="PHP Version">
+    </picture>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/silarhi/tabler-ux-components/continuous-integration.yml?style=for-the-badge&label=CI&color=20c997&labelColor=1a1a2e">
+        <img src="https://img.shields.io/github/actions/workflow/status/silarhi/tabler-ux-components/continuous-integration.yml?style=for-the-badge&label=CI&color=20c997"
+            alt="CI Status">
+    </picture>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsilarhi%2Ftabler-ux-components%2Fbadges%2Fcoverage.json&style=for-the-badge&labelColor=1a1a2e">
+        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsilarhi%2Ftabler-ux-components%2Fbadges%2Fcoverage.json&style=for-the-badge" alt="Coverage">
+    </picture>
+</p>
 
-![Build Status](https://github.com/silarhi/tabler-ux-components/actions/workflows/continuous-integration.yml/badge.svg)
-[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsilarhi%2Ftabler-ux-components%2Fbadges%2Fcoverage.json)](https://github.com/silarhi/tabler-ux-components/actions/workflows/continuous-integration.yml)
-[![License](https://img.shields.io/github/license/silarhi/tabler-ux-components)](LICENSE)
+<h1 align="center">Tabler UX Components</h1>
 
-Tabler-flavored Twig UX components for Symfony, following the [shadcn/ui](https://ui.shadcn.com/) composition pattern: every component offers a single all-in-one entry point **and** dedicated sub-components for fine-grained composition.
+<p align="center">
+    <strong>Tabler-flavored Twig UX components for Symfony.</strong><br>
+    Built on the <a href="https://ui.shadcn.com/">shadcn/ui</a> composition pattern: one all-in-one tag per component, plus sub-components when you need control.
+</p>
 
-Built on:
+---
 
-- [Symfony UX Twig Component](https://github.com/symfony/ux-twig-component)
-- [`twig/html-extra`](https://twig.symfony.com/doc/3.x/functions/html_cva) — `html_cva()` for variant composition (CVA, à la shadcn)
-- [Tabler](https://tabler.io/) + Bootstrap 5
+## Table of Contents
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Components](#components)
+    - [Alert](#alert)
+    - [Button](#button)
+    - [Badge](#badge)
+    - [Card](#card)
+    - [Modal](#modal)
+    - [Avatar / Spinner / Status / Divider](#avatar--spinner--status--divider)
+    - [Progress](#progress)
+    - [Breadcrumb / Pagination](#breadcrumb--pagination)
+    - [Dropdown](#dropdown)
+    - [Carousel](#carousel)
+    - [Nav](#nav)
+    - [More components](#more-components)
+    - [Layout: PageHeader / Navbar / Prose](#layout-pageheader--navbar--prose)
+    - [Not included](#not-included)
+- [Design Pattern](#design-pattern)
+- [Testing & Quality](#testing--quality)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Features
+
+- **shadcn composition** — an all-in-one entry point (`<twig:Tabler:Card title="…" />`) plus, where it makes sense, dedicated sub-components (`<twig:Tabler:Card:Header>`, `<twig:Tabler:Card:Body>`, …).
+- **Block-mirrored props** — on composite components, each prop has a matching Twig block; override one block without rewriting the rest.
+- **`html_cva()` variants** — classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html) from `twig/html-extra`, Twig's take on shadcn's CVA.
+- **Plain Tabler markup** — components render Tabler / Bootstrap 5 classes; Modal, Dropdown, Carousel, Tabs and Offcanvas use Bootstrap's own `data-bs-*` JavaScript.
+- **Attribute forwarding** — extra attributes (`class`, `id`, `data-*`, …) are merged onto the root element.
+- **Template-only** — anonymous Twig components, no PHP classes to register or configure.
+
+## Requirements
+
+| Dependency                                                                                    | Version         |
+| --------------------------------------------------------------------------------------------- | --------------- |
+| PHP                                                                                           | 8.2+            |
+| Symfony (`framework-bundle`, `twig-bundle`)                                                   | 6.4 / 7.x / 8.x |
+| [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) | 2.21+ / 3.x     |
+| Twig (`twig/twig`, `twig/extra-bundle`, `twig/html-extra`)                                    | 3.12+ / 4.x     |
+
+On the front-end, your app must load [Tabler](https://tabler.io/)'s CSS (and Bootstrap's JS for the interactive components). `Icon` and the `icon` props expect the [`@tabler/icons-webfont`](https://tabler.io/icons) font.
 
 ## Installation
 
+The package is not published on Packagist: add the GitHub repository, then require it.
+
 ```bash
-composer require silarhi/tabler-ux-components
+composer config repositories.tabler-ux-components vcs https://github.com/silarhi/tabler-ux-components
+composer require silarhi/tabler-ux-components:dev-main
 ```
 
 If your app uses Symfony Flex, the bundle is registered automatically. Otherwise add it to `config/bundles.php`:
@@ -27,7 +92,15 @@ return [
 ];
 ```
 
-Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
+The components live under `components/Tabler/` and are resolved by Twig Component's anonymous component finder. On **ux-twig-component v3**, `twig_component.defaults` and `twig_component.anonymous_template_directory` must be configured explicitly (on v2 they are optional) — the Flex recipe already does it:
+
+```yaml
+# config/packages/twig_component.yaml
+twig_component:
+    anonymous_template_directory: 'components/'
+    defaults:
+        App\Twig\Components\: 'components/'
+```
 
 ## Components
 
@@ -55,24 +128,25 @@ Make sure your front-end pulls in Tabler's CSS so the `alert-*` classes resolve.
 
 #### Props
 
-| Prop          | Type     | Default     | Description                                                  |
-| ------------- | -------- | ----------- | ------------------------------------------------------------ |
-| `variant`     | string   | `'info'`    | `primary`, `secondary`, `success`, `danger`, `warning`, `info` |
-| `important`   | bool     | `false`     | Filled/solid background (`alert-important`)                  |
-| `title`       | string?  | `null`      | Optional title; skip when using `<twig:Alert:Title>`         |
-| `description` | string?  | `null`      | Optional description; skip when using `<twig:Alert:Description>` |
-| `dismissible` | bool     | `false`     | Adds a Bootstrap close button                                |
+| Prop          | Type    | Default  | Description                                                                    |
+| ------------- | ------- | -------- | ------------------------------------------------------------------------------ |
+| `variant`     | string  | `'info'` | `primary`, `secondary`, `success`, `danger`, `warning`, `info`                 |
+| `important`   | bool    | `false`  | Filled/solid background (`alert-important`)                                    |
+| `icon`        | string? | `null`   | Icon HTML/SVG, rendered raw inside `Alert:Icon` — keep it developer-controlled |
+| `title`       | string? | `null`   | Optional title; skip when using `<twig:Tabler:Alert:Title>`                    |
+| `description` | string? | `null`   | Optional description; skip when using `<twig:Tabler:Alert:Description>`        |
+| `dismissible` | bool    | `false`  | Adds a Bootstrap close button                                                  |
 
 Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 
 #### Sub-components
 
-| Tag                                | Purpose                                                    |
-| ---------------------------------- | ---------------------------------------------------------- |
-| `<twig:Tabler:Alert:Icon>`         | Slot wrapper; put any icon markup inside (Tabler Icons, SVG, ux-icons) |
-| `<twig:Tabler:Alert:Title>`        | Renders `<h4 class="alert-title">`                         |
-| `<twig:Tabler:Alert:Description>`  | Renders `<div class="text-secondary">`                     |
-| `<twig:Tabler:Alert:Dismiss>`      | The close button (rendered automatically when `dismissible`) |
+| Tag                               | Purpose                                                                |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| `<twig:Tabler:Alert:Icon>`        | Slot wrapper; put any icon markup inside (Tabler Icons, SVG, ux-icons) |
+| `<twig:Tabler:Alert:Title>`       | Renders `<h4 class="alert-title">`                                     |
+| `<twig:Tabler:Alert:Description>` | Renders `<div class="text-secondary">`                                 |
+| `<twig:Tabler:Alert:Dismiss>`     | The close button (rendered automatically when `dismissible`)           |
 
 #### Blocks (one per prop)
 
@@ -86,13 +160,14 @@ Each prop has a matching block whose default renders the sub-component with the 
 </twig:Tabler:Alert>
 ```
 
-| Block         | Default content                                                       |
-| ------------- | --------------------------------------------------------------------- |
-| `icon`        | empty                                                                 |
-| `title`       | `<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>` (if `title` prop is set) |
+| Block         | Default content                                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `icon`        | `<twig:Tabler:Alert:Icon>{{ icon }}</twig:Tabler:Alert:Icon>` (if `icon` prop is set)                             |
+| `title`       | `<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>` (if `title` prop is set)                         |
 | `description` | `<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>` (if `description` prop is set) |
-| `content`     | wraps `icon`, `title`, `description`. Replace it to compose freely.   |
-| `dismiss`     | `<twig:Tabler:Alert:Dismiss />` (if `dismissible` prop is true)       |
+| `body`        | a `<div>` wrapping `title` and `description` (only when one of them renders)                                      |
+| `dismiss`     | `<twig:Tabler:Alert:Dismiss />` (if `dismissible` prop is true)                                                   |
+| `content`     | wraps `icon`, `body` and `dismiss`. Replace it to compose freely.                                                 |
 
 ### Button
 
@@ -101,22 +176,22 @@ Renders a `<button>`, or an `<a>` when `href` is set.
 ```twig
 <twig:Tabler:Button variant="primary">Save</twig:Tabler:Button>
 <twig:Tabler:Button variant="danger" appearance="outline" size="sm">Delete</twig:Tabler:Button>
-<twig:Tabler:Button href="/profile" variant="ghost">Profile</twig:Tabler:Button>
+<twig:Tabler:Button href="/profile" variant="secondary" appearance="ghost">Profile</twig:Tabler:Button>
 ```
 
-| Prop         | Type    | Default     | Description                                                       |
-| ------------ | ------- | ----------- | ----------------------------------------------------------------- |
+| Prop         | Type    | Default     | Description                                                              |
+| ------------ | ------- | ----------- | ------------------------------------------------------------------------ |
 | `variant`    | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
-| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                        |
-| `size`       | string  | `'md'`      | `sm` `md` `lg`                                                    |
-| `href`       | string? | `null`      | Renders `<a href>` instead of `<button>`                          |
-| `type`       | string  | `'button'`  | `button` `submit` `reset` (ignored for links)                    |
-| `pill`       | bool    | `false`     | Fully rounded                                                     |
-| `square`     | bool    | `false`     | Remove border radius                                             |
-| `iconOnly`   | bool    | `false`     | Icon-only button (`btn-icon`)                                    |
-| `loading`    | bool    | `false`     | Loading state (`btn-loading`)                                    |
-| `block`      | bool    | `false`     | Full width (`w-100`)                                             |
-| `disabled`   | bool    | `false`     | `disabled` attribute on `<button>`, `.disabled` class on `<a>`   |
+| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                               |
+| `size`       | string  | `'md'`      | `sm` `md` `lg`                                                           |
+| `href`       | string? | `null`      | Renders `<a href>` instead of `<button>`                                 |
+| `type`       | string  | `'button'`  | `button` `submit` `reset` (ignored for links)                            |
+| `pill`       | bool    | `false`     | Fully rounded                                                            |
+| `square`     | bool    | `false`     | Remove border radius                                                     |
+| `iconOnly`   | bool    | `false`     | Icon-only button (`btn-icon`)                                            |
+| `loading`    | bool    | `false`     | Loading state (`btn-loading`)                                            |
+| `block`      | bool    | `false`     | Full width (`w-100`)                                                     |
+| `disabled`   | bool    | `false`     | `disabled` attribute on `<button>`, `.disabled` class on `<a>`           |
 
 ### Badge
 
@@ -127,13 +202,13 @@ Renders a `<span>`, or an `<a>` when `href` is set.
 <twig:Tabler:Badge variant="primary" light pill>3</twig:Tabler:Badge>
 ```
 
-| Prop    | Type    | Default     | Description                                          |
-| ------- | ------- | ----------- | ---------------------------------------------------- |
-| `variant` | string  | `'primary'` | Bootstrap semantic color (primary, success, …)                             |
-| `light` | bool    | `false`     | Soft/tinted variant (`bg-{color}-lt`)                |
-| `pill`  | bool    | `false`     | Fully rounded (`badge-pill`)                         |
-| `size`  | string  | `'md'`      | `sm` `md` `lg`                                       |
-| `href`  | string? | `null`      | Renders `<a href>` instead of `<span>`               |
+| Prop      | Type    | Default     | Description                                    |
+| --------- | ------- | ----------- | ---------------------------------------------- |
+| `variant` | string  | `'primary'` | Bootstrap semantic color (primary, success, …) |
+| `light`   | bool    | `false`     | Soft/tinted variant (`bg-{color}-lt`)          |
+| `pill`    | bool    | `false`     | Fully rounded (`badge-pill`)                   |
+| `size`    | string  | `'md'`      | `sm` `md` `lg`                                 |
+| `href`    | string? | `null`      | Renders `<a href>` instead of `<span>`         |
 
 ### Card
 
@@ -156,15 +231,15 @@ Renders a `<div>`, or an `<a>` when `href` is set.
 </twig:Tabler:Card>
 ```
 
-| Prop             | Type    | Default | Description                                       |
-| ---------------- | ------- | ------- | ------------------------------------------------- |
-| `size`           | string  | `'md'`  | `sm` `md` `lg` (padding)                          |
-| `status`         | string? | `null`  | Status border color                               |
-| `statusPosition` | string  | `'top'` | `top` `bottom` `start`                            |
-| `title`          | string? | `null`  | Mirrored by the `header` block                    |
-| `text`           | string? | `null`  | Mirrored by the `body` block                      |
-| `footer`         | string? | `null`  | Mirrored by the `footer` block                    |
-| `href`           | string? | `null`  | Renders `<a href>` instead of `<div>`             |
+| Prop             | Type    | Default | Description                           |
+| ---------------- | ------- | ------- | ------------------------------------- |
+| `size`           | string  | `'md'`  | `sm` `md` `lg` (padding)              |
+| `status`         | string? | `null`  | Status border color                   |
+| `statusPosition` | string  | `'top'` | `top` `bottom` `start`                |
+| `title`          | string? | `null`  | Mirrored by the `header` block        |
+| `text`           | string? | `null`  | Mirrored by the `body` block          |
+| `footer`         | string? | `null`  | Mirrored by the `footer` block        |
+| `href`           | string? | `null`  | Renders `<a href>` instead of `<div>` |
 
 Sub-components: `Card:Header`, `Card:Title`, `Card:Subtitle`, `Card:Body`, `Card:Footer`, `Card:Actions`, `Card:Status`.
 
@@ -191,24 +266,24 @@ Bootstrap 5 modal markup. Open it with a trigger: `data-bs-toggle="modal" data-b
 </twig:Tabler:Modal>
 ```
 
-| Prop             | Type    | Default | Description                                       |
-| ---------------- | ------- | ------- | ------------------------------------------------- |
-| `id`             | string? | `null`  | DOM id targeted by triggers                       |
-| `size`           | string  | `'md'`  | `sm` `md` `lg` `xl` `full`                        |
-| `centered`       | bool    | `false` | Vertically center the dialog                      |
-| `scrollable`     | bool    | `false` | Scroll the body instead of the page               |
-| `status`         | string? | `null`  | Status bar color at the top of the dialog         |
-| `title`          | string? | `null`  | Mirrored by the `header` block                    |
-| `text`           | string? | `null`  | Mirrored by the `body` block                      |
-| `footer`         | string? | `null`  | Mirrored by the `footer` block                    |
-| `dismissible`    | bool    | `true`  | Show a close button in the header                 |
-| `staticBackdrop` | bool    | `false` | Clicking the backdrop does not close the modal    |
+| Prop             | Type    | Default | Description                                    |
+| ---------------- | ------- | ------- | ---------------------------------------------- |
+| `id`             | string? | `null`  | DOM id targeted by triggers                    |
+| `size`           | string  | `'md'`  | `sm` `md` `lg` `xl` `full`                     |
+| `centered`       | bool    | `false` | Vertically center the dialog                   |
+| `scrollable`     | bool    | `false` | Scroll the body instead of the page            |
+| `status`         | string? | `null`  | Status bar color at the top of the dialog      |
+| `title`          | string? | `null`  | Mirrored by the `header` block                 |
+| `text`           | string? | `null`  | Mirrored by the `body` block                   |
+| `footer`         | string? | `null`  | Mirrored by the `footer` block                 |
+| `dismissible`    | bool    | `true`  | Show a close button in the header              |
+| `staticBackdrop` | bool    | `false` | Clicking the backdrop does not close the modal |
 
 Sub-components: `Modal:Header`, `Modal:Title`, `Modal:Body`, `Modal:Footer`, `Modal:Close`, `Modal:Status`.
 
 Blocks: `content` (wraps the whole dialog content — override to compose freely), `header`, `body`, `footer`.
 
-> Note: to set a boolean prop to `false` in HTML syntax (e.g. disable `dismissible`), use the `{% component %}` tag — `dismissible="false"` passes the truthy string `"false"`.
+> **Note** — to set a boolean prop to `false` in HTML syntax (e.g. disable `dismissible`), use the `{% component %}` tag: `dismissible="false"` passes the truthy string `"false"`.
 
 ### Avatar / Spinner / Status / Divider
 
@@ -228,7 +303,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 
 - **Avatar** — `size` (xs–xl), `variant` (tinted bg for initials), `rounded`, `image`.
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
-- **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks).
+- **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks). Sub-component: `Status:Dot` (`animated`).
 - **Divider** — `position` (start/center/end), `variant`. Empty content → plain `<hr>`.
 
 ### Progress
@@ -308,21 +383,21 @@ A Bootstrap 5 slideshow. Uses Bootstrap's own bundled JS (`data-bs-ride` / `data
 </twig:Tabler:Carousel>
 ```
 
-| Prop             | Type    | Default     | Description                                                  |
-| ---------------- | ------- | ----------- | ------------------------------------------------------------ |
-| `id`             | string? | `null`      | DOM id; **required** for controls/indicators to work         |
-| `fade`           | bool    | `false`     | Cross-fade instead of sliding (`carousel-fade`)              |
-| `ride`           | bool    | `true`      | Autoplay on load (`data-bs-ride="carousel"`)                 |
-| `controls`       | bool    | `false`     | Render prev/next controls; mirrored by the `controls` block  |
+| Prop             | Type    | Default     | Description                                                                         |
+| ---------------- | ------- | ----------- | ----------------------------------------------------------------------------------- |
+| `id`             | string? | `null`      | DOM id; **required** for controls/indicators to work                                |
+| `fade`           | bool    | `false`     | Cross-fade instead of sliding (`carousel-fade`)                                     |
+| `ride`           | bool    | `true`      | Autoplay on load (`data-bs-ride="carousel"`)                                        |
+| `controls`       | bool    | `false`     | Render prev/next controls; mirrored by the `controls` block                         |
 | `indicators`     | int?    | `null`      | Number of slides → renders that many indicators; mirrored by the `indicators` block |
-| `indicatorStyle` | string  | `'default'` | `default` `dots` `thumb` (passed to `Carousel:Indicators`)   |
-| `vertical`       | bool    | `false`     | Place indicators vertically                                  |
+| `indicatorStyle` | string  | `'default'` | `default` `dots` `thumb` (passed to `Carousel:Indicators`)                          |
+| `vertical`       | bool    | `false`     | Place indicators vertically                                                         |
 
 Sub-components: `Carousel:Item` (`active`), `Carousel:Indicators` (`target`, `count`, `appearance`, `vertical`), `Carousel:Indicator` (`target`, `slideTo`, `active`, `image`), `Carousel:Control` (`target`, `direction`, `label`), `Carousel:Caption` (`background`).
 
 Blocks: `indicators`, `controls` (override to compose them), plus the default slot for the slides.
 
-> To disable autoplay, `ride` must be a real boolean — use the `{% component %}` tag (`{% component 'Tabler:Carousel' with {id: 'x', ride: false} %}`); `ride="false"` in HTML syntax passes the truthy string `"false"`.
+> **Note** — to disable autoplay, `ride` must be a real boolean: use the `{% component %}` tag (`{% component 'Tabler:Carousel' with {id: 'x', ride: false} %}`); `ride="false"` in HTML syntax passes the truthy string `"false"`.
 
 ### Nav
 
@@ -346,7 +421,7 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 <twig:Tabler:Icon name="check" variant="success" />
 
 {# Ribbon — place inside a positioned parent like a card #}
-<twig:Tabler:Ribbon variant="green" position="top-start">NEW</twig:Tabler:Ribbon>
+<twig:Tabler:Ribbon variant="success" position="top-start">NEW</twig:Tabler:Ribbon>
 
 {# Placeholder skeleton #}
 <twig:Tabler:Placeholder width="9" size="xs" />
@@ -463,9 +538,11 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 - **Navbar** — props `expand` (sm/md/lg/xl/none), `dark`, `container`; sub-components `Navbar:Brand`, `Navbar:Toggler`, `Navbar:Nav` (`collapse`, `id`), `Navbar:Item` (`href`, `active`, `icon`).
 - **Prose** — a `.prose` typography wrapper.
 
-> **ux-twig-component v3**: configure `twig_component.defaults` and `anonymous_template_directory` in your app (v3 made both required). On v2 they are optional.
+### Not included
 
-## Design pattern
+Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
+
+## Design Pattern
 
 Each component follows the shadcn composition layout:
 
@@ -508,30 +585,46 @@ compound_variants: [
 ]
 ```
 
-## Roadmap
+## Testing & Quality
 
-- [x] Alert
-- [x] Button
-- [x] Badge
-- [x] Card
-- [x] Modal
-- [x] Avatar
-- [x] Spinner
-- [x] Status
-- [x] Divider
-- [x] Progress
-- [x] Breadcrumb
-- [x] Pagination
-- [x] Dropdown
-- [x] Avatar, Spinner, Status, Divider, Progress, Breadcrumb, Pagination
-- [x] Icon, Ribbon, Placeholder, Tooltip, Popover, Table
-- [x] Empty, Tracking, SwitchIcon, Step, Timeline
-- [x] Tabs, Toast, Offcanvas, SegmentedControl, Datagrid
-- [x] Carousel (Bootstrap-native — uses Bootstrap's own bundled JS, no third-party lib)
-- [x] PageHeader, Navbar, Nav, Prose (from Tabler's layout/base sections)
+```bash
+# Install dependencies
+composer install
 
-**Not included** (require third-party JavaScript libraries): Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
+# Run tests
+vendor/bin/phpunit
+
+# Static analysis (level: max)
+vendor/bin/phpstan analyse
+
+# Code style check
+vendor/bin/php-cs-fixer fix --dry-run --diff
+
+# Code style fix
+vendor/bin/php-cs-fixer fix
+
+# Twig code style
+vendor/bin/twig-cs-fixer lint
+
+# Code modernization check
+vendor/bin/rector process --dry-run
+```
+
+## Contributing
+
+Contributions are welcome! Please make sure your changes pass all quality checks before submitting a pull request:
+
+```bash
+vendor/bin/phpunit && vendor/bin/phpstan analyse && vendor/bin/php-cs-fixer fix --dry-run --diff && vendor/bin/twig-cs-fixer lint
+```
 
 ## License
 
-MIT
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+    Built with care by <a href="https://github.com/silarhi">SILARHI</a>.<br>
+    If Tabler UX Components saves you time, consider giving it a star on GitHub.
+</p>
