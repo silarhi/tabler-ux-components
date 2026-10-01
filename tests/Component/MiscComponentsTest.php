@@ -26,9 +26,16 @@ final class MiscComponentsTest extends ComponentTestCase
 
     public function testRibbonBookmark(): void
     {
+        $html = $this->renderComponent('<twig:Tabler:Ribbon variant="warning" bookmark>★</twig:Tabler:Ribbon>');
+
+        self::assertHtmlSame('<div class="ribbon bg-warning ribbon-bookmark">★</div>', $html);
+    }
+
+    public function testRibbonWithUnknownVariantRendersNoColorClass(): void
+    {
         $html = $this->renderComponent('<twig:Tabler:Ribbon variant="orange" bookmark>★</twig:Tabler:Ribbon>');
 
-        // unknown color falls through to no color class; bookmark class still applies
+        // an unknown color falls through to no color class; the bookmark class still applies
         self::assertHtmlSame('<div class="ribbon ribbon-bookmark">★</div>', $html);
     }
 
