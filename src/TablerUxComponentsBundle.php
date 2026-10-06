@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents;
 
-use function dirname;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -35,7 +33,7 @@ final class TablerUxComponentsBundle extends AbstractBundle
     {
         $container->extension('twig', [
             'paths' => [
-                dirname(__DIR__) . '/templates' => null,
+                __DIR__ . '/../templates' => null,
             ],
         ]);
     }
