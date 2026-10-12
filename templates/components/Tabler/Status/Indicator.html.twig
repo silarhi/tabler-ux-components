@@ -1,0 +1,54 @@
+{#
+    Status indicator — a larger, standalone status marker (`.status-indicator`),
+    e.g. next to a service name on an uptime page.
+
+    Usage:
+        <twig:Tabler:Status:Indicator variant="green" animated aria-label="Operational" />
+
+    Accessibility: with an `aria-label` it gets role="img"; without one it is
+    treated as decoration next to a text label and hidden from assistive technology.
+
+    Props:
+      variant   — any color accepted by <twig:Tabler:Status> (status-{color})
+      animated  — pulsing indicator (status-indicator-animated)
+#}
+{% props
+    variant = null,
+    animated = false,
+%}
+
+{% set indicator = html_cva(
+    base: 'status-indicator',
+    variants: {
+        variant: {
+            primary: 'status-primary',
+            secondary: 'status-secondary',
+            success: 'status-success',
+            danger: 'status-danger',
+            warning: 'status-warning',
+            info: 'status-info',
+            dark: 'status-dark',
+            light: 'status-light',
+            muted: 'status-muted',
+            blue: 'status-blue',
+            azure: 'status-azure',
+            indigo: 'status-indigo',
+            purple: 'status-purple',
+            pink: 'status-pink',
+            red: 'status-red',
+            orange: 'status-orange',
+            yellow: 'status-yellow',
+            lime: 'status-lime',
+            green: 'status-green',
+            teal: 'status-teal',
+            cyan: 'status-cyan',
+        },
+        animated: {true: 'status-indicator-animated', false: ''},
+    },
+) %}
+
+<span class="{{ indicator.apply({variant: variant ?? '', animated: animated}, attributes.render('class')) }}"{% if 'aria-label' in attributes.all|keys %} role="img"{% else %} aria-hidden="true"{% endif %} {{ attributes.without('class') }}>
+    <span class="status-indicator-circle"></span>
+    <span class="status-indicator-circle"></span>
+    <span class="status-indicator-circle"></span>
+</span>

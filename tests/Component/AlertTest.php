@@ -211,4 +211,25 @@ final class AlertTest extends ComponentTestCase
 
         self::assertHtmlSame('<div class="alert alert-info alert-minor" role="alert"></div>', $html);
     }
+
+    public function testLinkActionAndListParts(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Alert variant="danger">
+                <twig:Tabler:Alert:Title>An error occurred</twig:Tabler:Alert:Title>
+                <twig:Tabler:Alert:Description>Read the <twig:Tabler:Alert:Link href="/docs">docs</twig:Tabler:Alert:Link>.</twig:Tabler:Alert:Description>
+                <twig:Tabler:Alert:List><li>Missing email.</li></twig:Tabler:Alert:List>
+                <twig:Tabler:Alert:Action href="/retry">Try again</twig:Tabler:Alert:Action>
+            </twig:Tabler:Alert>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">An error occurred</h4>
+                <div class="alert-description">Read the <a href="/docs" class="alert-link">docs</a>.</div>
+                <ul class="alert-list"><li>Missing email.</li></ul>
+                <a href="/retry" class="alert-action">Try again</a>
+            </div>
+            HTML, $html);
+    }
 }

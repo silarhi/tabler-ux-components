@@ -1,0 +1,10 @@
+{#
+    Table check — the row checkbox of a <twig:Tabler:Table selectable> (`.table-selectable-check`).
+    A checked row gets a highlighted background, with no JavaScript involved.
+
+    Usage:
+        <td><twig:Tabler:Table:Check name="ids[]" value="{{ user.id }}" aria-label="Select {{ user.name }}" /></td>
+
+    Give each checkbox an `aria-label` naming the row it selects.
+#}
+<input type="checkbox" {{ attributes.defaults({class: 'form-check-input table-selectable-check'}).without('type') }}>

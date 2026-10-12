@@ -150,6 +150,9 @@ Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 | `<twig:Tabler:Alert:Title>`       | Renders `<h4 class="alert-heading">`                                   |
 | `<twig:Tabler:Alert:Description>` | Renders `<div class="alert-description">`                              |
 | `<twig:Tabler:Alert:Dismiss>`     | The close button (rendered automatically when `dismissible`)           |
+| `<twig:Tabler:Alert:Link>`        | `<a class="alert-link">` inside the message (`href`)                   |
+| `<twig:Tabler:Alert:Action>`      | `<a class="alert-action">` on its own line, for the next step (`href`) |
+| `<twig:Tabler:Alert:List>`        | `<ul class="alert-list">` for several messages                         |
 
 #### Blocks (one per prop)
 
@@ -203,15 +206,31 @@ Renders a `<span>`, or an `<a>` when `href` is set.
 ```twig
 <twig:Tabler:Badge variant="success">New</twig:Tabler:Badge>
 <twig:Tabler:Badge variant="primary" light pill>3</twig:Tabler:Badge>
+<twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>
+<twig:Tabler:Badge variant="success" dot aria-label="Online" />
+
+{# counter over a button corner #}
+<twig:Tabler:Button>Inbox <twig:Tabler:Badge variant="danger" notification blink>4</twig:Tabler:Badge></twig:Tabler:Button>
+
+{# several badges side by side #}
+<twig:Tabler:Badge:List>
+    <twig:Tabler:Badge>PHP</twig:Tabler:Badge>
+    <twig:Tabler:Badge>Symfony</twig:Tabler:Badge>
+</twig:Tabler:Badge:List>
 ```
 
-| Prop      | Type    | Default     | Description                                    |
-| --------- | ------- | ----------- | ---------------------------------------------- |
-| `variant` | string  | `'primary'` | Bootstrap semantic color (primary, success, …) |
-| `light`   | bool    | `false`     | Soft/tinted variant (`bg-{color}-lt`)          |
-| `pill`    | bool    | `false`     | Fully rounded (`badge-pill`)                   |
-| `size`    | string  | `'md'`      | `sm` `md` `lg`                                 |
-| `href`    | string? | `null`      | Renders `<a href>` instead of `<span>`         |
+| Prop           | Type    | Default     | Description                                          |
+| -------------- | ------- | ----------- | ---------------------------------------------------- |
+| `variant`      | string  | `'primary'` | Bootstrap semantic color (primary, success, …)       |
+| `light`        | bool    | `false`     | Soft/tinted variant (`bg-{color}-lt`)                |
+| `outline`      | bool    | `false`     | Transparent fill, colored border (`badge-outline`)   |
+| `pill`         | bool    | `false`     | Fully rounded (`badge-pill`)                         |
+| `dot`          | bool    | `false`     | Small dot with no text (`badge-dot`)                 |
+| `iconOnly`     | bool    | `false`     | Square badge holding only an icon (`badge-icononly`) |
+| `notification` | bool    | `false`     | Over the corner of its parent (`badge-notification`) |
+| `blink`        | bool    | `false`     | Pulsing animation (`badge-blink`)                    |
+| `size`         | string  | `'md'`      | `sm` `md` `lg`                                       |
+| `href`         | string? | `null`      | Renders `<a href>` instead of `<span>`               |
 
 ### Card
 
@@ -307,6 +326,8 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 
 <twig:Tabler:Status variant="success" label="Online" />
 <twig:Tabler:Status variant="danger" dot animated label="Live" />
+<twig:Tabler:Status variant="azure" lite dot label="Deploying" />
+<twig:Tabler:Status:Indicator variant="green" animated aria-label="Operational" />
 
 <twig:Tabler:Divider>See also</twig:Tabler:Divider>
 <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
@@ -314,7 +335,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 
 - **Avatar** — `size` (xxs–2xl), `variant` (tinted bg for initials), `rounded`, `square` (rounded corners instead of a circle), `image`.
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
-- **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks). Sub-component: `Status:Dot` (`animated`).
+- **Status** — `variant` (theme or palette color), `dot`, `animated`, `lite` (no background), `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks). Sub-components: `Status:Dot` (`animated`), `Status:Indicator` (`variant`, `animated`; a larger standalone marker, `role="img"` when it has an `aria-label`).
 - **Divider** — `position` (start/center/end), `variant`. Empty content → plain `<hr>`.
 
 ### Progress
@@ -446,6 +467,19 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
     <thead><tr><th>Name</th></tr></thead>
     <tbody><tr><td>Jane</td></tr></tbody>
 </twig:Tabler:Table>
+
+{# Table — rows stacked below md (each cell needs a data-label), sortable header, selectable rows #}
+<twig:Tabler:Table mobile="md" selectable size="sm">
+    <thead><tr>
+        <th class="w-1"><twig:Tabler:Table:Check aria-label="Select all rows" /></th>
+        <th><twig:Tabler:Table:Sort field="name" direction="asc">Name</twig:Tabler:Table:Sort></th>
+    </tr></thead>
+    <tbody><tr>
+        <td><twig:Tabler:Table:Check aria-label="Select Jane" /></td>
+        <td data-label="Name">Jane</td>
+    </tr></tbody>
+</twig:Tabler:Table>
+{# other flags: vcenter, center, striped, hover, bordered, borderless, transparent, nowrap, responsive (default true) #}
 
 {# Empty state #}
 <twig:Tabler:Empty title="No results found" subtitle="Try adjusting your search." />

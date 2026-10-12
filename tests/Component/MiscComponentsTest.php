@@ -92,4 +92,26 @@ final class MiscComponentsTest extends ComponentTestCase
 
         self::assertHtmlSame('<table class="table table-vcenter"><tbody><tr><td>x</td></tr></tbody></table>', $html);
     }
+
+    public function testTableModifiers(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Table responsive="{{ false }}" center borderless transparent nowrap selectable size="sm" mobile="md" />');
+
+        self::assertHtmlSame(
+            '<table class="table table-center table-borderless table-transparent table-nowrap table-selectable table-sm table-mobile-md"></table>',
+            $html,
+        );
+    }
+
+    public function testTableSortAndCheck(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" class="table-sort asc" data-sort="name">Name</button>',
+            $this->renderComponent('<twig:Tabler:Table:Sort field="name" direction="asc">Name</twig:Tabler:Table:Sort>'),
+        );
+        self::assertHtmlSame(
+            '<input type="checkbox" class="form-check-input table-selectable-check" aria-label="Select all rows">',
+            $this->renderComponent('<twig:Tabler:Table:Check aria-label="Select all rows" />'),
+        );
+    }
 }
