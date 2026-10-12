@@ -1,0 +1,45 @@
+{#
+    Mention color — a color swatch at the start of a mention (`.mention-color`).
+    Never let the swatch be the only clue: keep the value or name in the text.
+
+    Usage:
+        <twig:Tabler:Mention:Color variant="blue" />
+
+    Props:
+      variant  — primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+#}
+{% props
+    variant = null,
+%}
+
+{% set swatch = html_cva(
+    base: 'mention-color',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+            muted: 'bg-muted',
+            blue: 'bg-blue',
+            azure: 'bg-azure',
+            indigo: 'bg-indigo',
+            purple: 'bg-purple',
+            pink: 'bg-pink',
+            red: 'bg-red',
+            orange: 'bg-orange',
+            yellow: 'bg-yellow',
+            lime: 'bg-lime',
+            green: 'bg-green',
+            teal: 'bg-teal',
+            cyan: 'bg-cyan',
+        },
+    },
+) %}
+
+<span class="{{ swatch.apply({variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>

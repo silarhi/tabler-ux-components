@@ -47,6 +47,11 @@
     - [More components](#more-components)
     - [Data display: Legend / Signal / Sparkline / ProgressSteps](#data-display-legend--signal--sparkline--progresssteps)
     - [Clipboard](#clipboard)
+    - [Buttons: ButtonGroup / ButtonList / ButtonToolbar](#buttons-buttongroup--buttonlist--buttontoolbar)
+    - [Accordion](#accordion)
+    - [ListGroup](#listgroup)
+    - [Inline: Tag / Mention / Trending / StarRating](#inline-tag--mention--trending--starrating)
+    - [Chat](#chat)
     - [Layout: PageHeader / PageSection / Navbar / Prose](#layout-pageheader--pagesection--navbar--prose)
     - [Not included](#not-included)
 - [Design Pattern](#design-pattern)
@@ -61,7 +66,7 @@
 - **shadcn composition** — an all-in-one entry point (`<twig:Tabler:Card title="…" />`) plus, where it makes sense, dedicated sub-components (`<twig:Tabler:Card:Header>`, `<twig:Tabler:Card:Body>`, …).
 - **Block-mirrored props** — on composite components, each prop has a matching Twig block; override one block without rewriting the rest.
 - **`html_cva()` variants** — classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html) from `twig/html-extra`, Twig's take on shadcn's CVA.
-- **Plain Tabler markup** — components render Tabler / Bootstrap 5 classes; Modal, Dropdown, Carousel, Tabs and Offcanvas use the `data-bs-*` JavaScript that ships in `tabler.js`.
+- **Plain Tabler markup** — components render Tabler / Bootstrap 5 classes; Modal, Dropdown, Carousel, Tabs, Offcanvas and Accordion use the `data-bs-*` JavaScript that ships in `tabler.js`.
 - **Attribute forwarding** — extra attributes (`class`, `id`, `data-*`, …) are merged onto the root element.
 - **Template-only** — anonymous Twig components, no PHP classes to register or configure.
 
@@ -574,6 +579,169 @@ Props: `target` (selector), `text` (literal string, wins over `target`), `delay`
 
 > **Confetti** needs no component: `tabler.js` binds it to any trigger, so `<twig:Tabler:Button data-bs-toggle="confetti" data-bs-count="150">Celebrate</twig:Tabler:Button>` works as is.
 
+### Buttons: ButtonGroup / ButtonList / ButtonToolbar
+
+```twig
+{# Button group — joined buttons; give it an aria-label #}
+<twig:Tabler:ButtonGroup aria-label="Alignment">
+    <twig:Tabler:Button variant="default">Left</twig:Tabler:Button>
+    <twig:Tabler:Button variant="default">Middle</twig:Tabler:Button>
+    <twig:Tabler:Button variant="default">Right</twig:Tabler:Button>
+</twig:Tabler:ButtonGroup>
+
+{# Toggle buttons — radio (or checkbox) inputs styled as buttons #}
+<twig:Tabler:ButtonGroup size="sm" aria-label="Period">
+    <twig:Tabler:ButtonGroup:Toggle id="period-day" name="period" value="day" checked>Day</twig:Tabler:ButtonGroup:Toggle>
+    <twig:Tabler:ButtonGroup:Toggle id="period-week" name="period" value="week">Week</twig:Tabler:ButtonGroup:Toggle>
+</twig:Tabler:ButtonGroup>
+
+{# Button list — a wrapping row of buttons with a consistent gap #}
+<twig:Tabler:ButtonList center>
+    <twig:Tabler:Button variant="primary">Save</twig:Tabler:Button>
+    <twig:Tabler:Button variant="default">Cancel</twig:Tabler:Button>
+</twig:Tabler:ButtonList>
+
+{# Button toolbar — several groups in one toolbar #}
+<twig:Tabler:ButtonToolbar aria-label="Editor" class="gap-2">
+    <twig:Tabler:ButtonGroup aria-label="Formatting">…</twig:Tabler:ButtonGroup>
+    <twig:Tabler:ButtonGroup aria-label="History">…</twig:Tabler:ButtonGroup>
+</twig:Tabler:ButtonToolbar>
+```
+
+- **ButtonGroup** — `vertical`, `size` (sm/md/lg); `role="group"`. Sub-component `ButtonGroup:Toggle` (`id`, `name`, `value`, `type` radio/checkbox, `checked`, `disabled`, `label`, `variant`, `appearance` filled/outline/ghost) renders the `.btn-check` input and its `<label class="btn">` (`class` goes on the label, other attributes on the input).
+- **ButtonList** — `center` (`btn-list-center`).
+- **ButtonToolbar** — `role="toolbar"`.
+
+### Accordion
+
+```twig
+{# All-in-one — item ids default to "<id>-<n>"; opening one closes the others #}
+<twig:Tabler:Accordion id="faq" items="{{ [
+    {title: 'Account details', text: 'Update your profile.', open: true},
+    {title: 'Security settings', text: 'Configure two-factor authentication.', icon: 'lock'},
+] }}" />
+
+{# Composed — `parent` wires data-bs-parent; override the `title` / `body` blocks of an item #}
+<twig:Tabler:Accordion id="settings" flush>
+    <twig:Tabler:Accordion:Item id="settings-api" parent="settings" title="API access" text="Generate tokens." open plus />
+    <twig:Tabler:Accordion:Item id="settings-hooks" parent="settings" title="Webhooks" plus>
+        <twig:block name="body">
+            <twig:Tabler:Accordion:Body>Manage <strong>delivery URLs</strong>.</twig:Tabler:Accordion:Body>
+        </twig:block>
+    </twig:Tabler:Accordion:Item>
+</twig:Tabler:Accordion>
+
+{# Fully composed item #}
+<twig:Tabler:Accordion:Item>
+    <twig:Tabler:Accordion:Header level="2">
+        <twig:Tabler:Accordion:Button target="faq-team" icon="user" open>Team profile</twig:Tabler:Accordion:Button>
+    </twig:Tabler:Accordion:Header>
+    <twig:Tabler:Accordion:Collapse id="faq-team" parent="faq" open>
+        <twig:Tabler:Accordion:Body>Manage members.</twig:Tabler:Accordion:Body>
+    </twig:Tabler:Accordion:Collapse>
+</twig:Tabler:Accordion:Item>
+```
+
+- **Accordion** — `id`, `items` (array of `{title, text, open?, icon?, id?}`), `flush`, `inverted` (toggle at the start), `tabs` (spaced, fully bordered items), `alwaysOpen` (no `data-bs-parent` on generated items), `plus` (plus toggle on generated items).
+- **Accordion:Item** — `id` (panel id), `parent` (accordion id, for `data-bs-parent`), `title`, `text`, `open`, `icon` (leading icon), `plus`, `toggleIcon` (default `chevron-down`), `level` (heading level, default 3). Blocks: `content`, `header`, `title`, `body`.
+- Sub-components `Accordion:Header` (`level`), `Accordion:Button` (`target`, `open`, `icon`, `plus`, `toggleIcon`; blocks `icon`, `toggle`) — keeps `collapsed`, `aria-expanded` and `aria-controls` in sync —, `Accordion:Icon`, `Accordion:Toggle` (`plus`, `icon`), `Accordion:Collapse` (`id`, `parent`, `open`), `Accordion:Body`.
+
+### ListGroup
+
+```twig
+{# All-in-one #}
+<twig:Tabler:ListGroup tag="nav" items="{{ [
+    {label: 'Profile', href: '/profile', active: true},
+    {label: 'Billing', href: '/billing', disabled: true},
+] }}" />
+
+{# Composed #}
+<twig:Tabler:ListGroup flush hoverable>
+    <twig:Tabler:ListGroup:Header>Today</twig:Tabler:ListGroup:Header>
+    <twig:Tabler:ListGroup:Item>
+        Build failed
+        <twig:Tabler:ListGroup:Actions href="/favorites/add" aria-label="Add to favorites"><twig:Tabler:Icon name="star" /></twig:Tabler:ListGroup:Actions>
+    </twig:Tabler:ListGroup:Item>
+    <twig:Tabler:ListGroup:Item button variant="success">Deploy succeeded</twig:Tabler:ListGroup:Item>
+</twig:Tabler:ListGroup>
+
+<twig:Tabler:ListGroup tag="ol" numbered>
+    <twig:Tabler:ListGroup:Item tag="li" label="Create an account" />
+    <twig:Tabler:ListGroup:Item tag="li" label="Invite your team" />
+</twig:Tabler:ListGroup>
+```
+
+- **ListGroup** — `tag` (div/ul/ol/nav), `items` (array of `{label, href?, active?, disabled?, variant?}`), `flush`, `hoverable`, `transparent`, `numbered`, `horizontal` (bare, or a breakpoint sm…xxl), `card` (`card-list-group`).
+- **ListGroup:Item** — `label`, `href` (renders `<a>`), `button` (renders `<button>`), `tag` (div/li), `action` (defaults to true for links and buttons), `active` (`aria-current="true"`), `disabled` (a disabled link loses its `href`), `variant` (theme color tint).
+- Sub-components `ListGroup:Header` (`tag`), `ListGroup:Actions` (`href`, `show`) — the trailing control revealed on hover.
+
+### Inline: Tag / Mention / Trending / StarRating
+
+```twig
+{# Tag — leading icon, avatar, status dot or checkbox; counter badge; remove button #}
+<twig:Tabler:Tag:List>
+    <twig:Tabler:Tag label="Featured" icon="star" dismissible />
+    <twig:Tabler:Tag label="Alex P." avatar="/avatars/alex.jpg" dismissible />
+    <twig:Tabler:Tag label="Online" status="success" />
+    <twig:Tabler:Tag label="Notifications" badge="12" />
+    <twig:Tabler:Tag label="Selected" checkbox checked />
+</twig:Tabler:Tag:List>
+
+{# Mention — an inline chip in running text #}
+Hey <twig:Tabler:Mention label="JohnDoe" prefix="@" prefixHidden avatar="/avatars/john.jpg" href="/u/john" />, look!
+<twig:Tabler:Mention label="GitHub" logo="/brands/github.svg" />
+<twig:Tabler:Mention label="#066fd1" swatch="blue" />
+<twig:Tabler:Mention label="Tabler" prefix="#" count="4" href="/tags/tabler" />
+
+{# Trending — direction and color come from the sign of the value #}
+<twig:Tabler:Trending value="25" />
+<twig:Tabler:Trending value="-12" />
+<twig:Tabler:Trending value="4.2K" unit="" />
+
+{# StarRating — read-only stars, labelled "4 out of 5" #}
+<twig:Tabler:StarRating value="4" />
+<twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart-filled" aria-label="3 of 10 hearts" />
+```
+
+- **Tag** — `label`, `icon`, `avatar` (image URL), `status` (dot color), `checkbox`, `checked`, `badge`, `dismissible` (remove button labelled "Remove &lt;label&gt;"). Sub-components `Tag:Avatar` (`image`), `Tag:Status` (`variant`), `Tag:Check` (`checked`), `Tag:Badge`, `Tag:Close`, `Tag:List` (`tag-list`, which replaces the deprecated `tags-list`). Blocks: `content`, `leading`, `label`, `badge`, `close`.
+- **Mention** — `label`, `href` (renders `<a>`), `prefix` (`@`, `#`, …), `prefixHidden` (visually hidden prefix), `avatar`, `logo`, `swatch` (color), `count`. Sub-components `Mention:Avatar` (`image`), `Mention:App` (`image`), `Mention:Color` (`variant`), `Mention:Count`. Blocks: `content`, `leading`, `label`, `count`.
+- **Trending** — `value` (number or signed string, rendered as written), `unit` (default `%`), `direction` (up/down/neutral, to override the sign), `label` (visually hidden prefix, default "Increased by" / "Decreased by" / "No change,"). Blocks: `content`, `label`, `value`, `icon`.
+- **StarRating** — `value`, `max` (default 5), `variant` (active color, default `yellow`), `icon` (default `star-filled`); `role="img"` with an "N out of M" `aria-label`. Sub-component `StarRating:Star` (`active`, `variant`, `icon`).
+
+Tag status, Mention swatch and StarRating accept the theme colors (`primary` … `light`, `muted`) and the palette colors (`blue` … `cyan`). Icons use `<twig:Tabler:Icon>` (requires `@tabler/icons-webfont`).
+
+### Chat
+
+```twig
+{# All-in-one #}
+<twig:Tabler:Chat messages="{{ [
+    {author: 'Alice Marlin', date: '10:24', text: 'Hey, are you free for a quick call?', avatar: '/avatars/alice.jpg'},
+    {author: 'You', date: '10:26', text: 'Sure, give me five minutes.', avatar: '/avatars/me.jpg', me: true},
+] }}" />
+
+{# Composed #}
+<twig:Tabler:Chat>
+    <twig:Tabler:Chat:Bubbles>
+        <twig:Tabler:Chat:Message author="Alice Marlin" date="10:24" text="Hey!" avatar="/avatars/alice.jpg" />
+        <twig:Tabler:Chat:Message me avatar="/avatars/me.jpg">
+            <twig:Tabler:Chat:Bubble me>
+                <twig:Tabler:Chat:Bubble:Title>
+                    <twig:Tabler:Chat:Bubble:Author>You</twig:Tabler:Chat:Bubble:Author>
+                    <twig:Tabler:Chat:Bubble:Date>10:26</twig:Tabler:Chat:Bubble:Date>
+                </twig:Tabler:Chat:Bubble:Title>
+                <twig:Tabler:Chat:Bubble:Body><p>Sure, <strong>five minutes</strong>.</p></twig:Tabler:Chat:Bubble:Body>
+            </twig:Tabler:Chat:Bubble>
+        </twig:Tabler:Chat:Message>
+        <twig:Tabler:Chat:Typing>Alice is typing</twig:Tabler:Chat:Typing>
+    </twig:Tabler:Chat:Bubbles>
+</twig:Tabler:Chat>
+```
+
+- **Chat** — `messages` (array of `{author?, date?, text?, avatar?, me?}`).
+- **Chat:Message** — one row: `author`, `date`, `text`, `avatar` (image URL; block `avatar`), `me` (bubble tinted and pushed to the end, avatar after it).
+- **Chat:Bubble** — `author`, `date`, `text` (wrapped in a `<p>`), `me`. Blocks: `content`, `title`, `body`.
+- Sub-components `Chat:Bubbles`, `Chat:Bubble:Title` (`author`, `date`), `Chat:Bubble:Author`, `Chat:Bubble:Date`, `Chat:Bubble:Body`, `Chat:Typing` (`label`, default "Typing", followed by animated dots).
+
 ### Layout: PageHeader / PageSection / Navbar / Prose
 
 ```twig
@@ -628,7 +796,7 @@ Props: `target` (selector), `text` (literal string, wins over `target`), `delay`
 
 ### Not included
 
-Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker. Form controls (OTP input, password strength) are not covered yet.
+Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker, interactive Star rating (the read-only `StarRating` is included). Form controls (OTP input, password strength) are not covered yet.
 
 ## Design Pattern
 

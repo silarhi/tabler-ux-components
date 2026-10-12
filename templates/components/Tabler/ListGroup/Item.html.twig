@@ -1,0 +1,72 @@
+{#
+    ListGroup item — one entry of a <twig:Tabler:ListGroup> (`.list-group-item`).
+
+    Renders an <a> when `href` is set, a <button type="button"> when `button`
+    is set (both are actionable: list-group-item-action), else a <div> — or an
+    <li> with tag="li" inside a ul/ol list group.
+
+    Usage:
+        <twig:Tabler:ListGroup:Item label="First item" />
+        <twig:Tabler:ListGroup:Item href="/settings" active>Settings</twig:Tabler:ListGroup:Item>
+        <twig:Tabler:ListGroup:Item href="/billing" disabled>Billing</twig:Tabler:ListGroup:Item>
+        <twig:Tabler:ListGroup:Item button data-action="list#pick">Pick me</twig:Tabler:ListGroup:Item>
+        <twig:Tabler:ListGroup:Item tag="li" variant="success">Success item</twig:Tabler:ListGroup:Item>
+
+    Accessibility: `active` adds aria-current="true"; a disabled link loses its
+    href and gets aria-disabled="true" and tabindex="-1".
+
+    Props:
+      label     — item text; mirrored by the `content` block
+      href      — renders an <a href>
+      button    — renders a <button type="button">
+      tag       — div (default) | li, for a non-actionable item
+      action    — hover/focus affordance (list-group-item-action); defaults to true for links and buttons
+      active    — current item (active, aria-current="true")
+      disabled  — item the user cannot pick (disabled)
+      variant   — tint: primary | secondary | success | danger | warning | info | dark | light
+#}
+{% props
+    label = null,
+    href = null,
+    button = false,
+    tag = 'div',
+    action = null,
+    active = false,
+    disabled = false,
+    variant = null,
+%}
+
+{% set item = html_cva(
+    base: 'list-group-item',
+    variants: {
+        action: {true: 'list-group-item-action', false: ''},
+        active: {true: 'active', false: ''},
+        disabled: {true: 'disabled', false: ''},
+        variant: {
+            primary: 'list-group-item-primary',
+            secondary: 'list-group-item-secondary',
+            success: 'list-group-item-success',
+            danger: 'list-group-item-danger',
+            warning: 'list-group-item-warning',
+            info: 'list-group-item-info',
+            dark: 'list-group-item-dark',
+            light: 'list-group-item-light',
+        },
+    },
+) %}
+
+{% set classes = item.apply({
+    action: action ?? (href is not null or button),
+    active: active,
+    disabled: disabled,
+    variant: variant ?? '',
+}, attributes.render('class')) %}
+{%- set inner -%}{%- block content %}{{ label }}{% endblock -%}{%- endset -%}
+
+{% if href is not null %}
+    <a{% if not disabled %} href="{{ href }}"{% endif %} class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} aria-disabled="true" tabindex="-1"{% endif %} {{ attributes.without('class', 'href') }}>{{ inner|raw }}</a>
+{% elseif button %}
+    <button type="button" class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} disabled{% endif %} {{ attributes.without('class', 'type') }}>{{ inner|raw }}</button>
+{% else %}
+    <{{ tag }} class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class') }}>{{ inner|raw }}</{{ tag }}>
+{% endif %}

@@ -1,0 +1,15 @@
+{#
+    Tag check — a checkbox at the start of a tag, for a selectable filter
+    (`.tag-check`). Give it an `aria-label` or a `name`/`value` as needed.
+
+    Usage:
+        <twig:Tabler:Tag:Check name="labels[]" value="bug" checked aria-label="Bug" />
+
+    Props:
+      checked  — initial state
+#}
+{% props
+    checked = false,
+%}
+
+<input type="checkbox" class="{{ ('form-check-input tag-check ' ~ attributes.render('class'))|trim }}"{% if checked %} checked{% endif %} {{ attributes.without('class', 'type') }}>

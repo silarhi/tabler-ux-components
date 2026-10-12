@@ -1,0 +1,8 @@
+{#
+    Chat bubble body — the message content of a bubble (`.chat-bubble-body`).
+    Wrap text in paragraphs; images or GIFs go below the text.
+
+    Usage:
+        <twig:Tabler:Chat:Bubble:Body><p>Hey, are you free for a quick call?</p></twig:Tabler:Chat:Bubble:Body>
+#}
+<div {{ attributes.defaults({class: 'chat-bubble-body'}) }}>{%- block content %}{% endblock -%}</div>

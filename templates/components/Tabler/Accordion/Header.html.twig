@@ -1,0 +1,18 @@
+{#
+    Accordion header — the heading that holds the toggle button (`.accordion-header`).
+
+    Usage:
+        <twig:Tabler:Accordion:Header level="2">
+            <twig:Tabler:Accordion:Button target="faq-api">API access</twig:Tabler:Accordion:Button>
+        </twig:Tabler:Accordion:Header>
+
+    Props:
+      level  — heading level, 1 to 6 (default 3)
+#}
+{% props
+    level = 3,
+%}
+
+<h{{ level }} {{ attributes.defaults({class: 'accordion-header'}) }}>
+    {%- block content %}{% endblock -%}
+</h{{ level }}>

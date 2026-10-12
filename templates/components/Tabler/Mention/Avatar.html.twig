@@ -1,0 +1,15 @@
+{#
+    Mention avatar — the round picture of a person at the start of a mention
+    (`.mention-avatar`).
+
+    Usage:
+        <twig:Tabler:Mention:Avatar image="/avatars/jane.jpg" />
+
+    Props:
+      image  — background image URL
+#}
+{% props
+    image = null,
+%}
+
+<span class="{{ ('mention-avatar ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}></span>

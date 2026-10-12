@@ -1,0 +1,30 @@
+{#
+    Chat bubble title — the header line of a message, holding the author and
+    the time (`.chat-bubble-title`).
+
+    All-in-one:
+        <twig:Tabler:Chat:Bubble:Title author="Alice Marlin" date="10:24" />
+
+    Composed (the content goes inside the title's row):
+        <twig:Tabler:Chat:Bubble:Title>
+            <twig:Tabler:Chat:Bubble:Author>Alice Marlin</twig:Tabler:Chat:Bubble:Author>
+            <twig:Tabler:Chat:Bubble:Date>10:24</twig:Tabler:Chat:Bubble:Date>
+        </twig:Tabler:Chat:Bubble:Title>
+
+    Props:
+      author  — sender name (Chat:Bubble:Author)
+      date    — time of the message (Chat:Bubble:Date)
+#}
+{% props
+    author = null,
+    date = null,
+%}
+
+<div {{ attributes.defaults({class: 'chat-bubble-title'}) }}>
+    <div class="row">
+        {%- block content -%}
+            {%- if author is not null -%}<twig:Tabler:Chat:Bubble:Author>{{ author }}</twig:Tabler:Chat:Bubble:Author>{%- endif -%}
+            {%- if date is not null -%}<twig:Tabler:Chat:Bubble:Date>{{ date }}</twig:Tabler:Chat:Bubble:Date>{%- endif -%}
+        {%- endblock -%}
+    </div>
+</div>

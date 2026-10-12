@@ -1,0 +1,16 @@
+{#
+    ListGroup header — a small uppercase label splitting a list group into
+    sections (`.list-group-header`).
+
+    Usage:
+        <twig:Tabler:ListGroup:Header>Today</twig:Tabler:ListGroup:Header>
+        <twig:Tabler:ListGroup:Header tag="li">Yesterday</twig:Tabler:ListGroup:Header>
+
+    Props:
+      tag  — div (default) | li, inside a ul/ol list group
+#}
+{% props
+    tag = 'div',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'list-group-header'}) }}>{%- block content %}{% endblock -%}</{{ tag }}>

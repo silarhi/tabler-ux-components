@@ -1,0 +1,49 @@
+{#
+    Chat bubble — a single message (`.chat-bubble`).
+
+    All-in-one:
+        <twig:Tabler:Chat:Bubble author="Alice Marlin" date="10:24" text="Hey, are you free?" />
+        <twig:Tabler:Chat:Bubble me text="Sure." />
+
+    Composed (override `content`, or just the `title` / `body` blocks):
+        <twig:Tabler:Chat:Bubble author="Alice Marlin" date="10:24">
+            <twig:block name="body">
+                <twig:Tabler:Chat:Bubble:Body>
+                    <p>Check this out</p>
+                    <img src="/photos/coffee.jpg" alt="A cup of coffee" class="rounded img-fluid mt-2">
+                </twig:Tabler:Chat:Bubble:Body>
+            </twig:block>
+        </twig:Tabler:Chat:Bubble>
+
+    Props:
+      author  — sender name; mirrored by the `title` block
+      date    — time of the message; mirrored by the `title` block
+      text    — message text, wrapped in a <p>; mirrored by the `body` block
+      me      — sent by the current user (chat-bubble-me)
+#}
+{% props
+    author = null,
+    date = null,
+    text = null,
+    me = false,
+%}
+
+{% set bubble = html_cva(
+    base: 'chat-bubble',
+    variants: {
+        me: {true: 'chat-bubble-me', false: ''},
+    },
+) %}
+
+<div class="{{ bubble.apply({me: me}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content -%}
+        {%- block title -%}
+            {%- if author is not null or date is not null -%}
+                <twig:Tabler:Chat:Bubble:Title author="{{ author }}" date="{{ date }}" />
+            {%- endif -%}
+        {%- endblock -%}
+        {%- block body -%}
+            {%- if text is not null -%}<twig:Tabler:Chat:Bubble:Body><p>{{ text }}</p></twig:Tabler:Chat:Bubble:Body>{%- endif -%}
+        {%- endblock -%}
+    {%- endblock -%}
+</div>
