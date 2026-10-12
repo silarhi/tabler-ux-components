@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BC break:** `List:Item`'s `inline` defaults to the `inline` of its `List`: the items of `<twig:Tabler:List inline>` no longer need `inline` each. Pass `inline="{{ false }}"` to keep an item out of the row.
 - **BC break:** an `Accordion` without `id` gets a random one (`accordion-<n>`) instead of rendering none, and its generated items use it as their `data-bs-parent`: they now close each other, like those of an accordion with an `id`. Pass `alwaysOpen` to keep them independent, or an `id` for stable ids.
 
 ### Fixed
