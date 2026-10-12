@@ -1,0 +1,60 @@
+---
+title: Status
+description: A colored status label, with an optional dot that can pulse.
+---
+
+import Example from '../../../../components/Example.astro'
+
+The state of something at a glance: a server, a deployment, a user.
+
+<Example name="status/all-in-one" />
+
+## Variants
+
+<Example name="status/variants" />
+
+## Dot
+
+`dot` adds a leading dot; `animated` makes it pulse, for something live or in progress:
+
+<Example name="status/dot" />
+
+## Composed
+
+Pass children for rich content, and add the dot with `Status:Dot`. Children replace the whole content, so the `dot`
+and `label` props are ignored:
+
+<Example name="status/composed" />
+
+## Blocks
+
+To keep the dot and change only the text, override the `label` block:
+
+<Example name="status/block" />
+
+See [Composition](/getting-started/composition/) for how blocks work.
+
+## Props
+
+| Prop       | Type    | Default     | Description                                                              |
+| ---------- | ------- | ----------- | ------------------------------------------------------------------------ |
+| `variant`  | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `dot`      | bool    | `false`     | Leading dot, rendered with `Status:Dot`                                  |
+| `animated` | bool    | `false`     | Pulses the dot (needs `dot`)                                             |
+| `label`    | string? | `null`      | The status text                                                          |
+
+Other attributes go to the root `<span class="status">`.
+
+## Sub-components
+
+| Component    | Renders                                                                                       |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| `Status:Dot` | `<span class="status-dot">`; its `animated` prop (default `false`) adds `status-dot-animated` |
+
+## Blocks
+
+| Block     | Default                                                   |
+| --------- | --------------------------------------------------------- |
+| `dot`     | `Status:Dot`, animated when `animated`, when `dot` is set |
+| `label`   | The `label` prop, when set                                |
+| `content` | `dot` and `label`: replace it to compose freely           |

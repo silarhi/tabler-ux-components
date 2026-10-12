@@ -1,0 +1,6 @@
+<twig:Tabler:Tracking>
+    {% for variant in ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', 'light'] %}
+        <twig:Tabler:Tracking:Block variant="{{ variant }}" tooltip="{{ variant }}" />
+    {% endfor %}
+    <twig:Tabler:Tracking:Block tooltip="No variant: no data" />
+</twig:Tabler:Tracking>

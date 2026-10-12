@@ -1,0 +1,48 @@
+---
+title: Table
+description: A styled table, wrapped for horizontal scrolling on small screens.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A styled `<table>`. Write the `<thead>` and `<tbody>` yourself; the component sets the classes and the scroll wrapper.
+
+<Example name="table/basic" />
+
+## Styles
+
+`striped` adds zebra rows, `hover` highlights the row under the pointer, `bordered` draws a border around every cell.
+Combine them freely:
+
+<Example name="table/styles" />
+
+## Vertical centering
+
+`vcenter` centers the cells vertically, for rows with avatars or buttons:
+
+<Example name="table/vcenter" />
+
+## In a card
+
+Classes and other attributes go to the `<table>`, not to the wrapper. Add `card-table` to fit the table in a card:
+
+<Example name="table/card" />
+
+## Without the scroll wrapper
+
+The table is wrapped in a `<div class="table-responsive">` by default. Pass `responsive="{{ false }}"` to render the
+bare `<table>` (see [boolean props](/getting-started/composition/#boolean-props)):
+
+<Example name="table/not-responsive" />
+
+## Props
+
+| Prop         | Type | Default | Description                                         |
+| ------------ | ---- | ------- | --------------------------------------------------- |
+| `responsive` | bool | `true`  | Wraps the table in `<div class="table-responsive">` |
+| `vcenter`    | bool | `false` | Centers cells vertically (`table-vcenter`)          |
+| `striped`    | bool | `false` | Zebra rows (`table-striped`)                        |
+| `hover`      | bool | `false` | Highlights the hovered row (`table-hover`)          |
+| `bordered`   | bool | `false` | Borders on every cell (`table-bordered`)            |
+
+Other attributes go to the `<table>`.

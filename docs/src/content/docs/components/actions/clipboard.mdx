@@ -1,0 +1,65 @@
+---
+title: Clipboard
+description: A copy button that shows a short "copied" state, built on the browser clipboard API.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A copy button handled by `tabler.js` (`data-bs-toggle="clipboard"`, Tabler 1.6+). `target` points to the element to
+copy: a field gives its value, any other element its text.
+
+<Example name="clipboard/all-in-one" />
+
+The browser only exposes the clipboard API on secure contexts (HTTPS or `localhost`): elsewhere, the copy fails and
+`tabler.js` fires `error.bs.clipboard`.
+
+## Literal text
+
+`text` copies a fixed string, and wins over `target`. `label` and `feedback` set the two states, `delay` how long the
+copied state lasts in milliseconds (2000 by default, `0` keeps it). The button is a plain `.btn`: add a color or a size
+with `class`.
+
+<Example name="clipboard/text" />
+
+## Composed
+
+Use the sub-components for icon states. `tabler.js` hides the `Clipboard:Feedback` until a copy, then swaps it with
+the `Clipboard:Label`. Give an icon-only button an `aria-label`:
+
+<Example name="clipboard/composed" />
+
+Size webfont icons with utilities (`fs-2 lh-1 d-block`) rather than Tabler's `icon` class: `icon` is made for an icon
+placed directly in the button, and the label and feedback wrappers push it off center.
+
+## Blocks
+
+`label` and `feedback` each have a matching block. Override one, and the other keeps rendering from its prop:
+
+<Example name="clipboard/block" />
+
+## Props
+
+| Prop       | Type    | Default    | Description                                                                                 |
+| ---------- | ------- | ---------- | ------------------------------------------------------------------------------------------- |
+| `target`   | string? | `null`     | Selector of the element to copy (`data-bs-target`)                                          |
+| `text`     | string? | `null`     | Literal string to copy, wins over `target` (`data-bs-text`)                                 |
+| `delay`    | int?    | `null`     | Duration of the copied state in ms (`data-bs-delay`); Tabler defaults to 2000, `0` keeps it |
+| `label`    | string  | `'Copy'`   | Resting text, rendered with `Clipboard:Label`                                               |
+| `feedback` | string  | `'Copied'` | Text shown after a copy, rendered with `Clipboard:Feedback`                                 |
+
+Other attributes go to the `<button class="btn">`.
+
+## Sub-components
+
+| Component            | Renders                                                 |
+| -------------------- | ------------------------------------------------------- |
+| `Clipboard:Label`    | `<span class="clipboard-label">`: the resting state     |
+| `Clipboard:Feedback` | `<span class="clipboard-feedback">`: shown after a copy |
+
+## Blocks
+
+| Block      | Default                                              |
+| ---------- | ---------------------------------------------------- |
+| `label`    | `Clipboard:Label` with the `label` prop              |
+| `feedback` | `Clipboard:Feedback` with the `feedback` prop        |
+| `content`  | `label` and `feedback`: replace it to compose freely |

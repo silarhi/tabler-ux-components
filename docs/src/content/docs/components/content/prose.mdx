@@ -1,0 +1,22 @@
+---
+title: Prose
+description: A typography wrapper for freeform HTML, such as rendered Markdown.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Styles freeform HTML you do not control the markup of: rendered Markdown, CMS content, release notes.
+
+<Example name="prose/basic" />
+
+## Rendered Markdown
+
+Pass the HTML with the `raw` filter. Only do this with HTML you trust or have sanitized:
+
+```twig
+<twig:Tabler:Prose>{{ article.html|raw }}</twig:Tabler:Prose>
+```
+
+## Props
+
+`Prose` has no props: attributes go to the root `<div class="prose">`.

@@ -1,0 +1,25 @@
+<twig:Tabler:Table vcenter>
+    <thead>
+        <tr><th>User</th><th>Role</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for user in [
+            {name: 'Jane Cooper', email: 'jane@example.com', role: 'Admin', avatar: '/examples/avatar-1.jpg'},
+            {name: 'Wade Warren', email: 'wade@example.com', role: 'Editor', avatar: '/examples/avatar-2.jpg'},
+        ] %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <twig:Tabler:Avatar image="{{ user.avatar }}" class="me-2" />
+                        <div>
+                            <div>{{ user.name }}</div>
+                            <div class="text-secondary">{{ user.email }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ user.role }}</td>
+                <td class="text-end"><a href="#">Edit</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</twig:Tabler:Table>

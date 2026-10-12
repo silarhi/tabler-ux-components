@@ -1,0 +1,50 @@
+---
+title: Step
+description: A progress stepper for multi-step flows, horizontal or vertical.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows the progress through a multi-step flow: onboarding, checkout, a setup wizard. Mark the current step `active`.
+
+<Example name="step/basic" />
+
+An item with an `href` renders a link, for the steps the user can go back to; without it, a `<span>`.
+
+## Counter
+
+`counter` numbers the steps:
+
+<Example name="step/counter" />
+
+## Vertical
+
+`vertical` stacks the steps, with room for a description under each one:
+
+<Example name="step/vertical" />
+
+## Props
+
+`Step`:
+
+| Prop       | Type | Default | Description                        |
+| ---------- | ---- | ------- | ---------------------------------- |
+| `counter`  | bool | `false` | Numbered steps (`steps-counter`)   |
+| `vertical` | bool | `false` | Vertical layout (`steps-vertical`) |
+
+Other attributes go to the root `<div class="steps">`.
+
+`Step:Item`:
+
+| Prop     | Type    | Default | Description                                     |
+| -------- | ------- | ------- | ----------------------------------------------- |
+| `href`   | string? | `null`  | Link target; without it, the step is a `<span>` |
+| `active` | bool    | `false` | The current step (`active`)                     |
+
+Other attributes go to the `<a>` or `<span class="step-item">`.
+
+## Sub-components
+
+| Component   | Renders                                               |
+| ----------- | ----------------------------------------------------- |
+| `Step:Item` | `<a class="step-item">`, or a `<span>` without `href` |

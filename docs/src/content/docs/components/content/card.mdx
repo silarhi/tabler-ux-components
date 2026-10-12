@@ -1,0 +1,117 @@
+---
+title: Card
+description: A bordered container with a header, a body and a footer, with status borders, gradients and link cards.
+---
+
+import Example from '../../../../components/Example.astro'
+
+The main building block of an admin page: a box that groups a title, content and actions.
+
+<Example name="card/all-in-one" />
+
+## Composed
+
+Use the sub-components for anything richer than a string. `Card:Actions` sits at the end of the header; wrap the title
+and the subtitle in a `<div>` so they stack:
+
+<Example name="card/composed" />
+
+## Status
+
+`status` adds a colored border, on the `top` edge by default. `statusPosition` moves it to the `bottom` or the
+`start`:
+
+<Example name="card/status" />
+
+In a composed card, render the border yourself with `Card:Status`, first in the card:
+
+<Example name="card/status-composed" />
+
+## Gradients
+
+`gradient` tints the card with a gradient background (`card-gradient`). It takes one of the presets: `disco` `gold`
+`love` `mellow` `ocean` `psychedelic` `rainbow` `snow` `sun`.
+
+<Example name="card/gradient-presets" />
+
+It also takes a color (`primary` `secondary` `success` `danger` `warning` `info` `dark` `light`), or `true` (a bare
+`gradient` attribute) for the default gradient. `gradientDirection` sets the edge the gradient starts from (`start`,
+`end` or `bottom`), and `gradientAnimated` slowly shifts it:
+
+<Example name="card/gradient-options" />
+
+## Dashed
+
+`dashed` draws a dashed border, for an empty slot or an "add" placeholder:
+
+<Example name="card/dashed" />
+
+## Sizes
+
+`size` sets the padding: `sm`, `md` (the default) or `lg`.
+
+<Example name="card/sizes" />
+
+## Links
+
+With `href`, the card renders as an `<a>`, so the whole card is clickable. Add Tabler's `card-link` class for a hover
+shadow, and `card-link-pop` or `card-link-rotate` for a hover effect:
+
+<Example name="card/link" />
+
+## Images
+
+There is no image sub-component: put an `<img class="card-img-top">` (or `card-img-bottom`) directly in the card.
+
+<Example name="card/image" />
+
+## Blocks
+
+`title`, `text` and `footer` each have a matching block. Override one, and the others keep rendering from their props:
+
+<Example name="card/block" />
+
+The status border is rendered inside the `content` block: replacing `content` (by passing children) drops it, so add a
+`Card:Status` yourself, as above. See [Composition](/getting-started/composition/) for how blocks work.
+
+## Props
+
+| Prop                | Type         | Default | Description                                                                                                                |
+| ------------------- | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `size`              | string       | `'md'`  | `sm` `md` `lg`: the padding                                                                                                |
+| `status`            | string?      | `null`  | Status border color, rendered with `Card:Status`: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `statusPosition`    | string       | `'top'` | `top` `bottom` `start`                                                                                                     |
+| `gradient`          | bool\|string | `null`  | Gradient background: `true` for the default, a color as for `status`, or a preset (see above)                              |
+| `gradientDirection` | string?      | `null`  | `start` `end` `bottom`: where the gradient starts                                                                          |
+| `gradientAnimated`  | bool         | `false` | Slowly shifts the gradient (`card-gradient-animated`)                                                                      |
+| `dashed`            | bool         | `false` | Dashed border (`card-dashed`)                                                                                              |
+| `title`             | string?      | `null`  | Rendered with `Card:Header` and `Card:Title`                                                                               |
+| `text`              | string?      | `null`  | Rendered with `Card:Body`                                                                                                  |
+| `footer`            | string?      | `null`  | Rendered with `Card:Footer`                                                                                                |
+| `href`              | string?      | `null`  | Renders an `<a href>` instead of a `<div>`                                                                                 |
+
+Other attributes go to the root `<div class="card">` (or `<a>`).
+
+## Sub-components
+
+| Component       | Renders                                                                            |
+| --------------- | ---------------------------------------------------------------------------------- |
+| `Card:Header`   | `<div class="card-header">`                                                        |
+| `Card:Title`    | `<h3 class="card-title">`                                                          |
+| `Card:Subtitle` | `<div class="card-subtitle">`: small muted text under the title                    |
+| `Card:Actions`  | `<div class="card-actions">`: buttons or links at the end of the header            |
+| `Card:Body`     | `<div class="card-body">`                                                          |
+| `Card:Footer`   | `<div class="card-footer">`                                                        |
+| `Card:Status`   | `<div class="card-status-top bg-primary">`: the status border, see its props below |
+
+`Card:Status` takes `variant` (default `'primary'`) and `position` (default `'top'`), with the same values as the
+`status` and `statusPosition` props of the card.
+
+## Blocks
+
+| Block     | Default                                                                                           |
+| --------- | ------------------------------------------------------------------------------------------------- |
+| `header`  | `Card:Header` with a `Card:Title` holding the `title` prop, when set                              |
+| `body`    | `Card:Body` with the `text` prop, when set                                                        |
+| `footer`  | `Card:Footer` with the `footer` prop, when set                                                    |
+| `content` | `Card:Status` (when `status` is set), `header`, `body` and `footer`: replace it to compose freely |

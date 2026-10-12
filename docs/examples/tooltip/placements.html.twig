@@ -1,0 +1,7 @@
+<div class="btn-list justify-content-center py-5">
+    {% for placement in ['top', 'bottom', 'left', 'right'] %}
+        <twig:Tabler:Tooltip title="Tooltip on {{ placement }}" placement="{{ placement }}">
+            <twig:Tabler:Button variant="default">{{ placement|capitalize }}</twig:Tabler:Button>
+        </twig:Tabler:Tooltip>
+    {% endfor %}
+</div>

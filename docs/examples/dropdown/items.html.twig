@@ -1,0 +1,14 @@
+<twig:Tabler:Dropdown>
+    <twig:Tabler:Dropdown:Toggle>Sort by</twig:Tabler:Dropdown:Toggle>
+    <twig:Tabler:Dropdown:Menu>
+        <twig:Tabler:Dropdown:Item href="?sort=date" active="{{ true }}">
+            <twig:Tabler:Icon name="calendar" class="dropdown-item-icon" /> Date
+        </twig:Tabler:Dropdown:Item>
+        <twig:Tabler:Dropdown:Item href="?sort=amount">
+            <twig:Tabler:Icon name="currency-euro" class="dropdown-item-icon" /> Amount
+        </twig:Tabler:Dropdown:Item>
+        <twig:Tabler:Dropdown:Item href="?sort=customer" disabled="{{ true }}">
+            <twig:Tabler:Icon name="user" class="dropdown-item-icon" /> Customer
+        </twig:Tabler:Dropdown:Item>
+    </twig:Tabler:Dropdown:Menu>
+</twig:Tabler:Dropdown>

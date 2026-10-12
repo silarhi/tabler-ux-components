@@ -1,0 +1,50 @@
+---
+title: Tracking
+description: A row of colored status blocks, such as the daily history of an uptime monitor.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A row of status blocks, one per period: the history of an uptime monitor, a job or a health check. Hover a block to
+see its tooltip.
+
+<Example name="tracking/all-in-one" />
+
+Tracking has no props: place one `Tracking:Block` per period. The blocks share the width of the row.
+
+## Variants
+
+`variant` colors a block. Without one, the block is gray, for a period with no data. `tooltip` adds a Bootstrap
+tooltip, which `tabler.js` initializes on page load: see [Tooltip](/components/overlays/tooltip/) for content added
+later.
+
+<Example name="tracking/variants" />
+
+## In a card
+
+<Example name="tracking/card" />
+
+## Props
+
+`Tracking` has no props. Its attributes go to the root `<div class="tracking">`.
+
+### Tracking:Block
+
+| Prop      | Type    | Default | Description                                                                       |
+| --------- | ------- | ------- | --------------------------------------------------------------------------------- |
+| `variant` | string? | `null`  | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` (`bg-*`) |
+| `tooltip` | string? | `null`  | Tooltip text (`data-bs-toggle="tooltip"` and `data-bs-title`)                     |
+
+Other attributes go to the block `<div>`.
+
+## Sub-components
+
+| Component        | Renders                                          |
+| ---------------- | ------------------------------------------------ |
+| `Tracking:Block` | `<div class="tracking-block">`, one status block |
+
+## Blocks
+
+| Block     | Default                           |
+| --------- | --------------------------------- |
+| `content` | Empty: the `Tracking:Block` items |

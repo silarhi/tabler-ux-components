@@ -1,0 +1,41 @@
+---
+title: Tooltip
+description: A short text label shown when hovering or focusing an element.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Wraps its children in a `<span>` carrying Bootstrap's tooltip data attributes. `tabler.js` initializes every
+`data-bs-toggle="tooltip"` element on page load; for content added later (a Turbo frame, a Live Component render),
+create the tooltip yourself with `Tooltip.getOrCreateInstance(element)` (`import { Tooltip } from '@tabler/core'`).
+
+<Example name="tooltip/all-in-one" minHeight="7rem" />
+
+## Placements
+
+<Example name="tooltip/placements" />
+
+The tooltip flips to the opposite side when there is no room for the requested one.
+
+## On text
+
+The wrapper is an inline `<span>`, so it works on a word or a date as well as on a button:
+
+<Example name="tooltip/text" minHeight="6rem" />
+
+## On a disabled button
+
+A disabled button fires no mouse event, but its wrapper still does. Make the wrapper focusable with `tabindex="0"`
+and `d-inline-block`, so keyboard users get the tooltip too:
+
+<Example name="tooltip/disabled" minHeight="7rem" />
+
+## Props
+
+| Prop        | Type   | Default | Description                                         |
+| ----------- | ------ | ------- | --------------------------------------------------- |
+| `title`     | string | —       | Tooltip text, required (`data-bs-title`)            |
+| `placement` | string | `'top'` | `top` `bottom` `left` `right` (`data-bs-placement`) |
+
+Other attributes go to the `<span>`, including Bootstrap options such as `data-bs-trigger`, `data-bs-delay` or
+`data-bs-custom-class`. The title is escaped: it is plain text.

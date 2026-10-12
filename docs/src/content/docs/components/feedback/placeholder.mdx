@@ -1,0 +1,41 @@
+---
+title: Placeholder
+description: Skeleton blocks that stand in for content while it loads.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Skeleton blocks that stand in for text, buttons or cards while the real content loads.
+
+<Example name="placeholder/all-in-one" />
+
+`width` is a grid column span: `width="7"` adds `col-7`, seven twelfths of the parent's width. Placeholders are
+inline blocks, so several of them flow like words in a line of text.
+
+The component renders a `<div>`: keep it out of `<p>` and other inline parents, where the browser would close the
+paragraph before it.
+
+## Sizes
+
+<Example name="placeholder/sizes" />
+
+## Animation
+
+Wrap placeholders in `.placeholder-glow` to make them pulse, or in `.placeholder-wave` to sweep a shine across them:
+
+<Example name="placeholder/animation" />
+
+## Loading card
+
+A skeleton of a card, hidden from assistive technology with `aria-hidden`:
+
+<Example name="placeholder/card" />
+
+## Props
+
+| Prop    | Type    | Default | Description                                                   |
+| ------- | ------- | ------- | ------------------------------------------------------------- |
+| `width` | int?    | `null`  | Column span, `1` to `12` (`col-*`)                            |
+| `size`  | string? | `null`  | `xs` `sm` `lg` (`placeholder-*`); none for the default height |
+
+Other attributes go to the root `<div class="placeholder">`; use a `w-*` class for a width outside the grid.

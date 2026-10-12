@@ -1,0 +1,15 @@
+{% set page = 4 %}
+{% set pages = 12 %}
+<twig:Tabler:Pagination>
+    <twig:Tabler:Pagination:Item href="?page={{ page - 1 }}" disabled="{{ page == 1 }}">
+        <twig:Tabler:Icon name="chevron-left" /> prev
+    </twig:Tabler:Pagination:Item>
+    {% for i in [1, 2, 3, 4, 5] %}
+        <twig:Tabler:Pagination:Item href="?page={{ i }}" active="{{ i == page }}">{{ i }}</twig:Tabler:Pagination:Item>
+    {% endfor %}
+    <twig:Tabler:Pagination:Item disabled>…</twig:Tabler:Pagination:Item>
+    <twig:Tabler:Pagination:Item href="?page={{ pages }}">{{ pages }}</twig:Tabler:Pagination:Item>
+    <twig:Tabler:Pagination:Item href="?page={{ page + 1 }}" disabled="{{ page == pages }}">
+        next <twig:Tabler:Icon name="chevron-right" />
+    </twig:Tabler:Pagination:Item>
+</twig:Tabler:Pagination>

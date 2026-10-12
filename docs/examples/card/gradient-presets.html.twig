@@ -1,0 +1,7 @@
+<div class="row row-cards">
+    {% for preset in ['disco', 'gold', 'love', 'mellow', 'ocean', 'psychedelic', 'rainbow', 'snow', 'sun'] %}
+        <div class="col-sm-4">
+            <twig:Tabler:Card gradient="{{ preset }}" title="{{ preset|capitalize }}" text="The {{ preset }} preset." />
+        </div>
+    {% endfor %}
+</div>

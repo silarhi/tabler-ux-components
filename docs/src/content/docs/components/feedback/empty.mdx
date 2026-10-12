@@ -1,0 +1,53 @@
+---
+title: Empty
+description: An empty state for a list, a table or a search with nothing to show.
+---
+
+import Example from '../../../../components/Example.astro'
+
+An empty state: a list with no items yet, a search with no results.
+
+<Example name="empty/all-in-one" />
+
+## Icon and action
+
+The `icon` and `action` blocks have no matching prop: fill them with `Empty:Icon` and `Empty:Action`, while the title
+and the subtitle keep coming from the props. See [blocks](/getting-started/composition/#blocks).
+
+`Empty:Icon` is a 3rem box sized for an SVG: give a webfont icon a matching `font-size`.
+
+<Example name="empty/blocks" />
+
+## Composed
+
+Children replace the whole content, for rich text in the subtitle:
+
+<Example name="empty/composed" />
+
+## Props
+
+| Prop       | Type    | Default | Description                    |
+| ---------- | ------- | ------- | ------------------------------ |
+| `title`    | string? | `null`  | Rendered with `Empty:Title`    |
+| `subtitle` | string? | `null`  | Rendered with `Empty:Subtitle` |
+
+Other attributes go to the root `<div class="empty">`.
+
+## Sub-components
+
+| Component        | Renders                                                                       |
+| ---------------- | ----------------------------------------------------------------------------- |
+| `Empty:Icon`     | `<div class="empty-icon">`: put any icon inside (Tabler Icons, SVG, ux-icons) |
+| `Empty:Title`    | `<p class="empty-title">`                                                     |
+| `Empty:Subtitle` | `<p class="empty-subtitle text-secondary">`                                   |
+| `Empty:Action`   | `<div class="empty-action">`: buttons or links                                |
+
+## Blocks
+
+| Block      | Default                                                                |
+| ---------- | ---------------------------------------------------------------------- |
+| `icon`     | Nothing: put an `Empty:Icon` in it                                     |
+| `title`    | `Empty:Title` with the `title` prop, when set                          |
+| `subtitle` | `Empty:Subtitle` with the `subtitle` prop, when set                    |
+| `action`   | Nothing: put an `Empty:Action` in it                                   |
+| `content`  | `icon`, `title`, `subtitle` and `action`: replace it to compose freely |

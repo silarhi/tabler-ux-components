@@ -1,0 +1,27 @@
+<twig:Tabler:Button variant="default" data-bs-toggle="offcanvas" data-bs-target="#user-filters">
+    <twig:Tabler:Icon name="filter" class="icon" /> Filters
+</twig:Tabler:Button>
+
+<twig:Tabler:Offcanvas id="user-filters" placement="end">
+    <twig:Tabler:Offcanvas:Header>
+        <twig:Tabler:Offcanvas:Title>Filter users</twig:Tabler:Offcanvas:Title>
+        <twig:Tabler:Offcanvas:Close />
+    </twig:Tabler:Offcanvas:Header>
+    <twig:Tabler:Offcanvas:Body>
+        <label class="form-check">
+            <input type="checkbox" class="form-check-input" checked>
+            <span class="form-check-label">Active</span>
+        </label>
+        <label class="form-check">
+            <input type="checkbox" class="form-check-input">
+            <span class="form-check-label">Invited</span>
+        </label>
+        <label class="form-check">
+            <input type="checkbox" class="form-check-input">
+            <span class="form-check-label">Suspended</span>
+        </label>
+    </twig:Tabler:Offcanvas:Body>
+    <twig:Tabler:Offcanvas:Footer>
+        <twig:Tabler:Button variant="primary" block="{{ true }}" data-bs-dismiss="offcanvas">Apply filters</twig:Tabler:Button>
+    </twig:Tabler:Offcanvas:Footer>
+</twig:Tabler:Offcanvas>

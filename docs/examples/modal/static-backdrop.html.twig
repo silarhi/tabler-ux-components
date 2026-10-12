@@ -1,0 +1,9 @@
+<twig:Tabler:Button variant="primary" data-bs-toggle="modal" data-bs-target="#accept-terms">Continue</twig:Tabler:Button>
+
+<twig:Tabler:Modal id="accept-terms" staticBackdrop="{{ true }}" dismissible="{{ false }}" title="Updated terms of service" text="Accept the new terms to keep using the workspace.">
+    <twig:block name="footer">
+        <twig:Tabler:Modal:Footer>
+            <twig:Tabler:Button variant="primary" data-bs-dismiss="modal">Accept</twig:Tabler:Button>
+        </twig:Tabler:Modal:Footer>
+    </twig:block>
+</twig:Tabler:Modal>

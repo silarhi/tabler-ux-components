@@ -1,0 +1,44 @@
+---
+title: Tabler UX Components
+description: Tabler-flavored Twig UX components for Symfony, following the shadcn composition pattern.
+template: splash
+hero:
+    tagline: Tabler-flavored Twig components for Symfony. One tag for the common case, sub-components and blocks when you need control — the shadcn way.
+    actions:
+        - text: Get started
+          link: /getting-started/installation/
+          icon: right-arrow
+        - text: View on GitHub
+          link: https://github.com/silarhi/tabler-ux-components
+          icon: github
+          variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+import Example from '../../components/Example.astro'
+
+<Example name="overview/card" />
+
+<CardGrid>
+    <Card title="shadcn composition" icon="puzzle">
+        An all-in-one tag (`<twig:Tabler:Card title="…" />`) and, where it makes sense, dedicated sub-components
+        (`<twig:Tabler:Card:Header>`, `<twig:Tabler:Card:Body>`…).
+    </Card>
+    <Card title="Block-mirrored props" icon="pencil">
+        On composite components, each prop has a matching Twig block: override one without rewriting the rest.
+    </Card>
+    <Card title="html_cva() variants" icon="setting">
+        Classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html), Twig's
+        take on shadcn's CVA.
+    </Card>
+    <Card title="Plain Tabler markup" icon="document">
+        Components render Tabler and Bootstrap 5 classes; the interactive ones use the `data-bs-*` JavaScript of
+        `tabler.js`.
+    </Card>
+    <Card title="Attribute forwarding" icon="random">
+        Extra attributes (`class`, `id`, `data-*`…) are merged onto the root element.
+    </Card>
+    <Card title="Template-only" icon="approve-check">
+        Anonymous Twig components: no PHP classes to register or configure.
+    </Card>
+</CardGrid>

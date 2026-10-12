@@ -1,0 +1,65 @@
+---
+title: Signal
+description: A small row of stepped bars showing a level, such as a priority, a strength or a coverage.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows a level with stepped bars: a priority, a signal strength, a coverage. Requires Tabler 1.6+.
+
+<Example name="signal/all-in-one" />
+
+## Levels
+
+`value` is the number of lit bars, `max` the total number of bars, from 2 to 5 (3 by default):
+
+<Example name="signal/levels" />
+
+## Colors
+
+`variant` takes the same colors as Legend: see [the list](/components/data/legend/#colors).
+
+<Example name="signal/colors" />
+
+## Accessibility
+
+Give a standalone signal an `aria-label` stating the level: it then gets `role="img"`. Without one, the signal is
+treated as decoration next to a text label and gets `aria-hidden="true"`:
+
+<Example name="signal/decorative" />
+
+## Composed
+
+The tag content replaces the bars: place one `Signal:Bar` per bar and light some with `active`. `value` and `max` are
+then ignored:
+
+<Example name="signal/composed" />
+
+## Props
+
+| Prop      | Type    | Default | Description                                                          |
+| --------- | ------- | ------- | -------------------------------------------------------------------- |
+| `value`   | int     | `0`     | Number of lit bars                                                   |
+| `max`     | int     | `3`     | Total number of bars, 2 to 5                                         |
+| `variant` | string? | `null`  | Color of the lit bars, see [Colors](/components/data/legend/#colors) |
+
+Other attributes go to the root `<span class="signal">`. With an `aria-label`, it gets `role="img"`, otherwise
+`aria-hidden="true"`.
+
+### Signal:Bar
+
+| Prop     | Type | Default | Description               |
+| -------- | ---- | ------- | ------------------------- |
+| `active` | bool | `false` | Lights the bar (`active`) |
+
+## Sub-components
+
+| Component    | Renders                              |
+| ------------ | ------------------------------------ |
+| `Signal:Bar` | `<span class="signal-bar">`, one bar |
+
+## Blocks
+
+| Block     | Default                                               |
+| --------- | ----------------------------------------------------- |
+| `content` | `max` × `Signal:Bar`, the first `value` ones `active` |

@@ -1,0 +1,117 @@
+---
+title: Legend
+description: A colored marker, a label and an optional value that name the series of a chart or a progress bar.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Names the series of a chart or a progress bar: a colored dot, a label and an optional value. Requires Tabler 1.6+.
+
+<Example name="legend/all-in-one" />
+
+Use the `label` prop rather than the tag content: the dot, the label and the value all render inside the `content`
+block, and the tag content replaces it (see [Composed](#composed)).
+
+## Large
+
+`size="lg"` puts the label on top and a big value below. `unit` adds a small unit after the value:
+
+<Example name="legend/large" />
+
+## Colors
+
+`variant` takes the theme colors and the palette colors. [Signal](/components/data/signal/) and
+[Sparkline](/components/data/sparkline/) accept the same list.
+
+| Kind    | Colors                                                                                       |
+| ------- | -------------------------------------------------------------------------------------------- |
+| Theme   | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` `muted`             |
+| Palette | `blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green` `teal` `cyan` |
+
+<Example name="legend/colors" />
+
+## Links and buttons
+
+With `href`, the legend renders an `<a>`, with `button` a `<button type="button">`, for example to toggle a chart
+series. `active` keeps the hover background, `off` dims a hidden series:
+
+<Example name="legend/interactive" />
+
+## Lists
+
+`Legend:List` lays the items out in a row. `vertical` stacks them in a column, `divided` draws a line between them:
+
+<Example name="legend/lists" />
+
+## Composed
+
+The tag content replaces the `content` block: place `Legend:Dot`, the label and `Legend:Value` yourself. Put
+`Legend:Unit` inside the value, or pass `unit` to `Legend:Value`:
+
+<Example name="legend/composed" />
+
+## Dot alone
+
+`Legend:Dot` takes the color of its legend. On its own, give it a `variant`, for example to mark a series in a
+sentence or a table cell:
+
+<Example name="legend/dot" />
+
+## Blocks
+
+Override the `dot`, `label` or `value` block and keep the others:
+
+<Example name="legend/block" />
+
+## Props
+
+| Prop      | Type    | Default | Description                                                                    |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------ |
+| `variant` | string? | `null`  | Color of the dot, see [Colors](#colors)                                        |
+| `size`    | string  | `'md'`  | `md`, or `lg`: label on top, big value below (`legend-lg`)                     |
+| `label`   | string? | `null`  | The series name                                                                |
+| `value`   | string? | `null`  | Rendered with `Legend:Value`, when set                                         |
+| `unit`    | string? | `null`  | Unit after the value, rendered with `Legend:Unit`                              |
+| `href`    | string? | `null`  | Renders an `<a href>` instead of a `<span>`                                    |
+| `button`  | bool    | `false` | Renders a `<button type="button">` instead of a `<span>` (ignored with `href`) |
+| `active`  | bool    | `false` | Keeps the hover background (`active`)                                          |
+| `off`     | bool    | `false` | Dims the item, for a hidden series (`legend-off`)                              |
+
+Other attributes go to the root element.
+
+### Legend:List
+
+| Prop       | Type | Default | Description                                            |
+| ---------- | ---- | ------- | ------------------------------------------------------ |
+| `vertical` | bool | `false` | Stacks the items in a column (`legend-list-vertical`)  |
+| `divided`  | bool | `false` | Draws a line between the items (`legend-list-divided`) |
+
+### Legend:Dot
+
+| Prop      | Type    | Default | Description                                                               |
+| --------- | ------- | ------- | ------------------------------------------------------------------------- |
+| `variant` | string? | `null`  | Color, see [Colors](#colors). Not needed inside a legend, which colors it |
+
+### Legend:Value
+
+| Prop   | Type    | Default | Description                                         |
+| ------ | ------- | ------- | --------------------------------------------------- |
+| `unit` | string? | `null`  | Unit after the content, rendered with `Legend:Unit` |
+
+## Sub-components
+
+| Component      | Renders                                                              |
+| -------------- | -------------------------------------------------------------------- |
+| `Legend:List`  | `<div class="legend-list">`, around the legend items                 |
+| `Legend:Dot`   | `<span class="legend-dot">`, the colored marker                      |
+| `Legend:Value` | `<span class="legend-value">`, the muted value next to the label     |
+| `Legend:Unit`  | `<span class="legend-unit">`, a small unit after the value (ms, GB…) |
+
+## Blocks
+
+| Block     | Default                                                               |
+| --------- | --------------------------------------------------------------------- |
+| `dot`     | `Legend:Dot`                                                          |
+| `label`   | The `label` prop, when set                                            |
+| `value`   | `Legend:Value` with the `value` and `unit` props, when `value` is set |
+| `content` | `dot`, `label` and `value`: replace it to compose freely              |

@@ -1,0 +1,14 @@
+<twig:Tabler:Navbar expand="sm">
+    <twig:Tabler:Navbar:Toggler target="navbar-side-menu" />
+    <twig:Tabler:Navbar:Brand href="/">Acme Admin</twig:Tabler:Navbar:Brand>
+    <twig:Tabler:Navbar:Nav id="navbar-side-menu" collapse>
+        <twig:Tabler:Navbar:Item href="/" icon="home" active>Dashboard</twig:Tabler:Navbar:Item>
+        <twig:Tabler:Navbar:Item href="/users" icon="users">Users</twig:Tabler:Navbar:Item>
+        <twig:block name="side">
+            <twig:Tabler:Navbar:Side class="ms-auto">
+                <twig:Tabler:Navbar:Item href="/help" icon="help">Help</twig:Tabler:Navbar:Item>
+                <twig:Tabler:Navbar:Item href="/settings" icon="settings">Settings</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Side>
+        </twig:block>
+    </twig:Tabler:Navbar:Nav>
+</twig:Tabler:Navbar>

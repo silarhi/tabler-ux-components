@@ -1,0 +1,7 @@
+{% for variant in ['default', 'tabs', 'pills', 'underline'] %}
+    <twig:Tabler:Nav variant="{{ variant }}" class="mb-3">
+        <twig:Tabler:Nav:Item href="/settings" active>Profile</twig:Tabler:Nav:Item>
+        <twig:Tabler:Nav:Item href="/settings/security">Security</twig:Tabler:Nav:Item>
+        <twig:Tabler:Nav:Item href="/settings/billing">Billing</twig:Tabler:Nav:Item>
+    </twig:Tabler:Nav>
+{% endfor %}

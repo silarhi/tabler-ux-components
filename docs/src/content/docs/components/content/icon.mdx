@@ -1,0 +1,41 @@
+---
+title: Icon
+description: A Tabler icon from the icon webfont, with a color and an animation.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Renders one of the [Tabler Icons](https://tabler.io/icons) as `<i class="ti ti-{name}">`. It needs the
+`@tabler/icons-webfont` stylesheet, see [Installation](/getting-started/installation/).
+
+<Example name="icon/all-in-one" />
+
+`name` is the icon name without the `ti-` prefix, as listed on [tabler.io/icons](https://tabler.io/icons). The webfont
+draws the outline icons only: names like `star-filled` render nothing.
+
+## Variants
+
+`variant` sets the color (`text-{variant}`):
+
+<Example name="icon/variants" />
+
+## Animations
+
+`animation` is `pulse`, `tada` or `rotate`:
+
+<Example name="icon/animations" />
+
+## Attributes
+
+The icon inherits the font size and color of its parent. Other attributes go to the `<i>`: a spacing class next to a
+label, a font-size class, or `role="img"` and an `aria-label` when the icon carries meaning on its own:
+
+<Example name="icon/attributes" />
+
+## Props
+
+| Prop        | Type    | Default    | Description                                                              |
+| ----------- | ------- | ---------- | ------------------------------------------------------------------------ |
+| `name`      | string  | (required) | Icon name, without the `ti-` prefix                                      |
+| `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `animation` | string? | `null`     | `pulse` `tada` `rotate`                                                  |

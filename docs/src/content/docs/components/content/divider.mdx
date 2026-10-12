@@ -1,0 +1,40 @@
+---
+title: Divider
+description: A horizontal rule between sections, with an optional label.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Separates two sections. Without children it renders a plain `<hr class="hr">`; with children, a labeled rule
+(`hr-text`).
+
+<Example name="divider/all-in-one" />
+
+## Positions
+
+`position` aligns the label: `start`, `center` (the default) or `end`.
+
+<Example name="divider/positions" />
+
+## Variants
+
+`variant` colors the label (`text-{variant}`):
+
+<Example name="divider/variants" />
+
+`position` and `variant` only apply to a labeled divider: the plain `<hr>` ignores them.
+
+## Props
+
+| Prop       | Type    | Default    | Description                                                              |
+| ---------- | ------- | ---------- | ------------------------------------------------------------------------ |
+| `position` | string  | `'center'` | `start` `center` `end`: label alignment                                  |
+| `variant`  | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+
+Other attributes go to the root `<div class="hr-text">` or `<hr class="hr">`.
+
+## Blocks
+
+| Block     | Default                                                          |
+| --------- | ---------------------------------------------------------------- |
+| `content` | Empty: the children, the label. Empty or blank renders an `<hr>` |

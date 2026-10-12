@@ -1,0 +1,10 @@
+<div class="row row-cards">
+    {% for position in ['end', 'start', 'top', 'top-start', 'bottom', 'bottom-start'] %}
+        <div class="col-sm-4">
+            <twig:Tabler:Card>
+                <twig:Tabler:Ribbon variant="primary" position="{{ position }}"><twig:Tabler:Icon name="star" /></twig:Tabler:Ribbon>
+                <twig:Tabler:Card:Body class="py-5 text-center">{{ position }}</twig:Tabler:Card:Body>
+            </twig:Tabler:Card>
+        </div>
+    {% endfor %}
+</div>

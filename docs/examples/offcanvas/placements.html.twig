@@ -1,0 +1,9 @@
+<div class="btn-list">
+    {% for placement in ['start', 'end', 'top', 'bottom'] %}
+        <twig:Tabler:Button variant="default" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-{{ placement }}">{{ placement|capitalize }}</twig:Tabler:Button>
+    {% endfor %}
+</div>
+
+{% for placement in ['start', 'end', 'top', 'bottom'] %}
+    <twig:Tabler:Offcanvas id="offcanvas-{{ placement }}" placement="{{ placement }}" title="Placement: {{ placement }}" text="This panel slides in from the {{ placement }} edge." />
+{% endfor %}

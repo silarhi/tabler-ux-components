@@ -1,0 +1,67 @@
+---
+title: Dropdown
+description: A toggle button that opens a menu of actions or links.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A Bootstrap dropdown: a toggle and a menu of items, built from sub-components. It needs `tabler.js`.
+
+<Example name="dropdown/all-in-one" minHeight="16rem" />
+
+## Toggle
+
+Without `variant`, the toggle is a plain `.btn`. `noCaret` hides the caret, for an icon-only toggle:
+
+<Example name="dropdown/toggle" minHeight="11rem" />
+
+## Menu alignment
+
+`end` aligns the menu with the end of the toggle, for a toggle on the right of the page:
+
+<Example name="dropdown/menu-end" minHeight="14rem" />
+
+## Items
+
+`active` highlights an item, `disabled` makes it non-interactive. Put an icon before the label with the
+`dropdown-item-icon` class:
+
+<Example name="dropdown/items" minHeight="13rem" />
+
+## Sub-components
+
+| Component          | Renders                                                                         |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `Dropdown`         | `<div class="dropdown">` around the toggle and the menu                         |
+| `Dropdown:Toggle`  | `<a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">`            |
+| `Dropdown:Menu`    | `<div class="dropdown-menu">`                                                   |
+| `Dropdown:Item`    | `<a class="dropdown-item">`                                                     |
+| `Dropdown:Header`  | `<div class="dropdown-header">`: a non-interactive label above a group of items |
+| `Dropdown:Divider` | `<div class="dropdown-divider">`: a separator between groups of items           |
+
+Attributes of each component go to its root element.
+
+## Props
+
+`Dropdown`, `Dropdown:Header` and `Dropdown:Divider` take no props.
+
+### Dropdown:Toggle
+
+| Prop      | Type    | Default | Description                                                                                         |
+| --------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| `variant` | string? | `null`  | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`; `null` for a plain `.btn` |
+| `noCaret` | bool    | `false` | Hides the caret (no `dropdown-toggle` class)                                                        |
+
+### Dropdown:Menu
+
+| Prop  | Type | Default | Description                                      |
+| ----- | ---- | ------- | ------------------------------------------------ |
+| `end` | bool | `false` | Aligns the menu to the end (`dropdown-menu-end`) |
+
+### Dropdown:Item
+
+| Prop       | Type    | Default | Description                                        |
+| ---------- | ------- | ------- | -------------------------------------------------- |
+| `href`     | string? | `null`  | Link target, `#` when `null`                       |
+| `active`   | bool    | `false` | Highlighted item (`active`)                        |
+| `disabled` | bool    | `false` | Non-interactive item (`disabled`, `aria-disabled`) |

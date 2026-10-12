@@ -1,0 +1,78 @@
+---
+title: Timeline
+description: A vertical feed of events, each with an icon, a title, a time and a text.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A vertical feed of events: an activity log, a deployment history, an audit trail.
+
+<Example name="timeline/all-in-one" />
+
+## Icons
+
+Every event has an icon marker, empty by default. Fill it with the `icon` block and `Timeline:Event:Icon`; a
+`bg-*-lt` class colors it:
+
+<Example name="timeline/icons" />
+
+## Blocks
+
+Each prop of `Timeline:Event` has a matching block. Override one, and the others keep rendering from their props:
+
+<Example name="timeline/block" />
+
+## Composed
+
+Replace the `content` block to build the whole event yourself. It holds the icon and the
+`<div class="card timeline-event-card">`, so keep that markup:
+
+<Example name="timeline/composed" />
+
+## Simple
+
+`simple` gives a compact timeline without icons:
+
+<Example name="timeline/simple" />
+
+## Props
+
+`Timeline`:
+
+| Prop     | Type | Default | Description                                 |
+| -------- | ---- | ------- | ------------------------------------------- |
+| `simple` | bool | `false` | Compact style, no icons (`timeline-simple`) |
+
+Other attributes go to the root `<ul class="timeline">`.
+
+`Timeline:Event`:
+
+| Prop    | Type    | Default | Description                                       |
+| ------- | ------- | ------- | ------------------------------------------------- |
+| `title` | string? | `null`  | Rendered with `Timeline:Event:Title`              |
+| `time`  | string? | `null`  | Rendered with `Timeline:Event:Time`, on the right |
+| `text`  | string? | `null`  | Rendered with `Timeline:Event:Body`               |
+
+Other attributes go to the `<li class="timeline-event">`.
+
+## Sub-components
+
+| Component              | Renders                                                                  |
+| ---------------------- | ------------------------------------------------------------------------ |
+| `Timeline:Event`       | `<li class="timeline-event">`: the icon and a `timeline-event-card` card |
+| `Timeline:Event:Icon`  | `<div class="timeline-event-icon">`: put any icon inside                 |
+| `Timeline:Event:Time`  | `<div class="text-secondary float-end">`                                 |
+| `Timeline:Event:Title` | `<h4>`                                                                   |
+| `Timeline:Event:Body`  | `<div class="text-secondary">`                                           |
+
+## Blocks
+
+Blocks of `Timeline:Event`:
+
+| Block     | Default                                                                             |
+| --------- | ----------------------------------------------------------------------------------- |
+| `icon`    | An empty `Timeline:Event:Icon`                                                      |
+| `time`    | `Timeline:Event:Time` with the `time` prop, when set                                |
+| `title`   | `Timeline:Event:Title` with the `title` prop, when set                              |
+| `body`    | `Timeline:Event:Body` with the `text` prop, when set                                |
+| `content` | `icon`, then the card with `time`, `title` and `body`: replace it to compose freely |

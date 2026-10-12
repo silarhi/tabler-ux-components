@@ -1,0 +1,48 @@
+---
+title: SegmentedControl
+description: A compact group of mutually exclusive options, such as a period or a view switcher.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A row of segments where one is selected, rendered as Tabler's `nav-segmented`. Each segment is a Bootstrap tab
+(`data-bs-toggle="tab"`), so `tabler.js` moves the selection on click.
+
+<Example name="segmented-control/all-in-one" />
+
+To show a panel per segment, add `data-bs-target="#pane-id"` to each item; attributes are forwarded to the
+`<button>`. Without a target, the control only switches its selected segment: listen to Bootstrap's `shown.bs.tab`
+event to react to it.
+
+## Icons
+
+Put an icon before the label with the `nav-link-icon` class:
+
+<Example name="segmented-control/icons" />
+
+## Full width
+
+`fullWidth` stretches the control, and its segments, to the width of the container. A segment takes the native
+`disabled` attribute:
+
+<Example name="segmented-control/full-width" />
+
+## Props
+
+| Prop        | Type | Default | Description                          |
+| ----------- | ---- | ------- | ------------------------------------ |
+| `fullWidth` | bool | `false` | Stretches to the container (`w-100`) |
+
+Other attributes go to the root `<nav role="tablist">`: give it an `aria-label`.
+
+## Sub-components
+
+| Component               | Renders                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `SegmentedControl:Item` | `<button class="nav-link" role="tab" data-bs-toggle="tab">`, with `aria-selected` |
+
+`SegmentedControl:Item` takes one prop:
+
+| Prop     | Type | Default | Description                                                                             |
+| -------- | ---- | ------- | --------------------------------------------------------------------------------------- |
+| `active` | bool | `false` | The selected segment (`active`, `aria-selected="true"`); the others get `tabindex="-1"` |

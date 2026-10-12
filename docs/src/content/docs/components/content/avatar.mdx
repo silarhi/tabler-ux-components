@@ -1,0 +1,56 @@
+---
+title: Avatar
+description: A user picture, initials or an icon in a round or square frame.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows who a user is: their photo, their initials on a tinted background, or an icon.
+
+<Example name="avatar/all-in-one" />
+
+`image` sets the picture as a background image. Without it, the children (initials, an icon) are centered in the
+avatar.
+
+## Sizes
+
+`size` goes from `xxs` to `2xl`; `md` is the default.
+
+<Example name="avatar/sizes" />
+
+## Variants
+
+`variant` gives initials or icons a tinted background (`bg-{variant}-lt`):
+
+<Example name="avatar/variants" />
+
+## Shapes
+
+Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-square`). `rounded` adds Bootstrap's
+`rounded-circle`, which forces a circle when your CSS gives avatars another shape.
+
+<Example name="avatar/shapes" />
+
+## Stacked list
+
+Group avatars with Tabler's `avatar-list` markup; `avatar-list-stacked` overlaps them:
+
+<Example name="avatar/list" />
+
+## Props
+
+| Prop      | Type    | Default | Description                                                                                 |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------------------- |
+| `size`    | string  | `'md'`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`                                                        |
+| `variant` | string? | `null`  | Tinted background: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `rounded` | bool    | `false` | Circle (`rounded-circle`)                                                                   |
+| `square`  | bool    | `false` | Rounded corners instead of a circle (`avatar-square`)                                       |
+| `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
+
+Other attributes go to the root `<span class="avatar">`, except `style`, which is never forwarded.
+
+## Blocks
+
+| Block     | Default                                         |
+| --------- | ----------------------------------------------- |
+| `content` | Empty: the children (initials, an icon) go here |

@@ -1,0 +1,51 @@
+---
+title: Pagination
+description: Links to the pages of a list, with the current page and disabled items.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Links to the pages of a long list. Mark the current page `active`, and `disabled` the links that lead nowhere.
+
+<Example name="pagination/basic" />
+
+A `disabled` item renders a `<span>` instead of a link. An item without `href` links to `#`.
+
+## Styles
+
+`outline` adds a border to every link, `circle` makes them round. Combine them:
+
+<Example name="pagination/styles" />
+
+## Labels and icons
+
+The content of an item is free: text, icons, an ellipsis. Compute `active` and `disabled` from the current page:
+
+<Example name="pagination/labels" />
+
+## Props
+
+`Pagination`:
+
+| Prop      | Type | Default | Description                           |
+| --------- | ---- | ------- | ------------------------------------- |
+| `outline` | bool | `false` | Bordered links (`pagination-outline`) |
+| `circle`  | bool | `false` | Round links (`pagination-circle`)     |
+
+Other attributes go to the root `<ul class="pagination">`.
+
+`Pagination:Item`:
+
+| Prop       | Type    | Default | Description                                                      |
+| ---------- | ------- | ------- | ---------------------------------------------------------------- |
+| `href`     | string? | `null`  | Link target; `#` when not set                                    |
+| `active`   | bool    | `false` | The current page (`active`, with `aria-current="page"`)          |
+| `disabled` | bool    | `false` | Not clickable (`disabled`): renders a `<span>` instead of a link |
+
+Other attributes go to the `<li class="page-item">`.
+
+## Sub-components
+
+| Component         | Renders                                                                |
+| ----------------- | ---------------------------------------------------------------------- |
+| `Pagination:Item` | `<li class="page-item">` with an `<a class="page-link">` or a `<span>` |

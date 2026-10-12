@@ -1,0 +1,3 @@
+{% for variant in ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', 'light'] %}
+    <twig:Tabler:Progress value="{{ 30 + loop.index * 8 }}" variant="{{ variant }}" class="mb-2" />
+{% endfor %}

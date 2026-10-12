@@ -1,0 +1,76 @@
+---
+title: Offcanvas
+description: A panel that slides in from an edge of the page, for filters, details or navigation.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A Bootstrap offcanvas, opened by a trigger with `data-bs-toggle="offcanvas"` and `data-bs-target="#<id>"`. It needs
+`tabler.js`.
+
+<Example name="offcanvas/all-in-one" minHeight="20rem" />
+
+## Composed
+
+The sub-components take over for a form or custom actions:
+
+<Example name="offcanvas/composed" minHeight="22rem" />
+
+## Placements
+
+`placement` sets the edge the panel slides in from. `start` and `end` follow the text direction.
+
+<Example name="offcanvas/placements" minHeight="22rem" />
+
+## Narrow and floating
+
+`narrow` limits the panel to 20rem. `floating` (Tabler 1.6+) detaches it from the edges of the viewport, with rounded
+corners:
+
+<Example name="offcanvas/narrow-floating" minHeight="22rem" />
+
+By default, the page cannot scroll while the panel is open: `scrollable` allows it (`data-bs-scroll="true"`).
+
+## Blocks
+
+`title`, `text` and `footer` are plain strings. For richer content, such as buttons in the footer, override the
+matching block: `header`, `body` or `footer`. The other blocks keep rendering from their props. See
+[Composition](/getting-started/composition/) for how blocks work.
+
+<Example name="offcanvas/block" minHeight="20rem" />
+
+## Props
+
+| Prop          | Type    | Default   | Description                                                          |
+| ------------- | ------- | --------- | -------------------------------------------------------------------- |
+| `id`          | string? | `null`    | DOM id targeted by triggers (`data-bs-target="#id"`)                 |
+| `placement`   | string  | `'start'` | `start` `end` `top` `bottom`                                         |
+| `title`       | string? | `null`    | Rendered with `Offcanvas:Header` and `Offcanvas:Title`               |
+| `text`        | string? | `null`    | Rendered with `Offcanvas:Body`                                       |
+| `footer`      | string? | `null`    | Rendered with `Offcanvas:Footer`                                     |
+| `dismissible` | bool    | `true`    | Close button in the header rendered from `title` (`Offcanvas:Close`) |
+| `scrollable`  | bool    | `false`   | The page keeps scrolling while the panel is open (`data-bs-scroll`)  |
+| `narrow`      | bool    | `false`   | 20rem wide panel (`offcanvas-narrow`)                                |
+| `floating`    | bool    | `false`   | Gap between the panel and the viewport edges (`offcanvas-floating`)  |
+
+Other attributes go to the root `<div class="offcanvas" tabindex="-1">`. To hide the close button, pass
+`dismissible="{{ false }}"` (see [boolean props](/getting-started/composition/#boolean-props)).
+
+## Sub-components
+
+| Component          | Renders                                                                     |
+| ------------------ | --------------------------------------------------------------------------- |
+| `Offcanvas:Header` | `<div class="offcanvas-header">`: holds the title and the close button      |
+| `Offcanvas:Title`  | `<h5 class="offcanvas-title">`                                              |
+| `Offcanvas:Close`  | `<button class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">` |
+| `Offcanvas:Body`   | `<div class="offcanvas-body">`                                              |
+| `Offcanvas:Footer` | `<div class="offcanvas-footer">`: usually the actions                       |
+
+## Blocks
+
+| Block     | Default                                                                                                   |
+| --------- | --------------------------------------------------------------------------------------------------------- |
+| `header`  | `Offcanvas:Header` with `Offcanvas:Title` and `Offcanvas:Close` (when `dismissible`), when `title` is set |
+| `body`    | `Offcanvas:Body` with the `text` prop, when set                                                           |
+| `footer`  | `Offcanvas:Footer` with the `footer` prop, when set                                                       |
+| `content` | `header`, `body` and `footer`: replace it to compose freely                                               |

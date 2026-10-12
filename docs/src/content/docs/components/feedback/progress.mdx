@@ -1,0 +1,70 @@
+---
+title: Progress
+description: A progress bar, with a single value or several stacked bars, and an indeterminate state.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A progress bar: a storage quota, an upload, a task completion rate.
+
+<Example name="progress/all-in-one" />
+
+The `label` is visually hidden: show the value next to the bar yourself, as above.
+
+## Variants
+
+<Example name="progress/variants" />
+
+## Sizes
+
+<Example name="progress/sizes" />
+
+## Indeterminate
+
+For work of unknown length, `indeterminate` animates the bar and ignores `value`:
+
+<Example name="progress/indeterminate" />
+
+## Stacked
+
+Put several `Progress:Bar` in one track to split it into segments. The children replace the single bar the props
+render:
+
+<Example name="progress/stacked" />
+
+## Props
+
+| Prop            | Type    | Default     | Description                                                                |
+| --------------- | ------- | ----------- | -------------------------------------------------------------------------- |
+| `value`         | int?    | `null`      | `0` to `100`: renders a single `Progress:Bar`; no bar when `null`          |
+| `variant`       | string  | `'primary'` | Color of the single bar, see `Progress:Bar`                                |
+| `size`          | string  | `'md'`      | `sm` `md` `lg` `xl` (`progress-*`)                                         |
+| `label`         | string? | `null`      | Visually-hidden text of the single bar (not rendered with `indeterminate`) |
+| `indeterminate` | bool    | `false`     | Renders a single indeterminate bar                                         |
+
+Other attributes go to the root `<div class="progress">`.
+
+## Sub-components
+
+| Component      | Renders                                                                                      |
+| -------------- | -------------------------------------------------------------------------------------------- |
+| `Progress:Bar` | `<div class="progress-bar" role="progressbar">`, with its width and `aria-value*` attributes |
+
+### `Progress:Bar` props
+
+| Prop            | Type    | Default     | Description                                                                       |
+| --------------- | ------- | ----------- | --------------------------------------------------------------------------------- |
+| `value`         | int?    | `null`      | `0` to `100`: sets the width and `aria-valuenow`                                  |
+| `variant`       | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` (`bg-*`) |
+| `label`         | string? | `null`      | Visually-hidden text (`<span class="visually-hidden">`)                           |
+| `indeterminate` | bool    | `false`     | Animated bar (`progress-bar-indeterminate`); ignores `value`                      |
+
+Other attributes go to the bar `<div>`, except `style`, which the component drops.
+
+## Blocks
+
+| Block                      | Default                                                                       |
+| -------------------------- | ----------------------------------------------------------------------------- |
+| `bar`                      | A `Progress:Bar` from `value`, `variant` and `label`, or an indeterminate one |
+| `content`                  | `bar`: replace it (with children) to stack bars                               |
+| `content` (`Progress:Bar`) | The visually-hidden `label`, when it is set                                   |
