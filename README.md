@@ -199,7 +199,7 @@ Renders a `<button>`, or an `<a>` when `href` is set.
 | Prop          | Type    | Default     | Description                                                                                  |
 | ------------- | ------- | ----------- | -------------------------------------------------------------------------------------------- |
 | `variant`     | string  | `'primary'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
-| `appearance`  | string  | `'filled'`  | `filled` `outline` `ghost` `link` (`btn-link`)                                               |
+| `appearance`  | string  | `'filled'`  | `filled` `outline` `ghost` `link` (`btn-link`) `action` (`btn-action`, quiet icon button)    |
 | `size`        | string  | `'md'`      | `sm` `md` `lg` `xl`                                                                          |
 | `href`        | string? | `null`      | Renders `<a href>` instead of `<button>`                                                     |
 | `type`        | string  | `'button'`  | `button` `submit` `reset` (ignored for links)                                                |
@@ -289,7 +289,7 @@ Renders a `<div>`, or an `<a>` when `href` is set.
 
 Gradient presets: `disco` `gold` `love` `mellow` `ocean` `psychedelic` `rainbow` `snow` `sun`.
 
-Sub-components: `Card:Header`, `Card:Title`, `Card:Subtitle`, `Card:Body` (`scrollable`), `Card:Footer`, `Card:Actions`, `Card:Status`, `Card:Img` (`src`, `alt`, `position` top/bottom/start/end), `Card:Stamp` (`icon`, `variant`, `size`), `Card:Progress` (`value`, `variant`, `label`), `Card:Meta`, `Card:Btn` (`href`).
+Sub-components: `Card:Header`, `Card:Title`, `Card:Subtitle`, `Card:Body` (`scrollable`), `Card:Footer`, `Card:Actions`, `Card:Status`, `Card:Img` (`src`, `alt`, `position` top/bottom/start/end), `Card:Stamp` (`icon`, `variant`, `size`), `Card:Progress` (`value`, `variant`, `label`), `Card:Meta`, `Card:Btn` (`href`), `Card:ImgOverlay` (`dark`; content over a `Card:Img position="full"`), `Card:Cover` (`image`, `blurred`; photo header), `Card:Code` (flush code block), `Card:Tabs` (cards switched by tabs; give each `Tabs:Pane` the `card` class). A table that runs edge to edge inside a card: `<twig:Tabler:Table card>`.
 
 Blocks: `content` (wraps the header, body and footer — override to compose freely), `header`, `body`, `footer`. The `status` bar is rendered outside `content`, so it is kept when you compose.
 
@@ -353,7 +353,7 @@ Blocks: `content` (wraps the header, body and footer — override to compose fre
 <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
 ```
 
-- **Avatar** — `size` (xxs–2xl), `variant` (tinted bg for initials), `rounded`, `square` (rounded corners instead of a circle), `image`. Sub-components: `Avatar:List` (`stacked`, `size`), `Avatar:Brand` (`image`, corner mark), `Avatar:Upload` (`href`, `size`, `icon`, `text`).
+- **Avatar** — `size` (xxs–2xl), `variant` (tinted bg for initials), `rounded`, `square` (rounded corners instead of a circle), `cover` (pulled over the element above, with a ring), `image`. Sub-components: `Avatar:List` (`stacked`, `size`), `Avatar:Brand` (`image`, corner mark), `Avatar:Upload` (`href`, `size`, `icon`, `text`).
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
 - **Status** — `variant` (theme or palette color), `dot`, `animated`, `lite` (no background), `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks). Sub-components: `Status:Dot` (`animated`), `Status:Indicator` (`variant`, `animated`; a larger standalone marker, `role="img"` when it has an `aria-label`).
 - **Divider** — `position` (start/center/end), `variant`, `spaceless`. Empty content → plain `<hr>`.
@@ -372,6 +372,17 @@ Blocks: `content` (wraps the header, body and footer — override to compose fre
 ```
 
 Props: `value`, `variant`, `size` (sm/md/lg/xl), `label`, `indeterminate`, `striped`, `animated`, `separated` (gap between stacked bars). Sub-component: `Progress:Bar` (`value`, `variant`, `label`, `indeterminate`, `striped`, `animated`).
+
+Several segments as one bar, with Bootstrap 5.3's `progress-stacked` markup:
+
+```twig
+<twig:Tabler:Progress:Stacked separated>
+    <twig:Tabler:Progress:Segment value="15" label="Photos" />
+    <twig:Tabler:Progress:Segment value="30" variant="success" label="Videos" />
+</twig:Tabler:Progress:Stacked>
+```
+
+`Progress:Segment` props: `value` (share in percent), `variant`, `label` (default `"{value}% of total"`), `striped`, `animated`.
 
 ### Breadcrumb / Pagination
 
@@ -414,7 +425,7 @@ Props: `value`, `variant`, `size` (sm/md/lg/xl), `label`, `indeterminate`, `stri
 
 Props: `direction` (down/up/end/start: where the menu opens). Submenus are not supported: `Dropdown:Toggle` is a `.btn`, not a `.dropdown-item`.
 
-Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`, `split`), `Dropdown:Menu` (`end`, `arrow`, `dark`, `scrollable`, `card`), `Dropdown:Item` (`href`, `active`, `disabled`, `icon`), `Dropdown:Text`, `Dropdown:Columns` / `Dropdown:Column` (multi-column menu), `Dropdown:Divider`, `Dropdown:Header`.
+Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`, `split`), `Dropdown:Menu` (`end`, `arrow`, `dark`, `scrollable`, `card`), `Dropdown:Item` (`href`, `active`, `disabled`, `icon`), `Dropdown:Text`, `Dropdown:Columns` / `Dropdown:Column` (multi-column menu), `Dropdown:Indicator` (leading checkbox/radio/avatar/flag slot), `Dropdown:Divider`, `Dropdown:Header`.
 
 ### Carousel
 
@@ -507,10 +518,12 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
     </tr></thead>
     <tbody><tr>
         <td><twig:Tabler:Table:Check aria-label="Select Jane" /></td>
-        <td data-label="Name">Jane</td>
+        <twig:Tabler:Table:Cell label="Name">Jane</twig:Tabler:Table:Cell>
+        <twig:Tabler:Table:Cell label="Bio" truncate>{{ user.bio }}</twig:Tabler:Table:Cell>
     </tr></tbody>
 </twig:Tabler:Table>
-{# other flags: vcenter, center, striped, hover, bordered, borderless, transparent, nowrap, responsive (default true) #}
+{# other flags: vcenter, center, striped, hover, bordered, borderless, transparent, nowrap, card (edge to edge in a card), responsive (default true) #}
+{# Table:Cell — label: data-label for stacked rows; truncate: ellipsis instead of stretching the table (td-truncate) #}
 
 {# Empty state #}
 <twig:Tabler:Empty title="No results found" subtitle="Try adjusting your search." />
@@ -672,11 +685,28 @@ Props: `target` (selector), `text` (literal string, wins over `target`), `delay`
     <twig:Tabler:ButtonGroup aria-label="Formatting">…</twig:Tabler:ButtonGroup>
     <twig:Tabler:ButtonGroup aria-label="History">…</twig:Tabler:ButtonGroup>
 </twig:Tabler:ButtonToolbar>
+
+{# Action buttons — quiet icon buttons for card headers and table rows #}
+<twig:Tabler:ButtonActions>
+    <twig:Tabler:Button appearance="action" href="/edit" aria-label="Edit"><twig:Tabler:Icon name="edit" /></twig:Tabler:Button>
+    <twig:Tabler:Button appearance="action" aria-label="Delete"><twig:Tabler:Icon name="trash" /></twig:Tabler:Button>
+</twig:Tabler:ButtonActions>
+
+{# Plain lists, without list-group borders #}
+<twig:Tabler:List separated>
+    <twig:Tabler:List:Item class="d-flex align-items-center">…</twig:Tabler:List:Item>
+</twig:Tabler:List>
+<twig:Tabler:List inline dots>
+    <twig:Tabler:List:Item inline>Documentation</twig:Tabler:List:Item>
+    <twig:Tabler:List:Item inline>License</twig:Tabler:List:Item>
+</twig:Tabler:List>
 ```
 
 - **ButtonGroup** — `vertical`, `size` (sm/md/lg); `role="group"`. Sub-component `ButtonGroup:Toggle` (`id`, `name`, `value`, `type` radio/checkbox, `checked`, `disabled`, `label`, `variant`, `appearance` filled/outline/ghost) renders the `.btn-check` input and its `<label class="btn">` (`class` goes on the label, other attributes on the input).
 - **ButtonList** — `center` (`btn-list-center`).
 - **ButtonToolbar** — `role="toolbar"`.
+- **ButtonActions** — `btn-actions` wrapper for `<twig:Tabler:Button appearance="action">` buttons.
+- **List** — `separated` (`list-separated`), `inline` (`list-inline`), `dots` (`list-inline-dots`), `unstyled`, `ordered` (`<ol>`). Sub-component `List:Item` (`inline`).
 
 ### Accordion
 

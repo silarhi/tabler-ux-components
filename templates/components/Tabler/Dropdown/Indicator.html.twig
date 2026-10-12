@@ -1,0 +1,13 @@
+{#
+    Dropdown indicator — a leading marker slot in a menu item, for a checkbox, a
+    radio, an avatar or a flag (`.dropdown-item-indicator`).
+
+    Usage:
+        <twig:Tabler:Dropdown:Item href="?lang=fr">
+            <twig:Tabler:Dropdown:Indicator><span class="avatar avatar-xs">FR</span></twig:Tabler:Dropdown:Indicator>
+            Français
+        </twig:Tabler:Dropdown:Item>
+#}
+{% apply trim %}
+<span {{ attributes.defaults({class: 'dropdown-item-indicator'}) }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

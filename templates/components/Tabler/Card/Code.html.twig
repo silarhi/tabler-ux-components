@@ -1,0 +1,9 @@
+{#
+    Card code — replaces the card body for a code block, without the body padding (`.card-code`).
+
+    Usage:
+        <twig:Tabler:Card:Code><pre><code>composer require silarhi/tabler-ux-components</code></pre></twig:Tabler:Card:Code>
+#}
+{% apply trim %}
+<div {{ attributes.defaults({class: 'card-code'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

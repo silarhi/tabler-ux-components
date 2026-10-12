@@ -1,0 +1,23 @@
+{#
+    Card cover — a header with a background photo darkened by an overlay, so white
+    text on top stays readable (`.card-cover`).
+
+    Usage:
+        <twig:Tabler:Card:Cover image="/photos/books.jpg" class="text-center text-white">
+            <div class="h1 m-0">Reading list</div>
+        </twig:Tabler:Card:Cover>
+
+    Props:
+      image    — background image URL
+      blurred  — blur the photo behind the overlay (card-cover-blurred)
+#}
+{% apply trim %}
+{% props
+    image = null,
+    blurred = false,
+%}
+
+<div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>
+    {%- block content %}{% endblock -%}
+</div>
+{% endapply %}
