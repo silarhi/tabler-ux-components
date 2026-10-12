@@ -37,4 +37,4 @@
 ) %}
 
 <button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>
-{% endapply %}
+{% endapply ~%}

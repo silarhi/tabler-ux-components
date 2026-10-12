@@ -17,7 +17,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Silarhi\TablerUxComponents\Tests\ComponentTestCase;
 
 /**
- * Components used in running text must not add a space around themselves:
+ * Components add no space before themselves and end with one line break, so
+ * components on consecutive lines stay apart whether they are written with a
+ * closing tag (whose following newline Twig drops) or self-closing:
  * assertHtmlSame() collapses whitespace, so these compare the exact output.
  */
 final class InlineWhitespaceTest extends ComponentTestCase
@@ -34,8 +36,17 @@ final class InlineWhitespaceTest extends ComponentTestCase
     }
 
     #[DataProvider('inlineProvider')]
-    public function testNoSpaceAroundInlineComponent(string $component, string $html): void
+    public function testNoSpaceBeforeInlineComponent(string $component, string $html): void
     {
-        self::assertSame("Click {$html}.", $this->renderComponent("Click {$component}."));
+        self::assertSame("Click {$html}\n.", $this->renderComponent("Click {$component}."));
+    }
+
+    #[DataProvider('inlineProvider')]
+    public function testLineBreakBetweenConsecutiveComponents(string $component, string $html): void
+    {
+        self::assertMatchesRegularExpression(
+            '/^' . preg_quote($html, '/') . '\n+' . preg_quote($html, '/') . '\n+$/',
+            $this->renderComponent("{$component}\n{$component}\n"),
+        );
     }
 }

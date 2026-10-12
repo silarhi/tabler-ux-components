@@ -43,4 +43,4 @@
 ) %}
 
 <div class="{{ ribbon.apply({variant: variant ?? '', position: position, bookmark: bookmark}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
-{% endapply %}
+{% endapply ~%}

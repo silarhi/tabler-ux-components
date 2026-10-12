@@ -93,4 +93,4 @@
 <span class="{{ sparkline.apply({size: size, square: square or circle, disabled: disabled, variant: variant ?? ''}, attributes.render('class')) }}" data-bs-toggle="sparkline"
     {%- for name, v in data %} {{ name }}="{{ v }}"{% endfor %}
     {%- if 'aria-label' in attributes.all|keys %} role="img"{% endif %} {{ attributes.without('class') }}></span>
-{% endapply %}
+{% endapply ~%}

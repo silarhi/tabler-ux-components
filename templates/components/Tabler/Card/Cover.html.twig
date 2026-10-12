@@ -20,4 +20,4 @@
 <div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>
     {%- block content %}{% endblock -%}
 </div>
-{% endapply %}
+{% endapply ~%}

@@ -24,4 +24,4 @@
 <div {{ attributes.defaults({class: 'progress'}).without('style') }} style="width: {{ value }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ label ?? (value ~ '% of total') }}">
     <twig:Tabler:Progress:Bar variant="{{ variant }}" striped="{{ striped }}" animated="{{ animated }}" />
 </div>
-{% endapply %}
+{% endapply ~%}

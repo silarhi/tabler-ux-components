@@ -37,4 +37,4 @@
 <div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content %}{% endblock -%}
 </div>
-{% endapply %}
+{% endapply ~%}

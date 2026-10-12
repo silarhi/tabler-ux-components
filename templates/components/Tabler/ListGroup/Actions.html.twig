@@ -30,4 +30,4 @@
 <a href="{{ href ?? '#' }}" class="{{ actions.apply({show: show}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
     {%- block content %}{% endblock -%}
 </a>
-{% endapply %}
+{% endapply ~%}

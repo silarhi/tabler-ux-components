@@ -19,4 +19,4 @@
 <span class="{{ ('avatar avatar-xs tag-avatar ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>
     {%- block content %}{% endblock -%}
 </span>
-{% endapply %}
+{% endapply ~%}

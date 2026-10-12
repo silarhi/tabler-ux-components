@@ -17,4 +17,4 @@
 <{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} {{ attributes.defaults({class: 'card-btn'}).without('href', 'type') }}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
-{% endapply %}
+{% endapply ~%}

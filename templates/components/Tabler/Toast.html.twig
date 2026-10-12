@@ -31,4 +31,4 @@
 <div class="{{ toast.apply({show: show}, attributes.render('class')) }}" role="alert" aria-live="polite" aria-atomic="true"{% if not autohide %} data-bs-autohide="false"{% endif %} {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>
-{% endapply %}
+{% endapply ~%}

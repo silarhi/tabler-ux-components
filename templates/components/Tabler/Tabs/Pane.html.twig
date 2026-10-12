@@ -22,4 +22,4 @@
 ) %}
 
 <div class="{{ pane.apply({active: active}, attributes.render('class')) }}" id="{{ id }}" role="tabpanel" {{ attributes.without('class', 'id') }}>{%- block content %}{% endblock -%}</div>
-{% endapply %}
+{% endapply ~%}
