@@ -69,7 +69,8 @@ composer normalize --dry-run
 - Integration libraries keep wide ranges so the CI matrix tests from the lowest to the latest supported versions: Symfony `^6.4 || ^7.0 || ^8.0`, ux-twig-component `^2.21 || ^3.0`, Twig `^3.12 || ^4.0`. Never raise their floors to the installed version.
 - QA tools are bumped to their latest releases. `composer.lock` is not committed.
 
-## Releases
+## Changelog & Releases
 
-- No `CHANGELOG.md` yet: GitHub releases carry the notes (a one-line summary + GitHub's generated list of merged PRs).
-- Tags are `vX.Y.Z` (`v0.1.0`, `v0.2.0`), on `origin/main` once CI is green. While in `0.x`, new components or modifiers are a minor, fixes a patch. Packagist updates from the GitHub hook.
+- **`CHANGELOG.md`** follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Every user-facing change (new component, prop or sub-component, changed markup or classes, fix) gets an entry in the top section, titled with the next release, never a bare `[Unreleased]` (e.g. `[0.3.0] - Unreleased`, its compare link ending in `...HEAD`). Prefix breaking changes (a removed or renamed prop, block or sub-component, markup users may style or test against) with **BC break:** and say what users must change. Skip dependency bumps, CI and tooling changes.
+- While in `0.x`, new components, modifiers and BC breaks are a minor, fixes only a patch.
+- **Releases**: date the section and point its compare link at the tag (`compare/<previous>...<tag>`), then tag `vX.Y.Z` on `origin/main` once CI is green, with a GitHub release whose notes follow that section. Packagist updates from the GitHub hook.
