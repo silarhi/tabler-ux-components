@@ -10,7 +10,8 @@
     Props:
       src       — image URL (required)
       alt       — alternative text (default empty: decorative)
-      position  — top (default) | bottom | start | end: the edge whose corners are rounded
+      position  — top (default) | bottom | start | end | full: the edge whose corners are rounded
+                  (full: rounds every corner, e.g. under a Card:ImgOverlay)
 #}
 {% apply trim %}
 {% props
@@ -21,7 +22,7 @@
 
 {% set img = html_cva(
     variants: {
-        position: {top: 'card-img-top', bottom: 'card-img-bottom', start: 'card-img-start', end: 'card-img-end'},
+        position: {top: 'card-img-top', bottom: 'card-img-bottom', start: 'card-img-start', end: 'card-img-end', full: 'card-img'},
     },
 ) %}
 

@@ -14,6 +14,7 @@
       variant    — tinted background for initials (bg-{variant}-lt)
       rounded  — circular avatar (rounded-circle)
       square   — rounded corners instead of a circle (avatar-square, Tabler 1.5+)
+      cover    — pull the avatar over the element above it, with a ring, e.g. over a Card:Cover (avatar-cover)
       image    — background image URL
 #}
 {% apply trim %}
@@ -22,6 +23,7 @@
     variant = null,
     rounded = false,
     square = false,
+    cover = false,
     image = null,
 %}
 
@@ -41,11 +43,12 @@
         },
         rounded: {true: 'rounded-circle', false: ''},
         square: {true: 'avatar-square', false: ''},
+        cover: {true: 'avatar-cover', false: ''},
     },
 ) %}
 
 {# the background image goes first so a user `style` can still override it #}
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 
-<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
 {% endapply %}

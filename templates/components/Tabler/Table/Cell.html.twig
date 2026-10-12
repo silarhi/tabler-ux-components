@@ -1,0 +1,25 @@
+{#
+    Table cell — a <td> with the Tabler cell helpers.
+
+    Usage:
+        <twig:Tabler:Table:Cell label="Name">Jane</twig:Tabler:Table:Cell>
+        <twig:Tabler:Table:Cell label="Comment" truncate>A very long comment…</twig:Tabler:Table:Cell>
+
+    Props:
+      label     — column name shown when a <twig:Tabler:Table mobile="…"> stacks the row (data-label)
+      truncate  — cut the content with an ellipsis instead of stretching the table (td-truncate);
+                  wrap the text in a `.text-truncate` element
+#}
+{% apply trim %}
+{% props
+    label = null,
+    truncate = false,
+%}
+
+{% set classes = ((truncate ? 'td-truncate ' : '') ~ attributes.render('class'))|trim %}
+<td{% if label is not null %} data-label="{{ label }}"{% endif %}{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>
+    {%- if truncate -%}<div class="text-truncate">{%- endif -%}
+    {%- block content %}{% endblock -%}
+    {%- if truncate -%}</div>{%- endif -%}
+</td>
+{% endapply %}
