@@ -1,11 +1,12 @@
 {#
     Card cover — a header with a background photo darkened by an overlay, so white
     text on top stays readable (`.card-cover`). The content is wrapped in a
-    `position-relative` <div>, which keeps it above the overlay.
+    `position-relative` <div>, which keeps it above the overlay. Put `text-white` on
+    the text itself: headings set their own color, so they ignore it on the cover.
 
     Usage:
-        <twig:Tabler:Card:Cover image="/photos/books.jpg" class="text-center text-white">
-            <div class="h1 m-0">Reading list</div>
+        <twig:Tabler:Card:Cover image="/photos/books.jpg" class="text-center">
+            <div class="h1 m-0 text-white">Reading list</div>
         </twig:Tabler:Card:Cover>
 
     Props:

@@ -116,6 +116,32 @@ final class SmallGapsTest extends ComponentTestCase
         );
     }
 
+    public function testListItemsFollowTheInlineOfTheirList(): void
+    {
+        self::assertHtmlSame(
+            '<ul class="list-inline list-inline-dots"><li class="list-inline-item">Docs</li><li class="list-inline-item">License</li></ul>',
+            $this->renderComponent('<twig:Tabler:List inline dots>{% for name in ["Docs", "License"] %}<twig:Tabler:List:Item>{{ name }}</twig:Tabler:List:Item>{% endfor %}</twig:Tabler:List>'),
+        );
+        // An explicit `inline` wins over the list's
+        self::assertHtmlSame(
+            '<ul class="list-inline"><li class="list-inline-item">Docs</li><li>Below</li></ul>',
+            $this->renderComponent('<twig:Tabler:List inline><twig:Tabler:List:Item>Docs</twig:Tabler:List:Item><twig:Tabler:List:Item inline="{{ false }}">Below</twig:Tabler:List:Item></twig:Tabler:List>'),
+        );
+        self::assertHtmlSame(
+            '<li class="list-inline-item">Docs</li>',
+            $this->renderComponent('<twig:Tabler:List:Item inline>Docs</twig:Tabler:List:Item>'),
+        );
+        self::assertHtmlSame('<li>Docs</li>', $this->renderComponent('<twig:Tabler:List:Item>Docs</twig:Tabler:List:Item>'));
+    }
+
+    public function testNestedListResetsTheInlineOfItsItems(): void
+    {
+        self::assertHtmlSame(
+            '<ul class="list-inline"><li class="list-inline-item">Docs<ul class="list-unstyled"><li>Install</li></ul></li></ul>',
+            $this->renderComponent('<twig:Tabler:List inline><twig:Tabler:List:Item>Docs<twig:Tabler:List unstyled><twig:Tabler:List:Item>Install</twig:Tabler:List:Item></twig:Tabler:List></twig:Tabler:List:Item></twig:Tabler:List>'),
+        );
+    }
+
     public function testAvatarCover(): void
     {
         self::assertHtmlSame('<span class="avatar avatar-xl avatar-cover">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="xl" cover>JL</twig:Tabler:Avatar>'));

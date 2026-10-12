@@ -15,8 +15,8 @@ lines of text. `unstyled` removes the bullets and the indent (`list-unstyled`).
 
 ## Inline
 
-`inline` lays the items out in a row (`list-inline`): give each `List:Item` `inline` too (`list-inline-item`). `dots`
-adds a dot between the items (`list-inline-dots`), and has no effect without `inline`:
+`inline` lays the items out in a row (`list-inline`), and its `List:Item`s follow it (`list-inline-item`). `dots` adds a
+dot between the items (`list-inline-dots`), and has no effect without `inline`:
 
 <Example name="list/inline" />
 
@@ -31,7 +31,7 @@ adds a dot between the items (`list-inline-dots`), and has no effect without `in
 | Prop        | Type | Default | Description                                                   |
 | ----------- | ---- | ------- | ------------------------------------------------------------- |
 | `separated` | bool | `false` | Stacks the items with a gap (`list-separated`)                |
-| `inline`    | bool | `false` | Items in a row (`list-inline`); set `inline` on each item too |
+| `inline`    | bool | `false` | Items in a row (`list-inline`); its `List:Item`s follow it    |
 | `dots`      | bool | `false` | With `inline`: a dot between the items (`list-inline-dots`)   |
 | `unstyled`  | bool | `false` | No bullets and no indent (`list-unstyled`)                    |
 | `ordered`   | bool | `false` | Renders an `<ol>` instead of a `<ul>`                         |
@@ -40,11 +40,12 @@ Other attributes go to the root `<ul>` (or `<ol>`).
 
 `List:Item`:
 
-| Prop     | Type | Default | Description                                 |
-| -------- | ---- | ------- | ------------------------------------------- |
-| `inline` | bool | `false` | Item of an inline list (`list-inline-item`) |
+| Prop     | Type  | Default | Description                                                                   |
+| -------- | ----- | ------- | ----------------------------------------------------------------------------- |
+| `inline` | bool? | `null`  | Item of an inline list (`list-inline-item`); `null` follows the parent `List` |
 
-Other attributes go to the `<li>`.
+Other attributes go to the `<li>`. An item placed outside a `List`, e.g. in a list of your own markup, needs `inline`
+set by hand; `inline="{{ false }}"` keeps an item of an inline list out of the row.
 
 ## Sub-components
 
