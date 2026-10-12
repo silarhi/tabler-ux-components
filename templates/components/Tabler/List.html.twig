@@ -1,0 +1,45 @@
+{#
+    Tabler List — a plain list without the list-group borders: `separated` stacks
+    blocks with a gap (`.list-separated`), `inline` lays items out in a row
+    (`.list-inline`), `unstyled` just drops the bullets.
+
+    Usage:
+        <twig:Tabler:List separated>
+            <twig:Tabler:List:Item class="d-flex align-items-center">…</twig:Tabler:List:Item>
+        </twig:Tabler:List>
+
+        <twig:Tabler:List inline dots>
+            <twig:Tabler:List:Item inline>Documentation</twig:Tabler:List:Item>
+            <twig:Tabler:List:Item inline>License</twig:Tabler:List:Item>
+        </twig:Tabler:List>
+
+    Props:
+      separated  — vertical stack with a gap between items (list-separated)
+      inline     — items in a row (list-inline); give each List:Item `inline`
+      dots       — with `inline`: a dot between the items (list-inline-dots)
+      unstyled   — no bullets, no indent (list-unstyled)
+      ordered    — render an <ol> instead of a <ul>
+#}
+{% apply trim %}
+{% props
+    separated = false,
+    inline = false,
+    dots = false,
+    unstyled = false,
+    ordered = false,
+%}
+
+{% set list = html_cva(
+    variants: {
+        separated: {true: 'list-separated', false: ''},
+        inline: {true: 'list-inline', false: ''},
+        dots: {true: 'list-inline-dots', false: ''},
+        unstyled: {true: 'list-unstyled', false: ''},
+    },
+) %}
+
+{% set tag = ordered ? 'ol' : 'ul' %}
+<{{ tag }} class="{{ list.apply({separated: separated, inline: inline, dots: inline and dots, unstyled: unstyled}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>
+{% endapply %}

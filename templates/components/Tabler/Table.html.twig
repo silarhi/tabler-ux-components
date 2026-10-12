@@ -36,6 +36,8 @@
       size         — sm | md (default) — sm tightens the cell padding
       mobile       — sm | md | lg | xl | xxl: stack rows into blocks below this breakpoint
                      (table-mobile-{breakpoint}), labelled by each cell's `data-label`
+                     (see <twig:Tabler:Table:Cell label="…">)
+      card         — inside a card: runs edge to edge, no bottom margin (card-table)
 #}
 {% apply trim %}
 {% props
@@ -51,6 +53,7 @@
     selectable = false,
     size = 'md',
     mobile = null,
+    card = false,
 %}
 
 {% set table = html_cva(
@@ -66,6 +69,7 @@
         nowrap: {true: 'table-nowrap', false: ''},
         selectable: {true: 'table-selectable', false: ''},
         size: {sm: 'table-sm', md: ''},
+        card: {true: 'card-table', false: ''},
         mobile: {
             sm: 'table-mobile-sm',
             md: 'table-mobile-md',
@@ -88,6 +92,7 @@
     selectable: selectable,
     size: size,
     mobile: mobile ?? '',
+    card: card,
 }, attributes.render('class')) %}
 {% if responsive %}<div class="table-responsive">{% endif %}
 <table class="{{ classes }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</table>

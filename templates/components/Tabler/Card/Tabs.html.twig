@@ -1,0 +1,21 @@
+{#
+    Card tabs — a set of cards switched by a row of tabs above them (`.card-tabs`).
+    Each pane is a card: give the <twig:Tabler:Tabs:Pane> the `card` class.
+
+    Usage:
+        <twig:Tabler:Card:Tabs>
+            <twig:Tabler:Tabs>
+                <twig:Tabler:Tabs:Item target="overview" active>Overview</twig:Tabler:Tabs:Item>
+                <twig:Tabler:Tabs:Item target="activity">Activity</twig:Tabler:Tabs:Item>
+            </twig:Tabler:Tabs>
+            <twig:Tabler:Tabs:Content>
+                <twig:Tabler:Tabs:Pane id="overview" class="card" active>
+                    <twig:Tabler:Card:Body>…</twig:Tabler:Card:Body>
+                </twig:Tabler:Tabs:Pane>
+                <twig:Tabler:Tabs:Pane id="activity" class="card">…</twig:Tabler:Tabs:Pane>
+            </twig:Tabler:Tabs:Content>
+        </twig:Tabler:Card:Tabs>
+#}
+{% apply trim %}
+<div {{ attributes.defaults({class: 'card-tabs'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}
