@@ -1,5 +1,14 @@
 <p align="center">
     <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/packagist/v/silarhi/tabler-ux-components?style=for-the-badge&label=stable&color=0d6efd&labelColor=1a1a2e">
+        <img src="https://img.shields.io/packagist/v/silarhi/tabler-ux-components?style=for-the-badge&label=stable&color=0d6efd"
+            alt="Latest Stable Version">
+    </picture>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/packagist/dt/silarhi/tabler-ux-components?style=for-the-badge&color=198754&labelColor=1a1a2e">
+        <img src="https://img.shields.io/packagist/dt/silarhi/tabler-ux-components?style=for-the-badge&color=198754" alt="Total Downloads">
+    </picture>
+    <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1&labelColor=1a1a2e">
         <img src="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1" alt="License">
     </picture>
@@ -83,11 +92,8 @@ On the front-end, your app must load [Tabler](https://tabler.io/) **1.6+** (`@ta
 
 ## Installation
 
-The package is not published on Packagist: add the GitHub repository, then require it.
-
 ```bash
-composer config repositories.tabler-ux-components vcs https://github.com/silarhi/tabler-ux-components
-composer require silarhi/tabler-ux-components:dev-main
+composer require silarhi/tabler-ux-components
 ```
 
 If your app uses Symfony Flex, the bundle is registered automatically. Otherwise add it to `config/bundles.php`:
