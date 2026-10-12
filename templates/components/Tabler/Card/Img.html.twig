@@ -12,6 +12,7 @@
       alt       — alternative text (default empty: decorative)
       position  — top (default) | bottom | start | end: the edge whose corners are rounded
 #}
+{% apply trim %}
 {% props
     src,
     alt = '',
@@ -25,3 +26,4 @@
 ) %}
 
 <img src="{{ src }}" alt="{{ alt }}" class="{{ img.apply({position: position}, attributes.render('class')) }}" {{ attributes.without('class', 'src', 'alt') }}>
+{% endapply %}

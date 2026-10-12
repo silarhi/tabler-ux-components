@@ -9,6 +9,7 @@
       variant  — primary | secondary | success | danger | warning | info | dark | light | muted,
                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
 #}
+{% apply trim %}
 {% props
     variant = null,
 %}
@@ -43,3 +44,4 @@
 ) %}
 
 <span class="{{ swatch.apply({variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>
+{% endapply %}

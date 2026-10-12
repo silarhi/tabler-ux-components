@@ -28,6 +28,7 @@
       alwaysOpen  — let generated items stay open when another one opens (no data-bs-parent)
       plus        — generated items use the plus toggle (accordion-button-toggle-plus)
 #}
+{% apply trim %}
 {% props
     id = null,
     items = null,
@@ -62,3 +63,4 @@
         {%- endfor -%}
     {%- endblock -%}
 </div>
+{% endapply %}

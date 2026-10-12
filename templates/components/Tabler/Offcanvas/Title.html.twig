@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Offcanvas:Title>Filters</twig:Tabler:Offcanvas:Title>
 #}
+{% apply trim %}
 <h5 {{ attributes.defaults({class: 'offcanvas-title'}) }}>{%- block content %}{% endblock -%}</h5>
+{% endapply %}

@@ -6,4 +6,6 @@
     Usage (inside <twig:Tabler:Navbar:Nav>):
         <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
 #}
+{% apply trim %}
 <li {{ attributes.defaults({class: 'nav-section-title'}) }}>{%- block content %}{% endblock -%}</li>
+{% endapply %}

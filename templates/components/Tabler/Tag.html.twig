@@ -33,6 +33,7 @@
       badge        — optional counter; mirrored by the `badge` block
       dismissible  — show a remove button labelled "Remove <label>"; mirrored by the `close` block
 #}
+{% apply trim %}
 {% props
     label = null,
     icon = null,
@@ -61,3 +62,4 @@
         {%- endblock -%}
     {%- endblock -%}
 </span>
+{% endapply %}

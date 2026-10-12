@@ -31,13 +31,13 @@ final class ChatTest extends ComponentTestCase
             '<div class="chat"><div class="chat-bubbles">'
             . '<div><div class="row align-items-end">'
             . '<div class="col-auto"><span class="avatar" style="background-image: url(/a.jpg)"></span></div>'
-            . '<div class="col-auto"><div class="chat-bubble">'
+            . '<div class="col col-lg-6"><div class="chat-bubble">'
             . '<div class="chat-bubble-title"><div class="row"><div class="col chat-bubble-author">Alice</div><div class="col-auto chat-bubble-date">10:24</div></div></div>'
             . '<div class="chat-bubble-body"><p>Hey!</p></div>'
             . '</div></div>'
             . '</div></div>'
             . '<div><div class="row align-items-end justify-content-end">'
-            . '<div class="col-auto"><div class="chat-bubble chat-bubble-me">'
+            . '<div class="col col-lg-6"><div class="chat-bubble chat-bubble-me">'
             . '<div class="chat-bubble-title"><div class="row"><div class="col chat-bubble-author">You</div><div class="col-auto chat-bubble-date">10:26</div></div></div>'
             . '<div class="chat-bubble-body"><p>Sure.</p></div>'
             . '</div></div>'
@@ -51,7 +51,7 @@ final class ChatTest extends ComponentTestCase
     public function testMessageWithoutAvatarAndCustomAvatarBlock(): void
     {
         self::assertHtmlSame(
-            '<div class="mb-2"><div class="row align-items-end"><div class="col-auto"><div class="chat-bubble"><div class="chat-bubble-body"><p>Hi</p></div></div></div></div></div>',
+            '<div class="mb-2"><div class="row align-items-end"><div class="col col-lg-6"><div class="chat-bubble"><div class="chat-bubble-body"><p>Hi</p></div></div></div></div></div>',
             $this->renderComponent('<twig:Tabler:Chat:Message text="Hi" class="mb-2" />'),
         );
 
@@ -64,7 +64,7 @@ final class ChatTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<div><div class="row align-items-end justify-content-end">'
-            . '<div class="col-auto"><div class="chat-bubble chat-bubble-me"><div class="chat-bubble-body"><p>Sure.</p></div></div></div>'
+            . '<div class="col col-lg-6"><div class="chat-bubble chat-bubble-me"><div class="chat-bubble-body"><p>Sure.</p></div></div></div>'
             . '<div class="col-auto"><span class="avatar avatar-xs">GS</span></div>'
             . '</div></div>',
             $html,
@@ -122,8 +122,8 @@ final class ChatTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<div class="chat"><div class="chat-bubbles">'
-            . '<div class="chat-bubble"><div class="chat-bubble-body"><p class="text-secondary fst-italic mb-0">Alice is typing <span class="animated-dots"></span></p></div></div>'
-            . '<div class="chat-bubble"><div class="chat-bubble-body"><p class="text-secondary fst-italic mb-0">Typing <span class="animated-dots"></span></p></div></div>'
+            . '<div class="chat-bubble align-self-start"><div class="chat-bubble-body"><p class="text-secondary fst-italic mb-0">Alice is typing <span class="animated-dots"></span></p></div></div>'
+            . '<div class="chat-bubble align-self-start"><div class="chat-bubble-body"><p class="text-secondary fst-italic mb-0">Typing <span class="animated-dots"></span></p></div></div>'
             . '</div></div>',
             $html,
         );

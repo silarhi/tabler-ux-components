@@ -7,6 +7,7 @@
     Props:
       active  — the initially-visible slide (exactly one item must be active)
 #}
+{% apply trim %}
 {% props
     active = false,
 %}
@@ -19,3 +20,4 @@
 ) %}
 
 <div class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

@@ -16,6 +16,7 @@
       square   — rounded corners instead of a circle (avatar-square, Tabler 1.5+)
       image    — background image URL
 #}
+{% apply trim %}
 {% props
     size = 'md',
     variant = null,
@@ -47,3 +48,4 @@
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 
 <span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

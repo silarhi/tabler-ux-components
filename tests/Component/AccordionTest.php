@@ -145,4 +145,10 @@ final class AccordionTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testHeaderLevelOutsideH1ToH6FallsBackToH3(): void
+    {
+        self::assertHtmlSame('<h2 class="accordion-header"></h2>', $this->renderComponent('<twig:Tabler:Accordion:Header level="2" />'));
+        self::assertHtmlSame('<h3 class="accordion-header"></h3>', $this->renderComponent('<twig:Tabler:Accordion:Header level="7" />'));
+    }
 }

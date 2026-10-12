@@ -20,6 +20,7 @@
       time   — optional timestamp shown on the right; mirrored by the `time` block
       text   — optional body text; mirrored by the `body` block
 #}
+{% apply trim %}
 {% props
     title = null,
     time = null,
@@ -44,3 +45,4 @@
         </div>
     {% endblock %}
 </li>
+{% endapply %}

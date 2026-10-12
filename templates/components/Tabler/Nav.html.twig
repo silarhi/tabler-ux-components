@@ -17,6 +17,7 @@
       fill       — items share the width proportionally (nav-fill)
       justified  — items share the width equally (nav-justified)
 #}
+{% apply trim %}
 {% props
     variant = 'default',
     vertical = false,
@@ -42,3 +43,4 @@
 <ul class="{{ nav.apply({variant: variant, vertical: vertical, fill: fill, justified: justified}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>
+{% endapply %}

@@ -22,6 +22,7 @@
       label          — visually-hidden label for the single bar
       indeterminate  — render an indeterminate single bar
 #}
+{% apply trim %}
 {% props
     value = null,
     variant = 'primary',
@@ -52,3 +53,4 @@
         {% endblock %}
     {% endblock %}
 </div>
+{% endapply %}

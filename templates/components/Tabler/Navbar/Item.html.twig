@@ -9,6 +9,7 @@
       active  — marks the current page
       icon    — optional leading Tabler icon name
 #}
+{% apply trim %}
 {% props
     href = null,
     active = false,
@@ -28,3 +29,4 @@
         <span class="nav-link-title">{%- block content %}{% endblock -%}</span>
     </a>
 </li>
+{% endapply %}

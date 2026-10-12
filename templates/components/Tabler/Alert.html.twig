@@ -34,6 +34,7 @@
       dismissible  — show a close button; mirrored by the `dismiss` block
 
 #}
+{% apply trim %}
 {% props
     variant = 'info',
     important = false,
@@ -99,3 +100,4 @@
         {% endblock %}
     {% endblock %}
 </div>
+{% endapply %}

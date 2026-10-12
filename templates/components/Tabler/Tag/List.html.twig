@@ -8,4 +8,6 @@
             <twig:Tabler:Tag label="Beta" />
         </twig:Tabler:Tag:List>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'tag-list'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

@@ -31,6 +31,7 @@
       swatch        — color swatch, any color accepted by Mention:Color (Mention:Color)
       count         — muted number at the end; mirrored by the `count` block
 #}
+{% apply trim %}
 {% props
     label = null,
     href = null,
@@ -61,3 +62,4 @@
         {%- endblock -%}
     {%- endblock -%}
 </{{ tag }}>
+{% endapply %}

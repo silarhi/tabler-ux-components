@@ -30,6 +30,7 @@
     Props:
       messages  — optional array of messages, rendered as Chat:Message rows; mirrored by the `content` block
 #}
+{% apply trim %}
 {% props
     messages = null,
 %}
@@ -51,3 +52,4 @@
         {%- endif -%}
     {%- endblock -%}
 </div>
+{% endapply %}

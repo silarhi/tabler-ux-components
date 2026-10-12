@@ -11,6 +11,7 @@
       variant  — circle color (bg-{color}): theme or palette color
       size     — md (default) | lg (card-stamp-lg)
 #}
+{% apply trim %}
 {% props
     icon = null,
     variant = null,
@@ -59,3 +60,4 @@
         {%- endblock -%}
     </div>
 </div>
+{% endapply %}

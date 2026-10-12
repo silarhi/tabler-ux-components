@@ -9,8 +9,10 @@
     Props:
       tag  — div (default) | li, inside a ul/ol list group
 #}
+{% apply trim %}
 {% props
     tag = 'div',
 %}
 
 <{{ tag }} {{ attributes.defaults({class: 'list-group-header'}) }}>{%- block content %}{% endblock -%}</{{ tag }}>
+{% endapply %}

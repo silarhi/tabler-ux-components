@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Dropdown:Header>Actions</twig:Tabler:Dropdown:Header>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'dropdown-header'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

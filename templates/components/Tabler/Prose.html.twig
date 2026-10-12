@@ -7,6 +7,8 @@
             <p>Body copy with <strong>emphasis</strong>…</p>
         </twig:Tabler:Prose>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'prose'}) }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

@@ -4,4 +4,6 @@
     Usage:
       <twig:Tabler:Modal:Close />
 #}
+{% apply trim %}
 <button type="button" {{ attributes.defaults({class: 'btn-close', 'data-bs-dismiss': 'modal', 'aria-label': 'Close'}) }}></button>
+{% endapply %}

@@ -9,6 +9,7 @@
       variant    — primary | secondary | success | danger | warning | info | dark | light
       tooltip  — optional tooltip text (Bootstrap tooltip data API)
 #}
+{% apply trim %}
 {% props
     variant = null,
     tooltip = null,
@@ -31,3 +32,4 @@
 ) %}
 
 <div class="{{ block.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if tooltip is not null %} data-bs-toggle="tooltip" data-bs-title="{{ tooltip }}"{% endif %} {{ attributes.without('class') }}></div>
+{% endapply %}

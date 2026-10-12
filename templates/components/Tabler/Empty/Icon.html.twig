@@ -4,4 +4,6 @@
     Usage:
       <twig:Tabler:Empty:Icon><twig:Tabler:Icon name="mood-empty" /></twig:Tabler:Empty:Icon>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'empty-icon'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

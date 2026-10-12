@@ -27,6 +27,7 @@
       blink         — pulsing animation, for a live counter (badge-blink)
       href          — when set, renders <a href> instead of <span>
 #}
+{% apply trim %}
 {% props
     variant = 'primary',
     light = false,
@@ -94,3 +95,4 @@
 <{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
+{% endapply %}

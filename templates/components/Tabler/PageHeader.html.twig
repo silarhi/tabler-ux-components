@@ -20,6 +20,7 @@
       pretitle  — small overline above the title; mirrored by the `pretitle` block
       title     — page title; mirrored by the `title` block
 #}
+{% apply trim %}
 {% props
     pretitle = null,
     title = null,
@@ -40,3 +41,4 @@
         </div>
     {% endblock %}
 </div>
+{% endapply %}

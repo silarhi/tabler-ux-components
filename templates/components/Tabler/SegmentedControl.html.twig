@@ -13,6 +13,7 @@
       vertical   — stack the segments in a column (nav-segmented-vertical)
       size       — sm | md (default) | lg
 #}
+{% apply trim %}
 {% props
     fullWidth = false,
     vertical = false,
@@ -31,3 +32,4 @@
 <nav class="{{ segmented.apply({fullWidth: fullWidth, vertical: vertical, size: size}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </nav>
+{% endapply %}

@@ -13,6 +13,7 @@
 
     With no content it renders a plain <hr>; with content it renders a `.hr-text`.
 #}
+{% apply trim %}
 {% props
     position = 'center',
     variant = null,
@@ -44,3 +45,4 @@
 {% else %}
     <hr {{ attributes.defaults({class: 'hr'}) }}>
 {% endif %}
+{% endapply %}

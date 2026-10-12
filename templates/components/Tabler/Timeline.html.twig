@@ -12,6 +12,7 @@
     Props:
       simple — compact, icon-less style (timeline-simple)
 #}
+{% apply trim %}
 {% props
     simple = false,
 %}
@@ -26,3 +27,4 @@
 <ul class="{{ timeline.apply({simple: simple}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>
+{% endapply %}

@@ -32,6 +32,7 @@
       horizontal   — lay the items out in a row: bare for always, or from a breakpoint sm | md | lg | xl | xxl
       card         — use the card padding inside a card (card-list-group)
 #}
+{% apply trim %}
 {% props
     tag = 'div',
     items = null,
@@ -86,3 +87,4 @@
         {%- endfor -%}
     {%- endblock -%}
 </{{ tag }}>
+{% endapply %}

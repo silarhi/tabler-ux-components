@@ -8,10 +8,15 @@
     Props:
       image  — background image URL
 #}
+{% apply trim %}
 {% props
     image = null,
 %}
 
-<span class="{{ ('avatar avatar-xs tag-avatar ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>
+{# the background image goes first so a user `style` can still override it #}
+{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+<span class="{{ ('avatar avatar-xs tag-avatar ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>
     {%- block content %}{% endblock -%}
 </span>
+{% endapply %}

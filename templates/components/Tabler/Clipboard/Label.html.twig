@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Clipboard:Label>Copy link</twig:Tabler:Clipboard:Label>
 #}
+{% apply trim %}
 <span {{ attributes.defaults({class: 'clipboard-label'}) }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

@@ -37,6 +37,7 @@
       mobile       — sm | md | lg | xl | xxl: stack rows into blocks below this breakpoint
                      (table-mobile-{breakpoint}), labelled by each cell's `data-label`
 #}
+{% apply trim %}
 {% props
     responsive = true,
     vcenter = false,
@@ -91,3 +92,4 @@
 {% if responsive %}<div class="table-responsive">{% endif %}
 <table class="{{ classes }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</table>
 {% if responsive %}</div>{% endif %}
+{% endapply %}

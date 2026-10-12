@@ -8,6 +8,7 @@
       id      — must match the target of its <twig:Tabler:Tabs:Item>
       active  — the initially-visible pane
 #}
+{% apply trim %}
 {% props
     id,
     active = false,
@@ -21,3 +22,4 @@
 ) %}
 
 <div class="{{ pane.apply({active: active}, attributes.render('class')) }}" id="{{ id }}" role="tabpanel" {{ attributes.without('class', 'id') }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

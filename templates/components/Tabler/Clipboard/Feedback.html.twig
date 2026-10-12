@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Clipboard:Feedback class="text-green">Copied</twig:Tabler:Clipboard:Feedback>
 #}
+{% apply trim %}
 <span {{ attributes.defaults({class: 'clipboard-feedback'}) }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

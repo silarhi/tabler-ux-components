@@ -19,6 +19,7 @@
       label     — resting text (default "Copy"); mirrored by the `label` block
       feedback  — text shown after a copy (default "Copied"); mirrored by the `feedback` block
 #}
+{% apply trim %}
 {% props
     target = null,
     text = null,
@@ -36,3 +37,4 @@
         {%- block feedback -%}<twig:Tabler:Clipboard:Feedback>{{ feedback }}</twig:Tabler:Clipboard:Feedback>{%- endblock -%}
     {%- endblock -%}
 </button>
+{% endapply %}

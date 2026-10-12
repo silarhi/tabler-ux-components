@@ -12,6 +12,7 @@
       counter   — numbered steps (steps-counter)
       vertical  — vertical layout (steps-vertical)
 #}
+{% apply trim %}
 {% props
     counter = false,
     vertical = false,
@@ -28,3 +29,4 @@
 <div class="{{ steps.apply({counter: counter, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

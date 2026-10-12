@@ -22,6 +22,7 @@
       vertical  — stack the buttons (btn-group-vertical)
       size      — sm | md (default) | lg (btn-group-sm / btn-group-lg)
 #}
+{% apply trim %}
 {% props
     vertical = false,
     size = 'md',
@@ -37,3 +38,4 @@
 <div class="{{ group.apply({vertical: vertical, size: size}, attributes.render('class')) }}" {{ attributes.defaults({role: 'group'}).without('class') }}>
     {%- block content %}{% endblock -%}
 </div>
+{% endapply %}

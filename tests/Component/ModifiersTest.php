@@ -198,7 +198,7 @@ final class ModifiersTest extends ComponentTestCase
     public function testAvatarListBrandAndUpload(): void
     {
         self::assertHtmlSame(
-            '<div class="avatar-list avatar-list-stacked avatar-list-sm"><span class="avatar">JL<span class="avatar-brand" style="background-image: url(/gh.svg)"></span></span></div>',
+            '<div class="avatar-list avatar-list-stacked avatar-list-sm"><span class="avatar">JL<span class="avatar-brand bg-cover" style="background-image: url(/gh.svg)"></span></span></div>',
             $this->renderComponent('<twig:Tabler:Avatar:List stacked size="sm"><twig:Tabler:Avatar>JL<twig:Tabler:Avatar:Brand image="/gh.svg" /></twig:Tabler:Avatar></twig:Tabler:Avatar:List>'),
         );
         self::assertHtmlSame(

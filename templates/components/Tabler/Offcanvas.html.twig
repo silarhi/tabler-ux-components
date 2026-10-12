@@ -27,6 +27,7 @@
       narrow       — narrower panel, 20rem (offcanvas-narrow)
       floating     — gap between the panel and the viewport edges (offcanvas-floating, Tabler 1.6+)
 #}
+{% apply trim %}
 {% props
     id = null,
     placement = 'start',
@@ -71,3 +72,4 @@
         {% endblock %}
     {% endblock %}
 </div>
+{% endapply %}

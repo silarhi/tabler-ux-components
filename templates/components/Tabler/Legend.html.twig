@@ -34,6 +34,7 @@
       active   — keeps the hover background (active)
       off      — dims the item, for a hidden series (legend-off)
 #}
+{% apply trim %}
 {% props
     variant = null,
     size = 'md',
@@ -89,3 +90,4 @@
         {%- endblock -%}
     {%- endblock -%}
 </{{ tag }}>
+{% endapply %}

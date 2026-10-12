@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Datagrid:Item:Title>Registrar</twig:Tabler:Datagrid:Item:Title>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'datagrid-title'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

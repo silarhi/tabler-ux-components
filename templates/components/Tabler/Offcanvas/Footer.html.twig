@@ -6,4 +6,6 @@
             <twig:Tabler:Button variant="primary" block>Apply</twig:Tabler:Button>
         </twig:Tabler:Offcanvas:Footer>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'offcanvas-footer'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

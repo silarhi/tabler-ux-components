@@ -12,6 +12,7 @@
       size   — md (default) | sm
       label  — visually-hidden status text (accessibility)
 #}
+{% apply trim %}
 {% props
     type = 'border',
     variant = null,
@@ -45,3 +46,4 @@
         {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
     {%- endblock -%}
 </div>
+{% endapply %}

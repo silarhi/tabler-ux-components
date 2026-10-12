@@ -13,9 +13,11 @@
     Props:
       background  — add a darkening overlay behind the caption (carousel-caption-background)
 #}
+{% apply trim %}
 {% props
     background = false,
 %}
 
 {%- if background -%}<div class="carousel-caption-background"></div>{%- endif -%}
 <div class="{{ ('carousel-caption ' ~ attributes.render('class'))|trim }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

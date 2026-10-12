@@ -11,6 +11,7 @@
       split    — caret-only half of a split button, next to a <twig:Tabler:Button> in a .btn-group
                  (dropdown-toggle-split); give it an `aria-label`
 #}
+{% apply trim %}
 {% props
     variant = null,
     noCaret = false,
@@ -36,3 +37,4 @@
 ) %}
 
 <button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>
+{% endapply %}
