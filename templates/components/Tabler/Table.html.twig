@@ -13,7 +13,6 @@
       striped     — zebra striping (table-striped)
       hover       — row hover highlight (table-hover)
       bordered    — cell borders (table-bordered)
-      cards       — card-style rows (table-cards)
 #}
 {% props
     responsive = true,
@@ -21,7 +20,6 @@
     striped = false,
     hover = false,
     bordered = false,
-    cards = false,
 %}
 
 {% set table = html_cva(
@@ -31,11 +29,10 @@
         striped: {true: 'table-striped', false: ''},
         hover: {true: 'table-hover', false: ''},
         bordered: {true: 'table-bordered', false: ''},
-        cards: {true: 'table-cards', false: ''},
     },
 ) %}
 
-{% set classes = table.apply({vcenter: vcenter, striped: striped, hover: hover, bordered: bordered, cards: cards}, attributes.render('class')) %}
+{% set classes = table.apply({vcenter: vcenter, striped: striped, hover: hover, bordered: bordered}, attributes.render('class')) %}
 {%- set inner -%}{%- block content %}{% endblock -%}{%- endset -%}
 
 {% if responsive %}

@@ -28,7 +28,7 @@ final class BadgeTest extends ComponentTestCase
     {
         $html = $this->renderComponent('<twig:Tabler:Badge variant="primary" light>Beta</twig:Tabler:Badge>');
 
-        self::assertHtmlSame('<span class="badge bg-primary-lt text-primary-lt-fg">Beta</span>', $html);
+        self::assertHtmlSame('<span class="badge bg-primary-lt">Beta</span>', $html);
     }
 
     public function testPillVariant(): void
@@ -49,7 +49,7 @@ final class BadgeTest extends ComponentTestCase
     {
         $html = $this->renderComponent('<twig:Tabler:Badge href="/tags/php" variant="primary" light>PHP</twig:Tabler:Badge>');
 
-        self::assertHtmlSame('<a href="/tags/php" class="badge bg-primary-lt text-primary-lt-fg">PHP</a>', $html);
+        self::assertHtmlSame('<a href="/tags/php" class="badge bg-primary-lt">PHP</a>', $html);
     }
 
     public function testConsumerClassMerges(): void

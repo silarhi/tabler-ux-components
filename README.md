@@ -59,7 +59,7 @@
 - **shadcn composition** — an all-in-one entry point (`<twig:Tabler:Card title="…" />`) plus, where it makes sense, dedicated sub-components (`<twig:Tabler:Card:Header>`, `<twig:Tabler:Card:Body>`, …).
 - **Block-mirrored props** — on composite components, each prop has a matching Twig block; override one block without rewriting the rest.
 - **`html_cva()` variants** — classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html) from `twig/html-extra`, Twig's take on shadcn's CVA.
-- **Plain Tabler markup** — components render Tabler / Bootstrap 5 classes; Modal, Dropdown, Carousel, Tabs and Offcanvas use Bootstrap's own `data-bs-*` JavaScript.
+- **Plain Tabler markup** — components render Tabler / Bootstrap 5 classes; Modal, Dropdown, Carousel, Tabs and Offcanvas use the `data-bs-*` JavaScript that ships in `tabler.js`.
 - **Attribute forwarding** — extra attributes (`class`, `id`, `data-*`, …) are merged onto the root element.
 - **Template-only** — anonymous Twig components, no PHP classes to register or configure.
 
@@ -72,7 +72,7 @@
 | [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) | 2.21+ / 3.x     |
 | Twig (`twig/twig`, `twig/extra-bundle`, `twig/html-extra`)                                    | 3.12+ / 4.x     |
 
-On the front-end, your app must load [Tabler](https://tabler.io/)'s CSS (and Bootstrap's JS for the interactive components). `Icon` and the `icon` props expect the [`@tabler/icons-webfont`](https://tabler.io/icons) font.
+On the front-end, your app must load [Tabler](https://tabler.io/) **1.6+** (`@tabler/core`): its CSS, and `tabler.js` for the interactive components. Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript, so do not load `bootstrap.js` next to it. `Icon` and the `icon` props expect the [`@tabler/icons-webfont`](https://tabler.io/icons) font.
 
 ## Installation
 
@@ -144,8 +144,8 @@ Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 | Tag                               | Purpose                                                                |
 | --------------------------------- | ---------------------------------------------------------------------- |
 | `<twig:Tabler:Alert:Icon>`        | Slot wrapper; put any icon markup inside (Tabler Icons, SVG, ux-icons) |
-| `<twig:Tabler:Alert:Title>`       | Renders `<h4 class="alert-title">`                                     |
-| `<twig:Tabler:Alert:Description>` | Renders `<div class="text-secondary">`                                 |
+| `<twig:Tabler:Alert:Title>`       | Renders `<h4 class="alert-heading">`                                   |
+| `<twig:Tabler:Alert:Description>` | Renders `<div class="alert-description">`                              |
 | `<twig:Tabler:Alert:Dismiss>`     | The close button (rendered automatically when `dismissible`)           |
 
 #### Blocks (one per prop)
