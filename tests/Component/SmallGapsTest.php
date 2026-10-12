@@ -53,7 +53,7 @@ final class SmallGapsTest extends ComponentTestCase
             '<div class="card">'
             . '<img src="/desk.jpg" alt="" class="card-img">'
             . '<div class="card-img-overlay card-img-overlay-dark">Over</div>'
-            . '<div class="card-cover card-cover-blurred text-white" style="background-image: url(/books.jpg)">Reading</div>'
+            . '<div class="card-cover card-cover-blurred text-white" style="background-image: url(/books.jpg)"><div class="position-relative">Reading</div></div>'
             . '<div class="card-code"><pre>code</pre></div>'
             . '</div>',
             $html,
@@ -89,8 +89,8 @@ final class SmallGapsTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<div class="progress-stacked progress-separated">'
-            . '<div class="progress" style="width: 15%" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" aria-label="Photos"><div class="progress-bar bg-primary" role="progressbar"></div></div>'
-            . '<div class="progress" style="width: 30%" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" aria-label="30% of total"><div class="progress-bar bg-success progress-bar-striped" role="progressbar"></div></div>'
+            . '<div class="progress" style="width: 15%" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" aria-label="Photos"><div class="progress-bar bg-primary"></div></div>'
+            . '<div class="progress" style="width: 30%" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" aria-label="30% of total"><div class="progress-bar bg-success progress-bar-striped"></div></div>'
             . '</div>',
             $html,
         );
@@ -119,5 +119,23 @@ final class SmallGapsTest extends ComponentTestCase
     public function testAvatarCover(): void
     {
         self::assertHtmlSame('<span class="avatar avatar-xl avatar-cover">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="xl" cover>JL</twig:Tabler:Avatar>'));
+    }
+
+    public function testCoverKeepsAUserStyleAndItsContentAboveTheOverlay(): void
+    {
+        self::assertHtmlSame(
+            '<div class="card-cover" style="background-image: url(/c.jpg); height: 6rem"><div class="position-relative"><h3>Hi</h3></div></div>',
+            $this->renderComponent('<twig:Tabler:Card:Cover image="/c.jpg" style="height: 6rem"><h3>Hi</h3></twig:Tabler:Card:Cover>'),
+        );
+    }
+
+    public function testSegmentFillHasNoRoleAndKeepsAUserStyle(): void
+    {
+        // The segment is the progressbar: a second, unnamed one inside it would be announced twice
+        self::assertHtmlSame(
+            '<div class="progress" style="width: 30%; transition: none" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" aria-label="30% of total">'
+            . '<div class="progress-bar bg-success progress-bar-striped progress-bar-animated"></div></div>',
+            $this->renderComponent('<twig:Tabler:Progress:Segment value="30" variant="success" animated style="transition: none" />'),
+        );
     }
 }

@@ -68,6 +68,12 @@ height and scrolls the rest:
 
 <Example name="dropdown/indicator" minHeight="13rem" />
 
+An item holding a checkbox or a radio cannot be a link: set `tag="label"` on it, so a click anywhere on the item toggles
+the input. `tag` also takes `button`, for an action that is not a navigation. Add `data-bs-auto-close="outside"` to the
+toggle to keep the menu open while the user ticks several options:
+
+<Example name="dropdown/checkboxes" minHeight="13rem" />
+
 ## Sub-components
 
 | Component            | Renders                                                                                 |
@@ -75,7 +81,7 @@ height and scrolls the rest:
 | `Dropdown`           | `<div class="dropdown">` around the toggle and the menu                                 |
 | `Dropdown:Toggle`    | `<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">`          |
 | `Dropdown:Menu`      | `<div class="dropdown-menu">`                                                           |
-| `Dropdown:Item`      | `<a class="dropdown-item">`                                                             |
+| `Dropdown:Item`      | `<a class="dropdown-item">`, or the element set by `tag`                                |
 | `Dropdown:Header`    | `<div class="dropdown-header">`: a non-interactive label above a group of items         |
 | `Dropdown:Text`      | `<span class="dropdown-item-text">`: plain text that is not an action                   |
 | `Dropdown:Indicator` | `<span class="dropdown-item-indicator">`: a leading avatar, checkbox or flag in an item |
@@ -116,9 +122,10 @@ take no props.
 
 ### Dropdown:Item
 
-| Prop       | Type    | Default | Description                                        |
-| ---------- | ------- | ------- | -------------------------------------------------- |
-| `href`     | string? | `null`  | Link target, `#` when `null`                       |
-| `active`   | bool    | `false` | Highlighted item (`active`)                        |
-| `disabled` | bool    | `false` | Non-interactive item (`disabled`, `aria-disabled`) |
-| `icon`     | string? | `null`  | Leading Tabler icon name (`dropdown-item-icon`)    |
+| Prop       | Type    | Default | Description                                                                                   |
+| ---------- | ------- | ------- | --------------------------------------------------------------------------------------------- |
+| `tag`      | string  | `'a'`   | `a` `button` `label`… Only an `<a>` gets the `href`; a `button` gets `type="button"`          |
+| `href`     | string? | `null`  | Link target, `#` when `null`                                                                  |
+| `active`   | bool    | `false` | Highlighted item (`active`)                                                                   |
+| `disabled` | bool    | `false` | Non-interactive item (`disabled`, `aria-disabled`, or the `disabled` attribute on a `button`) |
+| `icon`     | string? | `null`  | Leading Tabler icon name (`dropdown-item-icon`)                                               |

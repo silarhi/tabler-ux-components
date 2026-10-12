@@ -45,7 +45,8 @@ render:
 ## Labelled segments
 
 `Progress:Stacked` follows Bootstrap 5.3's stacked markup (`progress-stacked`): each `Progress:Segment` is its own
-track, sized to its share, with its own `role="progressbar"` and `aria-label`. Use it when each segment needs a name,
+track, sized to its share, with its own `role="progressbar"` and `aria-label`; the fill inside it has no role. Use it
+when each segment needs a name,
 such as the share of each file type in a storage quota. `separated` adds a gap between the segments
 (`progress-separated`):
 
@@ -72,7 +73,7 @@ Other attributes go to the root `<div class="progress">`.
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | `Progress:Bar`     | `<div class="progress-bar" role="progressbar">`, with its width and `aria-value*` attributes             |
 | `Progress:Stacked` | `<div class="progress-stacked">`: a row of `Progress:Segment`s; `separated` (default `false`) adds a gap |
-| `Progress:Segment` | `<div class="progress" role="progressbar">` sized to its share, holding a full `Progress:Bar`            |
+| `Progress:Segment` | `<div class="progress" role="progressbar">` sized to its share, holding a `<div class="progress-bar">`   |
 
 ### `Progress:Bar` props
 
@@ -97,7 +98,7 @@ Other attributes go to the bar `<div>`. A `style` is added after the width, so i
 | `striped`  | bool    | `false`     | Diagonal stripes (`progress-bar-striped`)                          |
 | `animated` | bool    | `false`     | Animated stripes (`progress-bar-animated`)                         |
 
-A `style` attribute on `Progress:Segment` is dropped; other attributes go to the `<div class="progress">`.
+Other attributes go to the `<div class="progress">`. A `style` attribute is merged after the width.
 
 ## Blocks
 

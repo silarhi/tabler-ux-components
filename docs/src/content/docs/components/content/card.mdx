@@ -90,8 +90,8 @@ that darkens the bottom of the image, so white text stays readable (`card-img-ov
 ## Cover
 
 `Card:Cover` is a header with a background photo under a dark overlay (`card-cover`). `image` sets the photo, and
-`blurred` blurs it (`card-cover-blurred`). The overlay is drawn over the content that is not positioned: give the
-content `position-relative`, and `text-white` on the element itself, since headings set their own color:
+`blurred` blurs it (`card-cover-blurred`). The content is wrapped in a `<div class="position-relative">`, which keeps it
+above the overlay. Put `text-white` on the text itself, since headings set their own color:
 
 <Example name="card/cover" />
 
@@ -225,7 +225,7 @@ Other attributes go to the root `<div class="card">` (or `<a>`).
 | `image`   | string? | `null`  | Photo URL, set as an inline `background-image` style      |
 | `blurred` | bool    | `false` | Blurs the photo behind the overlay (`card-cover-blurred`) |
 
-A `style` attribute on `Card:Cover` is dropped; other attributes go to the `<div class="card-cover">`.
+Other attributes go to the `<div class="card-cover">`. A `style` attribute is merged after the `background-image`.
 
 `Card:Stamp`:
 

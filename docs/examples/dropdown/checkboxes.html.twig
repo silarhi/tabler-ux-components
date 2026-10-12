@@ -1,0 +1,11 @@
+<twig:Tabler:Dropdown>
+    <twig:Tabler:Dropdown:Toggle data-bs-auto-close="outside">Columns</twig:Tabler:Dropdown:Toggle>
+    <twig:Tabler:Dropdown:Menu>
+        {% for column in [{label: 'Customer', checked: true}, {label: 'Amount', checked: true}, {label: 'Due date', checked: false}] %}
+            <twig:Tabler:Dropdown:Item tag="label">
+                <twig:Tabler:Dropdown:Indicator><input type="checkbox" class="form-check-input m-0"{% if column.checked %} checked{% endif %}></twig:Tabler:Dropdown:Indicator>
+                {{ column.label }}
+            </twig:Tabler:Dropdown:Item>
+        {% endfor %}
+    </twig:Tabler:Dropdown:Menu>
+</twig:Tabler:Dropdown>
