@@ -1,0 +1,27 @@
+{#
+    Progress segment — one part of a <twig:Tabler:Progress:Stacked>: a `.progress`
+    track sized to its share, holding a full bar.
+
+    Usage:
+        <twig:Tabler:Progress:Segment value="30" variant="success" label="Videos" />
+
+    Props:
+      value     — share of the whole, in percent (sets the width and aria-valuenow)
+      variant   — bar color (same values as <twig:Tabler:Progress:Bar>)
+      label     — accessible name (aria-label, default "{value}% of total")
+      striped   — diagonal stripes (progress-bar-striped)
+      animated  — animated stripes (progress-bar-animated)
+#}
+{% apply trim %}
+{% props
+    value = 0,
+    variant = 'primary',
+    label = null,
+    striped = false,
+    animated = false,
+%}
+
+<div {{ attributes.defaults({class: 'progress'}).without('style') }} style="width: {{ value }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ label ?? (value ~ '% of total') }}">
+    <twig:Tabler:Progress:Bar variant="{{ variant }}" striped="{{ striped }}" animated="{{ animated }}" />
+</div>
+{% endapply %}

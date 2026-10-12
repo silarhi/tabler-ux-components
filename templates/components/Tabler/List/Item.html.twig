@@ -1,0 +1,18 @@
+{#
+    List item — one entry of a <twig:Tabler:List>.
+
+    Usage:
+        <twig:Tabler:List:Item>Egan Poetz</twig:Tabler:List:Item>
+        <twig:Tabler:List:Item inline>License</twig:Tabler:List:Item>
+
+    Props:
+      inline  — item of an inline list (list-inline-item)
+#}
+{% apply trim %}
+{% props
+    inline = false,
+%}
+
+{% set classes = ((inline ? 'list-inline-item ' : '') ~ attributes.render('class'))|trim %}
+<li{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</li>
+{% endapply %}

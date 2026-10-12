@@ -11,7 +11,8 @@
     Props:
       variant      — color: default | primary | secondary | success | danger | warning | info | dark | light
                      (`default` is Tabler's neutral button: plain .btn, .btn-outline or .btn-ghost)
-      appearance   — filled (default) | outline | ghost | link (btn-link, ignores `variant`)
+      appearance   — filled (default) | outline | ghost | link (btn-link) | action (btn-action: quiet icon
+                     button for card headers and table rows; give it an aria-label) — link and action ignore `variant`
       size         — sm | md (default) | lg | xl
       href         — when set, renders <a href> instead of <button>
       type         — button (default) | submit | reset (ignored for links)
@@ -70,6 +71,7 @@
         {appearance: ['filled'], variant: ['dark'], class: 'btn-dark'},
         {appearance: ['filled'], variant: ['light'], class: 'btn-light'},
         {appearance: ['link'], class: 'btn-link'},
+        {appearance: ['action'], class: 'btn-action'},
         {appearance: ['outline'], variant: ['default'], class: 'btn-outline'},
         {appearance: ['outline'], variant: ['primary'], class: 'btn-outline-primary'},
         {appearance: ['outline'], variant: ['secondary'], class: 'btn-outline-secondary'},

@@ -1,0 +1,21 @@
+{#
+    Card image overlay — content laid over a full card image (`.card-img-overlay`).
+
+    Usage:
+        <twig:Tabler:Card>
+            <twig:Tabler:Card:Img src="/photos/desk.jpg" position="full" />
+            <twig:Tabler:Card:ImgOverlay dark>
+                <h3 class="card-title text-white">Working from home</h3>
+            </twig:Tabler:Card:ImgOverlay>
+        </twig:Tabler:Card>
+
+    Props:
+      dark  — gradient scrim that keeps light text readable (card-img-overlay-dark)
+#}
+{% apply trim %}
+{% props
+    dark = false,
+%}
+
+<div {{ attributes.defaults({class: dark ? 'card-img-overlay card-img-overlay-dark' : 'card-img-overlay'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

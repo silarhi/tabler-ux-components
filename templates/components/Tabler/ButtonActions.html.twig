@@ -1,0 +1,12 @@
+{#
+    Tabler ButtonActions — groups quiet action buttons with a consistent gap, e.g. in a card header (`.btn-actions`).
+
+    Usage:
+        <twig:Tabler:ButtonActions>
+            <twig:Tabler:Button appearance="action" href="/edit" aria-label="Edit"><twig:Tabler:Icon name="edit" /></twig:Tabler:Button>
+            <twig:Tabler:Button appearance="action" aria-label="Delete"><twig:Tabler:Icon name="trash" /></twig:Tabler:Button>
+        </twig:Tabler:ButtonActions>
+#}
+{% apply trim %}
+<div {{ attributes.defaults({class: 'btn-actions'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

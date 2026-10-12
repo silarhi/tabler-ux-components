@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `Modal` `blur` and `size="fullscreen"`; `Button` `appearance="link"`, `floating`, `animateIcon`; `Icon` `size` and `filled`.
   - `Card` `borderless`, `transparent`, `stacked`, `active`, `inactive`, `rotate`, `link`; `Card:Body` `scrollable`; new `Card:Img`, `Card:Stamp`, `Card:Progress`, `Card:Meta` and `Card:Btn`.
   - New `Avatar:List`, `Avatar:Brand` and `Avatar:Upload`; `Breadcrumb` `bullets`, `Divider` `spaceless`, `Tracking` `squares`, `Empty` `bordered` with `Empty:Header` / `Empty:Img`, and `Toast:Container`.
+- The last Tabler 1.6 classes:
+  - `Button` `appearance="action"` (`btn-action`) and a `ButtonActions` wrapper.
+  - `Card:ImgOverlay` (`dark`), `Card:Cover` (`image`, `blurred`), `Card:Code`, `Card:Tabs`, and `Card:Img` `position="full"`.
+  - `Table` `card` (`card-table`) and `Table:Cell` (`label` for stacked rows, `truncate`).
+  - `Progress:Stacked` (`separated`) and `Progress:Segment`, Bootstrap 5.3's `progress-stacked` markup.
+  - `Dropdown:Indicator`, `Avatar` `cover`, and a plain `List` + `List:Item` (`separated`, `inline` with `dots`, `unstyled`, `ordered`).
 
 ### Changed
 
