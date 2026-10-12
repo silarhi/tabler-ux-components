@@ -14,8 +14,6 @@
     active = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set item = html_cva(
     base: 'breadcrumb-item',
     variants: {
@@ -24,9 +22,8 @@
 ) %}
 
 <li class="{{ item.apply({active: active}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
-    {%- if href is not null and not active -%}
-        <a href="{{ href }}">{{ label|raw }}</a>
-    {%- else -%}
-        {{- label|raw -}}
-    {%- endif -%}
+    {%- set link = href is not null and not active -%}
+    {%- if link %}<a href="{{ href }}">{% endif -%}
+    {%- block content %}{% endblock -%}
+    {%- if link %}</a>{% endif -%}
 </li>

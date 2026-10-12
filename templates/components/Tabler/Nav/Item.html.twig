@@ -16,8 +16,6 @@
     disabled = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set link = html_cva(
     base: 'nav-link',
     variants: {
@@ -27,5 +25,5 @@
 ) %}
 
 <li class="nav-item">
-    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
 </li>

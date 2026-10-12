@@ -90,12 +90,10 @@
     ],
 ) %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
-{% if href is not null %}
-    {%- set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) -%}
-    <a href="{{ href }}" class="{{ classes }}" {{ attributes.defaults({role: 'button'}).without('class', 'href') }}{{ disabled ? ' aria-disabled="true" tabindex="-1"' : '' }}>{{- label|raw -}}</a>
-{% else %}
-    {%- set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) -%}
-    <button type="{{ type }}" class="{{ classes }}" {{ attributes.without('class', 'type') }}{{ disabled ? ' disabled' : '' }}>{{- label|raw -}}</button>
-{% endif %}
+{% set link = href is not null %}
+{% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: link and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
+{% set tag = link ? 'a' : 'button' %}
+<{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ (link ? attributes.defaults({role: 'button'}) : attributes).without('class', 'href', 'type') }}
+    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

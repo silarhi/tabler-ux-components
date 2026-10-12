@@ -61,12 +61,11 @@
     disabled: disabled,
     variant: variant ?? '',
 }, attributes.render('class')) %}
-{%- set inner -%}{%- block content %}{{ label }}{% endblock -%}{%- endset -%}
-
-{% if href is not null %}
-    <a{% if not disabled %} href="{{ href }}"{% endif %} class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} aria-disabled="true" tabindex="-1"{% endif %} {{ attributes.without('class', 'href') }}>{{ inner|raw }}</a>
-{% elseif button %}
-    <button type="button" class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} disabled{% endif %} {{ attributes.without('class', 'type') }}>{{ inner|raw }}</button>
-{% else %}
-    <{{ tag }} class="{{ classes }}"{% if active %} aria-current="true"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class') }}>{{ inner|raw }}</{{ tag }}>
-{% endif %}
+{% set element = href is not null ? 'a' : (button ? 'button' : tag) %}
+<{{ element }}
+    {%- if href is not null and not disabled %} href="{{ href }}"{% endif %}
+    {%- if button %} type="button"{% endif %} class="{{ classes }}"
+    {%- if active %} aria-current="true"{% endif %}
+    {%- if disabled %}{% if button %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
+    {%- block content %}{{ label }}{% endblock -%}
+</{{ element }}>
