@@ -151,4 +151,26 @@ final class AccordionTest extends ComponentTestCase
         self::assertHtmlSame('<h2 class="accordion-header"></h2>', $this->renderComponent('<twig:Tabler:Accordion:Header level="2" />'));
         self::assertHtmlSame('<h3 class="accordion-header"></h3>', $this->renderComponent('<twig:Tabler:Accordion:Header level="7" />'));
     }
+
+    public function testWithoutIdGeneratesOneForTheItems(): void
+    {
+        // A fixed fallback ("accordion-1", …) made two accordions without id share their item ids
+        $html = $this->renderComponent('<twig:Tabler:Accordion items="{{ [{title: \'A\', text: \'a\'}, {title: \'B\', text: \'b\'}] }}" />');
+
+        self::assertSame(1, preg_match('/^<div class="accordion" id="(accordion-\d{6})"/', $html, $match));
+        $id = $match[1] ?? '';
+        self::assertStringContainsString('data-bs-target="#' . $id . '-1"', $html);
+        self::assertStringContainsString('<div id="' . $id . '-2" class="accordion-collapse collapse" data-bs-parent="#' . $id . '"', $html);
+    }
+
+    public function testItemsLevelAndToggleIcon(): void
+    {
+        $html = (string) preg_replace('/\s+/', ' ', $this->renderComponent('<twig:Tabler:Accordion id="faq" level="2" toggleIcon="plus" items="{{ [{title: \'A\', text: \'a\'}, {title: \'B\', text: \'b\', level: 4, toggleIcon: \'arrow-down\'}] }}" />'));
+
+        // The accordion's level and toggleIcon apply to every generated item; an item's own keys win
+        self::assertStringContainsString('<h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-1"', $html);
+        self::assertStringContainsString('<i class="ti ti-plus" aria-hidden="true">', $html);
+        self::assertStringContainsString('<h4 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-2"', $html);
+        self::assertStringContainsString('<i class="ti ti-arrow-down" aria-hidden="true">', $html);
+    }
 }

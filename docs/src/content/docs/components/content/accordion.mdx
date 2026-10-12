@@ -10,10 +10,10 @@ bundled in `tabler.js`. By default, opening a section closes the one that was op
 
 <Example name="accordion/all-in-one" />
 
-`items` is an array of `{title, text, open?, icon?, id?}`. Each item gets the id `<id>-<n>`, starting at 1, unless it
-has its own `id`. Always set the `id` of the accordion: the generated items use it as their `data-bs-parent`, so that
-opening one closes the others. Without it, every item opens on its own, and the item ids fall back to `accordion-1`,
-`accordion-2`…, which clash when a page has two such accordions.
+`items` is an array of `{title, text, open?, icon?, id?, level?, toggleIcon?}`. Each item gets the id `<id>-<n>`,
+starting at 1, unless it has its own `id`, and uses the accordion `id` as its `data-bs-parent`, so that opening one
+closes the others. Without an `id`, the accordion gets a random one (`accordion-<n>`): set your own when the ids must
+stay the same between renders, for example to link to a section or to restore the open one.
 
 ## Items
 
@@ -24,8 +24,8 @@ accordion as `parent`: opening the item then closes the others. Mark the section
 
 The header is an `<h3>` by default. Set `level` on the item (1 to 6, any other value falls back to 3) to fit the
 outline of the page. The button
-inherits the font size of the heading, so the level changes the size of the label too. The `items` prop always renders
-`<h3>`.
+inherits the font size of the heading, so the level changes the size of the label too. With `items`, set `level` on the
+accordion for every generated item, or on an entry for that item only. `toggleIcon` works the same way.
 
 ## Always open
 
@@ -93,15 +93,17 @@ reader users can jump from section to section.
 
 `Accordion`:
 
-| Prop         | Type    | Default | Description                                                                     |
-| ------------ | ------- | ------- | ------------------------------------------------------------------------------- |
-| `id`         | string? | `null`  | DOM id, the `data-bs-parent` of the generated items and the prefix of their ids |
-| `items`      | array?  | `null`  | `{title, text, open?, icon?, id?}` entries, rendered with `Accordion:Item`      |
-| `flush`      | bool    | `false` | No outer border nor rounded corners (`accordion-flush`)                         |
-| `inverted`   | bool    | `false` | Toggle indicator at the start of the header (`accordion-inverted`)              |
-| `tabs`       | bool    | `false` | Spaced items, each fully bordered (`accordion-tabs`)                            |
-| `alwaysOpen` | bool    | `false` | Generated items stay open when another one opens (no `data-bs-parent`)          |
-| `plus`       | bool    | `false` | Generated items use the plus indicator (`accordion-button-toggle-plus`)         |
+| Prop         | Type    | Default | Description                                                                                         |
+| ------------ | ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| `id`         | string? | `null`  | DOM id, the `data-bs-parent` of the generated items and the prefix of their ids; random when `null` |
+| `items`      | array?  | `null`  | `{title, text, open?, icon?, id?, level?, toggleIcon?}` entries, rendered with `Accordion:Item`     |
+| `flush`      | bool    | `false` | No outer border nor rounded corners (`accordion-flush`)                                             |
+| `inverted`   | bool    | `false` | Toggle indicator at the start of the header (`accordion-inverted`)                                  |
+| `tabs`       | bool    | `false` | Spaced items, each fully bordered (`accordion-tabs`)                                                |
+| `alwaysOpen` | bool    | `false` | Generated items stay open when another one opens (no `data-bs-parent`)                              |
+| `plus`       | bool    | `false` | Generated items use the plus indicator (`accordion-button-toggle-plus`)                             |
+| `level`      | int     | `3`     | Heading level of the generated items, 1 to 6; an entry's `level` wins                               |
+| `toggleIcon` | string? | `null`  | Toggle indicator icon of the generated items; an entry's `toggleIcon` wins                          |
 
 Other attributes go to the root `<div class="accordion">`.
 
