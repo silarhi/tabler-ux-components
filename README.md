@@ -45,7 +45,9 @@
     - [Carousel](#carousel)
     - [Nav](#nav)
     - [More components](#more-components)
-    - [Layout: PageHeader / Navbar / Prose](#layout-pageheader--navbar--prose)
+    - [Data display: Legend / Signal / Sparkline / ProgressSteps](#data-display-legend--signal--sparkline--progresssteps)
+    - [Clipboard](#clipboard)
+    - [Layout: PageHeader / PageSection / Navbar / Prose](#layout-pageheader--pagesection--navbar--prose)
     - [Not included](#not-included)
 - [Design Pattern](#design-pattern)
 - [Testing & Quality](#testing--quality)
@@ -521,7 +523,58 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 </twig:Tabler:SwitchIcon>
 ```
 
-### Layout: PageHeader / Navbar / Prose
+### Data display: Legend / Signal / Sparkline / ProgressSteps
+
+```twig
+{# Legend — a colored marker, a label and an optional value for a chart series #}
+<twig:Tabler:Legend:List divided>
+    <twig:Tabler:Legend variant="primary" size="lg" label="P99" value="124" unit="ms" />
+    <twig:Tabler:Legend variant="azure" size="lg" label="P95" value="76" unit="ms" />
+    <twig:Tabler:Legend variant="yellow" size="lg" label="Requests" value="1,234" button off />
+</twig:Tabler:Legend:List>
+<twig:Tabler:Legend:Dot variant="green" />
+
+{# Signal — stepped bars showing a level; without aria-label it is hidden as decoration #}
+<twig:Tabler:Signal value="2" variant="orange" aria-label="Priority: high" />
+
+{# Sparkline — a tiny inline chart drawn by tabler.js from data attributes #}
+<twig:Tabler:Sparkline values="3,4,2,6,5,8,7" variant="primary" fill spot="last" aria-label="Weekly trend" />
+<twig:Tabler:Sparkline values="72" type="circle" size="lg" label="auto" variant="green" aria-label="72% done" />
+
+{# ProgressSteps — where the user is in a short flow #}
+<twig:Tabler:ProgressSteps count="4" active="2" aria-label="Setup progress" />
+```
+
+- **Legend** — `variant`, `size` (md/lg), `label`, `value`, `unit`, `href` (renders `<a>`), `button` (renders `<button>`), `active`, `off`. Sub-components `Legend:Dot` (`variant`, also usable on its own), `Legend:Value` (`unit`), `Legend:Unit`, `Legend:List` (`vertical`, `divided`). Blocks: `content`, `dot`, `label`, `value`.
+- **Signal** — `value` (lit bars), `max` (2–5, default 3), `variant`. Sub-component `Signal:Bar` (`active`).
+- **Sparkline** — `values` (array or comma-separated string), `type` (line/bar/tristate/circle), `variant` (text color), `size` (sm/md/lg), `square`, `fill`, `spot` (last/min/max), `min`, `max`, `threshold`, `label`, `barGap`, `barRadius`, `disabled`. Give it an `aria-label`: the SVG is hidden from assistive technology.
+- **ProgressSteps** — `count` or `labels`, `active` (1-based current step), `variant` (color of reached steps). Sub-component `ProgressSteps:Item` (`variant`, `current`, `label`).
+
+Legend, Signal and Sparkline accept the theme colors (`primary` … `light`, `muted`) and the palette colors (`blue`, `azure`, `indigo`, `purple`, `pink`, `red`, `orange`, `yellow`, `lime`, `green`, `teal`, `cyan`).
+
+### Clipboard
+
+A copy button built on the browser clipboard API by `tabler.js` (`data-bs-toggle="clipboard"`).
+
+```twig
+<input type="text" id="api-key" class="form-control" value="tblr_live_8f2c41d0a7" readonly>
+<twig:Tabler:Clipboard target="#api-key" />
+
+{# a literal string, custom labels #}
+<twig:Tabler:Clipboard text="composer require silarhi/tabler-ux-components" label="Copy command" feedback="Copied!" class="btn-sm" />
+
+{# composed — icon states #}
+<twig:Tabler:Clipboard target="#api-key" aria-label="Copy the API key">
+    <twig:Tabler:Clipboard:Label><twig:Tabler:Icon name="copy" /></twig:Tabler:Clipboard:Label>
+    <twig:Tabler:Clipboard:Feedback class="text-green"><twig:Tabler:Icon name="check" /></twig:Tabler:Clipboard:Feedback>
+</twig:Tabler:Clipboard>
+```
+
+Props: `target` (selector), `text` (literal string, wins over `target`), `delay` (ms), `label` (default `Copy`), `feedback` (default `Copied`). Sub-components `Clipboard:Label`, `Clipboard:Feedback`.
+
+> **Confetti** needs no component: `tabler.js` binds it to any trigger, so `<twig:Tabler:Button data-bs-toggle="confetti" data-bs-count="150">Celebrate</twig:Tabler:Button>` works as is.
+
+### Layout: PageHeader / PageSection / Navbar / Prose
 
 ```twig
 {# Page header #}
@@ -532,6 +585,9 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
         </twig:Tabler:PageHeader:Actions>
     </twig:block>
 </twig:Tabler:PageHeader>
+
+{# Page section — a heading inside the page body #}
+<twig:Tabler:PageSection title="Line charts" description="Trends over time." class="col-12" />
 
 {# Navbar #}
 <twig:Tabler:Navbar>
@@ -566,12 +622,13 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 ```
 
 - **PageHeader** — props `pretitle`, `title`; sub-components `PageHeader:Pretitle`, `PageHeader:Title`, `PageHeader:Actions`.
+- **PageSection** — props `title`, `description`; sub-components `PageSection:Title`, `PageSection:Description`.
 - **Navbar** — props `expand` (sm/md/lg/xl/none), `dark`, `container` (default `xl`, or `fluid` when vertical), `vertical` (sidebar, rendered as `<aside>`), `folded` (bare for an icon rail, `hover` to unfold on hover), `floating` (detached from the edges); sub-components `Navbar:Brand`, `Navbar:Toggler`, `Navbar:Nav` (`collapse`, `id`, `side` block), `Navbar:Item` (`href`, `active`, `icon`), `Navbar:SectionTitle`, `Navbar:Side` (trailing group), `Navbar:Footer` (bottom zone of a sidebar).
 - **Prose** — a `.prose` typography wrapper.
 
 ### Not included
 
-Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize.
+Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker. Form controls (OTP input, password strength) are not covered yet.
 
 ## Design Pattern
 

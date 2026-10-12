@@ -1,0 +1,68 @@
+{#
+    Tabler Signal — a small row of stepped bars showing a level, such as a
+    priority, a strength or a coverage (Tabler 1.6+).
+
+    All-in-one:
+        <twig:Tabler:Signal value="2" variant="orange" aria-label="Priority: high" />
+
+    Composed:
+        <twig:Tabler:Signal variant="primary" max="4" aria-label="Level 1 of 4">
+            <twig:Tabler:Signal:Bar active />
+            <twig:Tabler:Signal:Bar />
+            <twig:Tabler:Signal:Bar />
+            <twig:Tabler:Signal:Bar />
+        </twig:Tabler:Signal>
+
+    Accessibility: give a standalone signal an `aria-label` stating the level; it
+    then gets role="img". Without one, the signal is treated as decoration next
+    to a text label and hidden from assistive technology.
+
+    Props:
+      value    — number of lit bars (default 0)
+      max      — total number of bars, 2 to 5 (default 3)
+      variant  — primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+#}
+{% props
+    value = 0,
+    max = 3,
+    variant = null,
+%}
+
+{% set signal = html_cva(
+    base: 'signal',
+    variants: {
+        variant: {
+            primary: 'signal-primary',
+            secondary: 'signal-secondary',
+            success: 'signal-success',
+            danger: 'signal-danger',
+            warning: 'signal-warning',
+            info: 'signal-info',
+            dark: 'signal-dark',
+            light: 'signal-light',
+            muted: 'signal-muted',
+            blue: 'signal-blue',
+            azure: 'signal-azure',
+            indigo: 'signal-indigo',
+            purple: 'signal-purple',
+            pink: 'signal-pink',
+            red: 'signal-red',
+            orange: 'signal-orange',
+            yellow: 'signal-yellow',
+            lime: 'signal-lime',
+            green: 'signal-green',
+            teal: 'signal-teal',
+            cyan: 'signal-cyan',
+        },
+    },
+) %}
+
+{% set labelled = 'aria-label' in attributes.all|keys %}
+<span class="{{ signal.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if labelled %} role="img"{% else %} aria-hidden="true"{% endif %} {{ attributes.without('class') }}>
+    {%- block content -%}
+        {%- for i in 1..max -%}
+            {%- if i <= value -%}<twig:Tabler:Signal:Bar active />{%- else -%}<twig:Tabler:Signal:Bar />{%- endif -%}
+        {%- endfor -%}
+    {%- endblock -%}
+</span>

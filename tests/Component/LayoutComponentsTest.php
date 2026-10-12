@@ -160,4 +160,17 @@ final class LayoutComponentsTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testPageSection(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:PageSection title="Line charts" description="Trends over time." class="col-12" />');
+
+        self::assertHtmlSame(
+            '<div class="col-12">'
+            . '<h2 class="page-section-title">Line charts</h2>'
+            . '<p class="page-section-description">Trends over time.</p>'
+            . '</div>',
+            $html,
+        );
+    }
 }

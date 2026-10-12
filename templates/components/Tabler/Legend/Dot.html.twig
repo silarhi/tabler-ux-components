@@ -1,0 +1,44 @@
+{#
+    Legend dot — the small square marker of a legend (`.legend-dot`).
+
+    Inside a <twig:Tabler:Legend> it takes the item's color. On its own, set a
+    `variant` to color it:
+        <twig:Tabler:Legend:Dot variant="azure" />
+
+    Props:
+      variant  — any color accepted by <twig:Tabler:Legend> (legend-{color})
+#}
+{% props
+    variant = null,
+%}
+
+{% set dot = html_cva(
+    base: 'legend-dot',
+    variants: {
+        variant: {
+            primary: 'legend-primary',
+            secondary: 'legend-secondary',
+            success: 'legend-success',
+            danger: 'legend-danger',
+            warning: 'legend-warning',
+            info: 'legend-info',
+            dark: 'legend-dark',
+            light: 'legend-light',
+            muted: 'legend-muted',
+            blue: 'legend-blue',
+            azure: 'legend-azure',
+            indigo: 'legend-indigo',
+            purple: 'legend-purple',
+            pink: 'legend-pink',
+            red: 'legend-red',
+            orange: 'legend-orange',
+            yellow: 'legend-yellow',
+            lime: 'legend-lime',
+            green: 'legend-green',
+            teal: 'legend-teal',
+            cyan: 'legend-cyan',
+        },
+    },
+) %}
+
+<span class="{{ dot.apply({variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>

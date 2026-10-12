@@ -1,0 +1,38 @@
+{#
+    Tabler Clipboard — a copy button with a short "copied" state, built on the
+    browser clipboard API by tabler.js (data-bs-toggle="clipboard", Tabler 1.6+).
+
+    All-in-one:
+        <twig:Tabler:Clipboard target="#api-key" />
+        <twig:Tabler:Clipboard text="composer require silarhi/tabler-ux-components" label="Copy command" class="btn-sm" />
+
+    Composed (e.g. icon states):
+        <twig:Tabler:Clipboard target="#api-key" aria-label="Copy the API key">
+            <twig:Tabler:Clipboard:Label><twig:Tabler:Icon name="copy" /></twig:Tabler:Clipboard:Label>
+            <twig:Tabler:Clipboard:Feedback class="text-green"><twig:Tabler:Icon name="check" /></twig:Tabler:Clipboard:Feedback>
+        </twig:Tabler:Clipboard>
+
+    Props:
+      target    — selector of the element to copy: a field gives its value, anything else its text
+      text      — a literal string to copy (wins over `target`)
+      delay     — how long the copied state lasts, in ms (Tabler default 2000; 0 keeps it)
+      label     — resting text (default "Copy"); mirrored by the `label` block
+      feedback  — text shown after a copy (default "Copied"); mirrored by the `feedback` block
+#}
+{% props
+    target = null,
+    text = null,
+    delay = null,
+    label = 'Copy',
+    feedback = 'Copied',
+%}
+
+<button type="button" {{ attributes.defaults({class: 'btn'}).without('type') }} data-bs-toggle="clipboard"
+    {%- if target is not null %} data-bs-target="{{ target }}"{% endif %}
+    {%- if text is not null %} data-bs-text="{{ text }}"{% endif %}
+    {%- if delay is not null %} data-bs-delay="{{ delay }}"{% endif %}>
+    {%- block content -%}
+        {%- block label -%}<twig:Tabler:Clipboard:Label>{{ label }}</twig:Tabler:Clipboard:Label>{%- endblock -%}
+        {%- block feedback -%}<twig:Tabler:Clipboard:Feedback>{{ feedback }}</twig:Tabler:Clipboard:Feedback>{%- endblock -%}
+    {%- endblock -%}
+</button>

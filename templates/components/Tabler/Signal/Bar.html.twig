@@ -1,0 +1,14 @@
+{#
+    Signal bar — one bar of a <twig:Tabler:Signal> (`.signal-bar`).
+
+    Usage:
+        <twig:Tabler:Signal:Bar active />
+
+    Props:
+      active  — lights the bar
+#}
+{% props
+    active = false,
+%}
+
+<span class="signal-bar{{ active ? ' active' : '' }}{{ attributes.render('class') ? ' ' ~ attributes.render('class') : '' }}" {{ attributes.without('class') }}></span>

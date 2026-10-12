@@ -1,0 +1,29 @@
+{#
+    Legend list — lays legend items out in a row (`.legend-list`).
+
+    Usage:
+        <twig:Tabler:Legend:List vertical>
+            <twig:Tabler:Legend variant="primary" label="This year" value="$92,400" />
+            <twig:Tabler:Legend variant="secondary" label="Last year" value="$84,300" />
+        </twig:Tabler:Legend:List>
+
+    Props:
+      vertical  — stack the items in a column (legend-list-vertical)
+      divided   — draw a line between the items, for large legends (legend-list-divided)
+#}
+{% props
+    vertical = false,
+    divided = false,
+%}
+
+{% set list = html_cva(
+    base: 'legend-list',
+    variants: {
+        vertical: {true: 'legend-list-vertical', false: ''},
+        divided: {true: 'legend-list-divided', false: ''},
+    },
+) %}
+
+<div class="{{ list.apply({vertical: vertical, divided: divided}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
+</div>

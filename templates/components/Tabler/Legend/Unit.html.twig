@@ -1,0 +1,7 @@
+{#
+    Legend unit — a small unit after a legend value, e.g. ms or GB (`.legend-unit`).
+
+    Usage:
+        <twig:Tabler:Legend:Value>124 <twig:Tabler:Legend:Unit>ms</twig:Tabler:Legend:Unit></twig:Tabler:Legend:Value>
+#}
+<span {{ attributes.defaults({class: 'legend-unit'}) }}>{%- block content %}{% endblock -%}</span>
