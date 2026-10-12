@@ -6,20 +6,37 @@
     All-in-one:
         <twig:Tabler:Badge variant="success">New</twig:Tabler:Badge>
         <twig:Tabler:Badge variant="primary" light pill>3</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>
         <twig:Tabler:Badge href="/tags/php" variant="azure">PHP</twig:Tabler:Badge>
 
+    Status dot and notification counter:
+        <twig:Tabler:Badge variant="success" dot aria-label="Online" />
+        <twig:Tabler:Button>Inbox <twig:Tabler:Badge variant="danger" notification blink>4</twig:Tabler:Badge></twig:Tabler:Button>
+
+    Several badges side by side: wrap them in <twig:Tabler:Badge:List>.
+
     Props:
-      variant  — primary | secondary | success | danger | warning | info | dark | light
-      light  — soft/tinted variant (bg-{variant}-lt)
-      pill   — fully rounded corners
-      size   — sm | md (default) | lg
-      href   — when set, renders <a href> instead of <span>
+      variant       — primary | secondary | success | danger | warning | info | dark | light
+      light         — soft/tinted variant (bg-{variant}-lt)
+      outline       — transparent fill with a colored border (badge-outline, Tabler 1.5+)
+      pill          — fully rounded corners
+      size          — sm | md (default) | lg
+      dot           — small dot with no text, for a status marker (badge-dot)
+      iconOnly      — square badge holding only an icon (badge-icononly)
+      notification  — positions the badge over the corner of its parent (badge-notification)
+      blink         — pulsing animation, for a live counter (badge-blink)
+      href          — when set, renders <a href> instead of <span>
 #}
 {% props
     variant = 'primary',
     light = false,
+    outline = false,
     pill = false,
     size = 'md',
+    dot = false,
+    iconOnly = false,
+    notification = false,
+    blink = false,
     href = null,
 %}
 
@@ -28,28 +45,51 @@
     variants: {
         size: {sm: 'badge-sm', md: '', lg: 'badge-lg'},
         pill: {true: 'badge-pill', false: ''},
+        outline: {true: 'badge-outline', false: ''},
+        dot: {true: 'badge-dot', false: ''},
+        iconOnly: {true: 'badge-icononly', false: ''},
+        notification: {true: 'badge-notification', false: ''},
+        blink: {true: 'badge-blink', false: ''},
     },
     compound_variants: [
-        {light: [false], variant: ['primary'], class: 'text-bg-primary'},
-        {light: [false], variant: ['secondary'], class: 'text-bg-secondary'},
-        {light: [false], variant: ['success'], class: 'text-bg-success'},
-        {light: [false], variant: ['danger'], class: 'text-bg-danger'},
-        {light: [false], variant: ['warning'], class: 'text-bg-warning'},
-        {light: [false], variant: ['info'], class: 'text-bg-info'},
-        {light: [false], variant: ['dark'], class: 'text-bg-dark'},
-        {light: [false], variant: ['light'], class: 'text-bg-light'},
-        {light: [true], variant: ['primary'], class: 'bg-primary-lt'},
-        {light: [true], variant: ['secondary'], class: 'bg-secondary-lt'},
-        {light: [true], variant: ['success'], class: 'bg-success-lt'},
-        {light: [true], variant: ['danger'], class: 'bg-danger-lt'},
-        {light: [true], variant: ['warning'], class: 'bg-warning-lt'},
-        {light: [true], variant: ['info'], class: 'bg-info-lt'},
-        {light: [true], variant: ['dark'], class: 'bg-dark-lt'},
-        {light: [true], variant: ['light'], class: 'bg-light-lt'},
+        {light: [false], outline: [false], variant: ['primary'], class: 'text-bg-primary'},
+        {light: [false], outline: [false], variant: ['secondary'], class: 'text-bg-secondary'},
+        {light: [false], outline: [false], variant: ['success'], class: 'text-bg-success'},
+        {light: [false], outline: [false], variant: ['danger'], class: 'text-bg-danger'},
+        {light: [false], outline: [false], variant: ['warning'], class: 'text-bg-warning'},
+        {light: [false], outline: [false], variant: ['info'], class: 'text-bg-info'},
+        {light: [false], outline: [false], variant: ['dark'], class: 'text-bg-dark'},
+        {light: [false], outline: [false], variant: ['light'], class: 'text-bg-light'},
+        {light: [true], outline: [false], variant: ['primary'], class: 'bg-primary-lt'},
+        {light: [true], outline: [false], variant: ['secondary'], class: 'bg-secondary-lt'},
+        {light: [true], outline: [false], variant: ['success'], class: 'bg-success-lt'},
+        {light: [true], outline: [false], variant: ['danger'], class: 'bg-danger-lt'},
+        {light: [true], outline: [false], variant: ['warning'], class: 'bg-warning-lt'},
+        {light: [true], outline: [false], variant: ['info'], class: 'bg-info-lt'},
+        {light: [true], outline: [false], variant: ['dark'], class: 'bg-dark-lt'},
+        {light: [true], outline: [false], variant: ['light'], class: 'bg-light-lt'},
+        {outline: [true], variant: ['primary'], class: 'text-primary'},
+        {outline: [true], variant: ['secondary'], class: 'text-secondary'},
+        {outline: [true], variant: ['success'], class: 'text-success'},
+        {outline: [true], variant: ['danger'], class: 'text-danger'},
+        {outline: [true], variant: ['warning'], class: 'text-warning'},
+        {outline: [true], variant: ['info'], class: 'text-info'},
+        {outline: [true], variant: ['dark'], class: 'text-dark'},
+        {outline: [true], variant: ['light'], class: 'text-light'},
     ],
 ) %}
 
-{% set classes = badge.apply({size: size, pill: pill, light: light, variant: variant}, attributes.render('class')) %}
+{% set classes = badge.apply({
+    size: size,
+    pill: pill,
+    outline: outline,
+    dot: dot,
+    iconOnly: iconOnly,
+    notification: notification,
+    blink: blink,
+    light: light,
+    variant: variant,
+}, attributes.render('class')) %}
 {%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
 
 {% if href is not null %}

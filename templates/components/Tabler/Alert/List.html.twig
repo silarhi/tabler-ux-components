@@ -1,0 +1,13 @@
+{#
+    Alert list — a list of messages inside an alert, without the default list margin (`.alert-list`).
+
+    Usage:
+        <twig:Tabler:Alert variant="warning">
+            <twig:Tabler:Alert:Title>Check these fields</twig:Tabler:Alert:Title>
+            <twig:Tabler:Alert:List>
+                <li>The email address is missing.</li>
+                <li>The password is too short.</li>
+            </twig:Tabler:Alert:List>
+        </twig:Tabler:Alert>
+#}
+<ul {{ attributes.defaults({class: 'alert-list'}) }}>{%- block content %}{% endblock -%}</ul>

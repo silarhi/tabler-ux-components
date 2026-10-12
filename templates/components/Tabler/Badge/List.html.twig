@@ -1,0 +1,10 @@
+{#
+    Badge list — spaces several badges in a row and wraps them (`.badge-list`, Tabler 1.5+).
+
+    Usage:
+        <twig:Tabler:Badge:List>
+            <twig:Tabler:Badge variant="primary">PHP</twig:Tabler:Badge>
+            <twig:Tabler:Badge variant="success">Symfony</twig:Tabler:Badge>
+        </twig:Tabler:Badge:List>
+#}
+<div {{ attributes.defaults({class: 'badge-list'}) }}>{%- block content %}{% endblock -%}</div>

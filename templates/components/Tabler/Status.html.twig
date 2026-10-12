@@ -5,6 +5,8 @@
         <twig:Tabler:Status variant="success" label="Online" />
         <twig:Tabler:Status variant="danger" dot animated label="Live" />
 
+    A standalone, larger marker: <twig:Tabler:Status:Indicator variant="green" animated />.
+
     Composed (override `content`, or just the `dot` / `label` sub-blocks):
         <twig:Tabler:Status variant="danger">
             <twig:Tabler:Status:Dot animated />
@@ -12,15 +14,18 @@
         </twig:Tabler:Status>
 
     Props:
-      variant   — primary | secondary | success | danger | warning | info | dark | light
+      variant   — primary | secondary | success | danger | warning | info | dark | light | muted,
+                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
       dot       — show a leading status dot; mirrored by the `dot` block
       animated  — pulse the dot (requires `dot`)
+      lite      — transparent background, keeps only the dot and the text (status-lite)
       label     — the status text; mirrored by the `label` block
 #}
 {% props
     variant = 'primary',
     dot = false,
     animated = false,
+    lite = false,
     label = null,
 %}
 
@@ -36,11 +41,25 @@
             info: 'status-info',
             dark: 'status-dark',
             light: 'status-light',
+            muted: 'status-muted',
+            blue: 'status-blue',
+            azure: 'status-azure',
+            indigo: 'status-indigo',
+            purple: 'status-purple',
+            pink: 'status-pink',
+            red: 'status-red',
+            orange: 'status-orange',
+            yellow: 'status-yellow',
+            lime: 'status-lime',
+            green: 'status-green',
+            teal: 'status-teal',
+            cyan: 'status-cyan',
         },
+        lite: {true: 'status-lite', false: ''},
     },
 ) %}
 
-<span class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<span class="{{ status.apply({variant: variant, lite: lite}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content -%}
         {%- block dot -%}
             {%- if dot -%}
