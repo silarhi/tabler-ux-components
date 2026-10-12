@@ -12,10 +12,7 @@
     href = null,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
-{% if href is not null %}
-    <a href="{{ href }}" {{ attributes.defaults({class: 'card-btn'}).without('href') }}>{{- label|raw -}}</a>
-{% else %}
-    <button type="button" {{ attributes.defaults({class: 'card-btn'}).without('type') }}>{{- label|raw -}}</button>
-{% endif %}
+{% set tag = href is not null ? 'a' : 'button' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} {{ attributes.defaults({class: 'card-btn'}).without('href', 'type') }}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

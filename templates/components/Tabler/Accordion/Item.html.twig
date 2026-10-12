@@ -55,9 +55,9 @@
     {%- block content -%}
         {% block header %}
             <twig:Tabler:Accordion:Header level="{{ level }}">
-                <twig:Tabler:Accordion:Button target="{{ id }}" open="{{ open }}" icon="{{ icon }}" plus="{{ plus }}" toggleIcon="{{ toggleIcon }}">{{ title_html|raw }}</twig:Tabler:Accordion:Button>
+                <twig:Tabler:Accordion:Button target="{{ id }}" open="{{ open }}" icon="{{ icon }}" plus="{{ plus }}" toggleIcon="{{ toggleIcon }}">{{ title_html }}</twig:Tabler:Accordion:Button>
             </twig:Tabler:Accordion:Header>
         {% endblock %}
-        <twig:Tabler:Accordion:Collapse id="{{ id }}" parent="{{ parent }}" open="{{ open }}">{{ body_html|raw }}</twig:Tabler:Accordion:Collapse>
+        <twig:Tabler:Accordion:Collapse id="{{ id }}" parent="{{ parent }}" open="{{ open }}">{{ body_html }}</twig:Tabler:Accordion:Collapse>
     {%- endblock -%}
 </div>

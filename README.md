@@ -116,7 +116,7 @@ twig_component:
 #### All-in-one usage
 
 ```twig
-<twig:Tabler:Alert variant="success" title="Saved!" description="Your changes are live." />
+<twig:Tabler:Alert variant="success" icon="check" title="Saved!" description="Your changes are live." />
 ```
 
 #### Composed usage (with icon)
@@ -135,15 +135,15 @@ twig_component:
 
 #### Props
 
-| Prop          | Type    | Default  | Description                                                                    |
-| ------------- | ------- | -------- | ------------------------------------------------------------------------------ |
-| `variant`     | string  | `'info'` | `primary`, `secondary`, `success`, `danger`, `warning`, `info`                 |
-| `important`   | bool    | `false`  | Filled/solid background (`alert-important`)                                    |
-| `minor`       | bool    | `false`  | Quiet style: plain border, no tinted background (`alert-minor`)                |
-| `icon`        | string? | `null`   | Icon HTML/SVG, rendered raw inside `Alert:Icon` — keep it developer-controlled |
-| `title`       | string? | `null`   | Optional title; skip when using `<twig:Tabler:Alert:Title>`                    |
-| `description` | string? | `null`   | Optional description; skip when using `<twig:Tabler:Alert:Description>`        |
-| `dismissible` | bool    | `false`  | Adds a Bootstrap close button                                                  |
+| Prop          | Type    | Default  | Description                                                                                                          |
+| ------------- | ------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| `variant`     | string  | `'info'` | `primary`, `secondary`, `success`, `danger`, `warning`, `info`                                                       |
+| `important`   | bool    | `false`  | Filled/solid background (`alert-important`)                                                                          |
+| `minor`       | bool    | `false`  | Quiet style: plain border, no tinted background (`alert-minor`)                                                      |
+| `icon`        | string? | `null`   | Tabler icon name, rendered with `<twig:Tabler:Icon>` inside `Alert:Icon`; for other markup override the `icon` block |
+| `title`       | string? | `null`   | Optional title; skip when using `<twig:Tabler:Alert:Title>`                                                          |
+| `description` | string? | `null`   | Optional description; skip when using `<twig:Tabler:Alert:Description>`                                              |
+| `dismissible` | bool    | `false`  | Adds a Bootstrap close button                                                                                        |
 
 Extra attributes (e.g. `class`, `data-*`) are forwarded to the root `<div>`.
 
@@ -173,7 +173,7 @@ Each prop has a matching block whose default renders the sub-component with the 
 
 | Block         | Default content                                                                                                   |
 | ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `icon`        | `<twig:Tabler:Alert:Icon>{{ icon }}</twig:Tabler:Alert:Icon>` (if `icon` prop is set)                             |
+| `icon`        | `<twig:Tabler:Alert:Icon><twig:Tabler:Icon name="{{ icon }}" /></twig:Tabler:Alert:Icon>` (if `icon` prop is set) |
 | `title`       | `<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>` (if `title` prop is set)                         |
 | `description` | `<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>` (if `description` prop is set) |
 | `body`        | a `<div>` wrapping `title` and `description` (only when one of them renders)                                      |
@@ -900,6 +900,15 @@ compound_variants: [
     ...
 ]
 ```
+
+### Escaping rules
+
+Templates never bypass Twig's autoescaping — `tests/TemplateConventionsTest.php` fails on any `|raw` or `{% autoescape false %}`:
+
+- **Props are text, slots are markup.** Prop values are always escaped; HTML only comes in through blocks and sub-components (e.g. `Alert`'s `icon` prop is a Tabler icon name, custom SVG goes in the `icon` block).
+- **Pick the element, don't duplicate the content.** When a component renders `<a>`, `<button>` or `<span>` depending on its props, the tag name is dynamic (`<{{ tag }}>…</{{ tag }}>`) and the `content` block is defined once. An optional wrapper is opened and closed under the same `{% if %}`.
+- **Capture only to test for emptiness.** A captured `{% set x %}…{% endset %}` block is already escaped and marked safe: print it as `{{ x }}`, never through `|raw`, and never joined with `~` for output (that escapes it twice).
+- **Never forward a possibly-null value as an HTML attribute.** Older ux-twig-component releases render a `null` attribute as `"true"`; guard it with `{% if %}`, or make it a declared prop.
 
 ## Testing & Quality
 

@@ -17,8 +17,6 @@
     split = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set toggle = html_cva(
     base: 'btn',
     variants: {
@@ -37,4 +35,4 @@
     },
 ) %}
 
-<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{{- label|raw -}}</button>
+<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>
