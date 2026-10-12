@@ -9,8 +9,10 @@
     Props:
       image  — background image URL of the mark; or put markup in the `content` block
 #}
+{% apply trim %}
 {% props
     image = null,
 %}
 
 <span {{ attributes.defaults({class: 'avatar-brand'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

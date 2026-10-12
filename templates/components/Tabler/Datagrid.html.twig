@@ -7,6 +7,8 @@
             <twig:Tabler:Datagrid:Item title="Port">3306</twig:Tabler:Datagrid:Item>
         </twig:Tabler:Datagrid>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'datagrid'}) }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

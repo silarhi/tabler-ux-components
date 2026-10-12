@@ -13,6 +13,7 @@
       striped        — diagonal stripes (progress-bar-striped)
       animated       — animated stripes (progress-bar-striped progress-bar-animated)
 #}
+{% apply trim %}
 {% props
     value = null,
     variant = 'primary',
@@ -50,3 +51,4 @@
         {%- if label -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
     {%- endblock -%}
 </div>
+{% endapply %}

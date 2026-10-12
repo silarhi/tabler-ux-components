@@ -50,6 +50,7 @@
       footer          — optional footer text; mirrored by the `footer` block
       href            — when set, renders <a href> instead of <div>
 #}
+{% apply trim %}
 {% props
     size = 'md',
     status = null,
@@ -146,3 +147,4 @@
         {% endblock %}
     {% endblock %}
 </{{ tag }}>
+{% endapply %}

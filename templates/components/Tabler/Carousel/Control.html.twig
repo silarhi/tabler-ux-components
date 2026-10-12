@@ -10,6 +10,7 @@
       direction  — prev | next
       label      — visually-hidden label (defaults to "Previous" / "Next")
 #}
+{% apply trim %}
 {% props
     target = null,
     direction = 'next',
@@ -22,3 +23,4 @@
         <span class="visually-hidden">{{ label ?? (direction == 'prev' ? 'Previous' : 'Next') }}</span>
     {%- endblock -%}
 </a>
+{% endapply %}

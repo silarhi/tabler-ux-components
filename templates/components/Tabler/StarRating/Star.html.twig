@@ -11,6 +11,7 @@
       variant  — color when active (default yellow), any color accepted by <twig:Tabler:StarRating>
       icon     — Tabler icon name (default star-filled); mirrored by the `content` block
 #}
+{% apply trim %}
 {% props
     active = false,
     variant = 'yellow',
@@ -49,3 +50,4 @@
 <span class="{{ star.apply({variant: active ? (variant ?? '') : ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content -%}<twig:Tabler:Icon name="{{ icon }}" aria-hidden="true" />{%- endblock -%}
 </span>
+{% endapply %}

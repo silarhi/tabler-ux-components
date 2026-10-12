@@ -7,6 +7,7 @@
     Props:
       variant — primary | secondary | success | danger | warning | info | dark | light
 #}
+{% apply trim %}
 {% props variant = 'primary' %}
 
 {% set status = html_cva(
@@ -26,3 +27,4 @@
 ) %}
 
 <div class="{{ status.apply({variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}></div>
+{% endapply %}

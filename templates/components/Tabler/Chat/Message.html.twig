@@ -20,6 +20,7 @@
       avatar  — sender avatar image URL; mirrored by the `avatar` block
       me      — sent by the current user (chat-bubble-me, row aligned to the end)
 #}
+{% apply trim %}
 {% props
     author = null,
     date = null,
@@ -43,3 +44,4 @@
         {%- if me and avatar_html|trim is not empty -%}<div class="col-auto">{{ avatar_html }}</div>{%- endif -%}
     </div>
 </div>
+{% endapply %}

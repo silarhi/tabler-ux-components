@@ -25,6 +25,7 @@
       direction  — up | down | neutral, to override the direction read from `value`
       label      — visually-hidden prefix; defaults to "Increased by" / "Decreased by" / "No change,"
 #}
+{% apply trim %}
 {% props
     value = 0,
     unit = '%',
@@ -57,3 +58,4 @@
         {%- endblock -%}
     {%- endblock -%}
 </span>
+{% endapply %}

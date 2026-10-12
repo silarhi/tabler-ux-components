@@ -6,6 +6,8 @@
             <twig:Tabler:Tabs:Pane id="home" active>…</twig:Tabler:Tabs:Pane>
         </twig:Tabler:Tabs:Content>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'tab-content'}) }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

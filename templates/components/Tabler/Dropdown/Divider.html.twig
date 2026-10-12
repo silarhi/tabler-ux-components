@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Dropdown:Divider />
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'dropdown-divider'}) }}></div>
+{% endapply %}

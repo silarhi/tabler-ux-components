@@ -8,6 +8,7 @@
     Props:
       image  — background image URL
 #}
+{% apply trim %}
 {% props
     image = null,
 %}
@@ -15,3 +16,4 @@
 <span class="{{ ('avatar avatar-xs tag-avatar ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>
     {%- block content %}{% endblock -%}
 </span>
+{% endapply %}

@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="check" /></twig:Tabler:Timeline:Event:Icon>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'timeline-event-icon'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

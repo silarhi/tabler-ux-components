@@ -23,6 +23,7 @@
       plus        — plus indicator (accordion-button-toggle-plus); mirrored by the `toggle` block
       toggleIcon  — Tabler icon name of the indicator (default chevron-down, or plus)
 #}
+{% apply trim %}
 {% props
     target = null,
     open = false,
@@ -47,3 +48,4 @@
         <twig:Tabler:Accordion:Toggle plus="{{ plus }}" icon="{{ toggleIcon }}" />
     {%- endblock -%}
 </button>
+{% endapply %}

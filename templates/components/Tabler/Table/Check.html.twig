@@ -7,4 +7,6 @@
 
     Give each checkbox an `aria-label` naming the row it selects.
 #}
+{% apply trim %}
 <input type="checkbox" {{ attributes.defaults({class: 'form-check-input table-selectable-check'}).without('type') }}>
+{% endapply %}

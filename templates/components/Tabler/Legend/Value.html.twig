@@ -7,6 +7,7 @@
     Props:
       unit  — optional unit rendered with <twig:Tabler:Legend:Unit>
 #}
+{% apply trim %}
 {% props
     unit = null,
 %}
@@ -15,3 +16,4 @@
     {%- block content %}{% endblock -%}
     {%- if unit is not null and unit is not same as('') -%}<twig:Tabler:Legend:Unit>{{ unit }}</twig:Tabler:Legend:Unit>{%- endif -%}
 </span>
+{% endapply %}

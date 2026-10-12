@@ -10,6 +10,7 @@
       current  — marks the current step (aria-current="step")
       label    — visually hidden step name; mirrored by the `content` block
 #}
+{% apply trim %}
 {% props
     variant = null,
     current = false,
@@ -50,3 +51,4 @@
         {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
     {%- endblock -%}
 </li>
+{% endapply %}

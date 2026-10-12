@@ -11,6 +11,7 @@
       disabled  — non-interactive item
       icon      — optional leading Tabler icon name (dropdown-item-icon)
 #}
+{% apply trim %}
 {% props
     href = null,
     active = false,
@@ -30,3 +31,4 @@
     {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="dropdown-item-icon" />{%- endif -%}
     {%- block content %}{% endblock -%}
 </a>
+{% endapply %}

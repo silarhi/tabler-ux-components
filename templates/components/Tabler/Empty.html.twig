@@ -22,6 +22,7 @@
       subtitle  — mirrored by the `subtitle` block
       bordered  — border around the empty state (empty-bordered)
 #}
+{% apply trim %}
 {% props
     title = null,
     subtitle = null,
@@ -40,3 +41,4 @@
         {% block action %}{% endblock %}
     {% endblock %}
 </div>
+{% endapply %}

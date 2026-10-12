@@ -24,6 +24,7 @@
                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
       icon     — Tabler icon name of each star (default star-filled)
 #}
+{% apply trim %}
 {% props
     value = 0,
     max = 5,
@@ -38,3 +39,4 @@
         {%- endfor -%}
     {%- endblock -%}
 </div>
+{% endapply %}

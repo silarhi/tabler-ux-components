@@ -15,6 +15,7 @@
       title        — mirrored by the `title` block
       description  — mirrored by the `description` block
 #}
+{% apply trim %}
 {% props
     title = null,
     description = null,
@@ -30,3 +31,4 @@
         {% endblock %}
     {% endblock %}
 </div>
+{% endapply %}

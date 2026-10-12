@@ -9,4 +9,6 @@
           <i class="ti ti-check"></i>
       </twig:Tabler:Alert:Icon>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'alert-icon'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

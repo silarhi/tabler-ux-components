@@ -9,6 +9,7 @@
       href    — link target; when omitted the crumb is plain text
       active  — marks the current page (no link)
 #}
+{% apply trim %}
 {% props
     href = null,
     active = false,
@@ -27,3 +28,4 @@
     {%- block content %}{% endblock -%}
     {%- if link %}</a>{% endif -%}
 </li>
+{% endapply %}

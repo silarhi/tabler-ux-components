@@ -15,6 +15,7 @@
 
     Long menus can be split with <twig:Tabler:Dropdown:Columns> / <twig:Tabler:Dropdown:Column>.
 #}
+{% apply trim %}
 {% props
     end = false,
     arrow = false,
@@ -37,3 +38,4 @@
 <div class="{{ menu.apply({end: end, arrow: arrow, dark: dark, scrollable: scrollable, card: card}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

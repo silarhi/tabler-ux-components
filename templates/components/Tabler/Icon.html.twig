@@ -16,6 +16,7 @@
 
     Requires the @tabler/icons-webfont stylesheet to be loaded.
 #}
+{% apply trim %}
 {% props
     name,
     variant = null,
@@ -52,3 +53,4 @@
 ) %}
 
 <i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, 'ti-' ~ name ~ (filled ? '-filled' : ''), attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+{% endapply %}

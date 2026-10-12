@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Toast:Body>Saved successfully.</twig:Tabler:Toast:Body>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'toast-body'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

@@ -11,6 +11,7 @@
       vertical  — stack the items in a column (legend-list-vertical)
       divided   — draw a line between the items, for large legends (legend-list-divided)
 #}
+{% apply trim %}
 {% props
     vertical = false,
     divided = false,
@@ -27,3 +28,4 @@
 <div class="{{ list.apply({vertical: vertical, divided: divided}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content %}{% endblock -%}
 </div>
+{% endapply %}

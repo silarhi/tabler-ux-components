@@ -8,8 +8,10 @@
     Props:
       checked  — initial state
 #}
+{% apply trim %}
 {% props
     checked = false,
 %}
 
 <input type="checkbox" class="{{ ('form-check-input tag-check ' ~ attributes.render('class'))|trim }}"{% if checked %} checked{% endif %} {{ attributes.without('class', 'type') }}>
+{% endapply %}

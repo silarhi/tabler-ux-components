@@ -20,6 +20,7 @@
       iconA     — name of the first icon; mirrored by the `a` block
       iconB     — name of the second icon; mirrored by the `b` block
 #}
+{% apply trim %}
 {% props
     animation = null,
     active = false,
@@ -53,3 +54,4 @@
         {% block b %}<twig:Tabler:SwitchIcon:B>{%- if iconB is not null -%}<twig:Tabler:Icon name="{{ iconB }}" />{%- endif -%}</twig:Tabler:SwitchIcon:B>{% endblock %}
     {% endblock %}
 </button>
+{% endapply %}

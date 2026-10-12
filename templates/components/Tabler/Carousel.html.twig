@@ -32,6 +32,7 @@
       indicatorStyle  — default | dots | thumb (passed to Carousel:Indicators)
       vertical        — place indicators vertically (carousel-indicators-vertical)
 #}
+{% apply trim %}
 {% props
     id = null,
     fade = false,
@@ -65,3 +66,4 @@
         {%- endif -%}
     {% endblock %}
 </div>
+{% endapply %}

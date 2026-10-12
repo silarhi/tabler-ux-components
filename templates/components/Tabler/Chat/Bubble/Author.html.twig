@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Chat:Bubble:Author>Alice Marlin</twig:Tabler:Chat:Bubble:Author>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'col chat-bubble-author'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

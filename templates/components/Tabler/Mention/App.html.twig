@@ -8,8 +8,10 @@
     Props:
       image  — background image URL
 #}
+{% apply trim %}
 {% props
     image = null,
 %}
 
 <span class="{{ ('mention-app ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}></span>
+{% endapply %}

@@ -8,6 +8,7 @@
       target  — id of the pane this tab activates (without #)
       active  — the initially-selected tab
 #}
+{% apply trim %}
 {% props
     target,
     active = false,
@@ -23,3 +24,4 @@
 <li class="nav-item" role="presentation">
     <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
 </li>
+{% endapply %}

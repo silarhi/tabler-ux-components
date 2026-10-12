@@ -11,6 +11,7 @@
       active   — marks the current slide
       image    — thumbnail background (for `appearance="thumb"` indicators)
 #}
+{% apply trim %}
 {% props
     target = null,
     slideTo = 0,
@@ -31,3 +32,4 @@
     {%- if classes %} class="{{ classes }}"{% endif %}
     {{ attributes.without('class', 'style') }}
 ></button>
+{% endapply %}

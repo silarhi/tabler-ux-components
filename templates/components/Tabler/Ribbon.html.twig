@@ -10,6 +10,7 @@
       position  — end (default, top-right) | start | top | top-start | bottom | bottom-start
       bookmark  — bookmark-style ribbon
 #}
+{% apply trim %}
 {% props
     variant = null,
     position = 'end',
@@ -42,3 +43,4 @@
 ) %}
 
 <div class="{{ ribbon.apply({variant: variant ?? '', position: position, bookmark: bookmark}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

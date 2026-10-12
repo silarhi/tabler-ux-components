@@ -6,4 +6,6 @@
             <twig:Tabler:Dropdown:Item href="#">Accordion</twig:Tabler:Dropdown:Item>
         </twig:Tabler:Dropdown:Column>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'dropdown-menu-column'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

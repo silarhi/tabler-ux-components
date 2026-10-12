@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Datagrid:Item:Content>Third Party</twig:Tabler:Datagrid:Item:Content>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'datagrid-content'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

@@ -7,4 +7,6 @@
             <twig:Tabler:Badge variant="success">Symfony</twig:Tabler:Badge>
         </twig:Tabler:Badge:List>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'badge-list'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

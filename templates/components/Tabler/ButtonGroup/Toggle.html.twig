@@ -24,6 +24,7 @@
       variant     — default (default) | primary | secondary | success | danger | warning | info | dark | light
       appearance  — filled (default) | outline | ghost
 #}
+{% apply trim %}
 {% props
     id,
     name = null,
@@ -72,3 +73,4 @@
 <label class="{{ button.apply({appearance: appearance, variant: variant}, attributes.render('class')) }}" for="{{ id }}">
     {%- block content %}{{ label }}{% endblock -%}
 </label>
+{% endapply %}

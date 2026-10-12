@@ -12,6 +12,7 @@
       stacked  — overlap the avatars (avatar-list-stacked)
       size     — xxs | xs | sm | md | lg | xl | 2xl: sizes every avatar in the list (avatar-list-{size})
 #}
+{% apply trim %}
 {% props
     stacked = false,
     size = null,
@@ -36,3 +37,4 @@
 <div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content %}{% endblock -%}
 </div>
+{% endapply %}

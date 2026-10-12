@@ -10,8 +10,10 @@
             </twig:block>
         </twig:Tabler:Alert>
 #}
+{% apply trim %}
 <button type="button" {{ attributes.defaults({
     class: 'btn-close',
     'data-bs-dismiss': 'alert',
     'aria-label': 'Close',
 }) }}></button>
+{% endapply %}

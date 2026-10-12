@@ -10,6 +10,7 @@
       variant  — bar color (same values as <twig:Tabler:Progress:Bar>)
       label    — accessible label (aria-label on the bar)
 #}
+{% apply trim %}
 {% props
     value = 0,
     variant = 'primary',
@@ -19,3 +20,4 @@
 <div {{ attributes.defaults({class: 'progress card-progress'}) }}>
     <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" aria-label="{{ label ?? (value ~ '%') }}" />
 </div>
+{% endapply %}

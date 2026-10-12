@@ -16,6 +16,7 @@
       direction  — down (default) | up | end | start: where the menu opens (dropup / dropend / dropstart);
                    `end` also turns a dropdown nested in a menu into a submenu
 #}
+{% apply trim %}
 {% props
     direction = 'down',
 %}
@@ -30,3 +31,4 @@
 <div class="{{ dropdown.apply({direction: direction}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

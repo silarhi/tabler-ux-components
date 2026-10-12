@@ -9,6 +9,7 @@
     Props:
       label  — the text before the dots (default "Typing"); mirrored by the `content` block
 #}
+{% apply trim %}
 {% props
     label = 'Typing',
 %}
@@ -18,3 +19,4 @@
         <p class="text-secondary fst-italic mb-0">{%- block content %}{{ label }}{% endblock %} <span class="animated-dots"></span></p>
     </div>
 </div>
+{% endapply %}

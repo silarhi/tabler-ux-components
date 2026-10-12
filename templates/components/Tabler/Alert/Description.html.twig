@@ -6,4 +6,6 @@
           Your changes are <strong>live</strong>.
       </twig:Tabler:Alert:Description>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'alert-description'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

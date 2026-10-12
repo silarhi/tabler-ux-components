@@ -12,6 +12,7 @@
                    pins the stack to that corner of the viewport (position-fixed + p-3); unset, it
                    stays in the flow of its parent
 #}
+{% apply trim %}
 {% props
     placement = null,
 %}
@@ -34,3 +35,4 @@
 <div class="{{ container.apply({placement: placement ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content %}{% endblock -%}
 </div>
+{% endapply %}

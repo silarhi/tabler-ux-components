@@ -6,4 +6,6 @@
           <twig:Tabler:Card:Title>Title</twig:Tabler:Card:Title>
       </twig:Tabler:Card:Header>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'card-header'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

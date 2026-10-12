@@ -25,6 +25,7 @@
       disabled  — item the user cannot pick (disabled)
       variant   — tint: primary | secondary | success | danger | warning | info | dark | light
 #}
+{% apply trim %}
 {% props
     label = null,
     href = null,
@@ -69,3 +70,4 @@
     {%- if disabled %}{% if button %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
     {%- block content %}{{ label }}{% endblock -%}
 </{{ element }}>
+{% endapply %}

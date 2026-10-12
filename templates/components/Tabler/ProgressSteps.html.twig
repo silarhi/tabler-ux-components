@@ -20,6 +20,7 @@
       variant  — color of the reached steps (default primary): primary | secondary | success | danger | warning | info | dark | light | muted,
                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
 #}
+{% apply trim %}
 {% props
     count = 0,
     labels = null,
@@ -36,3 +37,4 @@
         {%- endfor -%}
     {%- endblock -%}
 </ol>
+{% endapply %}

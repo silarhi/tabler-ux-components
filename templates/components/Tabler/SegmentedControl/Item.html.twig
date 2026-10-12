@@ -9,6 +9,7 @@
     Props:
       active  — the selected segment
 #}
+{% apply trim %}
 {% props
     active = false,
 %}
@@ -21,3 +22,4 @@
 ) %}
 
 <button type="{{ attributes.render('type') ?? 'button' }}" class="{{ item.apply({active: active}, attributes.render('class')) }}" role="tab" data-bs-toggle="tab" aria-selected="{{ active ? 'true' : 'false' }}"{% if not active %} tabindex="-1"{% endif %} {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>
+{% endapply %}

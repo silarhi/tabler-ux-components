@@ -10,6 +10,7 @@
       icon  — optional Tabler icon name
       text  — optional label under the icon (avatar-upload-text)
 #}
+{% apply trim %}
 {% props
     href = null,
     size = 'md',
@@ -31,3 +32,4 @@
         {%- if text is not null -%}<span class="avatar-upload-text">{{ text }}</span>{%- endif -%}
     {%- endblock -%}
 </{{ tag }}>
+{% endapply %}
