@@ -13,8 +13,6 @@
     active = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set link = html_cva(
     base: 'nav-link',
     variants: {
@@ -23,5 +21,5 @@
 ) %}
 
 <li class="nav-item" role="presentation">
-    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
 </li>

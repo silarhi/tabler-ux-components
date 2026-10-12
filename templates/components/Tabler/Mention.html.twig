@@ -42,7 +42,8 @@
     count = null,
 %}
 
-{%- set inner -%}
+{% set tag = href is not null ? 'a' : 'span' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'mention'}).without('href') }}>
     {%- block content -%}
         {%- block leading -%}
             {%- if avatar is not null -%}<twig:Tabler:Mention:Avatar image="{{ avatar }}" />{%- endif -%}
@@ -59,10 +60,4 @@
             {%- if count is not null -%}<twig:Tabler:Mention:Count>{{ count }}</twig:Tabler:Mention:Count>{%- endif -%}
         {%- endblock -%}
     {%- endblock -%}
-{%- endset -%}
-
-{% if href is not null %}
-    <a href="{{ href }}" {{ attributes.defaults({class: 'mention'}).without('href') }}>{{ inner|raw }}</a>
-{% else %}
-    <span {{ attributes.defaults({class: 'mention'}) }}>{{ inner|raw }}</span>
-{% endif %}
+</{{ tag }}>

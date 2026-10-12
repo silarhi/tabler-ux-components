@@ -16,8 +16,6 @@
     split = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set toggle = html_cva(
     base: 'btn',
     variants: {
@@ -36,4 +34,4 @@
     },
 ) %}
 
-<a href="#" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+<a href="#" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>

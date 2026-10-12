@@ -14,8 +14,6 @@
     active = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
 {% set item = html_cva(
     base: 'step-item',
     variants: {
@@ -23,8 +21,7 @@
     },
 ) %}
 
-{% if href is not null %}
-    <a href="{{ href }}" class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
-{% else %}
-    <span class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</span>
-{% endif %}
+{% set tag = href is not null ? 'a' : 'span' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

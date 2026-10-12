@@ -18,12 +18,7 @@
     id = null,
 %}
 
-{%- set list -%}<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{% block content %}{% endblock %}</ul>{%- endset -%}
-
-{%- set side -%}{% block side %}{% endblock %}{%- endset -%}
-
-{% if collapse %}
-    <div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{{ list|raw }}{{ side|raw }}</div>
-{% else %}
-    {{ list|raw }}{{ side|raw }}
-{% endif %}
+{% if collapse %}<div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{% endif %}
+<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{% block content %}{% endblock %}</ul>
+{%- block side %}{% endblock -%}
+{% if collapse %}</div>{% endif %}

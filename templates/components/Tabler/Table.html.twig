@@ -88,12 +88,6 @@
     size: size,
     mobile: mobile ?? '',
 }, attributes.render('class')) %}
-{%- set inner -%}{%- block content %}{% endblock -%}{%- endset -%}
-
-{% if responsive %}
-    <div class="table-responsive">
-        <table class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</table>
-    </div>
-{% else %}
-    <table class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</table>
-{% endif %}
+{% if responsive %}<div class="table-responsive">{% endif %}
+<table class="{{ classes }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</table>
+{% if responsive %}</div>{% endif %}

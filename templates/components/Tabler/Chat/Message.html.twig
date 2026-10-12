@@ -31,16 +31,15 @@
 {% set avatar_html %}{% block avatar %}
     {%- if avatar is not null -%}<span class="avatar" style="background-image: url({{ avatar }})"></span>{%- endif -%}
 {% endblock %}{% endset %}
-{% set avatar_html = avatar_html|trim %}
 
 <div {{ attributes }}>
     <div class="row align-items-end{{ me ? ' justify-content-end' : '' }}">
-        {%- if not me and avatar_html is not empty -%}<div class="col-auto">{{ avatar_html|raw }}</div>{%- endif -%}
+        {%- if not me and avatar_html|trim is not empty -%}<div class="col-auto">{{ avatar_html }}</div>{%- endif -%}
         <div class="col-auto">
             {%- block content -%}
                 <twig:Tabler:Chat:Bubble me="{{ me }}" author="{{ author }}" date="{{ date }}" text="{{ text }}" />
             {%- endblock -%}
         </div>
-        {%- if me and avatar_html is not empty -%}<div class="col-auto">{{ avatar_html|raw }}</div>{%- endif -%}
+        {%- if me and avatar_html|trim is not empty -%}<div class="col-auto">{{ avatar_html }}</div>{%- endif -%}
     </div>
 </div>
