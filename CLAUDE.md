@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-`silarhi/tabler-ux-components` is a Symfony bundle of [Tabler](https://tabler.io/) UI components built as anonymous [Symfony UX Twig Components](https://symfony.com/bundles/ux-twig-component/current/index.html): `<twig:Tabler:Alert>`, `<twig:Tabler:Card>`, … Almost all of the code is Twig templates under `templates/components/Tabler/`; the only PHP class is the bundle. Published on Packagist under MIT license.
+`silarhi/tabler-ux-components` is a Symfony bundle of [Tabler](https://tabler.io/) UI components built as anonymous [Symfony UX Twig Components](https://symfony.com/bundles/ux-twig-component/current/index.html): `<twig:Tabler:Alert>`, `<twig:Tabler:Card>`, … Almost all of the code is Twig templates under `templates/components/Tabler/`; the only PHP code is the bundle and its Twig lexer. Published on Packagist under MIT license.
 
 The README documents every component, the design pattern and the escaping rules: keep it in sync with the templates.
 
@@ -36,7 +36,8 @@ composer normalize --dry-run
 
 ## Architecture
 
-- `src/TablerUxComponentsBundle.php` (`AbstractBundle`) only prepends the bundle's `templates/` directory as a non-namespaced Twig path, so ux-twig-component's anonymous component finder resolves everything under `components/Tabler/` with the `Tabler:` prefix. There are no PHP components, services or configuration.
+- `src/TablerUxComponentsBundle.php` (`AbstractBundle`) prepends the bundle's `templates/` directory as a non-namespaced Twig path, so ux-twig-component's anonymous component finder resolves everything under `components/Tabler/` with the `Tabler:` prefix, and registers the lexer below. There are no PHP components or configuration.
+- `src/Twig/ComponentLexer.php` wraps ux-twig-component's lexer to keep the line break after a `</twig:Tabler:…>` closing tag: Twig drops the first newline after the `{% endcomponent %}` the closing tag compiles to, so components on consecutive lines would touch. `src/Twig/EnvironmentConfigurator.php` decorates `twig.configurator.environment` to install it after ux-twig-component's own lexer (a `setLexer()` call in 3.x, a configurator in 2.x). The bundle's own templates are not rewritten: each is wrapped in `{% apply trim %}` and renders no whitespace around itself (`InlineWhitespaceTest`).
 - **shadcn composition pattern**: each component is a main template with every prop (`Alert.html.twig`) plus one sub-component per part (`Alert/Title.html.twig` → `<twig:Tabler:Alert:Title>`). Each prop of the main component has a matching block whose default renders the sub-component wrapping the prop value, so users can override a block, or the whole `content` block, to compose freely.
 - Every template starts with a `{# … #}` doc comment: what it renders, usage examples and the list of props. Keep it accurate; it is the reference the README is written from.
 - **Variants** are declared with `html_cva()` (twig/html-extra) and applied with `attributes.render('class')` so users' classes are merged. Booleans become the string keys `true`/`false`. When two axes both emit a color class (Button `appearance` × `variant`, Badge `light` × `variant`), the classes live entirely in `compound_variants` so only one wins.
