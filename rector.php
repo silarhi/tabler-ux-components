@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Rector\Config\RectorConfig;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 
 return RectorConfig::configure()
     ->withCache(__DIR__ . '/var/tools/rector')
@@ -24,6 +25,10 @@ return RectorConfig::configure()
         twig: true,
         symfony: true,
     )
+    ->withSkip([
+        // Symfony 8.1 moves the bundle classes to DependencyInjection\Kernel: the bundle still supports 6.4 and 7.x
+        RenameClassRector::class,
+    ])
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
