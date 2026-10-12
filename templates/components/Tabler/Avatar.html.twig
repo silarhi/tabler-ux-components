@@ -6,6 +6,9 @@
         <twig:Tabler:Avatar variant="primary" size="lg">JL</twig:Tabler:Avatar>
         <twig:Tabler:Avatar rounded><i class="ti ti-user"></i></twig:Tabler:Avatar>
 
+    Group avatars with <twig:Tabler:Avatar:List stacked>; add a corner mark with
+    <twig:Tabler:Avatar:Brand>; an empty slot is <twig:Tabler:Avatar:Upload>.
+
     Props:
       size     — xxs | xs | sm | md (default) | lg | xl | 2xl
       variant    — tinted background for initials (bg-{variant}-lt)
@@ -40,4 +43,7 @@
     },
 ) %}
 
-<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square}, attributes.render('class')) }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+{# the background image goes first so a user `style` can still override it #}
+{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>

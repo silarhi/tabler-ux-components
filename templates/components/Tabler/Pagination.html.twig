@@ -12,10 +12,12 @@
     Props:
       outline  — outline style (pagination-outline)
       circle   — circular page links (pagination-circle)
+      size     — sm | md (default) | lg
 #}
 {% props
     outline = false,
     circle = false,
+    size = 'md',
 %}
 
 {% set pagination = html_cva(
@@ -23,9 +25,10 @@
     variants: {
         outline: {true: 'pagination-outline', false: ''},
         circle: {true: 'pagination-circle', false: ''},
+        size: {sm: 'pagination-sm', md: '', lg: 'pagination-lg'},
     },
 ) %}
 
-<ul class="{{ pagination.apply({outline: outline, circle: circle}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<ul class="{{ pagination.apply({outline: outline, circle: circle, size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>

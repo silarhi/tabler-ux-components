@@ -58,13 +58,9 @@ final class ModalTest extends ComponentTestCase
 
     public function testNonDismissibleHidesCloseButton(): void
     {
-        // A real boolean false must be passed via the {% component %} syntax;
-        // `dismissible="false"` in HTML syntax would pass the truthy string "false".
-        $html = $this->renderComponent(
-            <<<'TWIG'
-            {% component 'Tabler:Modal' with {id: 'm', title: 'Locked', dismissible: false} %}{% endcomponent %}
-            TWIG,
-        );
+        // `{{ false }}` passes a real boolean; a bare `dismissible="false"`
+        // would pass the truthy string "false".
+        $html = $this->renderComponent('<twig:Tabler:Modal id="m" title="Locked" dismissible="{{ false }}" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="modal" tabindex="-1" id="m">
@@ -148,6 +144,26 @@ final class ModalTest extends ComponentTestCase
                         </div>
                         <div class="modal-body">Form</div>
                         <div class="modal-footer"><button type="button" class="btn btn-primary">Save</button></div>
+                    </div>
+                </div>
+            </div>
+            HTML, $html);
+    }
+
+    public function testStatusIsKeptWhenComposing(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Modal id="edit" size="lg" status="primary">
+                <twig:Tabler:Modal:Body>Form</twig:Tabler:Modal:Body>
+            </twig:Tabler:Modal>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <div class="modal" tabindex="-1" id="edit">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-status bg-primary"></div>
+                        <div class="modal-body">Form</div>
                     </div>
                 </div>
             </div>

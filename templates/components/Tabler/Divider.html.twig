@@ -9,12 +9,14 @@
     Props:
       position  — start | center (default) | end (text alignment)
       variant     — primary | secondary | success | danger | warning | info | dark | light
+      spaceless  — no vertical margin around a labelled divider (hr-text-spaceless)
 
     With no content it renders a plain <hr>; with content it renders a `.hr-text`.
 #}
 {% props
     position = 'center',
     variant = null,
+    spaceless = false,
 %}
 
 {%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
@@ -23,6 +25,7 @@
     base: 'hr-text',
     variants: {
         position: {start: 'hr-text-start', center: '', end: 'hr-text-end'},
+        spaceless: {true: 'hr-text-spaceless', false: ''},
         variant: {
             primary: 'text-primary',
             secondary: 'text-secondary',
@@ -37,7 +40,7 @@
 ) %}
 
 {% if label|trim %}
-    <div class="{{ divider.apply({position: position, variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</div>
+    <div class="{{ divider.apply({position: position, variant: variant ?? '', spaceless: spaceless}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label -}}</div>
 {% else %}
     <hr {{ attributes.defaults({class: 'hr'}) }}>
 {% endif %}

@@ -63,4 +63,22 @@ final class SignalTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testComposedBarsIgnoreValueAndMax(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Signal value="3" max="4" aria-label="Level 1 of 2">
+                <twig:Tabler:Signal:Bar active />
+                <twig:Tabler:Signal:Bar />
+            </twig:Tabler:Signal>
+            TWIG);
+
+        self::assertHtmlSame(
+            '<span class="signal" role="img" aria-label="Level 1 of 2">'
+            . '<span class="signal-bar active"></span>'
+            . '<span class="signal-bar"></span>'
+            . '</span>',
+            $html,
+        );
+    }
 }

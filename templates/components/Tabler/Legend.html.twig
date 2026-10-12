@@ -79,7 +79,8 @@
 ) %}
 
 {% set classes = legend.apply({size: size, variant: variant ?? '', active: active, off: off}, attributes.render('class')) %}
-{%- set inner -%}
+{% set tag = href is not null ? 'a' : (button ? 'button' : 'span') %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% elseif button %} type="button"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href', 'type') }}>
     {%- block content -%}
         {%- block dot -%}<twig:Tabler:Legend:Dot />{%- endblock %}
         {% block label -%}{%- if label is not null -%}{{ label }}{%- endif -%}{%- endblock %}
@@ -87,12 +88,4 @@
             {%- if value is not null -%}<twig:Tabler:Legend:Value unit="{{ unit }}">{{ value }}</twig:Tabler:Legend:Value>{%- endif -%}
         {%- endblock -%}
     {%- endblock -%}
-{%- endset -%}
-
-{% if href is not null %}
-    <a href="{{ href }}" class="{{ classes }}" {{ attributes.without('class', 'href') }}>{{ inner|raw }}</a>
-{% elseif button %}
-    <button type="button" class="{{ classes }}" {{ attributes.without('class', 'type') }}>{{ inner|raw }}</button>
-{% else %}
-    <span class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</span>
-{% endif %}
+</{{ tag }}>

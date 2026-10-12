@@ -12,22 +12,30 @@
         </twig:Tabler:Tabs:Content>
 
     Props:
-      pills  — pill style (nav-pills) instead of underlined tabs
-      card   — card-header tab style (card-header-tabs)
+      pills      — pill style (nav-pills) instead of tabs
+      underline  — underline style (nav-underline) instead of tabs
+      bordered   — bottom border under the whole bar (nav-bordered)
+      fill       — tabs share the full width (nav-fill)
+      card       — card-header tab style (card-header-tabs)
 #}
 {% props
     pills = false,
+    underline = false,
+    bordered = false,
+    fill = false,
     card = false,
 %}
 
 {% set tabs = html_cva(
     base: 'nav',
     variants: {
-        pills: {true: 'nav-pills', false: 'nav-tabs'},
+        look: {tabs: 'nav-tabs', pills: 'nav-pills', underline: 'nav-underline'},
+        bordered: {true: 'nav-bordered', false: ''},
+        fill: {true: 'nav-fill', false: ''},
         card: {true: 'card-header-tabs', false: ''},
     },
 ) %}
 
-<ul class="{{ tabs.apply({pills: pills, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
+<ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>

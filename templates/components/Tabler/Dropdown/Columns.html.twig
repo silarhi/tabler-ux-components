@@ -1,0 +1,16 @@
+{#
+    Dropdown columns — splits a long menu into columns (`.dropdown-menu-columns`).
+
+    Usage:
+        <twig:Tabler:Dropdown:Menu>
+            <twig:Tabler:Dropdown:Columns>
+                <twig:Tabler:Dropdown:Column>
+                    <twig:Tabler:Dropdown:Item href="#">Accordion</twig:Tabler:Dropdown:Item>
+                </twig:Tabler:Dropdown:Column>
+                <twig:Tabler:Dropdown:Column>
+                    <twig:Tabler:Dropdown:Item href="#">Badge</twig:Tabler:Dropdown:Item>
+                </twig:Tabler:Dropdown:Column>
+            </twig:Tabler:Dropdown:Columns>
+        </twig:Tabler:Dropdown:Menu>
+#}
+<div {{ attributes.defaults({class: 'dropdown-menu-columns'}) }}>{%- block content %}{% endblock -%}</div>

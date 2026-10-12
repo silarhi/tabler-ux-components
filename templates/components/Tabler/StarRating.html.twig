@@ -1,0 +1,40 @@
+{#
+    Tabler StarRating — a read-only row of stars showing a score (`.stars`).
+
+    The row gets role="img" and an "N out of M" `aria-label` (pass your own
+    `aria-label` to override it). Keep the score visible in text next to it too.
+    The interactive star rating relies on a third-party library and is not
+    covered.
+
+    All-in-one:
+        <twig:Tabler:StarRating value="4" />
+        <twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart-filled" aria-label="3 of 10 hearts" />
+
+    Composed:
+        <twig:Tabler:StarRating aria-label="2 out of 3">
+            <twig:Tabler:StarRating:Star active />
+            <twig:Tabler:StarRating:Star active />
+            <twig:Tabler:StarRating:Star />
+        </twig:Tabler:StarRating>
+
+    Props:
+      value    — number of active stars (default 0)
+      max      — total number of stars (default 5)
+      variant  — color of the active stars (default yellow): primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+      icon     — Tabler icon name of each star (default star-filled)
+#}
+{% props
+    value = 0,
+    max = 5,
+    variant = 'yellow',
+    icon = 'star-filled',
+%}
+
+<div {{ attributes.defaults({class: 'stars', role: 'img', 'aria-label': value ~ ' out of ' ~ max}) }}>
+    {%- block content -%}
+        {%- for i in 1..max -%}
+            <twig:Tabler:StarRating:Star active="{{ i <= value }}" variant="{{ variant }}" icon="{{ icon }}" />
+        {%- endfor -%}
+    {%- endblock -%}
+</div>

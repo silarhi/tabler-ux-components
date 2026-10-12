@@ -1,0 +1,8 @@
+{#
+    Tag close — the remove button at the end of a tag (`.btn-close`).
+    Name what it removes in its `aria-label` (defaults to "Remove").
+
+    Usage:
+        <twig:Tabler:Tag:Close aria-label="Remove Alpha" data-action="tags#remove" />
+#}
+<button type="button" {{ attributes.defaults({class: 'btn-close', 'aria-label': 'Remove'}) }}></button>

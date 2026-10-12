@@ -1,0 +1,59 @@
+{#
+    Tabler Trending — how a value changed: the number, a direction arrow and a
+    matching color, on one line (Tabler's utility-based trend indicator).
+
+    The direction is read from the sign of `value`: positive is up (green,
+    arrow-up), zero is neutral (secondary, minus), negative is down (red,
+    arrow-down). Keep the sign in the value, e.g. -12, so the direction does not
+    rely on color alone; a visually-hidden prefix ("Increased by", …) spells it
+    out for assistive technology and the arrow is hidden from it.
+
+    All-in-one:
+        <twig:Tabler:Trending value="25" />
+        <twig:Tabler:Trending value="-12" />
+        <twig:Tabler:Trending value="4.2K" unit="" />
+        <twig:Tabler:Trending value="0" class="h2 m-0" />
+
+    Composed (override `content`, or just the `label` / `value` / `icon` blocks):
+        <twig:Tabler:Trending value="7">
+            <twig:block name="icon"><twig:Tabler:Icon name="trending-up" class="ms-1" aria-hidden="true" /></twig:block>
+        </twig:Tabler:Trending>
+
+    Props:
+      value      — the change, a number or a signed string (rendered as written)
+      unit       — text after the value (default %; "" for none)
+      direction  — up | down | neutral, to override the direction read from `value`
+      label      — visually-hidden prefix; defaults to "Increased by" / "Decreased by" / "No change,"
+#}
+{% props
+    value = 0,
+    unit = '%',
+    direction = null,
+    label = null,
+%}
+
+{% set amount = (value ~ '')|trim %}
+{% set trend = direction ?? (amount matches '/^[+-]?0*(\\.0*)?$/' ? 'neutral' : (amount starts with '-' ? 'down' : 'up')) %}
+
+{% set trending = html_cva(
+    base: 'd-inline-flex align-items-center lh-1',
+    variants: {
+        trend: {
+            up: 'text-green',
+            neutral: 'text-secondary',
+            down: 'text-red',
+        },
+    },
+) %}
+
+<span class="{{ trending.apply({trend: trend}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content -%}
+        {%- block label -%}
+            <span class="visually-hidden">{{ label ?? {up: 'Increased by', neutral: 'No change,', down: 'Decreased by'}[trend] }} </span>
+        {%- endblock -%}
+        {%- block value -%}{{ value }}{{ unit }}{%- endblock -%}
+        {%- block icon -%}
+            <twig:Tabler:Icon name="{{ {up: 'arrow-up', neutral: 'minus', down: 'arrow-down'}[trend] }}" class="ms-0" aria-hidden="true" />
+        {%- endblock -%}
+    {%- endblock -%}
+</span>

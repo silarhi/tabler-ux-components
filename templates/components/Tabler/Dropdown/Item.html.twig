@@ -9,14 +9,14 @@
       href      — link target (defaults to #)
       active    — highlighted item
       disabled  — non-interactive item
+      icon      — optional leading Tabler icon name (dropdown-item-icon)
 #}
 {% props
     href = null,
     active = false,
     disabled = false,
+    icon = null,
 %}
-
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
 
 {% set item = html_cva(
     base: 'dropdown-item',
@@ -26,4 +26,7 @@
     },
 ) %}
 
-<a href="{{ href ?? '#' }}" class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{{- label|raw -}}</a>
+<a href="{{ href ?? '#' }}" class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>
+    {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="dropdown-item-icon" />{%- endif -%}
+    {%- block content %}{% endblock -%}
+</a>

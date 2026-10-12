@@ -1,0 +1,33 @@
+{#
+    Avatar upload — a dashed empty slot for a picture that is not set yet (`.avatar-upload`).
+
+    Usage:
+        <twig:Tabler:Avatar:Upload href="/profile/picture" size="xl" text="Add" icon="plus" />
+
+    Props:
+      href  — link target; without it a <button type="button"> is rendered
+      size  — avatar size: xxs | xs | sm | md (default) | lg | xl | 2xl
+      icon  — optional Tabler icon name
+      text  — optional label under the icon (avatar-upload-text)
+#}
+{% props
+    href = null,
+    size = 'md',
+    icon = null,
+    text = null,
+%}
+
+{% set upload = html_cva(
+    base: 'avatar avatar-upload',
+    variants: {
+        size: {xxs: 'avatar-xxs', xs: 'avatar-xs', sm: 'avatar-sm', md: '', lg: 'avatar-lg', xl: 'avatar-xl', '2xl': 'avatar-2xl'},
+    },
+) %}
+
+{% set tag = href is not null ? 'a' : 'button' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} class="{{ upload.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class', 'href', 'type') }}>
+    {%- block content -%}
+        {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" />{%- endif -%}
+        {%- if text is not null -%}<span class="avatar-upload-text">{{ text }}</span>{%- endif -%}
+    {%- endblock -%}
+</{{ tag }}>

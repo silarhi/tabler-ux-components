@@ -1,0 +1,16 @@
+{#
+    Avatar brand — a small brand mark in the bottom corner of an avatar (`.avatar-brand`).
+
+    Usage:
+        <twig:Tabler:Avatar image="/avatars/jane.jpg">
+            <twig:Tabler:Avatar:Brand image="/brands/github.svg" />
+        </twig:Tabler:Avatar>
+
+    Props:
+      image  — background image URL of the mark; or put markup in the `content` block
+#}
+{% props
+    image = null,
+%}
+
+<span {{ attributes.defaults({class: 'avatar-brand'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>{%- block content %}{% endblock -%}</span>

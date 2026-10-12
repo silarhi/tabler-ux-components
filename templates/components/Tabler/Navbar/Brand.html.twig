@@ -13,10 +13,7 @@
     href = null,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
-{% if href is not null %}
-    <a href="{{ href }}" {{ attributes.defaults({class: 'navbar-brand'}).without('href') }}>{{- label|raw -}}</a>
-{% else %}
-    <span {{ attributes.defaults({class: 'navbar-brand'}) }}>{{- label|raw -}}</span>
-{% endif %}
+{% set tag = href is not null ? 'a' : 'span' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'navbar-brand'}).without('href') }}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

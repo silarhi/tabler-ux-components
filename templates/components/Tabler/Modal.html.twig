@@ -1,9 +1,10 @@
 {#
     Tabler Modal — main component, shadcn-style. Bootstrap 5 modal markup.
 
-    The `content` block wraps the entire modal content (status, header, body,
-    footer), so composing it replaces everything — while each named sub-block
-    stays individually overridable.
+    The `content` block wraps the modal content (header, body, footer), so
+    composing it replaces them — while each named sub-block stays individually
+    overridable. The `status` bar is rendered outside `content`, so it is kept
+    when you compose.
 
     All-in-one:
         <twig:Tabler:Modal id="confirm" title="Delete item?" text="This cannot be undone." />
@@ -24,15 +25,17 @@
 
     Props:
       id              — DOM id used by triggers (data-bs-target="#id")
-      size            — sm | md (default) | lg | xl | full
+      size            — sm | md (default) | lg | xl | full | fullscreen
       centered        — vertically center the dialog
       scrollable      — scroll the body instead of the page
       status          — variant of the status bar at the top of the dialog
       title           — optional title; mirrored by the `header` block
       text            — optional body text; mirrored by the `body` block
       footer          — optional footer text; mirrored by the `footer` block
-      dismissible     — show a close button in the header (default true)
+      dismissible     — show a close button in the header (default true); turn it off with
+                        dismissible="{{ false }}" (a bare "false" is the truthy string "false")
       staticBackdrop  — clicking the backdrop does not close the modal
+      blur            — blur the page behind the backdrop (modal-blur)
 #}
 {% props
     id = null,
@@ -45,6 +48,7 @@
     footer = null,
     dismissible = true,
     staticBackdrop = false,
+    blur = false,
 %}
 
 {% set dialog = html_cva(
@@ -56,17 +60,18 @@
             lg: 'modal-lg',
             xl: 'modal-xl',
             full: 'modal-full-width',
+            fullscreen: 'modal-fullscreen',
         },
         centered: {true: 'modal-dialog-centered', false: ''},
         scrollable: {true: 'modal-dialog-scrollable', false: ''},
     },
 ) %}
 
-<div {{ attributes.defaults({class: 'modal', tabindex: '-1'}).without('id') }}{% if id is not null %} id="{{ id }}"{% endif %}{% if staticBackdrop %} data-bs-backdrop="static" data-bs-keyboard="false"{% endif %}>
+<div {{ attributes.defaults({class: blur ? 'modal modal-blur' : 'modal', tabindex: '-1'}).without('id') }}{% if id is not null %} id="{{ id }}"{% endif %}{% if staticBackdrop %} data-bs-backdrop="static" data-bs-keyboard="false"{% endif %}>
     <div class="{{ dialog.apply({size: size, centered: centered, scrollable: scrollable}) }}" role="document">
         <div class="modal-content">
+            {%- if status is not null -%}<twig:Tabler:Modal:Status variant="{{ status }}" />{%- endif -%}
             {% block content %}
-                {%- if status is not null -%}<twig:Tabler:Modal:Status variant="{{ status }}" />{%- endif -%}
                 {% block header %}
                     {%- if title is not null -%}
                         <twig:Tabler:Modal:Header>

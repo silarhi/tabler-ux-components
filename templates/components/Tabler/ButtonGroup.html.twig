@@ -1,0 +1,39 @@
+{#
+    Tabler ButtonGroup — joins related buttons into one bar with shared borders
+    (`.btn-group`, Bootstrap's button group).
+
+    Buttons:
+        <twig:Tabler:ButtonGroup aria-label="Text alignment">
+            <twig:Tabler:Button variant="default">Left</twig:Tabler:Button>
+            <twig:Tabler:Button variant="default">Middle</twig:Tabler:Button>
+            <twig:Tabler:Button variant="default">Right</twig:Tabler:Button>
+        </twig:Tabler:ButtonGroup>
+
+    Toggles (radio or checkbox inputs styled as buttons, `.btn-check`):
+        <twig:Tabler:ButtonGroup size="sm" aria-label="Period">
+            <twig:Tabler:ButtonGroup:Toggle id="period-day" name="period" value="day" checked>Day</twig:Tabler:ButtonGroup:Toggle>
+            <twig:Tabler:ButtonGroup:Toggle id="period-week" name="period" value="week">Week</twig:Tabler:ButtonGroup:Toggle>
+        </twig:Tabler:ButtonGroup>
+
+    Accessibility: the group gets role="group"; give it an `aria-label` naming
+    what the buttons control.
+
+    Props:
+      vertical  — stack the buttons (btn-group-vertical)
+      size      — sm | md (default) | lg (btn-group-sm / btn-group-lg)
+#}
+{% props
+    vertical = false,
+    size = 'md',
+%}
+
+{% set group = html_cva(
+    variants: {
+        vertical: {true: 'btn-group-vertical', false: 'btn-group'},
+        size: {sm: 'btn-group-sm', md: '', lg: 'btn-group-lg'},
+    },
+) %}
+
+<div class="{{ group.apply({vertical: vertical, size: size}, attributes.render('class')) }}" {{ attributes.defaults({role: 'group'}).without('class') }}>
+    {%- block content %}{% endblock -%}
+</div>

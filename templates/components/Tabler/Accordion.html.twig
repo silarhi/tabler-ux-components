@@ -1,0 +1,64 @@
+{#
+    Tabler Accordion — collapsible sections showing one panel at a time
+    (Bootstrap collapse).
+
+    All-in-one (`items` is an array of {title, text, open?, icon?, id?}; item ids
+    default to "<id>-<n>"):
+        <twig:Tabler:Accordion id="faq" items="{{ [
+            {title: 'Account details', text: 'Update your profile.', open: true},
+            {title: 'Security settings', text: 'Configure two-factor authentication.'},
+        ] }}" />
+
+    Composed (`parent` makes an item close the others when it opens):
+        <twig:Tabler:Accordion id="settings" flush>
+            <twig:Tabler:Accordion:Item id="settings-api" parent="settings" title="API access" text="Generate tokens." open />
+            <twig:Tabler:Accordion:Item id="settings-hooks" parent="settings" title="Webhooks">
+                <twig:block name="body">
+                    <twig:Tabler:Accordion:Body>Manage <strong>delivery URLs</strong>.</twig:Tabler:Accordion:Body>
+                </twig:block>
+            </twig:Tabler:Accordion:Item>
+        </twig:Tabler:Accordion>
+
+    Props:
+      id          — DOM id, used as the `data-bs-parent` of the generated items
+      items       — optional array of items; mirrored by the `content` block
+      flush       — no outer border nor rounding, to sit flush in a parent (accordion-flush)
+      inverted    — move the toggle indicator to the start of the header (accordion-inverted)
+      tabs        — a gap between items, each fully bordered (accordion-tabs)
+      alwaysOpen  — let generated items stay open when another one opens (no data-bs-parent)
+      plus        — generated items use the plus toggle (accordion-button-toggle-plus)
+#}
+{% props
+    id = null,
+    items = null,
+    flush = false,
+    inverted = false,
+    tabs = false,
+    alwaysOpen = false,
+    plus = false,
+%}
+
+{% set accordion = html_cva(
+    base: 'accordion',
+    variants: {
+        flush: {true: 'accordion-flush', false: ''},
+        inverted: {true: 'accordion-inverted', false: ''},
+        tabs: {true: 'accordion-tabs', false: ''},
+    },
+) %}
+
+<div class="{{ accordion.apply({flush: flush, inverted: inverted, tabs: tabs}, attributes.render('class')) }}"{% if id is not null %} id="{{ id }}"{% endif %} {{ attributes.without('class', 'id') }}>
+    {%- block content -%}
+        {%- for item in items ?? [] -%}
+            <twig:Tabler:Accordion:Item
+                id="{{ item.id ?? ((id ?? 'accordion') ~ '-' ~ loop.index) }}"
+                parent="{{ alwaysOpen ? null : id }}"
+                title="{{ item.title ?? null }}"
+                text="{{ item.text ?? null }}"
+                icon="{{ item.icon ?? null }}"
+                open="{{ item.open ?? false }}"
+                plus="{{ plus }}"
+            />
+        {%- endfor -%}
+    {%- endblock -%}
+</div>

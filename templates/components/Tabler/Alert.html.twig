@@ -1,6 +1,10 @@
 {#
     Tabler Alert — main component, shadcn-style.
 
+    All-in-one:
+
+        <twig:Tabler:Alert variant="success" icon="check" title="Saved!" description="Your changes are live." />
+
     Every prop has a matching block whose default renders the corresponding
     sub-component wrapping the prop value. Override any block to take full
     control while still leveraging the sub-component (and its attributes):
@@ -23,12 +27,12 @@
       variant      — primary | secondary | success | danger | warning | info
       important    — filled/solid style (alert-important)
       minor        — quiet style: plain border, no tinted background (alert-minor)
-      icon         — optional icon HTML/SVG (rendered via Alert:Icon's `.alert-icon` wrapper)
+      icon         — optional Tabler icon name, rendered with <twig:Tabler:Icon> inside Alert:Icon;
+                     for any other markup (SVG, ux-icons, …) override the `icon` block with Alert:Icon
       title        — optional title; mirrored by the `title` block
       description  — optional description; mirrored by the `description` block
       dismissible  — show a close button; mirrored by the `dismiss` block
 
-    Note: `icon` is rendered with `|raw`. Treat the value as developer-controlled.
 #}
 {% props
     variant = 'info',
@@ -69,7 +73,8 @@
     ],
 ) %}
 
-{# Capture title/description blocks so we can decide whether to render the wrapping <div> based on actual output (not just props). #}
+{# Capture title/description blocks so we can decide whether to render the wrapping <div> based on actual output (not just props).
+   A captured block is already escaped and marked safe: print it as is, never through |raw, and never joined with ~ (that escapes it twice). #}
 {% set title_html %}{% block title %}
     {%- if title is not null -%}<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>{%- endif -%}
 {% endblock %}{% endset %}
@@ -82,11 +87,11 @@
 <div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
     {% block content %}
         {% block icon %}
-            {%- if icon is not null -%}<twig:Tabler:Alert:Icon>{{ icon|raw }}</twig:Tabler:Alert:Icon>{%- endif -%}
+            {%- if icon is not null -%}<twig:Tabler:Alert:Icon><twig:Tabler:Icon name="{{ icon }}" /></twig:Tabler:Alert:Icon>{%- endif -%}
         {% endblock %}
         {% block body %}
             {%- if (title_html ~ description_html)|trim -%}
-                <div>{{ title_html|raw }}{{ description_html|raw }}</div>
+                <div>{{ title_html }}{{ description_html }}</div>
             {%- endif -%}
         {% endblock %}
         {% block dismiss %}

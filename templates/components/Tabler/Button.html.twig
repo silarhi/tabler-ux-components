@@ -11,7 +11,7 @@
     Props:
       variant      — color: default | primary | secondary | success | danger | warning | info | dark | light
                      (`default` is Tabler's neutral button: plain .btn, .btn-outline or .btn-ghost)
-      appearance   — filled (default) | outline | ghost
+      appearance   — filled (default) | outline | ghost | link (btn-link, ignores `variant`)
       size         — sm | md (default) | lg | xl
       href         — when set, renders <a href> instead of <button>
       type         — button (default) | submit | reset (ignored for links)
@@ -21,6 +21,8 @@
       loading      — show loading spinner state
       block        — full width (w-100)
       disabled     — inactive state (attribute on <button>, .disabled class on <a>)
+      floating     — pinned to the bottom corner of the viewport (btn-floating)
+      animateIcon  — animate the icon on hover: pulse | rotate | shake | tada | move-start (btn-animate-icon-*)
 #}
 {% props
     variant = 'primary',
@@ -34,6 +36,8 @@
     loading = false,
     block = false,
     disabled = false,
+    floating = false,
+    animateIcon = null,
 %}
 
 {% set button = html_cva(
@@ -46,6 +50,14 @@
         loading: {true: 'btn-loading', false: ''},
         block: {true: 'w-100', false: ''},
         disabled: {true: 'disabled', false: ''},
+        floating: {true: 'btn-floating', false: ''},
+        animateIcon: {
+            pulse: 'btn-animate-icon btn-animate-icon-pulse',
+            rotate: 'btn-animate-icon btn-animate-icon-rotate',
+            shake: 'btn-animate-icon btn-animate-icon-shake',
+            tada: 'btn-animate-icon btn-animate-icon-tada',
+            'move-start': 'btn-animate-icon btn-animate-icon-move-start',
+        },
     },
     compound_variants: [
         {appearance: ['filled'], variant: ['primary'], class: 'btn-primary'},
@@ -56,6 +68,7 @@
         {appearance: ['filled'], variant: ['info'], class: 'btn-info'},
         {appearance: ['filled'], variant: ['dark'], class: 'btn-dark'},
         {appearance: ['filled'], variant: ['light'], class: 'btn-light'},
+        {appearance: ['link'], class: 'btn-link'},
         {appearance: ['outline'], variant: ['default'], class: 'btn-outline'},
         {appearance: ['outline'], variant: ['primary'], class: 'btn-outline-primary'},
         {appearance: ['outline'], variant: ['secondary'], class: 'btn-outline-secondary'},
@@ -77,12 +90,10 @@
     ],
 ) %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
-
-{% if href is not null %}
-    {%- set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: disabled, appearance: appearance, variant: variant}, attributes.render('class')) -%}
-    <a href="{{ href }}" class="{{ classes }}" {{ attributes.defaults({role: 'button'}).without('class', 'href') }}{{ disabled ? ' aria-disabled="true" tabindex="-1"' : '' }}>{{- label|raw -}}</a>
-{% else %}
-    {%- set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, appearance: appearance, variant: variant}, attributes.render('class')) -%}
-    <button type="{{ type }}" class="{{ classes }}" {{ attributes.without('class', 'type') }}{{ disabled ? ' disabled' : '' }}>{{- label|raw -}}</button>
-{% endif %}
+{% set link = href is not null %}
+{% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: link and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
+{% set tag = link ? 'a' : 'button' %}
+<{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ (link ? attributes.defaults({role: 'button'}) : attributes).without('class', 'href', 'type') }}
+    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

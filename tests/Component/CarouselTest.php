@@ -69,12 +69,12 @@ final class CarouselTest extends ComponentTestCase
 
     public function testFadeWithoutAutoplay(): void
     {
-        // Booleans must be passed as real values (not the HTML "false" string),
-        // so use the {% component %} tag to disable `ride`.
+        // `{{ false }}` passes a real boolean; a bare `ride="false"` would
+        // pass the truthy string "false".
         $html = $this->renderComponent(<<<TWIG
-            {% component 'Tabler:Carousel' with {id: 'x', fade: true, ride: false} %}
-                {% block content %}<twig:Tabler:Carousel:Item active>A</twig:Tabler:Carousel:Item>{% endblock %}
-            {% endcomponent %}
+            <twig:Tabler:Carousel id="x" fade ride="{{ false }}">
+                <twig:Tabler:Carousel:Item active>A</twig:Tabler:Carousel:Item>
+            </twig:Tabler:Carousel>
             TWIG);
 
         self::assertHtmlSame(
@@ -129,6 +129,19 @@ final class CarouselTest extends ComponentTestCase
             '<div class="carousel-caption-background"></div>'
             . '<div class="carousel-caption"><h3>Label</h3></div>',
             $html,
+        );
+    }
+
+    public function testIndicatorConsumerStyleMergesWithThumbnail(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" data-bs-target="#hero" data-bs-slide-to="1" aria-label="Slide 2"'
+            . ' style="background-image: url(/thumb.jpg); opacity: .5" class="ratio ratio-4x3"></button>',
+            $this->renderComponent('<twig:Tabler:Carousel:Indicator target="hero" slideTo="1" image="/thumb.jpg" style="opacity: .5" />'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" data-bs-target="#hero" data-bs-slide-to="0" aria-label="Slide 1" style="width: 2rem"></button>',
+            $this->renderComponent('<twig:Tabler:Carousel:Indicator target="hero" style="width: 2rem" />'),
         );
     }
 }

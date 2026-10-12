@@ -1,0 +1,49 @@
+{#
+    Accordion button — the toggle of an accordion section (`.accordion-button`).
+
+    Wires Bootstrap collapse to the panel `target` and keeps `aria-expanded`,
+    `aria-controls` and the `collapsed` class in sync with `open`. The content
+    is the label; the `icon` and `toggle` blocks frame it.
+
+    Usage:
+        <twig:Tabler:Accordion:Button target="faq-api" open>API access</twig:Tabler:Accordion:Button>
+        <twig:Tabler:Accordion:Button target="faq-team" icon="user" plus>Team profile</twig:Tabler:Accordion:Button>
+
+        <twig:Tabler:Accordion:Button target="faq-api">
+            API access
+            <twig:block name="toggle">
+                <twig:Tabler:Accordion:Toggle icon="caret-down" />
+            </twig:block>
+        </twig:Tabler:Accordion:Button>
+
+    Props:
+      target      — id of the panel this button opens (data-bs-target / aria-controls)
+      open        — expanded state (no `collapsed` class, aria-expanded="true")
+      icon        — optional leading Tabler icon name; mirrored by the `icon` block
+      plus        — plus indicator (accordion-button-toggle-plus); mirrored by the `toggle` block
+      toggleIcon  — Tabler icon name of the indicator (default chevron-down, or plus)
+#}
+{% props
+    target = null,
+    open = false,
+    icon = null,
+    plus = false,
+    toggleIcon = null,
+%}
+
+{% set button = html_cva(
+    base: 'accordion-button',
+    variants: {
+        open: {true: '', false: 'collapsed'},
+    },
+) %}
+
+<button class="{{ button.apply({open: open}, attributes.render('class')) }}" type="button" data-bs-toggle="collapse"{% if target is not null %} data-bs-target="#{{ target }}" aria-controls="{{ target }}"{% endif %} aria-expanded="{{ open ? 'true' : 'false' }}" {{ attributes.without('class', 'type') }}>
+    {%- block icon -%}
+        {%- if icon is not null -%}<twig:Tabler:Accordion:Icon><twig:Tabler:Icon name="{{ icon }}" aria-hidden="true" /></twig:Tabler:Accordion:Icon>{%- endif -%}
+    {%- endblock -%}
+    {%- block content %}{% endblock -%}
+    {%- block toggle -%}
+        <twig:Tabler:Accordion:Toggle plus="{{ plus }}" icon="{{ toggleIcon }}" />
+    {%- endblock -%}
+</button>

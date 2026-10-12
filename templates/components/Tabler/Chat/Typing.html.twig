@@ -1,0 +1,20 @@
+{#
+    Chat typing indicator — a bubble with animated dots shown while waiting
+    for a reply (`.animated-dots`). Always pair the dots with real text.
+
+    Usage:
+        <twig:Tabler:Chat:Typing>Alice is typing</twig:Tabler:Chat:Typing>
+        <twig:Tabler:Chat:Typing label="Someone is typing" />
+
+    Props:
+      label  — the text before the dots (default "Typing"); mirrored by the `content` block
+#}
+{% props
+    label = 'Typing',
+%}
+
+<div {{ attributes.defaults({class: 'chat-bubble'}) }}>
+    <div class="chat-bubble-body">
+        <p class="text-secondary fst-italic mb-0">{%- block content %}{{ label }}{% endblock %} <span class="animated-dots"></span></p>
+    </div>
+</div>

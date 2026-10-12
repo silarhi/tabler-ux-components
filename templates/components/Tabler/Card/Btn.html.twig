@@ -1,0 +1,18 @@
+{#
+    Card button — a full-width action along the bottom edge of a card (`.card-btn`).
+    Several of them share the edge when wrapped in a `.d-flex` div.
+
+    Usage:
+        <twig:Tabler:Card:Btn href="/profile">View profile</twig:Tabler:Card:Btn>
+
+    Props:
+      href  — when set, renders <a href>; otherwise a <button type="button">
+#}
+{% props
+    href = null,
+%}
+
+{% set tag = href is not null ? 'a' : 'button' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} {{ attributes.defaults({class: 'card-btn'}).without('href', 'type') }}>
+    {%- block content %}{% endblock -%}
+</{{ tag }}>

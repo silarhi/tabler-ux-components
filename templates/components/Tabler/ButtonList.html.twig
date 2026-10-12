@@ -1,0 +1,34 @@
+{#
+    Tabler ButtonList — lays several buttons out in a row with a consistent gap,
+    wrapping onto the next line when needed (`.btn-list`).
+
+    Usage:
+        <twig:Tabler:ButtonList>
+            <twig:Tabler:Button variant="success">Save changes</twig:Tabler:Button>
+            <twig:Tabler:Button variant="default">Save and continue</twig:Tabler:Button>
+        </twig:Tabler:ButtonList>
+
+        <twig:Tabler:ButtonList center>
+            <twig:Tabler:Button variant="primary">Save</twig:Tabler:Button>
+            <twig:Tabler:Button variant="default">Cancel</twig:Tabler:Button>
+        </twig:Tabler:ButtonList>
+
+    Use `class="justify-content-end"` to push the buttons to the end of the row.
+
+    Props:
+      center  — center the row (btn-list-center)
+#}
+{% props
+    center = false,
+%}
+
+{% set list = html_cva(
+    base: 'btn-list',
+    variants: {
+        center: {true: 'btn-list-center', false: ''},
+    },
+) %}
+
+<div class="{{ list.apply({center: center}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
+</div>

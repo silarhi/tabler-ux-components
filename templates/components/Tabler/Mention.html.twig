@@ -1,0 +1,63 @@
+{#
+    Tabler Mention — an inline chip inside running text pointing at a person, a
+    tag, an app or a color (`.mention`).
+
+    Renders a <span> by default, or an <a> when `href` is set — a chip that
+    links somewhere must be a link to be reachable by keyboard.
+
+    All-in-one:
+        Hey <twig:Tabler:Mention label="JohnDoe" prefix="@" prefixHidden avatar="/avatars/john.jpg" href="/u/john" />, have you seen this?
+        <twig:Tabler:Mention label="GitHub" logo="/brands/github.svg" href="https://github.com" />
+        <twig:Tabler:Mention label="#066fd1" swatch="blue" />
+        <twig:Tabler:Mention label="WebDevelopment" prefix="#" count="16" href="/tags/web" />
+
+    Composed (override `content`, or just the `leading` / `label` / `count` blocks):
+        <twig:Tabler:Mention href="/u/jane">
+            <twig:Tabler:Mention:Avatar image="/avatars/jane.jpg" />
+            <span class="visually-hidden">@</span>JaneSmith
+        </twig:Tabler:Mention>
+
+    Accessibility: the avatar, logo and swatch carry no text, so the label must
+    say who or what the chip is. Keep the @ or # sign, visually hidden with
+    `prefixHidden` when the design drops it.
+
+    Props:
+      label         — the chip text; mirrored by the `label` block
+      href          — when set, renders <a href>
+      prefix        — sign before the label, e.g. @ or #
+      prefixHidden  — keep the prefix for assistive technology only (visually-hidden)
+      avatar        — round picture URL of a person (Mention:Avatar)
+      logo          — square logo URL of an app or a brand (Mention:App)
+      swatch        — color swatch, any color accepted by Mention:Color (Mention:Color)
+      count         — muted number at the end; mirrored by the `count` block
+#}
+{% props
+    label = null,
+    href = null,
+    prefix = null,
+    prefixHidden = false,
+    avatar = null,
+    logo = null,
+    swatch = null,
+    count = null,
+%}
+
+{% set tag = href is not null ? 'a' : 'span' %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'mention'}).without('href') }}>
+    {%- block content -%}
+        {%- block leading -%}
+            {%- if avatar is not null -%}<twig:Tabler:Mention:Avatar image="{{ avatar }}" />{%- endif -%}
+            {%- if logo is not null -%}<twig:Tabler:Mention:App image="{{ logo }}" />{%- endif -%}
+            {%- if swatch is not null -%}<twig:Tabler:Mention:Color variant="{{ swatch }}" />{%- endif -%}
+        {%- endblock -%}
+        {%- block label -%}
+            {%- if prefix is not null -%}
+                {%- if prefixHidden -%}<span class="visually-hidden">{{ prefix }}</span>{%- else -%}{{ prefix }}{%- endif -%}
+            {%- endif -%}
+            {{- label -}}
+        {%- endblock -%}
+        {%- block count -%}
+            {%- if count is not null -%}<twig:Tabler:Mention:Count>{{ count }}</twig:Tabler:Mention:Count>{%- endif -%}
+        {%- endblock -%}
+    {%- endblock -%}
+</{{ tag }}>

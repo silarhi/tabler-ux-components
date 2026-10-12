@@ -45,4 +45,25 @@ final class StatusTest extends ComponentTestCase
 
         self::assertHtmlSame('<span class="status status-danger">Custom</span>', $html);
     }
+
+    public function testLiteAndPaletteColor(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Status variant="azure" lite dot label="Azure" />');
+
+        self::assertHtmlSame('<span class="status status-azure status-lite"><span class="status-dot"></span>Azure</span>', $html);
+    }
+
+    public function testIndicator(): void
+    {
+        $circles = '<span class="status-indicator-circle"></span><span class="status-indicator-circle"></span><span class="status-indicator-circle"></span>';
+
+        self::assertHtmlSame(
+            '<span class="status-indicator status-green status-indicator-animated" role="img" aria-label="Operational">' . $circles . '</span>',
+            $this->renderComponent('<twig:Tabler:Status:Indicator variant="green" animated aria-label="Operational" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="status-indicator" aria-hidden="true">' . $circles . '</span>',
+            $this->renderComponent('<twig:Tabler:Status:Indicator />'),
+        );
+    }
 }

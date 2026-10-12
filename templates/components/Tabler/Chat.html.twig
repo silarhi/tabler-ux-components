@@ -1,0 +1,53 @@
+{#
+    Tabler Chat — a conversation shown as a column of message bubbles (`.chat`).
+
+    All-in-one (`messages` is an array of {author?, date?, text?, avatar?, me?}):
+        <twig:Tabler:Chat messages="{{ [
+            {author: 'Alice Marlin', date: '10:24', text: 'Hey, are you free for a quick call?', avatar: '/avatars/alice.jpg'},
+            {author: 'You', date: '10:26', text: 'Sure, give me five minutes.', avatar: '/avatars/me.jpg', me: true},
+        ] }}" />
+
+    Composed:
+        <twig:Tabler:Chat>
+            <twig:Tabler:Chat:Bubbles>
+                <twig:Tabler:Chat:Message author="Alice Marlin" date="10:24" text="Hey!" avatar="/avatars/alice.jpg" />
+                <twig:Tabler:Chat:Message me avatar="/avatars/me.jpg">
+                    <twig:Tabler:Chat:Bubble me>
+                        <twig:Tabler:Chat:Bubble:Title>
+                            <twig:Tabler:Chat:Bubble:Author>You</twig:Tabler:Chat:Bubble:Author>
+                            <twig:Tabler:Chat:Bubble:Date>10:26</twig:Tabler:Chat:Bubble:Date>
+                        </twig:Tabler:Chat:Bubble:Title>
+                        <twig:Tabler:Chat:Bubble:Body><p>Sure, <strong>five minutes</strong>.</p></twig:Tabler:Chat:Bubble:Body>
+                    </twig:Tabler:Chat:Bubble>
+                </twig:Tabler:Chat:Message>
+                <twig:Tabler:Chat:Typing>Alice is typing</twig:Tabler:Chat:Typing>
+            </twig:Tabler:Chat:Bubbles>
+        </twig:Tabler:Chat>
+
+    Accessibility: keep the messages in reading order and the author name on
+    each bubble — color and side alone must not tell who sent a message.
+
+    Props:
+      messages  — optional array of messages, rendered as Chat:Message rows; mirrored by the `content` block
+#}
+{% props
+    messages = null,
+%}
+
+<div {{ attributes.defaults({class: 'chat'}) }}>
+    {%- block content -%}
+        {%- if messages is not null -%}
+            <twig:Tabler:Chat:Bubbles>
+                {%- for message in messages -%}
+                    <twig:Tabler:Chat:Message
+                        author="{{ message.author ?? null }}"
+                        date="{{ message.date ?? null }}"
+                        text="{{ message.text ?? null }}"
+                        avatar="{{ message.avatar ?? null }}"
+                        me="{{ message.me ?? false }}"
+                    />
+                {%- endfor -%}
+            </twig:Tabler:Chat:Bubbles>
+        {%- endif -%}
+    {%- endblock -%}
+</div>

@@ -70,4 +70,16 @@ final class ProgressTest extends ComponentTestCase
         self::assertStringContainsString('class="progress progress-lg"', $this->renderComponent('<twig:Tabler:Progress value="10" size="lg" />'));
         self::assertStringContainsString('class="progress progress-xl"', $this->renderComponent('<twig:Tabler:Progress value="10" size="xl" />'));
     }
+
+    public function testBarConsumerStyleMergesWithWidth(): void
+    {
+        self::assertHtmlSame(
+            '<div class="progress-bar bg-success" role="progressbar" style="width: 60%; transition: none" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>',
+            $this->renderComponent('<twig:Tabler:Progress:Bar value="60" variant="success" style="transition: none" />'),
+        );
+        self::assertHtmlSame(
+            '<div class="progress-bar bg-primary progress-bar-indeterminate" role="progressbar" style="height: 2px"></div>',
+            $this->renderComponent('<twig:Tabler:Progress:Bar indeterminate style="height: 2px" />'),
+        );
+    }
 }

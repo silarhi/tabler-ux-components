@@ -151,4 +151,20 @@ final class CardTest extends ComponentTestCase
 
         self::assertHtmlSame('<div class="card card-dashed"></div>', $html);
     }
+
+    public function testStatusIsKeptWhenComposing(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Card status="danger" statusPosition="start">
+                <twig:Tabler:Card:Body>This action cannot be undone.</twig:Tabler:Card:Body>
+            </twig:Tabler:Card>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <div class="card">
+                <div class="card-status-start bg-danger"></div>
+                <div class="card-body">This action cannot be undone.</div>
+            </div>
+            HTML, $html);
+    }
 }

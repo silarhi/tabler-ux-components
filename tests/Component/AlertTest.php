@@ -59,14 +59,7 @@ final class AlertTest extends ComponentTestCase
 
     public function testIconPropRendersAlertIconWrapper(): void
     {
-        // Non-HTML syntax + context variable lets us pass HTML through the `icon` prop
-        // without fighting the HTML-attribute lexer (it would choke on `<`).
-        $html = $this->renderComponent(
-            <<<'TWIG'
-            {% component 'Tabler:Alert' with {variant: 'danger', icon: icon, title: 'Error'} %}{% endcomponent %}
-            TWIG,
-            ['icon' => '<i class="ti ti-x"></i>'],
-        );
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="danger" icon="x" title="Error" />');
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-danger" role="alert">
@@ -167,12 +160,34 @@ final class AlertTest extends ComponentTestCase
 
     public function testWrapperDivOmittedWhenNoTitleOrDescription(): void
     {
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="info" icon="info-circle" />');
+
+        self::assertHtmlSame(<<<HTML
+            <div class="alert alert-info" role="alert">
+                <div class="alert-icon"><i class="ti ti-info-circle"></i></div>
+            </div>
+            HTML, $html);
+    }
+
+    public function testIconPropIsEscaped(): void
+    {
         $html = $this->renderComponent(
             <<<'TWIG'
-            {% component 'Tabler:Alert' with {variant: 'info', icon: icon} %}{% endcomponent %}
+            {% component 'Tabler:Alert' with {icon: icon} %}{% endcomponent %}
             TWIG,
-            ['icon' => '<svg></svg>'],
+            ['icon' => '"><script>alert(1)</script>'],
         );
+
+        self::assertStringNotContainsString('<script>', $html);
+    }
+
+    public function testIconBlockTakesCustomMarkup(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Alert variant="info">
+                <twig:block name="icon"><twig:Tabler:Alert:Icon><svg></svg></twig:Tabler:Alert:Icon></twig:block>
+            </twig:Tabler:Alert>
+            TWIG);
 
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-info" role="alert">
@@ -210,5 +225,26 @@ final class AlertTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Alert variant="info" minor />');
 
         self::assertHtmlSame('<div class="alert alert-info alert-minor" role="alert"></div>', $html);
+    }
+
+    public function testLinkActionAndListParts(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Alert variant="danger">
+                <twig:Tabler:Alert:Title>An error occurred</twig:Tabler:Alert:Title>
+                <twig:Tabler:Alert:Description>Read the <twig:Tabler:Alert:Link href="/docs">docs</twig:Tabler:Alert:Link>.</twig:Tabler:Alert:Description>
+                <twig:Tabler:Alert:List><li>Missing email.</li></twig:Tabler:Alert:List>
+                <twig:Tabler:Alert:Action href="/retry">Try again</twig:Tabler:Alert:Action>
+            </twig:Tabler:Alert>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">An error occurred</h4>
+                <div class="alert-description">Read the <a href="/docs" class="alert-link">docs</a>.</div>
+                <ul class="alert-list"><li>Missing email.</li></ul>
+                <a href="/retry" class="alert-action">Try again</a>
+            </div>
+            HTML, $html);
     }
 }

@@ -58,4 +58,41 @@ final class BadgeTest extends ComponentTestCase
 
         self::assertHtmlSame('<span class="badge text-bg-success ms-2">OK</span>', $html);
     }
+
+    public function testOutlineUsesTextColor(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>');
+
+        self::assertHtmlSame('<span class="badge badge-outline text-danger">Deprecated</span>', $html);
+    }
+
+    public function testDotNotificationBlinkAndIconOnly(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge badge-dot text-bg-success" aria-label="Online"></span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="success" dot aria-label="Online" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge badge-notification badge-blink text-bg-danger">4</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="danger" notification blink>4</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge badge-icononly bg-primary-lt"><i class="ti ti-star"></i></span>',
+            $this->renderComponent('<twig:Tabler:Badge iconOnly light><i class="ti ti-star"></i></twig:Tabler:Badge>'),
+        );
+    }
+
+    public function testBadgeList(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge:List><twig:Tabler:Badge>PHP</twig:Tabler:Badge></twig:Tabler:Badge:List>');
+
+        self::assertHtmlSame('<div class="badge-list"><span class="badge text-bg-primary">PHP</span></div>', $html);
+    }
+
+    public function testLinkBadgeFromHeaderExample(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge href="/tags/php" variant="info" light>PHP</twig:Tabler:Badge>');
+
+        self::assertHtmlSame('<a href="/tags/php" class="badge bg-info-lt">PHP</a>', $html);
+    }
 }
