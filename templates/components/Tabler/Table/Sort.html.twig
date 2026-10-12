@@ -1,0 +1,28 @@
+{#
+    Table sort — a sortable-looking header button, to put inside a <th> (`.table-sort`).
+
+    The classes only style the header; sorting itself is up to you (e.g. List.js
+    reads `data-sort`, or a link/form that reloads the page sorted).
+
+    Usage:
+        <th><twig:Tabler:Table:Sort field="name" direction="asc">Name</twig:Tabler:Table:Sort></th>
+
+    Props:
+      field      — sort key, rendered as `data-sort`
+      direction  — asc | desc: marks the current sort direction
+#}
+{% props
+    field = null,
+    direction = null,
+%}
+
+{% set sort = html_cva(
+    base: 'table-sort',
+    variants: {
+        direction: {asc: 'asc', desc: 'desc'},
+    },
+) %}
+
+<button type="button" class="{{ sort.apply({direction: direction ?? ''}, attributes.render('class')) }}"{% if field is not null %} data-sort="{{ field }}"{% endif %} {{ attributes.without('class', 'type') }}>
+    {%- block content %}{% endblock -%}
+</button>
