@@ -24,4 +24,4 @@
 <div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if style %} style="{{ style }}"{% endif %}>
     <div class="position-relative">{%- block content %}{% endblock -%}</div>
 </div>
-{% endapply %}
+{% endapply ~%}

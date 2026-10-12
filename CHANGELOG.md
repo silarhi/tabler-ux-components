@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Components rendered whitespace around their markup, so a component in running text got a space on each side ("Click New ." instead of "Click New.").
+- Components rendered blank lines before their markup, which added a space before a component in running text. Each still ends with one line break, so components on consecutive lines stay apart.
 - `Card` and `Modal` dropped their status bar when given children.
 - `Avatar`, `Progress:Bar`, `Carousel:Indicator`, `Tag:Avatar`, `Mention:Avatar`, `Mention:App` and `Avatar:Brand` dropped a user `style` attribute instead of merging it.
 - `Toast` carried `data-bs-toggle="toast"` on its root, which tabler.js treats as a trigger.

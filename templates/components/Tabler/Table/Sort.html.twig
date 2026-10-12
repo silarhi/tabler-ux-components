@@ -27,4 +27,4 @@
 <button type="button" class="{{ sort.apply({direction: direction ?? ''}, attributes.render('class')) }}"{% if field is not null %} data-sort="{{ field }}"{% endif %} {{ attributes.without('class', 'type') }}>
     {%- block content %}{% endblock -%}
 </button>
-{% endapply %}
+{% endapply ~%}

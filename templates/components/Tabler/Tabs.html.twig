@@ -40,4 +40,4 @@
 <ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>
-{% endapply %}
+{% endapply ~%}

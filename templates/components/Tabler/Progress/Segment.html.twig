@@ -45,4 +45,4 @@
 <div {{ attributes.defaults({class: 'progress'}).without('style') }} style="{{ style }}" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ label ?? (value ~ '% of total') }}">
     <div class="{{ bar.apply({variant: variant, striped: striped and not animated, animated: animated ? true : false}) }}"></div>
 </div>
-{% endapply %}
+{% endapply ~%}

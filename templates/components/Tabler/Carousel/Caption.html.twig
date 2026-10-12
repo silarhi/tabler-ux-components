@@ -20,4 +20,4 @@
 
 {%- if background -%}<div class="carousel-caption-background"></div>{%- endif -%}
 <div class="{{ ('carousel-caption ' ~ attributes.render('class'))|trim }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
-{% endapply %}
+{% endapply ~%}
