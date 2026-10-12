@@ -1,0 +1,6 @@
+// The filled icons of @tabler/icons-webfont (3.36.1+) for the previews, compiled under their own prefix so they sit
+// next to the outline icons: <twig:Tabler:Icon filled> renders `ti-filled ti-filled-{name}`.
+@use '@tabler/icons-webfont/dist/tabler-icons-filled.scss' with (
+    $ti-prefix: 'ti-filled',
+    $ti-font-path: 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/fonts'
+);

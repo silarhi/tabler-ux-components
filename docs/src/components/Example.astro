@@ -11,6 +11,7 @@
  */
 import { Code, TabItem, Tabs } from '@astrojs/starlight/components'
 import { format } from 'prettier'
+import filledIcons from '../styles/tabler-icons-filled.scss?url'
 
 interface Props {
     name: string
@@ -48,6 +49,7 @@ const srcdoc = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${TABLER}/css/tabler.min.css">
 <link rel="stylesheet" href="${ICONS}/tabler-icons.min.css">
+<link rel="stylesheet" href="${filledIcons}">
 <style>body{padding:1.5rem;background:var(--tblr-${background === 'body' ? 'body-bg' : 'bg-surface'})}.tuc-root{display:flow-root}</style>
 </head>
 <body>

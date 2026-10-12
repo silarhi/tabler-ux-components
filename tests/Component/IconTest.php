@@ -37,4 +37,15 @@ final class IconTest extends ComponentTestCase
 
         self::assertHtmlSame('<i class="ti ti-heart me-1"></i>', $html);
     }
+
+    public function testFilledUsesTheFilledWebfontClasses(): void
+    {
+        // @tabler/icons-webfont 3.36.1+ ships the filled icons as their own font: tabler-icons-filled.scss
+        // compiled with $ti-prefix: 'ti-filled' styles these classes, next to the outline ti ones
+        self::assertHtmlSame(
+            '<i class="ti-filled text-warning ti-filled-star me-1" aria-hidden="true"></i>',
+            $this->renderComponent('<twig:Tabler:Icon name="star" variant="warning" filled class="me-1" aria-hidden="true" />'),
+        );
+        self::assertHtmlSame('<i class="ti ti-star"></i>', $this->renderComponent('<twig:Tabler:Icon name="star" filled="{{ false }}" />'));
+    }
 }

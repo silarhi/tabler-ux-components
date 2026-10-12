@@ -123,7 +123,7 @@ final class ModifiersTest extends ComponentTestCase
     public function testIconSizeAndFilled(): void
     {
         self::assertHtmlSame(
-            '<i class="ti icon icon-lg ti-heart-filled"></i>',
+            '<i class="ti-filled icon icon-lg ti-filled-heart"></i>',
             $this->renderComponent('<twig:Tabler:Icon name="heart" size="lg" filled />'),
         );
     }
