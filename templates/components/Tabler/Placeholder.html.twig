@@ -23,4 +23,4 @@
     },
 ) %}
 
-<div class="{{ placeholder.apply({size: size}, width is not null ? 'col-' ~ width : null, attributes.render('class')) }}" {{ attributes.without('class') }}></div>
+<div class="{{ placeholder.apply({size: size ?? ''}, width is not null ? 'col-' ~ width : null, attributes.render('class')) }}" {{ attributes.without('class') }}></div>

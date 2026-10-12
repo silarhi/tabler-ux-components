@@ -30,4 +30,4 @@
     },
 ) %}
 
-<div class="{{ block.apply({variant: variant}, attributes.render('class')) }}"{% if tooltip is not null %} data-bs-toggle="tooltip" data-bs-title="{{ tooltip }}"{% endif %} {{ attributes.without('class') }}></div>
+<div class="{{ block.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if tooltip is not null %} data-bs-toggle="tooltip" data-bs-title="{{ tooltip }}"{% endif %} {{ attributes.without('class') }}></div>

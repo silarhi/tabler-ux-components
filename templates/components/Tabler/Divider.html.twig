@@ -37,7 +37,7 @@
 ) %}
 
 {% if label|trim %}
-    <div class="{{ divider.apply({position: position, variant: variant}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</div>
+    <div class="{{ divider.apply({position: position, variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{{- label|raw -}}</div>
 {% else %}
     <hr {{ attributes.defaults({class: 'hr'}) }}>
 {% endif %}

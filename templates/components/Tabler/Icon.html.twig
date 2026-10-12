@@ -40,4 +40,4 @@
     },
 ) %}
 
-<i class="{{ icon.apply({variant: variant, animation: animation}, 'ti-' ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+<i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? ''}, 'ti-' ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
