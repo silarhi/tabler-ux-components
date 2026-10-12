@@ -65,6 +65,20 @@ A bare attribute is `true`: `<twig:Tabler:Alert dismissible />`. To pass `false`
 <twig:Tabler:Modal id="confirm" title="Delete item?" dismissible="{{ false }}" />
 ```
 
+## Whitespace
+
+Components render no whitespace around their markup, so `Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads
+"Click New.". Twig also removes the line break right after a closing tag such as `</twig:Tabler:Badge>`, so two
+components written with a closing tag on consecutive lines touch. Space them with a list component (`Badge:List`,
+`Avatar:List`, `ButtonList`…) or a flex container with a gap:
+
+```twig
+<twig:Tabler:Badge:List>
+    <twig:Tabler:Badge variant="success">Paid</twig:Tabler:Badge>
+    <twig:Tabler:Badge variant="warning">Pending</twig:Tabler:Badge>
+</twig:Tabler:Badge:List>
+```
+
 ## Escaping
 
 Prop values are text: they are always escaped, so `title="<b>Saved</b>"` prints the tags as text. HTML comes in

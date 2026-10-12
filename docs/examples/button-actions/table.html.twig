@@ -1,0 +1,25 @@
+<twig:Tabler:Table vcenter="{{ true }}">
+    <thead>
+        <tr><th>Invoice</th><th>Customer</th><th class="w-1"><span class="visually-hidden">Actions</span></th></tr>
+    </thead>
+    <tbody>
+        {% for invoice in [{number: 'INV-0142', customer: 'Acme Corp'}, {number: 'INV-0143', customer: 'Globex'}] %}
+            <tr>
+                <td>{{ invoice.number }}</td>
+                <td>{{ invoice.customer }}</td>
+                <td>
+                    <twig:Tabler:ButtonActions>
+                        <twig:Tabler:Button appearance="action" href="/invoices/{{ invoice.number }}/edit" aria-label="Edit {{ invoice.number }}"><twig:Tabler:Icon name="edit" /></twig:Tabler:Button>
+                        <twig:Tabler:Dropdown>
+                            <twig:Tabler:Dropdown:Toggle noCaret="{{ true }}" class="btn-action" aria-label="More actions for {{ invoice.number }}"><twig:Tabler:Icon name="dots-vertical" /></twig:Tabler:Dropdown:Toggle>
+                            <twig:Tabler:Dropdown:Menu end="{{ true }}">
+                                <twig:Tabler:Dropdown:Item href="/invoices/{{ invoice.number }}/duplicate">Duplicate</twig:Tabler:Dropdown:Item>
+                                <twig:Tabler:Dropdown:Item href="/invoices/{{ invoice.number }}/cancel">Cancel</twig:Tabler:Dropdown:Item>
+                            </twig:Tabler:Dropdown:Menu>
+                        </twig:Tabler:Dropdown>
+                    </twig:Tabler:ButtonActions>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</twig:Tabler:Table>

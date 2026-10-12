@@ -22,7 +22,8 @@ accordion as `parent`: opening the item then closes the others. Mark the section
 
 <Example name="accordion/items" />
 
-The header is an `<h3>` by default. Set `level` on the item (1 to 6) to fit the outline of the page. The button
+The header is an `<h3>` by default. Set `level` on the item (1 to 6, any other value falls back to 3) to fit the
+outline of the page. The button
 inherits the font size of the heading, so the level changes the size of the label too. The `items` prop always renders
 `<h3>`.
 
@@ -116,7 +117,7 @@ Other attributes go to the root `<div class="accordion">`.
 | `icon`       | string? | `null`  | Leading Tabler icon name, rendered with `Accordion:Icon`                              |
 | `plus`       | bool    | `false` | Plus indicator that turns into a close icon (`accordion-button-toggle-plus`)          |
 | `toggleIcon` | string? | `null`  | Tabler icon name of the indicator (default `chevron-down`, or `plus`)                 |
-| `level`      | int     | `3`     | Heading level of the header, 1 to 6                                                   |
+| `level`      | int     | `3`     | Heading level of the header, 1 to 6; any other value renders an `<h3>`                |
 
 Other attributes go to the `<div class="accordion-item">`.
 

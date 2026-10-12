@@ -15,7 +15,8 @@ generated items then render as `<li>`), `div` (the default) otherwise.
 
 ## Items
 
-`ListGroup:Item` renders an `<a>` when `href` is set and a `<button type="button">` when `button` is set. Both get
+`ListGroup:Item` renders an `<a>` when `href` is set and a `<button type="button">` when `button` is set (`href` wins
+when both are). Both get
 the hover and focus style of an actionable item (`list-group-item-action`). Otherwise the item is a `<div>`. `action`
 forces that style on or off, here off for the last link:
 
@@ -103,7 +104,7 @@ Other attributes go to the root `<div class="list-group">` (or the `tag` set).
 | ---------- | ------- | ------- | --------------------------------------------------------------------------------------- |
 | `label`    | string? | `null`  | Item text                                                                               |
 | `href`     | string? | `null`  | Renders an `<a href>`                                                                   |
-| `button`   | bool    | `false` | Renders a `<button type="button">`                                                      |
+| `button`   | bool    | `false` | Renders a `<button type="button">` (ignored with `href`)                                |
 | `tag`      | string  | `'div'` | `div` `li`: the element of an item that is not a link nor a button                      |
 | `action`   | bool?   | `null`  | Hover and focus style (`list-group-item-action`): `true` for links and buttons          |
 | `active`   | bool    | `false` | Current item (`active`, `aria-current="true"`)                                          |

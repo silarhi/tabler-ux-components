@@ -21,8 +21,8 @@ no title line; without `avatar`, the row has no avatar column:
 
 <Example name="chat/messages" />
 
-The bubble sits in a `col-auto` column, as wide as its content. Give wide content, such as an image, a width: a bubble
-wider than the row moves below the avatar.
+The bubble column (`col col-lg-6`) fills the row next to the avatar, and half of the row from the `lg` breakpoint, as
+in Tabler. A long message wraps inside it.
 
 ## Avatars
 
@@ -54,7 +54,7 @@ See [Composition](/getting-started/composition/) for how blocks work.
 
 `Chat:Typing` is a bubble with an italic text followed by animated dots. Its text comes from the children or from
 `label` (default "Typing"); always keep a text, the dots alone say nothing. Put it in a `Chat:Message` row to align it
-with an avatar: placed directly in `Chat:Bubbles`, it spans the whole width.
+with an avatar. Placed directly in `Chat:Bubbles`, it sits at the start, as wide as its text.
 
 <Example name="chat/typing" />
 
@@ -98,16 +98,16 @@ Other attributes go to the root `<div class="chat-bubble">`.
 
 ## Sub-components
 
-| Component            | Renders                                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `Chat:Bubbles`       | `<div class="chat-bubbles">`: stacks the rows with a gap                                                                 |
-| `Chat:Message`       | `<div>` with a `row`: the avatar column and the bubble column, see its props above                                       |
-| `Chat:Bubble`        | `<div class="chat-bubble">`: one message, see its props above                                                            |
-| `Chat:Bubble:Title`  | `<div class="chat-bubble-title">` with a `row`; `author` and `date` (default `null`)                                     |
-| `Chat:Bubble:Author` | `<div class="col chat-bubble-author">`                                                                                   |
-| `Chat:Bubble:Date`   | `<div class="col-auto chat-bubble-date">`                                                                                |
-| `Chat:Bubble:Body`   | `<div class="chat-bubble-body">`                                                                                         |
-| `Chat:Typing`        | `<div class="chat-bubble">` with the text and `<span class="animated-dots">`; `label` (default `'Typing'`) sets the text |
+| Component            | Renders                                                                                                                                   |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `Chat:Bubbles`       | `<div class="chat-bubbles">`: stacks the rows with a gap                                                                                  |
+| `Chat:Message`       | `<div>` with a `row`: the avatar column and the bubble column, see its props above                                                        |
+| `Chat:Bubble`        | `<div class="chat-bubble">`: one message, see its props above                                                                             |
+| `Chat:Bubble:Title`  | `<div class="chat-bubble-title">` with a `row`; `author` and `date` (default `null`)                                                      |
+| `Chat:Bubble:Author` | `<div class="col chat-bubble-author">`                                                                                                    |
+| `Chat:Bubble:Date`   | `<div class="col-auto chat-bubble-date">`                                                                                                 |
+| `Chat:Bubble:Body`   | `<div class="chat-bubble-body">`                                                                                                          |
+| `Chat:Typing`        | `<div class="chat-bubble align-self-start">` with the text and `<span class="animated-dots">`; `label` (default `'Typing'`) sets the text |
 
 `Chat:Bubble:Title` renders its `author` and `date` props with `Chat:Bubble:Author` and `Chat:Bubble:Date`; children go
 inside its `row` instead.

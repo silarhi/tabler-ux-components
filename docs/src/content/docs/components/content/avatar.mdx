@@ -31,6 +31,13 @@ Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-s
 
 <Example name="avatar/shapes" />
 
+## Cover
+
+`cover` pulls the avatar up by half its height over the element above it, such as a
+[`Card:Cover`](/components/content/card/#cover), and draws a ring in the card background around it (`avatar-cover`):
+
+<Example name="avatar/cover" />
+
 ## Lists
 
 `Avatar:List` spaces several avatars in a row (`avatar-list`). `stacked` overlaps them (`avatar-list-stacked`), and
@@ -60,6 +67,7 @@ from. Put it in the avatar, with an `image` or with markup such as an icon:
 | `variant` | string? | `null`  | Tinted background: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
 | `rounded` | bool    | `false` | Circle (`rounded-circle`)                                                                   |
 | `square`  | bool    | `false` | Rounded corners instead of a circle (`avatar-square`)                                       |
+| `cover`   | bool    | `false` | Pulled over the element above, with a ring (`avatar-cover`)                                 |
 | `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
 
 Other attributes go to the root `<span class="avatar">`. A `style` attribute is merged after the `background-image`,
@@ -74,11 +82,12 @@ so it can still override it.
 
 `Avatar:Brand`:
 
-| Prop    | Type    | Default | Description                                                      |
-| ------- | ------- | ------- | ---------------------------------------------------------------- |
-| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style |
+| Prop    | Type    | Default | Description                                                                                          |
+| ------- | ------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style and scaled to the mark (`bg-cover`) |
 
-A `style` attribute on `Avatar:Brand` is dropped; other attributes go to the `<span class="avatar-brand">`.
+Other attributes go to the `<span class="avatar-brand">`. A `style` attribute is merged after the `background-image`,
+so it can still override it.
 
 `Avatar:Upload`:
 

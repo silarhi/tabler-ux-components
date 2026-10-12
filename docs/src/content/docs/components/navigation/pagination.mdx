@@ -9,7 +9,8 @@ Links to the pages of a long list. Mark the current page `active`, and `disabled
 
 <Example name="pagination/basic" />
 
-A `disabled` item renders a `<span>` instead of a link. An item without `href` links to `#`.
+A `disabled` item keeps its `<a>`, without `href` and with `aria-disabled="true"`, so it cannot be followed. An
+item without `href` links to `#`.
 
 ## Styles
 
@@ -51,19 +52,19 @@ Other attributes go to the root `<ul class="pagination">`.
 
 `Pagination:Item`:
 
-| Prop        | Type    | Default | Description                                                                       |
-| ----------- | ------- | ------- | --------------------------------------------------------------------------------- |
-| `href`      | string? | `null`  | Link target; `#` when not set                                                     |
-| `active`    | bool    | `false` | The current page (`active`, with `aria-current="page"` on the link)               |
-| `disabled`  | bool    | `false` | Not clickable (`disabled`): renders a `<span>` instead of a link                  |
-| `direction` | string? | `null`  | `prev` (`page-prev`) `next` (`page-next`): a pager step, with a `rel` on the link |
-| `title`     | string? | `null`  | Page name, for a named pager (`page-item-title`)                                  |
-| `subtitle`  | string? | `null`  | Small uppercase label above the title (`page-item-subtitle`)                      |
+| Prop        | Type    | Default | Description                                                                        |
+| ----------- | ------- | ------- | ---------------------------------------------------------------------------------- |
+| `href`      | string? | `null`  | Link target; `#` when not set                                                      |
+| `active`    | bool    | `false` | The current page (`active`, with `aria-current="page"` on the link)                |
+| `disabled`  | bool    | `false` | Not clickable (`disabled`): the link has no `href` and gets `aria-disabled="true"` |
+| `direction` | string? | `null`  | `prev` (`page-prev`) `next` (`page-next`): a pager step, with a `rel` on the link  |
+| `title`     | string? | `null`  | Page name, for a named pager (`page-item-title`)                                   |
+| `subtitle`  | string? | `null`  | Small uppercase label above the title (`page-item-subtitle`)                       |
 
 Other attributes go to the `<li class="page-item">`. The `subtitle` and `title` render before the content of the item.
 
 ## Sub-components
 
-| Component         | Renders                                                                |
-| ----------------- | ---------------------------------------------------------------------- |
-| `Pagination:Item` | `<li class="page-item">` with an `<a class="page-link">` or a `<span>` |
+| Component         | Renders                                                  |
+| ----------------- | -------------------------------------------------------- |
+| `Pagination:Item` | `<li class="page-item">` with an `<a class="page-link">` |

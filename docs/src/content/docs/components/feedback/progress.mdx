@@ -42,6 +42,15 @@ render:
 
 <Example name="progress/separated" />
 
+## Labelled segments
+
+`Progress:Stacked` follows Bootstrap 5.3's stacked markup (`progress-stacked`): each `Progress:Segment` is its own
+track, sized to its share, with its own `role="progressbar"` and `aria-label`. Use it when each segment needs a name,
+such as the share of each file type in a storage quota. `separated` adds a gap between the segments
+(`progress-separated`):
+
+<Example name="progress/segments" />
+
 ## Props
 
 | Prop            | Type    | Default     | Description                                                                |
@@ -59,9 +68,11 @@ Other attributes go to the root `<div class="progress">`.
 
 ## Sub-components
 
-| Component      | Renders                                                                                      |
-| -------------- | -------------------------------------------------------------------------------------------- |
-| `Progress:Bar` | `<div class="progress-bar" role="progressbar">`, with its width and `aria-value*` attributes |
+| Component          | Renders                                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------- |
+| `Progress:Bar`     | `<div class="progress-bar" role="progressbar">`, with its width and `aria-value*` attributes             |
+| `Progress:Stacked` | `<div class="progress-stacked">`: a row of `Progress:Segment`s; `separated` (default `false`) adds a gap |
+| `Progress:Segment` | `<div class="progress" role="progressbar">` sized to its share, holding a full `Progress:Bar`            |
 
 ### `Progress:Bar` props
 
@@ -76,6 +87,18 @@ Other attributes go to the root `<div class="progress">`.
 
 Other attributes go to the bar `<div>`. A `style` is added after the width, so it can override it.
 
+### `Progress:Segment` props
+
+| Prop       | Type    | Default     | Description                                                        |
+| ---------- | ------- | ----------- | ------------------------------------------------------------------ |
+| `value`    | int     | `0`         | Share of the whole, in percent: sets the width and `aria-valuenow` |
+| `variant`  | string  | `'primary'` | Bar color, as for `Progress:Bar`                                   |
+| `label`    | string? | `null`      | `aria-label` of the segment; defaults to "`value`% of total"       |
+| `striped`  | bool    | `false`     | Diagonal stripes (`progress-bar-striped`)                          |
+| `animated` | bool    | `false`     | Animated stripes (`progress-bar-animated`)                         |
+
+A `style` attribute on `Progress:Segment` is dropped; other attributes go to the `<div class="progress">`.
+
 ## Blocks
 
 | Block                      | Default                                                                                              |
@@ -83,3 +106,5 @@ Other attributes go to the bar `<div>`. A `style` is added after the width, so i
 | `bar`                      | A `Progress:Bar` from `value`, `variant`, `label`, `striped` and `animated`, or an indeterminate one |
 | `content`                  | `bar`: replace it (with children) to stack bars                                                      |
 | `content` (`Progress:Bar`) | The visually-hidden `label`, when it is set                                                          |
+
+`Progress:Stacked` has an empty `content` block for its segments. `Progress:Segment` has no block.

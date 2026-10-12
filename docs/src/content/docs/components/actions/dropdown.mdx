@@ -36,6 +36,9 @@ the other side when there is no room:
 
 <Example name="dropdown/directions" minHeight="12rem" />
 
+Dropdowns do not nest into submenus: `Dropdown:Toggle` is a button (`.btn`), not the `.dropdown-item` a submenu
+trigger needs.
+
 ## Menu styles
 
 `arrow` adds a small arrow pointing at the toggle, `dark` a dark menu on a light page, and `scrollable` caps the menu
@@ -60,25 +63,32 @@ height and scrolls the rest:
 
 <Example name="dropdown/items" minHeight="13rem" />
 
+`Dropdown:Indicator` is a leading slot in an item for a small marker, such as an avatar, a checkbox or a flag
+(`dropdown-item-indicator`):
+
+<Example name="dropdown/indicator" minHeight="13rem" />
+
 ## Sub-components
 
-| Component          | Renders                                                                         |
-| ------------------ | ------------------------------------------------------------------------------- |
-| `Dropdown`         | `<div class="dropdown">` around the toggle and the menu                         |
-| `Dropdown:Toggle`  | `<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">`  |
-| `Dropdown:Menu`    | `<div class="dropdown-menu">`                                                   |
-| `Dropdown:Item`    | `<a class="dropdown-item">`                                                     |
-| `Dropdown:Header`  | `<div class="dropdown-header">`: a non-interactive label above a group of items |
-| `Dropdown:Text`    | `<span class="dropdown-item-text">`: plain text that is not an action           |
-| `Dropdown:Divider` | `<div class="dropdown-divider">`: a separator between groups of items           |
-| `Dropdown:Columns` | `<div class="dropdown-menu-columns">`: splits the menu into columns             |
-| `Dropdown:Column`  | `<div class="dropdown-menu-column">`: one column of `Dropdown:Columns`          |
+| Component            | Renders                                                                                 |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| `Dropdown`           | `<div class="dropdown">` around the toggle and the menu                                 |
+| `Dropdown:Toggle`    | `<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">`          |
+| `Dropdown:Menu`      | `<div class="dropdown-menu">`                                                           |
+| `Dropdown:Item`      | `<a class="dropdown-item">`                                                             |
+| `Dropdown:Header`    | `<div class="dropdown-header">`: a non-interactive label above a group of items         |
+| `Dropdown:Text`      | `<span class="dropdown-item-text">`: plain text that is not an action                   |
+| `Dropdown:Indicator` | `<span class="dropdown-item-indicator">`: a leading avatar, checkbox or flag in an item |
+| `Dropdown:Divider`   | `<div class="dropdown-divider">`: a separator between groups of items                   |
+| `Dropdown:Columns`   | `<div class="dropdown-menu-columns">`: splits the menu into columns                     |
+| `Dropdown:Column`    | `<div class="dropdown-menu-column">`: one column of `Dropdown:Columns`                  |
 
 Attributes of each component go to its root element.
 
 ## Props
 
-`Dropdown:Header`, `Dropdown:Text`, `Dropdown:Divider`, `Dropdown:Columns` and `Dropdown:Column` take no props.
+`Dropdown:Header`, `Dropdown:Text`, `Dropdown:Indicator`, `Dropdown:Divider`, `Dropdown:Columns` and `Dropdown:Column`
+take no props.
 
 ### Dropdown
 

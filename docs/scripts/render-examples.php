@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Silarhi\TablerUxComponents\Tests\Fixtures\TestKernel;
+use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment;
 
 // Renders the examples of the documentation with the components themselves, so the previews and the HTML the pages
@@ -32,6 +33,8 @@ $check = \in_array('--check', $arguments, true);
 $only = array_values(array_diff($arguments, ['--check']))[0] ?? null;
 
 $kernel = new TestKernel('test', false);
+// Without debug, Twig never checks its compiled templates: start from an empty cache, or it renders the old ones
+(new Filesystem())->remove($kernel->getCacheDir());
 $kernel->boot();
 /** @var Environment $twig */
 $twig = $kernel->getContainer()->get('test.service_container')->get('twig');

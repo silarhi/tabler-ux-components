@@ -36,9 +36,7 @@ alone says nothing to a screen reader or to a color-blind user.
 
 ## Apps
 
-`logo` adds the square logo of an app or a brand (`Mention:App`). Tabler 1.6.1 resets the background of `mention-app`,
-so the image is drawn at its natural size and is cropped when it is larger than the chip. To scale it down, render
-`Mention:App` with Tabler's `bg-cover` class in the `leading` block:
+`logo` adds the square logo of an app or a brand (`Mention:App`), scaled to fit the chip (`bg-cover`):
 
 <Example name="mention/apps" />
 
@@ -79,14 +77,15 @@ Other attributes go to the root `<span class="mention">` (or `<a>`).
 
 ## Sub-components
 
-| Component        | Renders                                                                                |
-| ---------------- | -------------------------------------------------------------------------------------- |
-| `Mention:Avatar` | `<span class="mention-avatar">`; `image` (default `null`) sets its background image    |
-| `Mention:App`    | `<span class="mention-app">`; `image` (default `null`) sets its background image       |
-| `Mention:Color`  | `<span class="mention-color">`; `variant` (default `null`) sets the color, as `swatch` |
-| `Mention:Count`  | `<span class="mention-count">`                                                         |
+| Component        | Renders                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| `Mention:Avatar` | `<span class="mention-avatar">`; `image` (default `null`) sets its background image                   |
+| `Mention:App`    | `<span class="mention-app">`; `image` (default `null`) sets its background image, scaled (`bg-cover`) |
+| `Mention:Color`  | `<span class="mention-color">`; `variant` (default `null`) sets the color, as `swatch`                |
+| `Mention:Count`  | `<span class="mention-count">`                                                                        |
 
-`Mention:Avatar` and `Mention:App` never forward a `style` attribute.
+On `Mention:Avatar` and `Mention:App`, a `style` attribute is merged after the `background-image`, so it can still
+override it.
 
 ## Blocks
 

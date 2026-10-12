@@ -1,0 +1,61 @@
+---
+title: List
+description: A plain list without the list group borders, stacked with a gap or laid out in a row.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A `<ul>` with Tabler's list helpers, for a list that needs no borders: people, links in a footer, the steps of a
+procedure. For bordered rows, use [List group](/components/content/list-group/).
+
+<Example name="list/all-in-one" />
+
+`separated` stacks the items with a gap (`list-separated`), for items that are blocks, such as a picture next to two
+lines of text. `unstyled` removes the bullets and the indent (`list-unstyled`).
+
+## Inline
+
+`inline` lays the items out in a row (`list-inline`): give each `List:Item` `inline` too (`list-inline-item`). `dots`
+adds a dot between the items (`list-inline-dots`), and has no effect without `inline`:
+
+<Example name="list/inline" />
+
+## Ordered
+
+`ordered` renders an `<ol>`, for items whose order matters:
+
+<Example name="list/ordered" />
+
+## Props
+
+| Prop        | Type | Default | Description                                                   |
+| ----------- | ---- | ------- | ------------------------------------------------------------- |
+| `separated` | bool | `false` | Stacks the items with a gap (`list-separated`)                |
+| `inline`    | bool | `false` | Items in a row (`list-inline`); set `inline` on each item too |
+| `dots`      | bool | `false` | With `inline`: a dot between the items (`list-inline-dots`)   |
+| `unstyled`  | bool | `false` | No bullets and no indent (`list-unstyled`)                    |
+| `ordered`   | bool | `false` | Renders an `<ol>` instead of a `<ul>`                         |
+
+Other attributes go to the root `<ul>` (or `<ol>`).
+
+`List:Item`:
+
+| Prop     | Type | Default | Description                                 |
+| -------- | ---- | ------- | ------------------------------------------- |
+| `inline` | bool | `false` | Item of an inline list (`list-inline-item`) |
+
+Other attributes go to the `<li>`.
+
+## Sub-components
+
+| Component   | Renders               |
+| ----------- | --------------------- |
+| `List:Item` | `<li>`: one list item |
+
+## Blocks
+
+| Block     | Default                               |
+| --------- | ------------------------------------- |
+| `content` | Empty: the children, the `List:Item`s |
+
+`List:Item` has an empty `content` block too, for the item content.

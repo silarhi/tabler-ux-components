@@ -1,0 +1,15 @@
+<twig:Tabler:List separated="{{ true }}" unstyled="{{ true }}" class="mb-0">
+    {% for person in [
+        {name: 'Jane Cooper', role: 'Account manager', avatar: '/examples/avatar-1.jpg'},
+        {name: 'Wade Warren', role: 'Accountant', avatar: '/examples/avatar-2.jpg'},
+        {name: 'Esther Howard', role: 'Sales', avatar: '/examples/avatar-3.jpg'},
+    ] %}
+        <twig:Tabler:List:Item class="d-flex align-items-center gap-2">
+            <twig:Tabler:Avatar size="sm" image="{{ person.avatar }}" />
+            <div>
+                <div class="fw-medium">{{ person.name }}</div>
+                <div class="text-secondary small">{{ person.role }}</div>
+            </div>
+        </twig:Tabler:List:Item>
+    {% endfor %}
+</twig:Tabler:List>

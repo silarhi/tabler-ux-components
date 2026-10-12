@@ -30,9 +30,18 @@ Combine them freely:
 ## Stacked rows on phones
 
 `mobile` stacks each row into a block below a breakpoint (`table-mobile-{breakpoint}`): `sm`, `md`, `lg`, `xl` or
-`xxl`. The header row is hidden, and each cell is labelled by its `data-label` attribute. Narrow the window to see it:
+`xxl`. The header row is hidden, and each cell is labelled by its `data-label` attribute: write the cells with
+`Table:Cell` and its `label` prop. Narrow the window to see it:
 
 <Example name="table/mobile" />
+
+## Truncated cells
+
+`Table:Cell` with `truncate` cuts a long text with an ellipsis instead of stretching the table: the cell takes the
+remaining width (`td-truncate`) and wraps its content in a `<div class="text-truncate">`. Here `nowrap` keeps the
+other cells on one line:
+
+<Example name="table/truncate" />
 
 ## Sortable headers and selectable rows
 
@@ -48,7 +57,8 @@ your own JavaScript:
 
 ## In a card
 
-Classes and other attributes go to the `<table>`, not to the wrapper. Add `card-table` to fit the table in a card:
+`card` runs the table edge to edge in a card, aligned with the card padding and without a bottom margin
+(`card-table`). Classes and other attributes go to the `<table>`, not to the wrapper:
 
 <Example name="table/card" />
 
@@ -75,6 +85,7 @@ bare `<table>` (see [boolean props](/getting-started/composition/#boolean-props)
 | `selectable`  | bool    | `false` | Highlights the rows whose `Table:Check` is checked (`table-selectable`)             |
 | `size`        | string  | `'md'`  | `sm` `md`: `sm` tightens the cell padding (`table-sm`)                              |
 | `mobile`      | string? | `null`  | `sm` `md` `lg` `xl` `xxl`: stacks the rows below this breakpoint (`table-mobile-*`) |
+| `card`        | bool    | `false` | Edge to edge inside a card, no bottom margin (`card-table`)                         |
 
 Other attributes go to the `<table>`.
 
@@ -85,7 +96,16 @@ Other attributes go to the `<table>`.
 | `field`     | string? | `null`  | Sort key, rendered as `data-sort`              |
 | `direction` | string? | `null`  | `asc` `desc`: marks the current sort direction |
 
-Other attributes go to the `<button class="table-sort">`. `Table:Check` has no props: its attributes (`name`, `value`,
+Other attributes go to the `<button class="table-sort">`.
+
+`Table:Cell`:
+
+| Prop       | Type    | Default | Description                                                                          |
+| ---------- | ------- | ------- | ------------------------------------------------------------------------------------ |
+| `label`    | string? | `null`  | Column name shown when `mobile` stacks the row (`data-label`)                        |
+| `truncate` | bool    | `false` | Cuts the content with an ellipsis (`td-truncate`, content in a `.text-truncate` div) |
+
+Other attributes go to the `<td>`. `Table:Check` has no props: its attributes (`name`, `value`,
 `checked`, `aria-label`…) go to the `<input type="checkbox">`.
 
 ## Sub-components
@@ -94,6 +114,7 @@ Other attributes go to the `<button class="table-sort">`. `Table:Check` has no p
 | ------------- | ----------------------------------------------------------------------------------------- |
 | `Table:Sort`  | `<button type="button" class="table-sort">`: a sortable header                            |
 | `Table:Check` | `<input type="checkbox" class="form-check-input table-selectable-check">`: a row checkbox |
+| `Table:Cell`  | `<td>`: a cell with a mobile label or a truncated content                                 |
 
 ## Blocks
 
@@ -101,4 +122,4 @@ Other attributes go to the `<button class="table-sort">`. `Table:Check` has no p
 | --------- | --------------------------------------------------------- |
 | `content` | Empty: the children, the `<thead>` and `<tbody>`, go here |
 
-`Table:Sort` has an empty `content` block too, for the header label.
+`Table:Sort` and `Table:Cell` have an empty `content` block too, for the header label and the cell content.

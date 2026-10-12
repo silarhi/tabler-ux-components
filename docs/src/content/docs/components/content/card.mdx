@@ -75,10 +75,41 @@ With `href`, the card renders as an `<a>`, so the whole card is clickable. `link
 ## Images
 
 `Card:Img` renders an image on an edge of the card. `position` sets the edge whose corners are rounded: `top` (the
-default), `bottom`, `start` or `end`. Put it first in the card for `top`, last for `bottom`. `alt` defaults to an empty
-string, for a decorative image.
+default), `bottom`, `start` or `end`, or `full` for every corner (`card-img`). Put it first in the card for `top`, last
+for `bottom`. `alt` defaults to an empty string, for a decorative image.
 
 <Example name="card/image" />
+
+## Image overlay
+
+`Card:ImgOverlay` lays content over a `Card:Img` with `position="full"` (`card-img-overlay`). `dark` adds a gradient
+that darkens the bottom of the image, so white text stays readable (`card-img-overlay-dark`):
+
+<Example name="card/img-overlay" />
+
+## Cover
+
+`Card:Cover` is a header with a background photo under a dark overlay (`card-cover`). `image` sets the photo, and
+`blurred` blurs it (`card-cover-blurred`). The overlay is drawn over the content that is not positioned: give the
+content `position-relative`, and `text-white` on the element itself, since headings set their own color:
+
+<Example name="card/cover" />
+
+An [Avatar](/components/content/avatar/#cover) with `cover` overlaps the cover from the body below.
+
+## Code and tables
+
+`Card:Code` replaces the body for a code block, without the body padding (`card-code`). To run a
+[Table](/components/content/table/#in-a-card) edge to edge in a card, set its `card` prop.
+
+<Example name="card/code" />
+
+## Tabs
+
+`Card:Tabs` switches between several cards with a row of tabs above them (`card-tabs`). Put a
+[Tabs](/components/navigation/tabs/) bar and a `Tabs:Content` in it, and give each `Tabs:Pane` the `card` class:
+
+<Example name="card/tabs" />
 
 ## Stamp
 
@@ -145,20 +176,24 @@ Other attributes go to the root `<div class="card">` (or `<a>`).
 
 ## Sub-components
 
-| Component       | Renders                                                                            |
-| --------------- | ---------------------------------------------------------------------------------- |
-| `Card:Header`   | `<div class="card-header">`                                                        |
-| `Card:Title`    | `<h3 class="card-title">`                                                          |
-| `Card:Subtitle` | `<div class="card-subtitle">`: small muted text under the title                    |
-| `Card:Actions`  | `<div class="card-actions">`: buttons or links at the end of the header            |
-| `Card:Body`     | `<div class="card-body">`                                                          |
-| `Card:Footer`   | `<div class="card-footer">`                                                        |
-| `Card:Status`   | `<div class="card-status-top bg-primary">`: the status border, see its props below |
-| `Card:Img`      | `<img class="card-img-top">`: an image on an edge of the card                      |
-| `Card:Stamp`    | `<div class="card-stamp">`: a large icon in the top end corner                     |
-| `Card:Progress` | `<div class="progress card-progress">`: a progress bar on the bottom edge          |
-| `Card:Meta`     | `<div class="card-meta">`: a muted secondary line                                  |
-| `Card:Btn`      | `<a class="card-btn">` (or `<button>`): a full-width action on the bottom edge     |
+| Component         | Renders                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| `Card:Header`     | `<div class="card-header">`                                                        |
+| `Card:Title`      | `<h3 class="card-title">`                                                          |
+| `Card:Subtitle`   | `<div class="card-subtitle">`: small muted text under the title                    |
+| `Card:Actions`    | `<div class="card-actions">`: buttons or links at the end of the header            |
+| `Card:Body`       | `<div class="card-body">`                                                          |
+| `Card:Footer`     | `<div class="card-footer">`                                                        |
+| `Card:Status`     | `<div class="card-status-top bg-primary">`: the status border, see its props below |
+| `Card:Img`        | `<img class="card-img-top">`: an image on an edge of the card                      |
+| `Card:ImgOverlay` | `<div class="card-img-overlay">`: content over a full `Card:Img`                   |
+| `Card:Cover`      | `<div class="card-cover">`: a header with a background photo                       |
+| `Card:Code`       | `<div class="card-code">`: a code block without the body padding                   |
+| `Card:Tabs`       | `<div class="card-tabs">`: cards switched by a row of tabs                         |
+| `Card:Stamp`      | `<div class="card-stamp">`: a large icon in the top end corner                     |
+| `Card:Progress`   | `<div class="progress card-progress">`: a progress bar on the bottom edge          |
+| `Card:Meta`       | `<div class="card-meta">`: a muted secondary line                                  |
+| `Card:Btn`        | `<a class="card-btn">` (or `<button>`): a full-width action on the bottom edge     |
 
 `Card:Status` takes `variant` (default `'primary'`) and `position` (default `'top'`), with the same values as the
 `status` and `statusPosition` props of the card.
@@ -171,11 +206,26 @@ Other attributes go to the root `<div class="card">` (or `<a>`).
 
 `Card:Img`:
 
-| Prop       | Type   | Default | Description                                                                              |
-| ---------- | ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `src`      | string |         | Image URL (required)                                                                     |
-| `alt`      | string | `''`    | Alternative text; empty for a decorative image                                           |
-| `position` | string | `'top'` | `top` `bottom` `start` `end`: the edge whose corners are rounded (`card-img-{position}`) |
+| Prop       | Type   | Default | Description                                                                                                                    |
+| ---------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `src`      | string |         | Image URL (required)                                                                                                           |
+| `alt`      | string | `''`    | Alternative text; empty for a decorative image                                                                                 |
+| `position` | string | `'top'` | `top` `bottom` `start` `end` (`card-img-{position}`): the edge whose corners are rounded; `full` for every corner (`card-img`) |
+
+`Card:ImgOverlay`:
+
+| Prop   | Type | Default | Description                                                       |
+| ------ | ---- | ------- | ----------------------------------------------------------------- |
+| `dark` | bool | `false` | Gradient that keeps light text readable (`card-img-overlay-dark`) |
+
+`Card:Cover`:
+
+| Prop      | Type    | Default | Description                                               |
+| --------- | ------- | ------- | --------------------------------------------------------- |
+| `image`   | string? | `null`  | Photo URL, set as an inline `background-image` style      |
+| `blurred` | bool    | `false` | Blurs the photo behind the overlay (`card-cover-blurred`) |
+
+A `style` attribute on `Card:Cover` is dropped; other attributes go to the `<div class="card-cover">`.
 
 `Card:Stamp`:
 
