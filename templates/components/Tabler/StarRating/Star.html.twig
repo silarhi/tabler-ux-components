@@ -4,18 +4,18 @@
 
     Usage:
         <twig:Tabler:StarRating:Star active />
-        <twig:Tabler:StarRating:Star active variant="orange" icon="heart-filled" />
+        <twig:Tabler:StarRating:Star active variant="orange" icon="heart" />
 
     Props:
       active   — colored (counted) star
       variant  — color when active (default yellow), any color accepted by <twig:Tabler:StarRating>
-      icon     — Tabler icon name (default star-filled); mirrored by the `content` block
+      icon     — Tabler icon name (default star); mirrored by the `content` block
 #}
 {% apply trim %}
 {% props
     active = false,
     variant = 'yellow',
-    icon = 'star-filled',
+    icon = 'star',
 %}
 
 {% set star = html_cva(

@@ -13,5 +13,8 @@
     image = null,
 %}
 
-<span class="{{ ('mention-app ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}></span>
+{# Tabler resets .mention-app's background, so bg-cover scales the logo to the box; a user `style` goes last #}
+{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+<span class="{{ ('mention-app' ~ (image is not null ? ' bg-cover' : '') ~ ' ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}></span>
 {% endapply %}

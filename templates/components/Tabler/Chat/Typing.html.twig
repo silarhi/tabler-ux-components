@@ -14,7 +14,7 @@
     label = 'Typing',
 %}
 
-<div {{ attributes.defaults({class: 'chat-bubble'}) }}>
+<div {{ attributes.defaults({class: 'chat-bubble align-self-start'}) }}>
     <div class="chat-bubble-body">
         <p class="text-secondary fst-italic mb-0">{%- block content %}{{ label }}{% endblock %} <span class="animated-dots"></span></p>
     </div>

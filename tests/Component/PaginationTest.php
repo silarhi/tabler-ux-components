@@ -29,7 +29,7 @@ final class PaginationTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<ul class="pagination">'
-            . '<li class="page-item disabled"><span class="page-link">«</span></li>'
+            . '<li class="page-item disabled"><a class="page-link" aria-disabled="true">«</a></li>'
             . '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>'
             . '<li class="page-item active"><a class="page-link" href="?page=2" aria-current="page">2</a></li>'
             . '</ul>',
@@ -50,6 +50,16 @@ final class PaginationTest extends ComponentTestCase
             . '<li class="page-item"><a class="page-link" href="#">1</a></li>'
             . '</ul>',
             $html,
+        );
+    }
+
+    public function testDisabledNamedPagerItemStaysALink(): void
+    {
+        // A <span> could not hold the title <div>s, and an active item keeps aria-current
+        self::assertHtmlSame(
+            '<li class="page-item active disabled page-prev"><a class="page-link" aria-disabled="true" aria-current="page">'
+            . '<div class="page-item-subtitle">Intro</div><div class="page-item-title">Previous</div></a></li>',
+            $this->renderComponent('<twig:Tabler:Pagination:Item direction="prev" title="Previous" subtitle="Intro" disabled active />'),
         );
     }
 }

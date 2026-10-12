@@ -8,7 +8,7 @@
 
     All-in-one:
         <twig:Tabler:StarRating value="4" />
-        <twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart-filled" aria-label="3 of 10 hearts" />
+        <twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart" aria-label="3 of 10 hearts" />
 
     Composed:
         <twig:Tabler:StarRating aria-label="2 out of 3">
@@ -22,21 +22,25 @@
       max      — total number of stars (default 5)
       variant  — color of the active stars (default yellow): primary | secondary | success | danger | warning | info | dark | light | muted,
                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
-      icon     — Tabler icon name of each star (default star-filled)
+      icon     — Tabler icon name of each star (default star). The `star-filled` glyph only
+                 exists up to @tabler/icons-webfont 3.36.0
 #}
 {% apply trim %}
 {% props
     value = 0,
     max = 5,
     variant = 'yellow',
-    icon = 'star-filled',
+    icon = 'star',
 %}
 
 <div {{ attributes.defaults({class: 'stars', role: 'img', 'aria-label': value ~ ' out of ' ~ max}) }}>
     {%- block content -%}
-        {%- for i in 1..max -%}
-            <twig:Tabler:StarRating:Star active="{{ i <= value }}" variant="{{ variant }}" icon="{{ icon }}" />
-        {%- endfor -%}
+        {#- 1..0 counts down to [1, 0], so a zero `max` must skip the loop -#}
+        {%- if max > 0 -%}
+            {%- for i in 1..max -%}
+                <twig:Tabler:StarRating:Star active="{{ i <= value }}" variant="{{ variant }}" icon="{{ icon }}" />
+            {%- endfor -%}
+        {%- endif -%}
     {%- endblock -%}
 </div>
 {% endapply %}

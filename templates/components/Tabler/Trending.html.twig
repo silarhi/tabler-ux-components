@@ -34,7 +34,8 @@
 %}
 
 {% set amount = (value ~ '')|trim %}
-{% set trend = direction ?? (amount matches '/^[+-]?0*(\\.0*)?$/' ? 'neutral' : (amount starts with '-' ? 'down' : 'up')) %}
+{#- a zero (12.0, 0,0) is neutral; a number with a minus (- or U+2212) is down, any other number up; anything else (N/A) neutral -#}
+{% set trend = direction ?? (amount matches '/^[+\\-\\x{2212}]?0*([.,]0*)?$/u' ? 'neutral' : (amount matches '/^[\\-\\x{2212}]\\s*[.,]?\\d/u' ? 'down' : (amount matches '/^\\+?\\s*[.,]?\\d/u' ? 'up' : 'neutral'))) %}
 
 {% set trending = html_cva(
     base: 'd-inline-flex align-items-center lh-1',
@@ -52,7 +53,7 @@
         {%- block label -%}
             <span class="visually-hidden">{{ label ?? {up: 'Increased by', neutral: 'No change,', down: 'Decreased by'}[trend] }} </span>
         {%- endblock -%}
-        {%- block value -%}{{ value }}{{ unit }}{%- endblock -%}
+        {%- block value -%}{{ amount }}{{ unit }}{%- endblock -%}
         {%- block icon -%}
             <twig:Tabler:Icon name="{{ {up: 'arrow-up', neutral: 'minus', down: 'arrow-down'}[trend] }}" class="ms-0" aria-hidden="true" />
         {%- endblock -%}

@@ -37,13 +37,14 @@
     },
 ) %}
 
-{% set tag = disabled ? 'span' : 'a' %}
+{# a disabled item is an <a> without href, as in Tabler's markup: a <span> could not hold the title <div>s #}
 <li class="{{ item.apply({active: active, disabled: disabled, direction: direction ?? ''}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
-    <{{ tag }} class="page-link"
-        {%- if not disabled %} href="{{ href ?? '#' }}"{% if active %} aria-current="page"{% endif %}{% if direction is not null %} rel="{{ direction }}"{% endif %}{% endif %}>
+    <a class="page-link"
+        {%- if disabled %} aria-disabled="true"{% else %} href="{{ href ?? '#' }}"{% if direction is not null %} rel="{{ direction }}"{% endif %}{% endif %}
+        {%- if active %} aria-current="page"{% endif %}>
         {%- if subtitle is not null -%}<div class="page-item-subtitle">{{ subtitle }}</div>{%- endif -%}
         {%- if title is not null -%}<div class="page-item-title">{{ title }}</div>{%- endif -%}
         {%- block content %}{% endblock -%}
-    </{{ tag }}>
+    </a>
 </li>
 {% endapply %}

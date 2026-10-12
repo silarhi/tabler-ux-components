@@ -71,4 +71,16 @@ final class AvatarTest extends ComponentTestCase
 
         self::assertHtmlSame('<span class="avatar" style="background-image: url(/a.jpg); background-position: top"></span>', $html);
     }
+
+    public function testBrandConsumerStyleIsKept(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar-brand bg-cover" style="background-image: url(/gh.svg); opacity: .5"></span>',
+            $this->renderComponent('<twig:Tabler:Avatar:Brand image="/gh.svg" style="opacity: .5" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar-brand" style="opacity: .5"><i class="ti ti-x"></i></span>',
+            $this->renderComponent('<twig:Tabler:Avatar:Brand style="opacity: .5"><i class="ti ti-x"></i></twig:Tabler:Avatar:Brand>'),
+        );
+    }
 }

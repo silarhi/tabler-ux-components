@@ -275,7 +275,7 @@ Renders a `<div>`, or an `<a>` when `href` is set.
 | `footer`              | string?      | `null`  | Mirrored by the `footer` block                                                    |
 | `href`                | string?      | `null`  | Renders `<a href>` instead of `<div>`                                             |
 | `borderless`          | bool         | `false` | No border                                                                         |
-| `transparent`         | bool         | `false` | No background and no border                                                       |
+| `transparent`         | bool         | `false` | No background, dashed border                                                      |
 | `stacked`             | bool         | `false` | Second card drawn behind                                                          |
 | `active` / `inactive` | bool         | `false` | Selected / dimmed card                                                            |
 | `rotate`              | string?      | `null`  | `start` `end` `left` `right` (tilted card)                                        |
@@ -406,7 +406,7 @@ Props: `value`, `variant`, `size` (sm/md/lg/xl), `label`, `indeterminate`, `stri
 </twig:Tabler:Dropdown>
 ```
 
-Props: `direction` (down/up/end/start; `end` on a dropdown nested in a menu makes a submenu).
+Props: `direction` (down/up/end/start: where the menu opens). Submenus are not supported: `Dropdown:Toggle` is a `.btn`, not a `.dropdown-item`.
 
 Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`, `split`), `Dropdown:Menu` (`end`, `arrow`, `dark`, `scrollable`, `card`), `Dropdown:Item` (`href`, `active`, `disabled`, `icon`), `Dropdown:Text`, `Dropdown:Columns` / `Dropdown:Column` (multi-column menu), `Dropdown:Divider`, `Dropdown:Header`.
 
@@ -474,7 +474,7 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 ```twig
 {# Icon (requires @tabler/icons-webfont) #}
 <twig:Tabler:Icon name="check" variant="success" />
-{# size: sm | md | lg | inline (otherwise it follows the font size); filled: the ti-{name}-filled glyph #}
+{# size: sm | md | lg | inline (otherwise it follows the font size); filled: the ti-{name}-filled glyph (icons-webfont <= 3.36.0) #}
 <twig:Tabler:Icon name="heart" size="lg" filled variant="danger" />
 
 {# Ribbon — place inside a positioned parent like a card #}
@@ -760,13 +760,13 @@ Hey <twig:Tabler:Mention label="JohnDoe" prefix="@" prefixHidden avatar="/avatar
 
 {# StarRating — read-only stars, labelled "4 out of 5" #}
 <twig:Tabler:StarRating value="4" />
-<twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart-filled" aria-label="3 of 10 hearts" />
+<twig:Tabler:StarRating value="3" max="10" variant="red" icon="heart" aria-label="3 of 10 hearts" />
 ```
 
 - **Tag** — `label`, `icon`, `avatar` (image URL), `status` (dot color), `checkbox`, `checked`, `badge`, `dismissible` (remove button labelled "Remove &lt;label&gt;"). Sub-components `Tag:Avatar` (`image`), `Tag:Status` (`variant`), `Tag:Check` (`checked`), `Tag:Badge`, `Tag:Close`, `Tag:List` (`tag-list`, which replaces the deprecated `tags-list`). Blocks: `content`, `leading`, `label`, `badge`, `close`.
 - **Mention** — `label`, `href` (renders `<a>`), `prefix` (`@`, `#`, …), `prefixHidden` (visually hidden prefix), `avatar`, `logo`, `swatch` (color), `count`. Sub-components `Mention:Avatar` (`image`), `Mention:App` (`image`), `Mention:Color` (`variant`), `Mention:Count`. Blocks: `content`, `leading`, `label`, `count`.
 - **Trending** — `value` (number or signed string, rendered as written), `unit` (default `%`), `direction` (up/down/neutral, to override the sign), `label` (visually hidden prefix, default "Increased by" / "Decreased by" / "No change,"). Blocks: `content`, `label`, `value`, `icon`.
-- **StarRating** — `value`, `max` (default 5), `variant` (active color, default `yellow`), `icon` (default `star-filled`); `role="img"` with an "N out of M" `aria-label`. Sub-component `StarRating:Star` (`active`, `variant`, `icon`).
+- **StarRating** — `value`, `max` (default 5), `variant` (active color, default `yellow`), `icon` (default `star`; `star-filled` only exists up to `@tabler/icons-webfont` 3.36.0); `role="img"` with an "N out of M" `aria-label`. Sub-component `StarRating:Star` (`active`, `variant`, `icon`).
 
 Tag status, Mention swatch and StarRating accept the theme colors (`primary` … `light`, `muted`) and the palette colors (`blue` … `cyan`). Icons use `<twig:Tabler:Icon>` (requires `@tabler/icons-webfont`).
 

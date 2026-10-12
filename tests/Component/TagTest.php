@@ -91,4 +91,12 @@ final class TagTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testAvatarConsumerStyleMergesWithImage(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar avatar-xs tag-avatar" style="background-image: url(/a.jpg); background-position: top"></span>',
+            $this->renderComponent('<twig:Tabler:Tag:Avatar image="/a.jpg" style="background-position: top" />'),
+        );
+    }
 }
