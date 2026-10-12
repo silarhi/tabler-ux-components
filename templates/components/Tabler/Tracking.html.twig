@@ -7,7 +7,14 @@
             <twig:Tabler:Tracking:Block variant="success" />
             <twig:Tabler:Tracking:Block variant="danger" />
         </twig:Tabler:Tracking>
+
+    Props:
+      squares  — square blocks instead of thin bars (tracking-squares)
 #}
-<div {{ attributes.defaults({class: 'tracking'}) }}>
+{% props
+    squares = false,
+%}
+
+<div {{ attributes.defaults({class: squares ? 'tracking tracking-squares' : 'tracking'}) }}>
     {% block content %}{% endblock %}
 </div>

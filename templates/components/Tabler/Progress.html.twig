@@ -16,6 +16,9 @@
       value          — 0–100 percentage for the single-bar shortcut
       variant          — bar variant for the single-bar shortcut
       size           — sm | md (default) | lg | xl
+      striped        — diagonal stripes on the bar (progress-bar-striped)
+      animated       — animates the stripes (progress-bar-animated)
+      separated      — gap between stacked bars (progress-separated)
       label          — visually-hidden label for the single bar
       indeterminate  — render an indeterminate single bar
 #}
@@ -25,22 +28,26 @@
     size = 'md',
     label = null,
     indeterminate = false,
+    striped = false,
+    animated = false,
+    separated = false,
 %}
 
 {% set progress = html_cva(
     base: 'progress',
     variants: {
         size: {sm: 'progress-sm', md: '', lg: 'progress-lg', xl: 'progress-xl'},
+        separated: {true: 'progress-separated', false: ''},
     },
 ) %}
 
-<div class="{{ progress.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ progress.apply({size: size, separated: separated}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}
         {% block bar %}
             {%- if indeterminate -%}
                 <twig:Tabler:Progress:Bar variant="{{ variant }}" indeterminate />
             {%- elseif value is not null -%}
-                <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" label="{{ label }}" />
+                <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" label="{{ label }}" striped="{{ striped }}" animated="{{ animated }}" />
             {%- endif -%}
         {% endblock %}
     {% endblock %}

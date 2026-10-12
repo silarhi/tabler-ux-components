@@ -1,0 +1,27 @@
+{#
+    Card image — an image on an edge of a card (`.card-img-top` and friends).
+
+    Usage:
+        <twig:Tabler:Card>
+            <twig:Tabler:Card:Img src="/photos/coffee.jpg" alt="A cup of coffee" />
+            <twig:Tabler:Card:Body>…</twig:Tabler:Card:Body>
+        </twig:Tabler:Card>
+
+    Props:
+      src       — image URL (required)
+      alt       — alternative text (default empty: decorative)
+      position  — top (default) | bottom | start | end: the edge whose corners are rounded
+#}
+{% props
+    src,
+    alt = '',
+    position = 'top',
+%}
+
+{% set img = html_cva(
+    variants: {
+        position: {top: 'card-img-top', bottom: 'card-img-bottom', start: 'card-img-start', end: 'card-img-end'},
+    },
+) %}
+
+<img src="{{ src }}" alt="{{ alt }}" class="{{ img.apply({position: position}, attributes.render('class')) }}" {{ attributes.without('class', 'src', 'alt') }}>

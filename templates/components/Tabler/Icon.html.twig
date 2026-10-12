@@ -10,6 +10,9 @@
       name       — Tabler icon name (without the `ti-` prefix)
       variant      — primary | secondary | success | danger | warning | info | dark | light
       animation  — pulse | tada | rotate
+      size       — sm (1rem) | md (2.5rem) | lg (3.5rem) | inline (1rem, aligned with text);
+                   unset, the icon follows the surrounding font size
+      filled     — use the filled variant of the icon (ti-{name}-filled)
 
     Requires the @tabler/icons-webfont stylesheet to be loaded.
 #}
@@ -17,6 +20,8 @@
     name,
     variant = null,
     animation = null,
+    size = null,
+    filled = false,
 %}
 
 {% set icon = html_cva(
@@ -37,7 +42,13 @@
             tada: 'icon-tada',
             rotate: 'icon-rotate',
         },
+        size: {
+            sm: 'icon icon-sm',
+            md: 'icon icon-md',
+            lg: 'icon icon-lg',
+            inline: 'icon icon-inline',
+        },
     },
 ) %}
 
-<i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? ''}, 'ti-' ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+<i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, 'ti-' ~ name ~ (filled ? '-filled' : ''), attributes.render('class')) }}" {{ attributes.without('class') }}></i>

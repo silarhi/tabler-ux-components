@@ -24,7 +24,7 @@
 
     Props:
       id              — DOM id used by triggers (data-bs-target="#id")
-      size            — sm | md (default) | lg | xl | full
+      size            — sm | md (default) | lg | xl | full | fullscreen
       centered        — vertically center the dialog
       scrollable      — scroll the body instead of the page
       status          — variant of the status bar at the top of the dialog
@@ -33,6 +33,7 @@
       footer          — optional footer text; mirrored by the `footer` block
       dismissible     — show a close button in the header (default true)
       staticBackdrop  — clicking the backdrop does not close the modal
+      blur            — blur the page behind the backdrop (modal-blur)
 #}
 {% props
     id = null,
@@ -45,6 +46,7 @@
     footer = null,
     dismissible = true,
     staticBackdrop = false,
+    blur = false,
 %}
 
 {% set dialog = html_cva(
@@ -56,13 +58,14 @@
             lg: 'modal-lg',
             xl: 'modal-xl',
             full: 'modal-full-width',
+            fullscreen: 'modal-fullscreen',
         },
         centered: {true: 'modal-dialog-centered', false: ''},
         scrollable: {true: 'modal-dialog-scrollable', false: ''},
     },
 ) %}
 
-<div {{ attributes.defaults({class: 'modal', tabindex: '-1'}).without('id') }}{% if id is not null %} id="{{ id }}"{% endif %}{% if staticBackdrop %} data-bs-backdrop="static" data-bs-keyboard="false"{% endif %}>
+<div {{ attributes.defaults({class: blur ? 'modal modal-blur' : 'modal', tabindex: '-1'}).without('id') }}{% if id is not null %} id="{{ id }}"{% endif %}{% if staticBackdrop %} data-bs-backdrop="static" data-bs-keyboard="false"{% endif %}>
     <div class="{{ dialog.apply({size: size, centered: centered, scrollable: scrollable}) }}" role="document">
         <div class="modal-content">
             {% block content %}

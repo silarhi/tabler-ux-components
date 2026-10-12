@@ -1,0 +1,38 @@
+{#
+    Avatar list — spaces several avatars in a row, optionally overlapping (`.avatar-list`).
+
+    Usage:
+        <twig:Tabler:Avatar:List stacked>
+            <twig:Tabler:Avatar image="/avatars/1.jpg" />
+            <twig:Tabler:Avatar image="/avatars/2.jpg" />
+            <twig:Tabler:Avatar>+8</twig:Tabler:Avatar>
+        </twig:Tabler:Avatar:List>
+
+    Props:
+      stacked  — overlap the avatars (avatar-list-stacked)
+      size     — xxs | xs | sm | md | lg | xl | 2xl: sizes every avatar in the list (avatar-list-{size})
+#}
+{% props
+    stacked = false,
+    size = null,
+%}
+
+{% set list = html_cva(
+    base: 'avatar-list',
+    variants: {
+        stacked: {true: 'avatar-list-stacked', false: ''},
+        size: {
+            xxs: 'avatar-list-xxs',
+            xs: 'avatar-list-xs',
+            sm: 'avatar-list-sm',
+            md: 'avatar-list-md',
+            lg: 'avatar-list-lg',
+            xl: 'avatar-list-xl',
+            '2xl': 'avatar-list-2xl',
+        },
+    },
+) %}
+
+<div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
+</div>

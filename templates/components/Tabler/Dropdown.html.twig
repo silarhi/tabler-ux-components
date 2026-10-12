@@ -11,7 +11,22 @@
                 <twig:Tabler:Dropdown:Item href="/delete">Delete</twig:Tabler:Dropdown:Item>
             </twig:Tabler:Dropdown:Menu>
         </twig:Tabler:Dropdown>
+
+    Props:
+      direction  — down (default) | up | end | start: where the menu opens (dropup / dropend / dropstart);
+                   `end` also turns a dropdown nested in a menu into a submenu
 #}
-<div {{ attributes.defaults({class: 'dropdown'}) }}>
+{% props
+    direction = 'down',
+%}
+
+{% set dropdown = html_cva(
+    base: 'dropdown',
+    variants: {
+        direction: {down: '', up: 'dropup', end: 'dropend', start: 'dropstart'},
+    },
+) %}
+
+<div class="{{ dropdown.apply({direction: direction}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>

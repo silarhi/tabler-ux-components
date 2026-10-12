@@ -3,5 +3,12 @@
 
     Usage:
       <twig:Tabler:Card:Body>Some content.</twig:Tabler:Card:Body>
+
+    Props:
+      scrollable  — scrolls the body instead of growing the card (card-body-scrollable)
 #}
-<div {{ attributes.defaults({class: 'card-body'}) }}>{%- block content %}{% endblock -%}</div>
+{% props
+    scrollable = false,
+%}
+
+<div {{ attributes.defaults({class: scrollable ? 'card-body card-body-scrollable' : 'card-body'}) }}>{%- block content %}{% endblock -%}</div>
