@@ -173,4 +173,34 @@ final class LayoutComponentsTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testPageHeaderDirectChildrenReplaceTheTitleRow(): void
+    {
+        // Direct children fill `content`, which wraps the whole header: the
+        // `title` prop is dropped. Use the `actions` block to keep it.
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:PageHeader title="Dashboard">
+                <twig:Tabler:PageHeader:Actions><twig:Tabler:Button variant="primary">New</twig:Tabler:Button></twig:Tabler:PageHeader:Actions>
+            </twig:Tabler:PageHeader>
+            TWIG);
+
+        self::assertHtmlSame(
+            '<div class="page-header d-print-none">'
+            . '<div class="col-auto ms-auto"><div class="btn-list"><button type="button" class="btn btn-primary">New</button></div></div>'
+            . '</div>',
+            $html,
+        );
+    }
+
+    public function testNavbarSideTakesEndAlignmentClass(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Navbar:Side class="ms-auto"><twig:Tabler:Navbar:Item href="/help">Help</twig:Tabler:Navbar:Item></twig:Tabler:Navbar:Side>');
+
+        self::assertHtmlSame(
+            '<div class="navbar-side ms-auto"><ul class="navbar-nav">'
+            . '<li class="nav-item"><a class="nav-link" href="/help"><span class="nav-link-title">Help</span></a></li>'
+            . '</ul></div>',
+            $html,
+        );
+    }
 }

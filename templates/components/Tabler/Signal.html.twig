@@ -5,8 +5,9 @@
     All-in-one:
         <twig:Tabler:Signal value="2" variant="orange" aria-label="Priority: high" />
 
-    Composed:
-        <twig:Tabler:Signal variant="primary" max="4" aria-label="Level 1 of 4">
+    Composed (the bars you pass replace the generated ones, so `value` and `max`
+    are ignored):
+        <twig:Tabler:Signal variant="primary" aria-label="Level 1 of 4">
             <twig:Tabler:Signal:Bar active />
             <twig:Tabler:Signal:Bar />
             <twig:Tabler:Signal:Bar />

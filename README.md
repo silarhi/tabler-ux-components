@@ -285,7 +285,7 @@ Gradient presets: `disco` `gold` `love` `mellow` `ocean` `psychedelic` `rainbow`
 
 Sub-components: `Card:Header`, `Card:Title`, `Card:Subtitle`, `Card:Body` (`scrollable`), `Card:Footer`, `Card:Actions`, `Card:Status`, `Card:Img` (`src`, `alt`, `position` top/bottom/start/end), `Card:Stamp` (`icon`, `variant`, `size`), `Card:Progress` (`value`, `variant`, `label`), `Card:Meta`, `Card:Btn` (`href`).
 
-Blocks: `content` (wraps the whole card — override to compose freely), `header`, `body`, `footer`.
+Blocks: `content` (wraps the header, body and footer — override to compose freely), `header`, `body`, `footer`. The `status` bar is rendered outside `content`, so it is kept when you compose.
 
 ### Modal
 
@@ -324,9 +324,9 @@ Bootstrap 5 modal markup. Open it with a trigger: `data-bs-toggle="modal" data-b
 
 Sub-components: `Modal:Header`, `Modal:Title`, `Modal:Body`, `Modal:Footer`, `Modal:Close`, `Modal:Status`.
 
-Blocks: `content` (wraps the whole dialog content — override to compose freely), `header`, `body`, `footer`.
+Blocks: `content` (wraps the header, body and footer — override to compose freely), `header`, `body`, `footer`. The `status` bar is rendered outside `content`, so it is kept when you compose.
 
-> **Note** — to set a boolean prop to `false` in HTML syntax (e.g. disable `dismissible`), use the `{% component %}` tag: `dismissible="false"` passes the truthy string `"false"`.
+> **Note** — to set a boolean prop to `false` in HTML syntax (e.g. disable `dismissible`), pass a Twig expression: `dismissible="{{ false }}"`. A bare `dismissible="false"` passes the truthy string `"false"`.
 
 ### Avatar / Spinner / Status / Divider
 

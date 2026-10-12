@@ -88,4 +88,11 @@ final class BadgeTest extends ComponentTestCase
 
         self::assertHtmlSame('<div class="badge-list"><span class="badge text-bg-primary">PHP</span></div>', $html);
     }
+
+    public function testLinkBadgeFromHeaderExample(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge href="/tags/php" variant="info" light>PHP</twig:Tabler:Badge>');
+
+        self::assertHtmlSame('<a href="/tags/php" class="badge bg-info-lt">PHP</a>', $html);
+    }
 }

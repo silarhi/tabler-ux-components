@@ -79,7 +79,7 @@ final class ModifiersTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:Dropdown:Item href="/settings" icon="settings">Settings</twig:Tabler:Dropdown:Item>'),
         );
         self::assertHtmlSame(
-            '<a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More"></a>',
+            '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More"></button>',
             $this->renderComponent('<twig:Tabler:Dropdown:Toggle variant="primary" split aria-label="More" />'),
         );
     }

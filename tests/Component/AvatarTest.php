@@ -57,4 +57,18 @@ final class AvatarTest extends ComponentTestCase
         self::assertHtmlSame('<span class="avatar avatar-xxs">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="xxs">JL</twig:Tabler:Avatar>'));
         self::assertHtmlSame('<span class="avatar avatar-2xl">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="2xl">JL</twig:Tabler:Avatar>'));
     }
+
+    public function testConsumerStyleIsKeptWithoutImage(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Avatar style="--tblr-avatar-size: 3rem">JL</twig:Tabler:Avatar>');
+
+        self::assertHtmlSame('<span class="avatar" style="--tblr-avatar-size: 3rem">JL</span>', $html);
+    }
+
+    public function testConsumerStyleMergesWithImage(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Avatar image="/a.jpg" style="background-position: top" />');
+
+        self::assertHtmlSame('<span class="avatar" style="background-image: url(/a.jpg); background-position: top"></span>', $html);
+    }
 }
