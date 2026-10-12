@@ -74,4 +74,17 @@ final class DropdownTest extends ComponentTestCase
             $this->renderComponent('<form><twig:Tabler:Dropdown:Toggle id="actions">Actions</twig:Tabler:Dropdown:Toggle></form>'),
         );
     }
+
+    public function testItemTagForCheckboxesAndButtons(): void
+    {
+        // A checkbox inside an <a> is invalid HTML: render the item as a <label>
+        self::assertHtmlSame(
+            '<label class="dropdown-item"><span class="dropdown-item-indicator"><input type="checkbox"></span>Archived</label>',
+            $this->renderComponent('<twig:Tabler:Dropdown:Item tag="label" href="/ignored"><twig:Tabler:Dropdown:Indicator><input type="checkbox"></twig:Tabler:Dropdown:Indicator>Archived</twig:Tabler:Dropdown:Item>'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" class="dropdown-item disabled" disabled>Retry</button>',
+            $this->renderComponent('<twig:Tabler:Dropdown:Item tag="button" disabled>Retry</twig:Tabler:Dropdown:Item>'),
+        );
+    }
 }

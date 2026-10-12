@@ -21,7 +21,28 @@
     animated = false,
 %}
 
-<div {{ attributes.defaults({class: 'progress'}).without('style') }} style="width: {{ value }}%" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ label ?? (value ~ '% of total') }}">
-    <twig:Tabler:Progress:Bar variant="{{ variant }}" striped="{{ striped }}" animated="{{ animated }}" />
+{% set bar = html_cva(
+    base: 'progress-bar',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+        },
+        striped: {true: 'progress-bar-striped', false: ''},
+        animated: {true: 'progress-bar-striped progress-bar-animated', false: ''},
+    },
+) %}
+{# the width goes first so a user `style` can still override it #}
+{% set style = ['width: ' ~ value ~ '%', attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+{# the segment is the progressbar; its fill is decorative, without a role of its own (Bootstrap 5.3 markup) #}
+<div {{ attributes.defaults({class: 'progress'}).without('style') }} style="{{ style }}" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ label ?? (value ~ '% of total') }}">
+    <div class="{{ bar.apply({variant: variant, striped: striped and not animated, animated: animated ? true : false}) }}"></div>
 </div>
 {% endapply ~%}

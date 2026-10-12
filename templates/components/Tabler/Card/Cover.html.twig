@@ -1,6 +1,7 @@
 {#
     Card cover — a header with a background photo darkened by an overlay, so white
-    text on top stays readable (`.card-cover`).
+    text on top stays readable (`.card-cover`). The content is wrapped in a
+    `position-relative` <div>, which keeps it above the overlay.
 
     Usage:
         <twig:Tabler:Card:Cover image="/photos/books.jpg" class="text-center text-white">
@@ -17,7 +18,10 @@
     blurred = false,
 %}
 
-<div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>
-    {%- block content %}{% endblock -%}
+{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+{# the overlay is an absolutely positioned ::before: the content needs its own stacking to stay above it #}
+<div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if style %} style="{{ style }}"{% endif %}>
+    <div class="position-relative">{%- block content %}{% endblock -%}</div>
 </div>
 {% endapply ~%}
