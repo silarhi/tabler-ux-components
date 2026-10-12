@@ -5,7 +5,14 @@
         <twig:Tabler:Dropdown:Item href="/edit">Edit</twig:Tabler:Dropdown:Item>
         <twig:Tabler:Dropdown:Item href="#" active>Selected</twig:Tabler:Dropdown:Item>
 
+    An item holding a checkbox or a radio (Dropdown:Indicator) cannot be a link:
+        <twig:Tabler:Dropdown:Item tag="label">
+            <twig:Tabler:Dropdown:Indicator><input type="checkbox" class="form-check-input m-0"></twig:Tabler:Dropdown:Indicator>
+            Show archived
+        </twig:Tabler:Dropdown:Item>
+
     Props:
+      tag       — a (default) | button | label | any other element; only an <a> gets the `href`
       href      — link target (defaults to #)
       active    — highlighted item
       disabled  — non-interactive item
@@ -13,6 +20,7 @@
 #}
 {% apply trim %}
 {% props
+    tag = 'a',
     href = null,
     active = false,
     disabled = false,
@@ -27,8 +35,9 @@
     },
 ) %}
 
-<a href="{{ href ?? '#' }}" class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>
+<{{ tag }}{% if tag == 'a' %} href="{{ href ?? '#' }}"{% elseif tag == 'button' %} type="{{ attributes.render('type') ?? 'button' }}"{% endif %} class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"
+    {%- if disabled %}{% if tag == 'button' %} disabled{% else %} aria-disabled="true"{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
     {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="dropdown-item-icon" />{%- endif -%}
     {%- block content %}{% endblock -%}
-</a>
+</{{ tag }}>
 {% endapply %}

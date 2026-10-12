@@ -21,7 +21,7 @@
 
 {%- set classes = ((image is not null ? 'ratio ratio-4x3 ' : '') ~ (active ? 'active' : '') ~ ' ' ~ attributes.render('class'))|trim -%}
 {#- the thumbnail goes first so a user `style` can still override it -#}
-{%- set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') -%}
+{%- set style = [image is not null ? 'background-image: url(' ~ image|replace({'\\': '\\\\', '"': '\\"', "'": "\\'", '(': '\\(', ')': '\\)', ' ': '\\ ', '\n': '\\a ', '\r': '\\d ', '\t': '\\9 ', '\f': '\\c '}) ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') -%}
 <button
     type="button"
     {% if target is not null %}data-bs-target="#{{ target }}"{% endif %}

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `Table` `card` (`card-table`) and `Table:Cell` (`label` for stacked rows, `truncate`).
   - `Progress:Stacked` (`separated`) and `Progress:Segment`, Bootstrap 5.3's `progress-stacked` markup.
   - `Dropdown:Indicator`, `Avatar` `cover`, and a plain `List` + `List:Item` (`separated`, `inline` with `dots`, `unstyled`, `ordered`).
+- `Dropdown:Item` `tag`: `button` or `label` for an item that is not a link, such as one holding a checkbox or a radio in a `Dropdown:Indicator`.
 
 ### Changed
 
@@ -42,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Trending`: a Unicode minus is a decrease, a zero with a decimal comma is neutral, and a value that is not a number (e.g. `N/A`) is neutral instead of an increase.
 - `ListGroup:Item` with both `href` and `button` no longer puts `type="button"` or a bare `disabled` on the link; a disabled `Pagination:Item` is an `<a aria-disabled>` without `href`, and an active one keeps `aria-current`.
 - `Chat:Message` wraps long messages instead of dropping them under the avatar, and `Chat:Typing` no longer stretches across `Chat:Bubbles`.
+- **Security:** image URLs (`Avatar`, `Avatar:Brand`, `Card:Cover`, `Carousel:Indicator`, `Chat:Message`, `Mention:App`, `Mention:Avatar`, `Tag:Avatar`) were printed unescaped inside an inline `background-image: url(…)`: a URL containing `)` could close it and add CSS declarations to the `style` attribute. Quotes, parentheses, backslashes and whitespace in the URL are now backslash-escaped.
+- `Card:Cover` and `Progress:Segment` dropped a user `style` attribute; `Card:Cover` wraps its content in a `position-relative` `<div>`, so text stays above the darkening overlay; `Progress:Segment`'s fill no longer carries a second, unnamed `role="progressbar"`.
 - `Accordion:Header` falls back to `<h3>` for a level outside 1 to 6, and `Tag`'s checkbox no longer gets `aria-label="true"` on older ux-twig-component releases when the tag has no label.
 
 ## [0.2.0] - 2026-10-12

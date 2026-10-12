@@ -425,7 +425,7 @@ Several segments as one bar, with Bootstrap 5.3's `progress-stacked` markup:
 
 Props: `direction` (down/up/end/start: where the menu opens). Submenus are not supported: `Dropdown:Toggle` is a `.btn`, not a `.dropdown-item`.
 
-Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`, `split`), `Dropdown:Menu` (`end`, `arrow`, `dark`, `scrollable`, `card`), `Dropdown:Item` (`href`, `active`, `disabled`, `icon`), `Dropdown:Text`, `Dropdown:Columns` / `Dropdown:Column` (multi-column menu), `Dropdown:Indicator` (leading checkbox/radio/avatar/flag slot), `Dropdown:Divider`, `Dropdown:Header`.
+Sub-components: `Dropdown:Toggle` (`variant`, `noCaret`, `split`), `Dropdown:Menu` (`end`, `arrow`, `dark`, `scrollable`, `card`), `Dropdown:Item` (`href`, `active`, `disabled`, `icon`, `tag`: `button` or `label` for an item that is not a link, e.g. holding a checkbox), `Dropdown:Text`, `Dropdown:Columns` / `Dropdown:Column` (multi-column menu), `Dropdown:Indicator` (leading checkbox/radio/avatar/flag slot), `Dropdown:Divider`, `Dropdown:Header`.
 
 ### Carousel
 

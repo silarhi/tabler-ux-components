@@ -30,7 +30,7 @@
 %}
 
 {% set avatar_html %}{% block avatar %}
-    {%- if avatar is not null -%}<span class="avatar" style="background-image: url({{ avatar }})"></span>{%- endif -%}
+    {%- if avatar is not null -%}<span class="avatar" style="background-image: url({{ avatar|replace({'\\': '\\\\', '"': '\\"', "'": "\\'", '(': '\\(', ')': '\\)', ' ': '\\ ', '\n': '\\a ', '\r': '\\d ', '\t': '\\9 ', '\f': '\\c '}) }})"></span>{%- endif -%}
 {% endblock %}{% endset %}
 
 <div {{ attributes }}>

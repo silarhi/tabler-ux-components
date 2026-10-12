@@ -14,7 +14,7 @@
 %}
 
 {# the background image goes first so a user `style` can still override it #}
-{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+{% set style = [image is not null ? 'background-image: url(' ~ image|replace({'\\': '\\\\', '"': '\\"', "'": "\\'", '(': '\\(', ')': '\\)', ' ': '\\ ', '\n': '\\a ', '\r': '\\d ', '\t': '\\9 ', '\f': '\\c '}) ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 
 <span class="{{ ('avatar avatar-xs tag-avatar ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>
     {%- block content %}{% endblock -%}
