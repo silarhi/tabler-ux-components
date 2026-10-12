@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Components rendered whitespace around their markup, so a component in running text got a space on each side ("Click New ." instead of "Click New."). The line break after a `</twig:Tabler:…>` closing tag, which Twig drops after the `{% endcomponent %}` it compiles to, is now kept, so components on consecutive lines stay separated like self-closing ones.
+- Components rendered whitespace around their markup, so a component in running text got a space on each side ("Click New ." instead of "Click New.").
 - `Card` and `Modal` dropped their status bar when given children.
 - `Avatar`, `Progress:Bar`, `Carousel:Indicator`, `Tag:Avatar`, `Mention:Avatar`, `Mention:App` and `Avatar:Brand` dropped a user `style` attribute instead of merging it.
 - `Toast` carried `data-bs-toggle="toast"` on its root, which tabler.js treats as a trigger.
