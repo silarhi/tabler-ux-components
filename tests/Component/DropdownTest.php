@@ -33,7 +33,7 @@ final class DropdownTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<div class="dropdown">'
-            . '<a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>'
+            . '<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Menu</button>'
             . '<div class="dropdown-menu">'
             . '<div class="dropdown-header">Actions</div>'
             . '<a href="/edit" class="dropdown-item">Edit</a>'
@@ -58,12 +58,20 @@ final class DropdownTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<div class="dropdown">'
-            . '<a href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">•••</a>'
+            . '<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">•••</button>'
             . '<div class="dropdown-menu dropdown-menu-end">'
             . '<a href="#" class="dropdown-item active">Selected</a>'
             . '</div>'
             . '</div>',
             $html,
+        );
+    }
+
+    public function testToggleIsAButtonThatDoesNotSubmitForms(): void
+    {
+        self::assertHtmlSame(
+            '<form><button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="actions">Actions</button></form>',
+            $this->renderComponent('<form><twig:Tabler:Dropdown:Toggle id="actions">Actions</twig:Tabler:Dropdown:Toggle></form>'),
         );
     }
 }

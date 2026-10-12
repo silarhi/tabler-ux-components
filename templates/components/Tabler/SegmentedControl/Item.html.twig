@@ -4,6 +4,8 @@
     Usage:
         <twig:Tabler:SegmentedControl:Item active>Day</twig:Tabler:SegmentedControl:Item>
 
+    Renders a <button type="button">, so it never submits an enclosing <form>.
+
     Props:
       active  — the selected segment
 #}
@@ -18,4 +20,4 @@
     },
 ) %}
 
-<button class="{{ item.apply({active: active}, attributes.render('class')) }}" role="tab" data-bs-toggle="tab" aria-selected="{{ active ? 'true' : 'false' }}"{% if not active %} tabindex="-1"{% endif %} {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</button>
+<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ item.apply({active: active}, attributes.render('class')) }}" role="tab" data-bs-toggle="tab" aria-selected="{{ active ? 'true' : 'false' }}"{% if not active %} tabindex="-1"{% endif %} {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>

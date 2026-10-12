@@ -63,7 +63,7 @@ final class InteractiveComponentsTest extends ComponentTestCase
             TWIG);
 
         self::assertHtmlSame(
-            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true" data-bs-toggle="toast">'
+            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true">'
             . '<div class="toast-header"><strong class="me-auto">Notice</strong>'
             . '<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>'
             . '<div class="toast-body">Saved.</div>'
@@ -99,8 +99,8 @@ final class InteractiveComponentsTest extends ComponentTestCase
 
         self::assertHtmlSame(
             '<nav class="nav nav-segmented w-100" role="tablist">'
-            . '<button class="nav-link active" role="tab" data-bs-toggle="tab" aria-selected="true">Day</button>'
-            . '<button class="nav-link" role="tab" data-bs-toggle="tab" aria-selected="false" tabindex="-1">Week</button>'
+            . '<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" aria-selected="true">Day</button>'
+            . '<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" aria-selected="false" tabindex="-1">Week</button>'
             . '</nav>',
             $html,
         );
@@ -137,6 +137,30 @@ final class InteractiveComponentsTest extends ComponentTestCase
             . '<div class="offcanvas-footer">Actions</div>'
             . '</div>',
             $html,
+        );
+    }
+
+    public function testToastRootIsNotAToggleTrigger(): void
+    {
+        // tabler.js binds [data-bs-toggle="toast"] as a *trigger* button that
+        // shows its data-bs-target; on the toast itself it has no target.
+        $html = $this->renderComponent('<twig:Tabler:Toast autohide="{{ false }}"><twig:Tabler:Toast:Body>Saved.</twig:Tabler:Toast:Body></twig:Tabler:Toast>');
+
+        self::assertHtmlSame(
+            '<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-bs-autohide="false"><div class="toast-body">Saved.</div></div>',
+            $html,
+        );
+    }
+
+    public function testSegmentedControlItemDoesNotSubmitForms(): void
+    {
+        self::assertHtmlSame(
+            '<form><button type="button" class="nav-link" role="tab" data-bs-toggle="tab" aria-selected="false" tabindex="-1">Day</button></form>',
+            $this->renderComponent('<form><twig:Tabler:SegmentedControl:Item>Day</twig:Tabler:SegmentedControl:Item></form>'),
+        );
+        self::assertHtmlSame(
+            '<button type="submit" class="nav-link active" role="tab" data-bs-toggle="tab" aria-selected="true" name="period" value="day">Day</button>',
+            $this->renderComponent('<twig:Tabler:SegmentedControl:Item active type="submit" name="period" value="day">Day</twig:Tabler:SegmentedControl:Item>'),
         );
     }
 }

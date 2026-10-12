@@ -1,5 +1,6 @@
 {#
-    Dropdown toggle — the button/link that opens the menu.
+    Dropdown toggle — the button that opens the menu. Renders a
+    <button type="button">, so it never submits an enclosing <form>.
 
     Usage:
         <twig:Tabler:Dropdown:Toggle variant="primary">Menu</twig:Tabler:Dropdown:Toggle>
@@ -34,4 +35,4 @@
     },
 ) %}
 
-<a href="#" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
+<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>

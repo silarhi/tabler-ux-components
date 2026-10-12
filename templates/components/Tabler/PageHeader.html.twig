@@ -4,12 +4,17 @@
     All-in-one:
         <twig:Tabler:PageHeader pretitle="Overview" title="Dashboard" />
 
-    Composed (the `content` block wraps the whole header):
-        <twig:Tabler:PageHeader title="Dashboard">
-            <twig:Tabler:PageHeader:Actions>
-                <twig:Tabler:Button variant="primary">New</twig:Tabler:Button>
-            </twig:Tabler:PageHeader:Actions>
+    With actions (fill the `actions` block, so the title props are kept):
+        <twig:Tabler:PageHeader pretitle="Overview" title="Dashboard">
+            <twig:block name="actions">
+                <twig:Tabler:PageHeader:Actions>
+                    <twig:Tabler:Button variant="primary">New</twig:Tabler:Button>
+                </twig:Tabler:PageHeader:Actions>
+            </twig:block>
         </twig:Tabler:PageHeader>
+
+    Direct children fill the `content` block, which wraps the whole header: they
+    replace the row, so the `pretitle` and `title` props are no longer rendered.
 
     Props:
       pretitle  — small overline above the title; mirrored by the `pretitle` block

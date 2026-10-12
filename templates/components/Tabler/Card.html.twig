@@ -3,9 +3,9 @@
 
     Renders a <div> by default, or an <a> when `href` is set.
 
-    The `content` block wraps the entire card body (status, header, body, footer),
-    so composing it replaces everything — while each named sub-block stays
-    individually overridable.
+    The `content` block wraps the card body (header, body, footer), so composing
+    it replaces them — while each named sub-block stays individually overridable.
+    The `status` bar is rendered outside `content`, so it is kept when you compose.
 
     All-in-one:
         <twig:Tabler:Card title="Stats" text="42 active users" footer="Updated today" />
@@ -129,10 +129,10 @@
 {% set tag = href is not null ? 'a' : 'div' %}
 
 <{{ tag }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>
+    {%- if status is not null -%}
+        <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
+    {%- endif -%}
     {% block content %}
-        {%- if status is not null -%}
-            <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
-        {%- endif -%}
         {% block header %}
             {%- if title is not null -%}
                 <twig:Tabler:Card:Header><twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title></twig:Tabler:Card:Header>
