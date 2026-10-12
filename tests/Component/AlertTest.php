@@ -37,8 +37,8 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success" role="alert">
                 <div>
-                    <h4 class="alert-title">Saved!</h4>
-                    <div class="text-secondary">Your changes are live.</div>
+                    <h4 class="alert-heading">Saved!</h4>
+                    <div class="alert-description">Your changes are live.</div>
                 </div>
             </div>
             HTML, $html);
@@ -51,7 +51,7 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-warning" role="alert">
                 <div>
-                    <h4 class="alert-title">Heads up</h4>
+                    <h4 class="alert-heading">Heads up</h4>
                 </div>
             </div>
             HTML, $html);
@@ -72,7 +72,7 @@ final class AlertTest extends ComponentTestCase
             <div class="alert alert-danger" role="alert">
                 <div class="alert-icon"><i class="ti ti-x"></i></div>
                 <div>
-                    <h4 class="alert-title">Error</h4>
+                    <h4 class="alert-heading">Error</h4>
                 </div>
             </div>
             HTML, $html);
@@ -85,9 +85,9 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-info alert-dismissible" role="alert">
                 <div>
-                    <h4 class="alert-title">Hi</h4>
+                    <h4 class="alert-heading">Hi</h4>
                 </div>
-                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             HTML, $html);
     }
@@ -99,7 +99,7 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success alert-important text-white" role="alert">
                 <div>
-                    <h4 class="alert-title">Done</h4>
+                    <h4 class="alert-heading">Done</h4>
                 </div>
             </div>
             HTML, $html);
@@ -126,8 +126,8 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success" role="alert">
                 <div class="alert-icon"><i class="ti ti-check"></i></div>
-                <h4 class="alert-title">Saved!</h4>
-                <div class="text-secondary">Your changes are <strong>live</strong>.</div>
+                <h4 class="alert-heading">Saved!</h4>
+                <div class="alert-description">Your changes are <strong>live</strong>.</div>
             </div>
             HTML, $html);
     }
@@ -145,8 +145,8 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-info" role="alert">
                 <div>
-                    <h4 class="alert-title display-6">Custom!</h4>
-                    <div class="text-secondary">A description</div>
+                    <h4 class="alert-heading display-6">Custom!</h4>
+                    <div class="alert-description">A description</div>
                 </div>
             </div>
             HTML, $html);
@@ -159,7 +159,7 @@ final class AlertTest extends ComponentTestCase
         self::assertHtmlSame(<<<HTML
             <div class="alert alert-success shadow-sm mt-3" role="alert">
                 <div>
-                    <h4 class="alert-title">Hi</h4>
+                    <h4 class="alert-heading">Hi</h4>
                 </div>
             </div>
             HTML, $html);
