@@ -5,7 +5,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.0] - Unreleased
+## [0.3.0] - 2026-10-12
 
 ### Added
 
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **BC break:** `Alert`'s `icon` prop takes a Tabler icon name, rendered through `<twig:Tabler:Icon>`. Markup passed to it (`icon="<svg …>"`) is now escaped: move it to the `icon` block (`<twig:block name="icon"><twig:Tabler:Alert:Icon>…</twig:Tabler:Alert:Icon></twig:block>`).
 - No template bypasses Twig's autoescaping any more: components that switch between `<a>`, `<button>` and `<span>` render a dynamic tag with their content defined once.
-- `Dropdown:Toggle` renders a `<button type="button">` instead of an `<a href="#">`, and `SegmentedControl:Item` defaults to `type="button"`, so neither submits an enclosing form.
+- **BC break:** `Dropdown:Toggle` renders a `<button type="button">` instead of an `<a href="#">`: CSS or tests targeting `a.dropdown-toggle` must target `.dropdown-toggle`. `SegmentedControl:Item` defaults to `type="button"`, so neither submits an enclosing form.
 - `Pagination:Item` puts `aria-current="page"` on the link instead of the `<li>`, as Tabler's documentation requires.
 
 ### Fixed
@@ -78,6 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
-[0.3.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.2.0...HEAD
+[0.3.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/silarhi/tabler-ux-components/releases/tag/v0.1.0
