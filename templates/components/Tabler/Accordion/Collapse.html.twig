@@ -29,4 +29,4 @@
 <div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ collapse.apply({open: open}, attributes.render('class')) }}"{% if parent is not null %} data-bs-parent="#{{ parent }}"{% endif %} {{ attributes.without('class', 'id') }}>
     {%- block content %}{% endblock -%}
 </div>
-{% endapply %}
+{% endapply ~%}

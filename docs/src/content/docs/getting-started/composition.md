@@ -67,10 +67,13 @@ A bare attribute is `true`: `<twig:Tabler:Alert dismissible />`. To pass `false`
 
 ## Whitespace
 
-Components render no whitespace around their markup, so `Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads
-"Click New.". Twig also removes the line break right after a closing tag such as `</twig:Tabler:Badge>`, so two
-components written with a closing tag on consecutive lines touch. Space them with a list component (`Badge:List`,
-`Avatar:List`, `ButtonList`…) or a flex container with a gap:
+Each component ends its output with a line break, like an element on its own line in HTML: components written on
+consecutive lines are separated by a space. In running text, that line break shows as a space after the component:
+`Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads "Click New ." until ux-twig-component keeps the line
+break after a closing tag itself.
+
+For a row of components, a list component (`Badge:List`, `Avatar:List`, `ButtonList`…) or a flex container with a
+gap gives a consistent spacing:
 
 ```twig
 <twig:Tabler:Badge:List>

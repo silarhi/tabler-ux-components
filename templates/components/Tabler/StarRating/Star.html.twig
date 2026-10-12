@@ -50,4 +50,4 @@
 <span class="{{ star.apply({variant: active ? (variant ?? '') : ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {%- block content -%}<twig:Tabler:Icon name="{{ icon }}" aria-hidden="true" />{%- endblock -%}
 </span>
-{% endapply %}
+{% endapply ~%}
