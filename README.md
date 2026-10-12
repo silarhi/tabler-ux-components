@@ -132,6 +132,7 @@ twig_component:
 | ------------- | ------- | -------- | ------------------------------------------------------------------------------ |
 | `variant`     | string  | `'info'` | `primary`, `secondary`, `success`, `danger`, `warning`, `info`                 |
 | `important`   | bool    | `false`  | Filled/solid background (`alert-important`)                                    |
+| `minor`       | bool    | `false`  | Quiet style: plain border, no tinted background (`alert-minor`)                |
 | `icon`        | string? | `null`   | Icon HTML/SVG, rendered raw inside `Alert:Icon` — keep it developer-controlled |
 | `title`       | string? | `null`   | Optional title; skip when using `<twig:Tabler:Alert:Title>`                    |
 | `description` | string? | `null`   | Optional description; skip when using `<twig:Tabler:Alert:Description>`        |
@@ -179,19 +180,19 @@ Renders a `<button>`, or an `<a>` when `href` is set.
 <twig:Tabler:Button href="/profile" variant="secondary" appearance="ghost">Profile</twig:Tabler:Button>
 ```
 
-| Prop         | Type    | Default     | Description                                                              |
-| ------------ | ------- | ----------- | ------------------------------------------------------------------------ |
-| `variant`    | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
-| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                               |
-| `size`       | string  | `'md'`      | `sm` `md` `lg`                                                           |
-| `href`       | string? | `null`      | Renders `<a href>` instead of `<button>`                                 |
-| `type`       | string  | `'button'`  | `button` `submit` `reset` (ignored for links)                            |
-| `pill`       | bool    | `false`     | Fully rounded                                                            |
-| `square`     | bool    | `false`     | Remove border radius                                                     |
-| `iconOnly`   | bool    | `false`     | Icon-only button (`btn-icon`)                                            |
-| `loading`    | bool    | `false`     | Loading state (`btn-loading`)                                            |
-| `block`      | bool    | `false`     | Full width (`w-100`)                                                     |
-| `disabled`   | bool    | `false`     | `disabled` attribute on `<button>`, `.disabled` class on `<a>`           |
+| Prop         | Type    | Default     | Description                                                                                  |
+| ------------ | ------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `variant`    | string  | `'primary'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                                                   |
+| `size`       | string  | `'md'`      | `sm` `md` `lg` `xl`                                                                          |
+| `href`       | string? | `null`      | Renders `<a href>` instead of `<button>`                                                     |
+| `type`       | string  | `'button'`  | `button` `submit` `reset` (ignored for links)                                                |
+| `pill`       | bool    | `false`     | Fully rounded                                                                                |
+| `square`     | bool    | `false`     | Remove border radius                                                                         |
+| `iconOnly`   | bool    | `false`     | Icon-only button (`btn-icon`)                                                                |
+| `loading`    | bool    | `false`     | Loading state (`btn-loading`)                                                                |
+| `block`      | bool    | `false`     | Full width (`w-100`)                                                                         |
+| `disabled`   | bool    | `false`     | `disabled` attribute on `<button>`, `.disabled` class on `<a>`                               |
 
 ### Badge
 
@@ -217,6 +218,7 @@ Renders a `<div>`, or an `<a>` when `href` is set.
 ```twig
 {# all-in-one #}
 <twig:Tabler:Card title="Stats" text="42 active users" status="success" />
+<twig:Tabler:Card title="Welcome back" gradient="ocean" gradientDirection="bottom" gradientAnimated />
 
 {# composed #}
 <twig:Tabler:Card>
@@ -231,15 +233,21 @@ Renders a `<div>`, or an `<a>` when `href` is set.
 </twig:Tabler:Card>
 ```
 
-| Prop             | Type    | Default | Description                           |
-| ---------------- | ------- | ------- | ------------------------------------- |
-| `size`           | string  | `'md'`  | `sm` `md` `lg` (padding)              |
-| `status`         | string? | `null`  | Status border color                   |
-| `statusPosition` | string  | `'top'` | `top` `bottom` `start`                |
-| `title`          | string? | `null`  | Mirrored by the `header` block        |
-| `text`           | string? | `null`  | Mirrored by the `body` block          |
-| `footer`         | string? | `null`  | Mirrored by the `footer` block        |
-| `href`           | string? | `null`  | Renders `<a href>` instead of `<div>` |
+| Prop                | Type         | Default | Description                                                                       |
+| ------------------- | ------------ | ------- | --------------------------------------------------------------------------------- |
+| `size`              | string       | `'md'`  | `sm` `md` `lg` (padding)                                                          |
+| `status`            | string?      | `null`  | Status border color                                                               |
+| `statusPosition`    | string       | `'top'` | `top` `bottom` `start`                                                            |
+| `gradient`          | bool\|string | `null`  | Gradient background: bare, a color (`primary`, …) or a preset (`ocean`, `sun`, …) |
+| `gradientDirection` | string?      | `null`  | `start` `end` `bottom`                                                            |
+| `gradientAnimated`  | bool         | `false` | Slowly shifts the gradient                                                        |
+| `dashed`            | bool         | `false` | Dashed border (`card-dashed`)                                                     |
+| `title`             | string?      | `null`  | Mirrored by the `header` block                                                    |
+| `text`              | string?      | `null`  | Mirrored by the `body` block                                                      |
+| `footer`            | string?      | `null`  | Mirrored by the `footer` block                                                    |
+| `href`              | string?      | `null`  | Renders `<a href>` instead of `<div>`                                             |
+
+Gradient presets: `disco` `gold` `love` `mellow` `ocean` `psychedelic` `rainbow` `snow` `sun`.
 
 Sub-components: `Card:Header`, `Card:Title`, `Card:Subtitle`, `Card:Body`, `Card:Footer`, `Card:Actions`, `Card:Status`.
 
@@ -290,6 +298,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 ```twig
 <twig:Tabler:Avatar image="/avatars/jane.jpg" rounded />
 <twig:Tabler:Avatar variant="primary" size="lg">JL</twig:Tabler:Avatar>
+<twig:Tabler:Avatar variant="success" square>AB</twig:Tabler:Avatar>
 
 <twig:Tabler:Spinner variant="primary" size="sm" />
 <twig:Tabler:Spinner type="grow" variant="success" />
@@ -301,7 +310,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 <twig:Tabler:Divider position="start" variant="primary">Section</twig:Tabler:Divider>
 ```
 
-- **Avatar** — `size` (xs–xl), `variant` (tinted bg for initials), `rounded`, `image`.
+- **Avatar** — `size` (xxs–2xl), `variant` (tinted bg for initials), `rounded`, `square` (rounded corners instead of a circle), `image`.
 - **Spinner** — `type` (border/grow), `variant`, `size` (sm/md), `label`.
 - **Status** — `variant`, `dot`, `animated`, `label`. The dot and label live inside the `content` block (override `content`, or the `dot` / `label` sub-blocks). Sub-component: `Status:Dot` (`animated`).
 - **Divider** — `position` (start/center/end), `variant`. Empty content → plain `<hr>`.
@@ -319,7 +328,7 @@ Blocks: `content` (wraps the whole dialog content — override to compose freely
 </twig:Tabler:Progress>
 ```
 
-Props: `value`, `variant`, `size` (sm/md), `label`, `indeterminate`. Sub-component: `Progress:Bar`.
+Props: `value`, `variant`, `size` (sm/md/lg/xl), `label`, `indeterminate`. Sub-component: `Progress:Bar`.
 
 ### Breadcrumb / Pagination
 
@@ -481,7 +490,9 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 </twig:Tabler:Toast>
 
 {# Offcanvas — open with data-bs-toggle="offcanvas" data-bs-target="#menu" #}
-<twig:Tabler:Offcanvas id="menu" placement="end" title="Filters" text="…" />
+<twig:Tabler:Offcanvas id="menu" placement="end" title="Filters" text="…" footer="…" />
+{# narrow: 20rem wide; floating: detached from the viewport edges; sub-components Offcanvas:Header/Title/Close/Body/Footer #}
+<twig:Tabler:Offcanvas id="settings" placement="end" narrow floating title="Settings" />
 
 {# Segmented control #}
 <twig:Tabler:SegmentedControl fullWidth>
@@ -499,7 +510,9 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
 </twig:Tabler:Datagrid>
 
 {# SwitchIcon (requires Tabler switch-icon JS) #}
-<twig:Tabler:SwitchIcon iconA="moon" iconB="sun" animation="fade" />
+<twig:Tabler:SwitchIcon iconA="moon" iconB="sun" animation="fade" aria-label="Dark mode" />
+{# active: starts on; loading: spinner, clicks ignored; animation: fade | scale | flip | slide-{up,down,left,right,start,end} #}
+<twig:Tabler:SwitchIcon iconA="star" iconB="star" active loading aria-label="Favorite" />
 
 {# …or composed #}
 <twig:Tabler:SwitchIcon animation="fade">
@@ -530,12 +543,30 @@ A content navigation list (`.nav`) — for static section/filter navigation. For
     </twig:Tabler:Navbar:Nav>
 </twig:Tabler:Navbar>
 
+{# Vertical sidebar, folded into an icon rail that unfolds on hover #}
+<twig:Tabler:Navbar vertical expand="lg" folded="hover">
+    <twig:Tabler:Navbar:Toggler target="sidebar-menu" />
+    <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
+    <twig:Tabler:Navbar:Nav id="sidebar-menu" collapse>
+        <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
+        <twig:Tabler:Navbar:Item href="/" icon="home" active>Home</twig:Tabler:Navbar:Item>
+        <twig:block name="side">
+            <twig:Tabler:Navbar:Side>
+                <twig:Tabler:Navbar:Item href="/help" icon="help">Help</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Side>
+        </twig:block>
+    </twig:Tabler:Navbar:Nav>
+    <twig:Tabler:Navbar:Footer>
+        <twig:Tabler:Navbar:Item href="/me" icon="user">Jane Doe</twig:Tabler:Navbar:Item>
+    </twig:Tabler:Navbar:Footer>
+</twig:Tabler:Navbar>
+
 {# Prose — wraps freeform/markdown HTML with Tabler typography #}
 <twig:Tabler:Prose>{{ article.html|raw }}</twig:Tabler:Prose>
 ```
 
 - **PageHeader** — props `pretitle`, `title`; sub-components `PageHeader:Pretitle`, `PageHeader:Title`, `PageHeader:Actions`.
-- **Navbar** — props `expand` (sm/md/lg/xl/none), `dark`, `container`; sub-components `Navbar:Brand`, `Navbar:Toggler`, `Navbar:Nav` (`collapse`, `id`), `Navbar:Item` (`href`, `active`, `icon`).
+- **Navbar** — props `expand` (sm/md/lg/xl/none), `dark`, `container` (default `xl`, or `fluid` when vertical), `vertical` (sidebar, rendered as `<aside>`), `folded` (bare for an icon rail, `hover` to unfold on hover), `floating` (detached from the edges); sub-components `Navbar:Brand`, `Navbar:Toggler`, `Navbar:Nav` (`collapse`, `id`, `side` block), `Navbar:Item` (`href`, `active`, `icon`), `Navbar:SectionTitle`, `Navbar:Side` (trailing group), `Navbar:Footer` (bottom zone of a sidebar).
 - **Prose** — a `.prose` typography wrapper.
 
 ### Not included

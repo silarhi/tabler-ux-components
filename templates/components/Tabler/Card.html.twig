@@ -10,6 +10,7 @@
     All-in-one:
         <twig:Tabler:Card title="Stats" text="42 active users" footer="Updated today" />
         <twig:Tabler:Card title="Revenue" status="success" size="sm" text="$12,400" />
+        <twig:Tabler:Card title="Welcome back" gradient="ocean" gradientDirection="bottom" gradientAnimated />
 
     Composed (full control):
         <twig:Tabler:Card status="danger">
@@ -27,6 +28,12 @@
       size            — sm | md (default) | lg (padding)
       status          — variant of the status border (primary, success, danger, …)
       statusPosition  — top (default) | bottom | start
+      gradient        — gradient background (card-gradient, Tabler 1.5+): bare for the default
+                        gradient, a color (primary, success, …) or a preset (disco, gold, love,
+                        mellow, ocean, psychedelic, rainbow, snow, sun)
+      gradientDirection — start | end | bottom (where the gradient starts)
+      gradientAnimated  — slowly shift the gradient (card-gradient-animated)
+      dashed          — dashed border, e.g. for an empty slot (card-dashed, Tabler 1.5+)
       title           — optional title; mirrored by the `header` block
       text            — optional body text; mirrored by the `body` block
       footer          — optional footer text; mirrored by the `footer` block
@@ -36,6 +43,10 @@
     size = 'md',
     status = null,
     statusPosition = 'top',
+    gradient = null,
+    gradientDirection = null,
+    gradientAnimated = false,
+    dashed = false,
     title = null,
     text = null,
     footer = null,
@@ -46,10 +57,43 @@
     base: 'card',
     variants: {
         size: {sm: 'card-sm', md: '', lg: 'card-lg'},
+        gradient: {
+            true: 'card-gradient',
+            primary: 'card-gradient card-gradient-primary',
+            secondary: 'card-gradient card-gradient-secondary',
+            success: 'card-gradient card-gradient-success',
+            danger: 'card-gradient card-gradient-danger',
+            warning: 'card-gradient card-gradient-warning',
+            info: 'card-gradient card-gradient-info',
+            dark: 'card-gradient card-gradient-dark',
+            light: 'card-gradient card-gradient-light',
+            disco: 'card-gradient card-gradient-disco',
+            gold: 'card-gradient card-gradient-gold',
+            love: 'card-gradient card-gradient-love',
+            mellow: 'card-gradient card-gradient-mellow',
+            ocean: 'card-gradient card-gradient-ocean',
+            psychedelic: 'card-gradient card-gradient-psychedelic',
+            rainbow: 'card-gradient card-gradient-rainbow',
+            snow: 'card-gradient card-gradient-snow',
+            sun: 'card-gradient card-gradient-sun',
+        },
+        gradientDirection: {
+            start: 'card-gradient-start',
+            end: 'card-gradient-end',
+            bottom: 'card-gradient-bottom',
+        },
+        gradientAnimated: {true: 'card-gradient-animated', false: ''},
+        dashed: {true: 'card-dashed', false: ''},
     },
 ) %}
 
-{% set classes = card.apply({size: size}, attributes.render('class')) %}
+{% set classes = card.apply({
+    size: size,
+    gradient: gradient ?? '',
+    gradientDirection: gradientDirection ?? '',
+    gradientAnimated: gradientAnimated,
+    dashed: dashed,
+}, attributes.render('class')) %}
 {% set tag = href is not null ? 'a' : 'div' %}
 
 <{{ tag }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>

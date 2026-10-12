@@ -123,4 +123,32 @@ final class CardTest extends ComponentTestCase
             </div>
             HTML, $html);
     }
+
+    public function testBareGradientUsesDefaultGradient(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card gradient />');
+
+        self::assertHtmlSame('<div class="card card-gradient"></div>', $html);
+    }
+
+    public function testGradientColorDirectionAndAnimation(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card gradient="primary" gradientDirection="bottom" gradientAnimated />');
+
+        self::assertHtmlSame('<div class="card card-gradient card-gradient-primary card-gradient-bottom card-gradient-animated"></div>', $html);
+    }
+
+    public function testGradientPreset(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card gradient="ocean" />');
+
+        self::assertHtmlSame('<div class="card card-gradient card-gradient-ocean"></div>', $html);
+    }
+
+    public function testDashed(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card dashed />');
+
+        self::assertHtmlSame('<div class="card card-dashed"></div>', $html);
+    }
 }

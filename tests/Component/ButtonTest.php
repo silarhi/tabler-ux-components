@@ -79,4 +79,27 @@ final class ButtonTest extends ComponentTestCase
 
         self::assertHtmlSame('<button type="button" class="btn btn-primary me-2">X</button>', $html);
     }
+
+    public function testDefaultVariantRendersNeutralButtons(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" class="btn">Cancel</button>',
+            $this->renderComponent('<twig:Tabler:Button variant="default">Cancel</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-outline">Cancel</button>',
+            $this->renderComponent('<twig:Tabler:Button variant="default" appearance="outline">Cancel</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-ghost">Cancel</button>',
+            $this->renderComponent('<twig:Tabler:Button variant="default" appearance="ghost">Cancel</twig:Tabler:Button>'),
+        );
+    }
+
+    public function testExtraLargeSize(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button size="xl">Go</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-xl btn-primary">Go</button>', $html);
+    }
 }

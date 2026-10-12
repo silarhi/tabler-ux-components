@@ -9,9 +9,10 @@
         <twig:Tabler:Button href="/profile" variant="secondary" appearance="ghost">Profile</twig:Tabler:Button>
 
     Props:
-      variant      — color: primary | secondary | success | danger | warning | info | dark | light
+      variant      — color: default | primary | secondary | success | danger | warning | info | dark | light
+                     (`default` is Tabler's neutral button: plain .btn, .btn-outline or .btn-ghost)
       appearance   — filled (default) | outline | ghost
-      size         — sm | md (default) | lg
+      size         — sm | md (default) | lg | xl
       href         — when set, renders <a href> instead of <button>
       type         — button (default) | submit | reset (ignored for links)
       pill         — fully rounded corners
@@ -38,7 +39,7 @@
 {% set button = html_cva(
     base: 'btn',
     variants: {
-        size: {sm: 'btn-sm', md: '', lg: 'btn-lg'},
+        size: {sm: 'btn-sm', md: '', lg: 'btn-lg', xl: 'btn-xl'},
         pill: {true: 'btn-pill', false: ''},
         square: {true: 'btn-square', false: ''},
         iconOnly: {true: 'btn-icon', false: ''},
@@ -55,6 +56,7 @@
         {appearance: ['filled'], variant: ['info'], class: 'btn-info'},
         {appearance: ['filled'], variant: ['dark'], class: 'btn-dark'},
         {appearance: ['filled'], variant: ['light'], class: 'btn-light'},
+        {appearance: ['outline'], variant: ['default'], class: 'btn-outline'},
         {appearance: ['outline'], variant: ['primary'], class: 'btn-outline-primary'},
         {appearance: ['outline'], variant: ['secondary'], class: 'btn-outline-secondary'},
         {appearance: ['outline'], variant: ['success'], class: 'btn-outline-success'},
@@ -63,6 +65,7 @@
         {appearance: ['outline'], variant: ['info'], class: 'btn-outline-info'},
         {appearance: ['outline'], variant: ['dark'], class: 'btn-outline-dark'},
         {appearance: ['outline'], variant: ['light'], class: 'btn-outline-light'},
+        {appearance: ['ghost'], variant: ['default'], class: 'btn-ghost'},
         {appearance: ['ghost'], variant: ['primary'], class: 'btn-ghost-primary'},
         {appearance: ['ghost'], variant: ['secondary'], class: 'btn-ghost-secondary'},
         {appearance: ['ghost'], variant: ['success'], class: 'btn-ghost-success'},

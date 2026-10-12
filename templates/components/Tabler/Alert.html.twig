@@ -22,6 +22,7 @@
     Props:
       variant      — primary | secondary | success | danger | warning | info
       important    — filled/solid style (alert-important)
+      minor        — quiet style: plain border, no tinted background (alert-minor)
       icon         — optional icon HTML/SVG (rendered via Alert:Icon's `.alert-icon` wrapper)
       title        — optional title; mirrored by the `title` block
       description  — optional description; mirrored by the `description` block
@@ -32,6 +33,7 @@
 {% props
     variant = 'info',
     important = false,
+    minor = false,
     icon = null,
     title = null,
     description = null,
@@ -53,6 +55,10 @@
             true: 'alert-important',
             false: '',
         },
+        minor: {
+            true: 'alert-minor',
+            false: '',
+        },
         dismissible: {
             true: 'alert-dismissible',
             false: '',
@@ -72,7 +78,7 @@
     {%- if description is not null -%}<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>{%- endif -%}
 {% endblock %}{% endset %}
 
-{% set wrapper_class = alert.apply({variant: variant, important: important, dismissible: dismissible}, attributes.render('class')) %}
+{% set wrapper_class = alert.apply({variant: variant, important: important, minor: minor, dismissible: dismissible}, attributes.render('class')) %}
 <div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
     {% block content %}
         {% block icon %}

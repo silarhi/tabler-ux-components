@@ -64,4 +64,10 @@ final class ProgressTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testLargeAndExtraLargeSizes(): void
+    {
+        self::assertStringContainsString('class="progress progress-lg"', $this->renderComponent('<twig:Tabler:Progress value="10" size="lg" />'));
+        self::assertStringContainsString('class="progress progress-xl"', $this->renderComponent('<twig:Tabler:Progress value="10" size="xl" />'));
+    }
 }

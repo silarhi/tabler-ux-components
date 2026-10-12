@@ -1,0 +1,19 @@
+{#
+    Navbar side — the trailing group of a navbar (`.navbar-side`): pinned to the
+    bottom of a vertical sidebar's scroll area, laid out on the end side of a
+    horizontal navbar. Put it in the `side` block of <twig:Tabler:Navbar:Nav> so
+    it sits inside the collapse panel.
+
+    Usage:
+        <twig:Tabler:Navbar:Nav id="sidebar-menu" collapse>
+            <twig:Tabler:Navbar:Item href="/">Home</twig:Tabler:Navbar:Item>
+            <twig:block name="side">
+                <twig:Tabler:Navbar:Side>
+                    <twig:Tabler:Navbar:Item href="/help" icon="help">Help</twig:Tabler:Navbar:Item>
+                </twig:Tabler:Navbar:Side>
+            </twig:block>
+        </twig:Tabler:Navbar:Nav>
+#}
+<div {{ attributes.defaults({class: 'navbar-side'}) }}>
+    <ul class="navbar-nav">{%- block content %}{% endblock -%}</ul>
+</div>
