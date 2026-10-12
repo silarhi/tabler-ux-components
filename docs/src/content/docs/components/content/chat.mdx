@@ -21,8 +21,8 @@ no title line; without `avatar`, the row has no avatar column:
 
 <Example name="chat/messages" />
 
-The bubble sits in a `col-auto` column, as wide as its content. Give wide content, such as an image, a width: a bubble
-wider than the row moves below the avatar.
+The bubble sits in a `col col-lg-6` column, as in Tabler's chat: it fills the row next to the avatar, and half of it
+from the `lg` breakpoint. Long text and images wrap inside it.
 
 ## Avatars
 
@@ -53,8 +53,8 @@ See [Composition](/getting-started/composition/) for how blocks work.
 ## Typing indicator
 
 `Chat:Typing` is a bubble with an italic text followed by animated dots. Its text comes from the children or from
-`label` (default "Typing"); always keep a text, the dots alone say nothing. Put it in a `Chat:Message` row to align it
-with an avatar: placed directly in `Chat:Bubbles`, it spans the whole width.
+`label` (default "Typing"); always keep a text, the dots alone say nothing. It can go directly in `Chat:Bubbles`, where
+it keeps the width of its text (`align-self-start`), or in a `Chat:Message` row to align it with an avatar.
 
 <Example name="chat/typing" />
 

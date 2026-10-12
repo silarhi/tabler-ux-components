@@ -27,9 +27,10 @@ it needs one: `unit=" ms"`.
 
 ## Forcing the direction
 
-`direction` (`up`, `down` or `neutral`) overrides the direction read from the value. Use it for an unsigned value, or
-for a value the sign check does not read: only a leading `-` reads as down and only a plain zero (`0`, `0.0`, `+0`)
-reads as neutral, so `0,0` or `N/A` read as up.
+`direction` (`up`, `down` or `neutral`) overrides the direction read from the value. Without it, a zero (`0`, `0.0`,
+`0,0`, `-0`) reads as neutral, a number with a minus (`-` or `−`) as down, any other number as up, and a value that is
+not a number, such as `N/A`, as neutral. Use `direction` for an unsigned value, or to show a small change as
+neutral:
 
 <Example name="trending/direction" />
 

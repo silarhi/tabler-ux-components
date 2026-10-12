@@ -15,7 +15,8 @@ generated items then render as `<li>`), `div` (the default) otherwise.
 
 ## Items
 
-`ListGroup:Item` renders an `<a>` when `href` is set and a `<button type="button">` when `button` is set. Both get
+`ListGroup:Item` renders an `<a>` when `href` is set and a `<button type="button">` when `button` is set (`href` wins
+when both are). Both get
 the hover and focus style of an actionable item (`list-group-item-action`). Otherwise the item is a `<div>`. `action`
 forces that style on or off, here off for the last link:
 

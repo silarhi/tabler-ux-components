@@ -74,11 +74,11 @@ so it can still override it.
 
 `Avatar:Brand`:
 
-| Prop    | Type    | Default | Description                                                      |
-| ------- | ------- | ------- | ---------------------------------------------------------------- |
-| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style |
+| Prop    | Type    | Default | Description                                                                                     |
+| ------- | ------- | ------- | ----------------------------------------------------------------------------------------------- |
+| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style and scaled to fit (`bg-cover`) |
 
-A `style` attribute on `Avatar:Brand` is dropped; other attributes go to the `<span class="avatar-brand">`.
+Other attributes go to the `<span class="avatar-brand">`; a `style` is added after the `background-image`.
 
 `Avatar:Upload`:
 

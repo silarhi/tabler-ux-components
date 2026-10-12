@@ -14,7 +14,8 @@ covered.
 ## Values
 
 `value` is the number of colored stars, `max` the total number of stars (5 by default). Stars are whole:
-`value="3.5"` colors 3 stars. Round the score yourself and pass the exact one in `aria-label`:
+`value="3.5"` colors 3 stars. Round the score yourself and pass the exact one in `aria-label`. With `max="0"`, no star
+is rendered:
 
 <Example name="star-rating/values" />
 
@@ -22,7 +23,8 @@ covered.
 
 `variant` colors the active stars, `yellow` by default. It takes the same colors as Legend: see
 [the list](/components/data/legend/#colors). `icon` replaces the star with another Tabler icon. Change the
-`aria-label` to match:
+`aria-label` to match. The filled glyphs (`star-filled`, `heart-filled`…) only exist up to `@tabler/icons-webfont`
+3.36.0, see [Icon](/components/content/icon/):
 
 <Example name="star-rating/colors" />
 
@@ -51,23 +53,23 @@ The tag content replaces the stars: place one `StarRating:Star` per star and col
 
 ## Props
 
-| Prop      | Type   | Default         | Description                                                              |
-| --------- | ------ | --------------- | ------------------------------------------------------------------------ |
-| `value`   | int    | `0`             | Number of active stars                                                   |
-| `max`     | int    | `5`             | Total number of stars                                                    |
-| `variant` | string | `'yellow'`      | Color of the active stars, see [Colors](/components/data/legend/#colors) |
-| `icon`    | string | `'star-filled'` | Tabler icon name of each star                                            |
+| Prop      | Type   | Default    | Description                                                              |
+| --------- | ------ | ---------- | ------------------------------------------------------------------------ |
+| `value`   | int    | `0`        | Number of active stars                                                   |
+| `max`     | int    | `5`        | Total number of stars                                                    |
+| `variant` | string | `'yellow'` | Color of the active stars, see [Colors](/components/data/legend/#colors) |
+| `icon`    | string | `'star'`   | Tabler icon name of each star                                            |
 
 Other attributes go to the root `<div class="stars">`. It gets `role="img"` and an `aria-label` of "`value` out of
 `max`", unless you pass your own.
 
 ### StarRating:Star
 
-| Prop      | Type   | Default         | Description                                                      |
-| --------- | ------ | --------------- | ---------------------------------------------------------------- |
-| `active`  | bool   | `false`         | Colors the star with `variant`. Inactive stars stay gray         |
-| `variant` | string | `'yellow'`      | Color when active, see [Colors](/components/data/legend/#colors) |
-| `icon`    | string | `'star-filled'` | Tabler icon name                                                 |
+| Prop      | Type   | Default    | Description                                                      |
+| --------- | ------ | ---------- | ---------------------------------------------------------------- |
+| `active`  | bool   | `false`    | Colors the star with `variant`. Inactive stars stay gray         |
+| `variant` | string | `'yellow'` | Color when active, see [Colors](/components/data/legend/#colors) |
+| `icon`    | string | `'star'`   | Tabler icon name                                                 |
 
 Other attributes go to the star `<span>`.
 
