@@ -21,13 +21,24 @@ Without `size`, the icon follows the font size of its parent. `size` gives it a 
 
 ## Filled
 
-`filled` renders the filled variant of the icon, `ti-{name}-filled`.
+`filled` renders the filled variant of the icon (`ti-filled ti-filled-{name}`):
 
-:::caution
-`@tabler/icons-webfont` defines the `ti-{name}-filled` classes up to version 3.36.0 only. From 3.36.1, the filled icons
-moved to a separate stylesheet, `tabler-icons-filled.css`, which uses the plain `ti-{name}` classes, so `filled`
-renders nothing with a recent webfont (the previews on this site use 3.49.0).
-:::
+<Example name="icon/filled" />
+
+The filled icons are a separate font of `@tabler/icons-webfont` (3.36.1+), and its `tabler-icons-filled.css` reuses
+the class names of the outline icons (`ti`, `ti-{name}`), so it cannot be loaded next to them. Compile its SCSS source
+under the `ti-filled` prefix instead, here with Webpack Encore's Sass loader (or `symfonycasts/sass-bundle` with
+AssetMapper):
+
+```scss
+// assets/styles/tabler-icons-filled.scss
+@use '@tabler/icons-webfont/dist/tabler-icons-filled.scss' with (
+    $ti-prefix: 'ti-filled',
+    $ti-font-path: '~@tabler/icons-webfont/dist/fonts'
+);
+```
+
+`$ti-font-path` points at the font files: adjust it to how your build resolves `node_modules`.
 
 ## Variants
 
@@ -57,4 +68,4 @@ meaning on its own:
 | `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`   |
 | `animation` | string? | `null`     | `pulse` `tada` `rotate`                                                    |
 | `size`      | string? | `null`     | `sm` `md` `lg` `inline` (`icon icon-{size}`); unset, follows the font size |
-| `filled`    | bool    | `false`    | Filled variant: `ti-{name}-filled` instead of `ti-{name}`                  |
+| `filled`    | bool    | `false`    | Filled variant: `ti-filled ti-filled-{name}`, see [Filled](#filled)        |

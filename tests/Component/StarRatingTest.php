@@ -67,4 +67,18 @@ final class StarRatingTest extends ComponentTestCase
         // Twig's 1..0 is [1, 0]: without a guard this rendered two stars
         self::assertHtmlSame('<div class="stars" role="img" aria-label="0 out of 0"></div>', $this->renderComponent('<twig:Tabler:StarRating max="0" />'));
     }
+
+    public function testFilledStars(): void
+    {
+        $star = '<i class="ti-filled ti-filled-star" aria-hidden="true"></i>';
+
+        self::assertHtmlSame(
+            '<div class="stars" role="img" aria-label="1 out of 2"><span class="star text-yellow">' . $star . '</span><span class="star">' . $star . '</span></div>',
+            $this->renderComponent('<twig:Tabler:StarRating value="1" max="2" filled />'),
+        );
+        self::assertHtmlSame(
+            '<span class="star text-red"><i class="ti-filled ti-filled-heart" aria-hidden="true"></i></span>',
+            $this->renderComponent('<twig:Tabler:StarRating:Star active variant="red" icon="heart" filled />'),
+        );
+    }
 }

@@ -22,7 +22,7 @@ covered.
 
 `variant` colors the active stars, `yellow` by default. It takes the same colors as Legend: see
 [the list](/components/data/legend/#colors). `icon` replaces the star with another Tabler icon. Change the
-`aria-label` to match. The `-filled` icons, such as `star-filled`, only exist up to `@tabler/icons-webfont` 3.36.0: see
+`aria-label` to match. `filled` uses the filled icons, which need the filled webfont: see
 [Icon](/components/content/icon/#filled).
 
 <Example name="star-rating/colors" />
@@ -45,7 +45,7 @@ so it does not rely on color alone:
 ## Composed
 
 The tag content replaces the stars: place one `StarRating:Star` per star and color some with `active`. `value`,
-`max`, `variant` and `icon` are then ignored, so give each star its own `variant` and `icon`. Always pass an
+`max`, `variant`, `icon` and `filled` are then ignored, so give each star its own `variant`, `icon` and `filled`. Always pass an
 `aria-label`: the default one is built from `value` and `max` and would read "0 out of 5".
 
 <Example name="star-rating/composed" />
@@ -58,6 +58,7 @@ The tag content replaces the stars: place one `StarRating:Star` per star and col
 | `max`     | int    | `5`        | Total number of stars; `0` renders none                                  |
 | `variant` | string | `'yellow'` | Color of the active stars, see [Colors](/components/data/legend/#colors) |
 | `icon`    | string | `'star'`   | Tabler icon name of each star                                            |
+| `filled`  | bool   | `false`    | Filled icons, see [Icon](/components/content/icon/#filled)               |
 
 Other attributes go to the root `<div class="stars">`. It gets `role="img"` and an `aria-label` of "`value` out of
 `max`", unless you pass your own.
@@ -69,6 +70,7 @@ Other attributes go to the root `<div class="stars">`. It gets `role="img"` and 
 | `active`  | bool   | `false`    | Colors the star with `variant`. Inactive stars stay gray         |
 | `variant` | string | `'yellow'` | Color when active, see [Colors](/components/data/legend/#colors) |
 | `icon`    | string | `'star'`   | Tabler icon name                                                 |
+| `filled`  | bool   | `false`    | Filled icon, see [Icon](/components/content/icon/#filled)        |
 
 Other attributes go to the star `<span>`.
 

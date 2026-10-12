@@ -10,7 +10,9 @@
     "dependencies": {
         "@astrojs/starlight": "^0.42.6",
         "@silarhi/docs-kit": "^0.4.0",
+        "@tabler/icons-webfont": "3.49.0",
         "astro": "^7.3.8",
-        "prettier": "^3.9.10"
+        "prettier": "^3.9.10",
+        "sass": "^1.105.1"
     }
 }

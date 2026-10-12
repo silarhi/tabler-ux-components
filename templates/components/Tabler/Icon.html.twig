@@ -5,6 +5,7 @@
         <twig:Tabler:Icon name="check" />
         <twig:Tabler:Icon name="heart" variant="danger" />
         <twig:Tabler:Icon name="refresh" animation="rotate" />
+        <twig:Tabler:Icon name="star" filled variant="warning" />
 
     Props:
       name       — Tabler icon name (without the `ti-` prefix)
@@ -12,11 +13,11 @@
       animation  — pulse | tada | rotate
       size       — sm (1rem) | md (2.5rem) | lg (3.5rem) | inline (1rem, aligned with text);
                    unset, the icon follows the surrounding font size
-      filled     — use the filled variant of the icon (ti-{name}-filled). Those classes only exist up to
-                   @tabler/icons-webfont 3.36.0: later versions ship the filled icons as a separate font
-                   that replaces the outline one, so they cannot be mixed on a page
+      filled     — use the filled variant of the icon (ti-filled ti-filled-{name})
 
-    Requires the @tabler/icons-webfont stylesheet to be loaded.
+    Requires the @tabler/icons-webfont stylesheet to be loaded. The filled icons are a
+    separate font (@tabler/icons-webfont 3.36.1+): compile its tabler-icons-filled.scss with
+    `$ti-prefix: 'ti-filled'`, so its classes do not replace the outline ones.
 #}
 {% apply trim %}
 {% props
@@ -27,9 +28,10 @@
     filled = false,
 %}
 
+{# `filled` comes first, so its font class (ti or ti-filled) leads the class list #}
 {% set icon = html_cva(
-    base: 'ti',
     variants: {
+        filled: {true: 'ti-filled', false: 'ti'},
         variant: {
             primary: 'text-primary',
             secondary: 'text-secondary',
@@ -54,5 +56,5 @@
     },
 ) %}
 
-<i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, 'ti-' ~ name ~ (filled ? '-filled' : ''), attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+<i class="{{ icon.apply({filled: filled, variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, (filled ? 'ti-filled-' : 'ti-') ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
 {% endapply ~%}

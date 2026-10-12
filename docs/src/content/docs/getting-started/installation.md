@@ -62,7 +62,8 @@ Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript: do not load `boots
 :::
 
 [`Icon`](/components/content/icon/) and the `icon` props expect the [`@tabler/icons-webfont`](https://tabler.io/icons)
-font.
+font. Filled icons (`<twig:Tabler:Icon filled>`) need its filled font as well, compiled under its own prefix: see
+[Filled](/components/content/icon/#filled).
 
 ## First component
 
