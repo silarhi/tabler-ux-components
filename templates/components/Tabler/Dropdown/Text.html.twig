@@ -1,0 +1,7 @@
+{#
+    Dropdown text — plain text in a menu that is not an action (`.dropdown-item-text`).
+
+    Usage:
+        <twig:Tabler:Dropdown:Text>Signed in as jane@example.com</twig:Tabler:Dropdown:Text>
+#}
+<span {{ attributes.defaults({class: 'dropdown-item-text'}) }}>{%- block content %}{% endblock -%}</span>

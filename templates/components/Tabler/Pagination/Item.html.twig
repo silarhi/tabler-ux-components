@@ -6,15 +6,25 @@
         <twig:Tabler:Pagination:Item href="?page=2" active>2</twig:Tabler:Pagination:Item>
         <twig:Tabler:Pagination:Item disabled>«</twig:Tabler:Pagination:Item>
 
+    Named pager (prose, docs, wizards):
+        <twig:Tabler:Pagination:Item href="/docs/start" direction="prev" subtitle="previous" title="Getting started" />
+        <twig:Tabler:Pagination:Item href="/docs/install" direction="next" subtitle="next" title="Installation" />
+
     Props:
       href      — link target
       active    — current page
       disabled  — non-interactive page
+      direction — prev | next: a pager step (page-prev / page-next, rel=prev|next)
+      title     — page name, for a pager that names pages (page-item-title)
+      subtitle  — small uppercase label above the title (page-item-subtitle)
 #}
 {% props
     href = null,
     active = false,
     disabled = false,
+    direction = null,
+    title = null,
+    subtitle = null,
 %}
 
 {%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
@@ -24,13 +34,22 @@
     variants: {
         active: {true: 'active', false: ''},
         disabled: {true: 'disabled', false: ''},
+        direction: {prev: 'page-prev', next: 'page-next'},
     },
 ) %}
 
-<li class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
+{%- if title is not null or subtitle is not null -%}
+    {%- set label -%}
+        {%- if subtitle is not null -%}<div class="page-item-subtitle">{{ subtitle }}</div>{%- endif -%}
+        {%- if title is not null -%}<div class="page-item-title">{{ title }}</div>{%- endif -%}
+        {{- label|raw -}}
+    {%- endset -%}
+{%- endif -%}
+
+<li class="{{ item.apply({active: active, disabled: disabled, direction: direction ?? ''}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
     {%- if disabled -%}
         <span class="page-link">{{ label|raw }}</span>
     {%- else -%}
-        <a class="page-link" href="{{ href ?? '#' }}">{{ label|raw }}</a>
+        <a class="page-link" href="{{ href ?? '#' }}"{% if active %} aria-current="page"{% endif %}{% if direction is not null %} rel="{{ direction }}"{% endif %}>{{ label|raw }}</a>
     {%- endif -%}
 </li>

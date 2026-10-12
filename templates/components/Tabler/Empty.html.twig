@@ -14,16 +14,21 @@
             </twig:Tabler:Empty:Action>
         </twig:Tabler:Empty>
 
+    Instead of an icon, lead with <twig:Tabler:Empty:Header>404</twig:Tabler:Empty:Header>
+    or an illustration in <twig:Tabler:Empty:Img>.
+
     Props:
       title     — mirrored by the `title` block
       subtitle  — mirrored by the `subtitle` block
+      bordered  — border around the empty state (empty-bordered)
 #}
 {% props
     title = null,
     subtitle = null,
+    bordered = false,
 %}
 
-<div {{ attributes.defaults({class: 'empty'}) }}>
+<div {{ attributes.defaults({class: bordered ? 'empty empty-bordered' : 'empty'}) }}>
     {% block content %}
         {% block icon %}{% endblock %}
         {% block title %}

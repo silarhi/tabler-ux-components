@@ -1,0 +1,21 @@
+{#
+    Card progress — a progress bar attached to the bottom edge of a card (`.card-progress`).
+    Put it as the last child of the card.
+
+    Usage:
+        <twig:Tabler:Card:Progress value="94" variant="danger" label="94% used" />
+
+    Props:
+      value    — percentage (0–100)
+      variant  — bar color (same values as <twig:Tabler:Progress:Bar>)
+      label    — accessible label (aria-label on the bar)
+#}
+{% props
+    value = 0,
+    variant = 'primary',
+    label = null,
+%}
+
+<div {{ attributes.defaults({class: 'progress card-progress'}) }}>
+    <twig:Tabler:Progress:Bar value="{{ value }}" variant="{{ variant }}" aria-label="{{ label ?? (value ~ '%') }}" />
+</div>

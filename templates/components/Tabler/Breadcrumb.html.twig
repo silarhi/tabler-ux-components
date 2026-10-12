@@ -9,7 +9,7 @@
         </twig:Tabler:Breadcrumb>
 
     Props:
-      separator  — default | dots | arrows
+      separator  — default | dots | arrows | bullets
       muted      — muted style (breadcrumb-muted)
 #}
 {% props
@@ -20,7 +20,7 @@
 {% set breadcrumb = html_cva(
     base: 'breadcrumb',
     variants: {
-        separator: {default: '', dots: 'breadcrumb-dots', arrows: 'breadcrumb-arrows'},
+        separator: {default: '', dots: 'breadcrumb-dots', arrows: 'breadcrumb-arrows', bullets: 'breadcrumb-bullets'},
         muted: {true: 'breadcrumb-muted', false: ''},
     },
 ) %}

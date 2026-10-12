@@ -10,18 +10,24 @@
 
     Props:
       fullWidth — stretch to the container width (w-100)
+      vertical   — stack the segments in a column (nav-segmented-vertical)
+      size       — sm | md (default) | lg
 #}
 {% props
     fullWidth = false,
+    vertical = false,
+    size = 'md',
 %}
 
 {% set segmented = html_cva(
     base: 'nav nav-segmented',
     variants: {
         fullWidth: {true: 'w-100', false: ''},
+        vertical: {true: 'nav-segmented-vertical', false: ''},
+        size: {sm: 'nav-sm', md: '', lg: 'nav-lg'},
     },
 ) %}
 
-<nav class="{{ segmented.apply({fullWidth: fullWidth}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
+<nav class="{{ segmented.apply({fullWidth: fullWidth, vertical: vertical, size: size}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </nav>

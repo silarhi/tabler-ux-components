@@ -8,18 +8,32 @@
 
     Props:
       end  — align the menu to the end (dropdown-menu-end)
+      arrow       — small arrow pointing at the toggle (dropdown-menu-arrow)
+      dark        — dark menu on a light page (dropdown-menu-dark)
+      scrollable  — caps the height and scrolls (dropdown-menu-scrollable)
+      card        — card-like panel for rich content (dropdown-menu-card)
+
+    Long menus can be split with <twig:Tabler:Dropdown:Columns> / <twig:Tabler:Dropdown:Column>.
 #}
 {% props
     end = false,
+    arrow = false,
+    dark = false,
+    scrollable = false,
+    card = false,
 %}
 
 {% set menu = html_cva(
     base: 'dropdown-menu',
     variants: {
         end: {true: 'dropdown-menu-end', false: ''},
+        arrow: {true: 'dropdown-menu-arrow', false: ''},
+        dark: {true: 'dropdown-menu-dark', false: ''},
+        scrollable: {true: 'dropdown-menu-scrollable', false: ''},
+        card: {true: 'dropdown-menu-card', false: ''},
     },
 ) %}
 
-<div class="{{ menu.apply({end: end}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ menu.apply({end: end, arrow: arrow, dark: dark, scrollable: scrollable, card: card}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>

@@ -31,7 +31,7 @@ final class PaginationTest extends ComponentTestCase
             '<ul class="pagination">'
             . '<li class="page-item disabled"><span class="page-link">«</span></li>'
             . '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>'
-            . '<li class="page-item active" aria-current="page"><a class="page-link" href="?page=2">2</a></li>'
+            . '<li class="page-item active"><a class="page-link" href="?page=2" aria-current="page">2</a></li>'
             . '</ul>',
             $html,
         );

@@ -1,0 +1,61 @@
+{#
+    Card stamp — a large decorative mark in the top corner of a card (`.card-stamp`).
+    Put it as a direct child of the card, before the body.
+
+    Usage:
+        <twig:Tabler:Card:Stamp icon="bell" variant="yellow" />
+        <twig:Tabler:Card:Stamp size="lg" variant="primary"><twig:Tabler:Icon name="ghost" /></twig:Tabler:Card:Stamp>
+
+    Props:
+      icon     — Tabler icon name; or put any markup in the `content` block
+      variant  — circle color (bg-{color}): theme or palette color
+      size     — md (default) | lg (card-stamp-lg)
+#}
+{% props
+    icon = null,
+    variant = null,
+    size = 'md',
+%}
+
+{% set stamp = html_cva(
+    base: 'card-stamp',
+    variants: {
+        size: {md: '', lg: 'card-stamp-lg'},
+    },
+) %}
+
+{% set circle = html_cva(
+    base: 'card-stamp-icon',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+            blue: 'bg-blue',
+            azure: 'bg-azure',
+            indigo: 'bg-indigo',
+            purple: 'bg-purple',
+            pink: 'bg-pink',
+            red: 'bg-red',
+            orange: 'bg-orange',
+            yellow: 'bg-yellow',
+            lime: 'bg-lime',
+            green: 'bg-green',
+            teal: 'bg-teal',
+            cyan: 'bg-cyan',
+        },
+    },
+) %}
+
+<div class="{{ stamp.apply({size: size}, attributes.render('class')) }}" aria-hidden="true" {{ attributes.without('class') }}>
+    <div class="{{ circle.apply({variant: variant ?? ''}) }}">
+        {%- block content -%}
+            {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" />{%- endif -%}
+        {%- endblock -%}
+    </div>
+</div>

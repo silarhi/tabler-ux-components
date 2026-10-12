@@ -1,0 +1,36 @@
+{#
+    Toast container — stacks toasts and positions them on the page (`.toast-container`).
+
+    Usage:
+        <twig:Tabler:Toast:Container placement="bottom-end">
+            <twig:Tabler:Toast show>…</twig:Tabler:Toast>
+            <twig:Tabler:Toast show>…</twig:Tabler:Toast>
+        </twig:Tabler:Toast:Container>
+
+    Props:
+      placement  — top-start | top-center | top-end | middle-center | bottom-start | bottom-center | bottom-end:
+                   pins the stack to that corner of the viewport (position-fixed + p-3); unset, it
+                   stays in the flow of its parent
+#}
+{% props
+    placement = null,
+%}
+
+{% set container = html_cva(
+    base: 'toast-container',
+    variants: {
+        placement: {
+            'top-start': 'position-fixed p-3 top-0 start-0',
+            'top-center': 'position-fixed p-3 top-0 start-50 translate-middle-x',
+            'top-end': 'position-fixed p-3 top-0 end-0',
+            'middle-center': 'position-fixed p-3 top-50 start-50 translate-middle',
+            'bottom-start': 'position-fixed p-3 bottom-0 start-0',
+            'bottom-center': 'position-fixed p-3 bottom-0 start-50 translate-middle-x',
+            'bottom-end': 'position-fixed p-3 bottom-0 end-0',
+        },
+    },
+) %}
+
+<div class="{{ container.apply({placement: placement ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
+</div>
