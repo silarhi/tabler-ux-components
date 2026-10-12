@@ -47,7 +47,7 @@
 <span {{ attributes.defaults({class: 'tag'}) }}>
     {%- block content -%}
         {%- block leading -%}
-            {%- if checkbox -%}<twig:Tabler:Tag:Check checked="{{ checked }}" aria-label="{{ label }}" />{%- endif -%}
+            {%- if checkbox -%}{%- if label is not null -%}<twig:Tabler:Tag:Check checked="{{ checked }}" aria-label="{{ label }}" />{%- else -%}<twig:Tabler:Tag:Check checked="{{ checked }}" />{%- endif -%}{%- endif -%}
             {%- if avatar is not null -%}<twig:Tabler:Tag:Avatar image="{{ avatar }}" />{%- endif -%}
             {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="tag-icon" aria-hidden="true" />{%- endif -%}
             {%- if status is not null -%}<twig:Tabler:Tag:Status variant="{{ status }}" />{%- endif -%}
