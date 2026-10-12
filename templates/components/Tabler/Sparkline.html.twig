@@ -1,0 +1,94 @@
+{#
+    Tabler Sparkline — a tiny inline SVG chart (line, bar, win/loss or circle),
+    drawn by tabler.js from data attributes; no chart library needed (Tabler 1.6+).
+
+    Usage:
+        <twig:Tabler:Sparkline values="3,4,2,6,5,8,7" variant="primary" aria-label="Weekly trend" />
+        <twig:Tabler:Sparkline values="{{ [1, 2, 3, 2, 4] }}" type="bar" variant="orange" aria-label="Daily activity" />
+        <twig:Tabler:Sparkline values="72" type="circle" size="lg" label="auto" variant="green" aria-label="72% done" />
+
+    The SVG is hidden from assistive technology: give the element an `aria-label`.
+
+    Props:
+      values     — the numbers to draw: an array or a comma-separated string (required)
+      type       — line (default) | bar | tristate | circle
+      variant    — text color the chart draws with: primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+      size       — sm | md (default) | lg
+      square     — width equal to the height (always on for `circle`)
+      fill       — tinted area under a line (data-bs-fill="auto")
+      spot       — mark one value on a line: last | min | max
+      min, max   — fixed value range (circle: `max` is the 100% value)
+      threshold  — dashed guide line at this value
+      label      — text centered over the chart; `auto` prints the percentage of a circle
+      barGap     — space between bars, in SVG units
+      barRadius  — bar corner rounding, in SVG units
+      disabled   — greys the chart out (sparkline-disabled)
+#}
+{% props
+    values,
+    type = 'line',
+    variant = null,
+    size = 'md',
+    square = false,
+    fill = false,
+    spot = null,
+    min = null,
+    max = null,
+    threshold = null,
+    label = null,
+    barGap = null,
+    barRadius = null,
+    disabled = false,
+%}
+
+{% set sparkline = html_cva(
+    base: 'sparkline',
+    variants: {
+        size: {sm: 'sparkline-sm', md: '', lg: 'sparkline-lg'},
+        square: {true: 'sparkline-square', false: ''},
+        disabled: {true: 'sparkline-disabled', false: ''},
+        variant: {
+            primary: 'text-primary',
+            secondary: 'text-secondary',
+            success: 'text-success',
+            danger: 'text-danger',
+            warning: 'text-warning',
+            info: 'text-info',
+            dark: 'text-dark',
+            light: 'text-light',
+            muted: 'text-muted',
+            blue: 'text-blue',
+            azure: 'text-azure',
+            indigo: 'text-indigo',
+            purple: 'text-purple',
+            pink: 'text-pink',
+            red: 'text-red',
+            orange: 'text-orange',
+            yellow: 'text-yellow',
+            lime: 'text-lime',
+            green: 'text-green',
+            teal: 'text-teal',
+            cyan: 'text-cyan',
+        },
+    },
+) %}
+
+{% set circle = type == 'circle' %}
+{% set data = {
+    'data-bs-type': type != 'line' ? type : null,
+    'data-bs-values': values is iterable ? values|join(',') : values,
+    'data-bs-fill': fill ? 'auto' : null,
+    'data-bs-spot': spot,
+    'data-bs-min': min,
+    'data-bs-max': max,
+    'data-bs-threshold': threshold,
+    'data-bs-label': label,
+    'data-bs-bar-gap': barGap,
+    'data-bs-bar-radius': barRadius,
+    'data-bs-width': circle ? 40 : null,
+    'data-bs-height': circle ? 40 : null,
+}|filter(v => v is not null) %}
+<span class="{{ sparkline.apply({size: size, square: square or circle, disabled: disabled, variant: variant ?? ''}, attributes.render('class')) }}" data-bs-toggle="sparkline"
+    {%- for name, v in data %} {{ name }}="{{ v }}"{% endfor %}
+    {%- if 'aria-label' in attributes.all|keys %} role="img"{% endif %} {{ attributes.without('class') }}></span>

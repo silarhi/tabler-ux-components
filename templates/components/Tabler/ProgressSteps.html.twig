@@ -1,0 +1,38 @@
+{#
+    Tabler ProgressSteps — a segmented bar showing where the user is in a short
+    flow such as setup or onboarding (`.progress-steps`, Tabler 1.5+).
+
+    All-in-one (steps up to `active` are filled, `active` is the current one):
+        <twig:Tabler:ProgressSteps count="4" active="2" aria-label="Setup progress" />
+        <twig:Tabler:ProgressSteps labels="{{ ['Account', 'Profile', 'Billing'] }}" active="3" variant="green" aria-label="Checkout progress" />
+
+    Composed:
+        <twig:Tabler:ProgressSteps aria-label="Onboarding progress">
+            <twig:Tabler:ProgressSteps:Item variant="primary" label="Account" />
+            <twig:Tabler:ProgressSteps:Item variant="primary" current label="Profile" />
+            <twig:Tabler:ProgressSteps:Item label="Billing" />
+        </twig:Tabler:ProgressSteps>
+
+    Props:
+      count    — number of steps; ignored when `labels` is set
+      labels   — step names, announced to assistive technology (default "Step n")
+      active   — 1-based index of the current step (default 1); 0 fills none
+      variant  — color of the reached steps (default primary): primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+#}
+{% props
+    count = 0,
+    labels = null,
+    active = 1,
+    variant = 'primary',
+%}
+
+{% set steps = labels ?? (count > 0 ? range(1, count)|map(i => null) : []) %}
+<ol {{ attributes.defaults({class: 'progress-steps'}) }}>
+    {%- block content -%}
+        {%- for step in steps -%}
+            {%- set index = loop.index -%}
+            <twig:Tabler:ProgressSteps:Item variant="{{ index <= active ? variant : '' }}" current="{{ index == active }}" label="{{ step ?? ('Step ' ~ index) }}" />
+        {%- endfor -%}
+    {%- endblock -%}
+</ol>

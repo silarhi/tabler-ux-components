@@ -1,0 +1,32 @@
+{#
+    Tabler PageSection — a heading that splits a long page body into sections,
+    e.g. between groups of cards (`.page-section-title`, Tabler 1.6+).
+
+    All-in-one:
+        <twig:Tabler:PageSection title="Line charts" description="Trends over time." class="col-12" />
+
+    Composed:
+        <twig:Tabler:PageSection class="col-12">
+            <twig:Tabler:PageSection:Title>Line charts</twig:Tabler:PageSection:Title>
+            <twig:Tabler:PageSection:Description>Trends over time.</twig:Tabler:PageSection:Description>
+        </twig:Tabler:PageSection>
+
+    Props:
+      title        — mirrored by the `title` block
+      description  — mirrored by the `description` block
+#}
+{% props
+    title = null,
+    description = null,
+%}
+
+<div {{ attributes }}>
+    {% block content %}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:PageSection:Title>{{ title }}</twig:Tabler:PageSection:Title>{%- endif -%}
+        {% endblock %}
+        {% block description %}
+            {%- if description is not null -%}<twig:Tabler:PageSection:Description>{{ description }}</twig:Tabler:PageSection:Description>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</div>

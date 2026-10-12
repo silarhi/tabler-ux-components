@@ -1,0 +1,52 @@
+{#
+    Progress steps item — one segment of a <twig:Tabler:ProgressSteps>
+    (`.progress-steps-item`).
+
+    Usage:
+        <twig:Tabler:ProgressSteps:Item variant="primary" current label="Profile" />
+
+    Props:
+      variant  — fill color of a reached step (bg-{color}); empty for an upcoming step
+      current  — marks the current step (aria-current="step")
+      label    — visually hidden step name; mirrored by the `content` block
+#}
+{% props
+    variant = null,
+    current = false,
+    label = null,
+%}
+
+{% set item = html_cva(
+    base: 'progress-steps-item',
+    variants: {
+        variant: {
+            primary: 'bg-primary',
+            secondary: 'bg-secondary',
+            success: 'bg-success',
+            danger: 'bg-danger',
+            warning: 'bg-warning',
+            info: 'bg-info',
+            dark: 'bg-dark',
+            light: 'bg-light',
+            muted: 'bg-muted',
+            blue: 'bg-blue',
+            azure: 'bg-azure',
+            indigo: 'bg-indigo',
+            purple: 'bg-purple',
+            pink: 'bg-pink',
+            red: 'bg-red',
+            orange: 'bg-orange',
+            yellow: 'bg-yellow',
+            lime: 'bg-lime',
+            green: 'bg-green',
+            teal: 'bg-teal',
+            cyan: 'bg-cyan',
+        },
+    },
+) %}
+
+<li class="{{ item.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if current %} aria-current="step"{% endif %} {{ attributes.without('class') }}>
+    {%- block content -%}
+        {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
+    {%- endblock -%}
+</li>

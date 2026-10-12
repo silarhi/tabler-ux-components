@@ -1,0 +1,98 @@
+{#
+    Tabler Legend — a colored marker, a label and an optional value, naming the
+    series of a chart or a progress bar (Tabler 1.6+).
+
+    Renders a <span> by default, an <a> when `href` is set, or a
+    <button type="button"> when `button` is set (e.g. to toggle a chart series).
+
+    All-in-one (use the `label` prop so the dot, label and value all stay inside `content`):
+        <twig:Tabler:Legend variant="blue" label="Allowed" value="339.0k" />
+        <twig:Tabler:Legend variant="primary" size="lg" label="P99" value="124" unit="ms" />
+
+    In a list:
+        <twig:Tabler:Legend:List divided>
+            <twig:Tabler:Legend variant="green" label="Passed" value="128" href="?status=passed" active />
+            <twig:Tabler:Legend variant="red" label="Failed" value="4" href="?status=failed" />
+        </twig:Tabler:Legend:List>
+
+    Composed (override `content`, or just the `dot` / `label` / `value` sub-blocks):
+        <twig:Tabler:Legend variant="blue" button>
+            <twig:Tabler:Legend:Dot />
+            Allowed
+            <twig:Tabler:Legend:Value unit="k">339</twig:Tabler:Legend:Value>
+        </twig:Tabler:Legend>
+
+    Props:
+      variant  — primary | secondary | success | danger | warning | info | dark | light | muted,
+                 or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+      size     — md (default) | lg (label on top, big value below)
+      label    — the series name; mirrored by the `label` block
+      value    — optional value; mirrored by the `value` block
+      unit     — optional unit after the value (legend-unit)
+      href     — when set, renders <a href>
+      button   — renders a <button type="button">
+      active   — keeps the hover background (active)
+      off      — dims the item, for a hidden series (legend-off)
+#}
+{% props
+    variant = null,
+    size = 'md',
+    label = null,
+    value = null,
+    unit = null,
+    href = null,
+    button = false,
+    active = false,
+    off = false,
+%}
+
+{% set legend = html_cva(
+    base: 'legend',
+    variants: {
+        size: {md: '', lg: 'legend-lg'},
+        variant: {
+            primary: 'legend-primary',
+            secondary: 'legend-secondary',
+            success: 'legend-success',
+            danger: 'legend-danger',
+            warning: 'legend-warning',
+            info: 'legend-info',
+            dark: 'legend-dark',
+            light: 'legend-light',
+            muted: 'legend-muted',
+            blue: 'legend-blue',
+            azure: 'legend-azure',
+            indigo: 'legend-indigo',
+            purple: 'legend-purple',
+            pink: 'legend-pink',
+            red: 'legend-red',
+            orange: 'legend-orange',
+            yellow: 'legend-yellow',
+            lime: 'legend-lime',
+            green: 'legend-green',
+            teal: 'legend-teal',
+            cyan: 'legend-cyan',
+        },
+        active: {true: 'active', false: ''},
+        off: {true: 'legend-off', false: ''},
+    },
+) %}
+
+{% set classes = legend.apply({size: size, variant: variant ?? '', active: active, off: off}, attributes.render('class')) %}
+{%- set inner -%}
+    {%- block content -%}
+        {%- block dot -%}<twig:Tabler:Legend:Dot />{%- endblock %}
+        {% block label -%}{%- if label is not null -%}{{ label }}{%- endif -%}{%- endblock %}
+        {% block value -%}
+            {%- if value is not null -%}<twig:Tabler:Legend:Value unit="{{ unit }}">{{ value }}</twig:Tabler:Legend:Value>{%- endif -%}
+        {%- endblock -%}
+    {%- endblock -%}
+{%- endset -%}
+
+{% if href is not null %}
+    <a href="{{ href }}" class="{{ classes }}" {{ attributes.without('class', 'href') }}>{{ inner|raw }}</a>
+{% elseif button %}
+    <button type="button" class="{{ classes }}" {{ attributes.without('class', 'type') }}>{{ inner|raw }}</button>
+{% else %}
+    <span class="{{ classes }}" {{ attributes.without('class') }}>{{ inner|raw }}</span>
+{% endif %}
