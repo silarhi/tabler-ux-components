@@ -71,4 +71,4 @@
     {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
     {%- block content %}{{ label }}{% endblock -%}
 </{{ element }}>
-{% endapply %}
+{% endapply ~%}

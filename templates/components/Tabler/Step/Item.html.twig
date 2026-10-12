@@ -26,4 +26,4 @@
 <{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
-{% endapply %}
+{% endapply ~%}

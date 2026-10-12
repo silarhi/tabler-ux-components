@@ -15,4 +15,4 @@
 %}
 
 <a href="{{ href ?? '#' }}" {{ attributes.defaults({class: 'alert-link'}).without('href') }}>{%- block content %}{% endblock -%}</a>
-{% endapply %}
+{% endapply ~%}

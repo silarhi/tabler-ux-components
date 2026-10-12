@@ -18,4 +18,4 @@
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 
 <span class="{{ ('avatar-brand' ~ (image is not null ? ' bg-cover' : '') ~ ' ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
-{% endapply %}
+{% endapply ~%}
