@@ -37,4 +37,4 @@
     },
 ) %}
 
-<span class="{{ avatar.apply({size: size, variant: variant, rounded: rounded}, attributes.render('class')) }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded}, attributes.render('class')) }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>

@@ -35,7 +35,7 @@
     },
 ) %}
 
-<button class="{{ switch.apply({animation: animation}, attributes.render('class')) }}" data-bs-toggle="switch-icon" {{ attributes.without('class') }}>
+<button class="{{ switch.apply({animation: animation ?? ''}, attributes.render('class')) }}" data-bs-toggle="switch-icon" {{ attributes.without('class') }}>
     {% block content %}
         {% block a %}<twig:Tabler:SwitchIcon:A>{%- if iconA is not null -%}<twig:Tabler:Icon name="{{ iconA }}" />{%- endif -%}</twig:Tabler:SwitchIcon:A>{% endblock %}
         {% block b %}<twig:Tabler:SwitchIcon:B>{%- if iconB is not null -%}<twig:Tabler:Icon name="{{ iconB }}" />{%- endif -%}</twig:Tabler:SwitchIcon:B>{% endblock %}
