@@ -11,6 +11,7 @@
       plus  — a plus that turns into a close icon when open (accordion-button-toggle-plus)
       icon  — Tabler icon name (default chevron-down, or plus); mirrored by the `content` block
 #}
+{% apply trim %}
 {% props
     plus = false,
     icon = null,
@@ -28,3 +29,4 @@
         <twig:Tabler:Icon name="{{ icon ?? (plus ? 'plus' : 'chevron-down') }}" aria-hidden="true" />
     {%- endblock -%}
 </span>
+{% endapply %}

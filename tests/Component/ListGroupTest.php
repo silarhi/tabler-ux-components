@@ -102,4 +102,17 @@ final class ListGroupTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:ListGroup:Header tag="li">Yesterday</twig:Tabler:ListGroup:Header>'),
         );
     }
+
+    public function testHrefWinsOverButton(): void
+    {
+        // A link never gets the button-only type and disabled attributes
+        self::assertHtmlSame(
+            '<a href="/a" class="list-group-item list-group-item-action">A</a>',
+            $this->renderComponent('<twig:Tabler:ListGroup:Item href="/a" button>A</twig:Tabler:ListGroup:Item>'),
+        );
+        self::assertHtmlSame(
+            '<a class="list-group-item list-group-item-action disabled" aria-disabled="true" tabindex="-1">A</a>',
+            $this->renderComponent('<twig:Tabler:ListGroup:Item href="/a" button disabled>A</twig:Tabler:ListGroup:Item>'),
+        );
+    }
 }

@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:PageSection:Description>Trends over time.</twig:Tabler:PageSection:Description>
 #}
+{% apply trim %}
 <p {{ attributes.defaults({class: 'page-section-description'}) }}>{%- block content %}{% endblock -%}</p>
+{% endapply %}

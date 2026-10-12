@@ -7,8 +7,10 @@
     Props:
       active  — lights the bar
 #}
+{% apply trim %}
 {% props
     active = false,
 %}
 
 <span class="signal-bar{{ active ? ' active' : '' }}{{ attributes.render('class') ? ' ' ~ attributes.render('class') : '' }}" {{ attributes.without('class') }}></span>
+{% endapply %}

@@ -15,6 +15,7 @@
       author  — sender name (Chat:Bubble:Author)
       date    — time of the message (Chat:Bubble:Date)
 #}
+{% apply trim %}
 {% props
     author = null,
     date = null,
@@ -28,3 +29,4 @@
         {%- endblock -%}
     </div>
 </div>
+{% endapply %}

@@ -9,10 +9,15 @@
     Props:
       level  — heading level, 1 to 6 (default 3)
 #}
+{% apply trim %}
 {% props
     level = 3,
 %}
 
-<h{{ level }} {{ attributes.defaults({class: 'accordion-header'}) }}>
+{# any other level falls back to h3 rather than rendering an <h7> #}
+{% set heading = 'h' ~ (level in ['1', '2', '3', '4', '5', '6'] ? level : 3) %}
+
+<{{ heading }} {{ attributes.defaults({class: 'accordion-header'}) }}>
     {%- block content %}{% endblock -%}
-</h{{ level }}>
+</{{ heading }}>
+{% endapply %}

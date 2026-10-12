@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Empty:Header>404</twig:Tabler:Empty:Header>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'empty-header'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

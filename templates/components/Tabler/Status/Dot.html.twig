@@ -8,6 +8,7 @@
     Props:
       animated — pulse animation (status-dot-animated)
 #}
+{% apply trim %}
 {% props
     animated = false,
 %}
@@ -20,3 +21,4 @@
 ) %}
 
 <span class="{{ dot.apply({animated: animated}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>
+{% endapply %}

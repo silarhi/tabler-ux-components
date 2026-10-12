@@ -12,6 +12,7 @@
       variant   — any color accepted by <twig:Tabler:Status> (status-{color})
       animated  — pulsing indicator (status-indicator-animated)
 #}
+{% apply trim %}
 {% props
     variant = null,
     animated = false,
@@ -52,3 +53,4 @@
     <span class="status-indicator-circle"></span>
     <span class="status-indicator-circle"></span>
 </span>
+{% endapply %}

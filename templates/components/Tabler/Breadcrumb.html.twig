@@ -12,6 +12,7 @@
       separator  — default | dots | arrows | bullets
       muted      — muted style (breadcrumb-muted)
 #}
+{% apply trim %}
 {% props
     separator = 'default',
     muted = false,
@@ -30,3 +31,4 @@
         {% block content %}{% endblock %}
     </ol>
 </nav>
+{% endapply %}

@@ -12,10 +12,13 @@
       animation  — pulse | tada | rotate
       size       — sm (1rem) | md (2.5rem) | lg (3.5rem) | inline (1rem, aligned with text);
                    unset, the icon follows the surrounding font size
-      filled     — use the filled variant of the icon (ti-{name}-filled)
+      filled     — use the filled variant of the icon (ti-{name}-filled). Those classes only exist up to
+                   @tabler/icons-webfont 3.36.0: later versions ship the filled icons as a separate font
+                   that replaces the outline one, so they cannot be mixed on a page
 
     Requires the @tabler/icons-webfont stylesheet to be loaded.
 #}
+{% apply trim %}
 {% props
     name,
     variant = null,
@@ -52,3 +55,4 @@
 ) %}
 
 <i class="{{ icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, 'ti-' ~ name ~ (filled ? '-filled' : ''), attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+{% endapply %}

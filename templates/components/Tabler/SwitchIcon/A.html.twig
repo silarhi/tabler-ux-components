@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:SwitchIcon:A><twig:Tabler:Icon name="moon" /></twig:Tabler:SwitchIcon:A>
 #}
+{% apply trim %}
 <span {{ attributes.defaults({class: 'switch-icon-a'}) }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

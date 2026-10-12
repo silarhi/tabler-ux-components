@@ -6,4 +6,6 @@
           <twig:Tabler:Button variant="primary">New item</twig:Tabler:Button>
       </twig:Tabler:Empty:Action>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'empty-action'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

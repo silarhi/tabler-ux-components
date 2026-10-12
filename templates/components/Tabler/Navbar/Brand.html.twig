@@ -9,6 +9,7 @@
     Props:
       href  — link target (usually the home page)
 #}
+{% apply trim %}
 {% props
     href = null,
 %}
@@ -17,3 +18,4 @@
 <{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'navbar-brand'}).without('href') }}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
+{% endapply %}

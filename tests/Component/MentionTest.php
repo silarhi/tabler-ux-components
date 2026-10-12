@@ -28,7 +28,7 @@ final class MentionTest extends ComponentTestCase
     public function testApp(): void
     {
         self::assertHtmlSame(
-            '<span class="mention"><span class="mention-app" style="background-image: url(/github.svg)"></span>GitHub</span>',
+            '<span class="mention"><span class="mention-app bg-cover" style="background-image: url(/github.svg)"></span>GitHub</span>',
             $this->renderComponent('<twig:Tabler:Mention label="GitHub" logo="/github.svg" />'),
         );
     }
@@ -70,6 +70,18 @@ final class MentionTest extends ComponentTestCase
         self::assertHtmlSame(
             '<span class="mention-color bg-orange"></span>',
             $this->renderComponent('<twig:Tabler:Mention:Color variant="orange" />'),
+        );
+    }
+
+    public function testAvatarAndAppConsumerStyleMergesWithImage(): void
+    {
+        self::assertHtmlSame(
+            '<span class="mention-avatar" style="background-image: url(/a.jpg); opacity: .5"></span>',
+            $this->renderComponent('<twig:Tabler:Mention:Avatar image="/a.jpg" style="opacity: .5" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="mention-app bg-cover" style="background-image: url(/gh.svg); opacity: .5"></span>',
+            $this->renderComponent('<twig:Tabler:Mention:App image="/gh.svg" style="opacity: .5" />'),
         );
     }
 }

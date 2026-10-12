@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents\Tests\Component;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Silarhi\TablerUxComponents\Tests\ComponentTestCase;
 
 final class TrendingTest extends ComponentTestCase
@@ -65,5 +66,30 @@ final class TrendingTest extends ComponentTestCase
             '<span class="d-inline-flex align-items-center lh-1 text-green"><span class="visually-hidden">Increased by</span>7%<i class="ti ti-trending-up ms-1"></i></span>',
             $html,
         );
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string}>
+     */
+    public static function directionProvider(): iterable
+    {
+        yield 'Unicode minus' => ['−4', 'text-red', 'Decreased by'];
+        yield 'decimal comma zero' => ['0,0', 'text-secondary', 'No change,'];
+        yield 'not a number' => ['N/A', 'text-secondary', 'No change,'];
+        yield 'leading dot' => ['.5', 'text-green', 'Increased by'];
+    }
+
+    #[DataProvider('directionProvider')]
+    public function testDirectionFromValue(string $value, string $class, string $prefix): void
+    {
+        self::assertHtmlSame(
+            '<span class="d-inline-flex align-items-center lh-1 ' . $class . '"><span class="visually-hidden">' . $prefix . ' </span>' . $value . '</span>',
+            $this->renderComponent('<twig:Tabler:Trending value="' . $value . '" unit=""><twig:block name="icon"></twig:block></twig:Tabler:Trending>'),
+        );
+    }
+
+    public function testValueIsPrintedTrimmed(): void
+    {
+        self::assertStringContainsString('</span>7%', $this->renderComponent('<twig:Tabler:Trending value=" 7 " />'));
     }
 }

@@ -16,11 +16,8 @@ sidebar:
 
 ## Installation
 
-The package is not published on Packagist: add the GitHub repository, then require it.
-
 ```bash
-composer config repositories.tabler-ux-components vcs https://github.com/silarhi/tabler-ux-components
-composer require silarhi/tabler-ux-components:dev-main
+composer require silarhi/tabler-ux-components
 ```
 
 If your app uses Symfony Flex, the bundle is registered automatically. Otherwise add it to `config/bundles.php`:

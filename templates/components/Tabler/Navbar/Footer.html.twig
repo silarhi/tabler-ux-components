@@ -7,6 +7,8 @@
             <twig:Tabler:Navbar:Item href="/profile" icon="user">Jane Doe</twig:Tabler:Navbar:Item>
         </twig:Tabler:Navbar:Footer>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'navbar-footer'}) }}>
     <ul class="navbar-nav">{%- block content %}{% endblock -%}</ul>
 </div>
+{% endapply %}

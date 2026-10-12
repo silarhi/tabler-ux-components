@@ -9,6 +9,7 @@
       href    — link target; when omitted renders a non-link <span>
       active  — marks the current step
 #}
+{% apply trim %}
 {% props
     href = null,
     active = false,
@@ -25,3 +26,4 @@
 <{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
+{% endapply %}

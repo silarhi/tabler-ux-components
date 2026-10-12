@@ -31,6 +31,9 @@ use function strlen;
  * and sub-components. A captured `{% set %}…{% endset %}` block is already
  * escaped and marked safe, so no template ever needs `|raw` — or a way around
  * autoescaping — and any occurrence is a bug waiting to become an XSS.
+ *
+ * Every template also trims its output, so a component used in running text
+ * (`Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.`) adds no space around it.
  */
 final class TemplateConventionsTest extends TestCase
 {
@@ -70,5 +73,15 @@ final class TemplateConventionsTest extends TestCase
         foreach (self::FORBIDDEN as $pattern => $what) {
             self::assertDoesNotMatchRegularExpression($pattern, $code, sprintf('Use a block or a sub-component instead of %s.', $what));
         }
+    }
+
+    #[DataProvider('templateProvider')]
+    public function testTemplateTrimsItsOutput(string $path): void
+    {
+        // The blank lines between the {% props %} and {% set %} tags, and the final newline, would otherwise be output
+        $code = trim(preg_replace('/^\{#.*?#\}/s', '', (string) file_get_contents($path)) ?? '');
+
+        self::assertStringStartsWith('{% apply trim %}', $code, 'Wrap the template, after its header comment, in {% apply trim %}…{% endapply %}.');
+        self::assertStringEndsWith('{% endapply %}', $code, 'Wrap the template, after its header comment, in {% apply trim %}…{% endapply %}.');
     }
 }

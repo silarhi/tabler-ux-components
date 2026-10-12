@@ -14,6 +14,7 @@
       circle   — circular page links (pagination-circle)
       size     — sm | md (default) | lg
 #}
+{% apply trim %}
 {% props
     outline = false,
     circle = false,
@@ -32,3 +33,4 @@
 <ul class="{{ pagination.apply({outline: outline, circle: circle, size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>
+{% endapply %}

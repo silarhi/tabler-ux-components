@@ -4,4 +4,6 @@
     Usage:
       <twig:Tabler:Card:Subtitle>Last 30 days</twig:Tabler:Card:Subtitle>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'card-subtitle'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

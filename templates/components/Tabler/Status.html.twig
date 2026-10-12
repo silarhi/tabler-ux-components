@@ -21,6 +21,7 @@
       lite      — transparent background, keeps only the dot and the text (status-lite)
       label     — the status text; mirrored by the `label` block
 #}
+{% apply trim %}
 {% props
     variant = 'primary',
     dot = false,
@@ -69,3 +70,4 @@
         {%- block label -%}{%- if label is not null -%}{{ label }}{%- endif -%}{%- endblock -%}
     {%- endblock -%}
 </span>
+{% endapply %}

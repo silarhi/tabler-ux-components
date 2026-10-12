@@ -1,5 +1,14 @@
 <p align="center">
     <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/packagist/v/silarhi/tabler-ux-components?style=for-the-badge&label=stable&color=0d6efd&labelColor=1a1a2e">
+        <img src="https://img.shields.io/packagist/v/silarhi/tabler-ux-components?style=for-the-badge&label=stable&color=0d6efd"
+            alt="Latest Stable Version">
+    </picture>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/packagist/dt/silarhi/tabler-ux-components?style=for-the-badge&color=198754&labelColor=1a1a2e">
+        <img src="https://img.shields.io/packagist/dt/silarhi/tabler-ux-components?style=for-the-badge&color=198754" alt="Total Downloads">
+    </picture>
+    <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1&labelColor=1a1a2e">
         <img src="https://img.shields.io/github/license/silarhi/tabler-ux-components?style=for-the-badge&color=6f42c1" alt="License">
     </picture>
@@ -49,11 +58,8 @@
 
 ## Installation
 
-The package is not published on Packagist: add the GitHub repository, then require it.
-
 ```bash
-composer config repositories.tabler-ux-components vcs https://github.com/silarhi/tabler-ux-components
-composer require silarhi/tabler-ux-components:dev-main
+composer require silarhi/tabler-ux-components
 ```
 
 On ux-twig-component v3, `twig_component` needs some configuration: see [Installation](https://tabler-ux-components.silarhi.dev/getting-started/installation/).
@@ -83,7 +89,7 @@ and blocks on **[tabler-ux-components.silarhi.dev](https://tabler-ux-components.
 
 - **Feedback**: [Alert](https://tabler-ux-components.silarhi.dev/components/feedback/alert/), [Empty](https://tabler-ux-components.silarhi.dev/components/feedback/empty/), [Placeholder](https://tabler-ux-components.silarhi.dev/components/feedback/placeholder/), [Progress](https://tabler-ux-components.silarhi.dev/components/feedback/progress/), [ProgressSteps](https://tabler-ux-components.silarhi.dev/components/feedback/progress-steps/), [Spinner](https://tabler-ux-components.silarhi.dev/components/feedback/spinner/), [Toast](https://tabler-ux-components.silarhi.dev/components/feedback/toast/)
 - **Actions**: [Button](https://tabler-ux-components.silarhi.dev/components/actions/button/), [ButtonGroup](https://tabler-ux-components.silarhi.dev/components/actions/button-group/), [ButtonList](https://tabler-ux-components.silarhi.dev/components/actions/button-list/), [ButtonToolbar](https://tabler-ux-components.silarhi.dev/components/actions/button-toolbar/), [Clipboard](https://tabler-ux-components.silarhi.dev/components/actions/clipboard/), [Dropdown](https://tabler-ux-components.silarhi.dev/components/actions/dropdown/), [SegmentedControl](https://tabler-ux-components.silarhi.dev/components/actions/segmented-control/), [SwitchIcon](https://tabler-ux-components.silarhi.dev/components/actions/switch-icon/)
-- **Content**: [Accordion](https://tabler-ux-components.silarhi.dev/components/content/accordion/), [Avatar](https://tabler-ux-components.silarhi.dev/components/content/avatar/), [Badge](https://tabler-ux-components.silarhi.dev/components/content/badge/), [Card](https://tabler-ux-components.silarhi.dev/components/content/card/), [Carousel](https://tabler-ux-components.silarhi.dev/components/content/carousel/), [Chat](https://tabler-ux-components.silarhi.dev/components/content/chat/), [Datagrid](https://tabler-ux-components.silarhi.dev/components/content/datagrid/), [Divider](https://tabler-ux-components.silarhi.dev/components/content/divider/), [Icon](https://tabler-ux-components.silarhi.dev/components/content/icon/), [ListGroup](https://tabler-ux-components.silarhi.dev/components/content/list-group/), [Mention](https://tabler-ux-components.silarhi.dev/components/content/mention/), [Prose](https://tabler-ux-components.silarhi.dev/components/content/prose/), [Ribbon](https://tabler-ux-components.silarhi.dev/components/content/ribbon/), [Status](https://tabler-ux-components.silarhi.dev/components/content/status/), [Table](https://tabler-ux-components.silarhi.dev/components/content/table/), [Tag](https://tabler-ux-components.silarhi.dev/components/content/tag/), [Timeline](https://tabler-ux-components.silarhi.dev/components/content/timeline/)
+- **Content**: [Accordion](https://tabler-ux-components.silarhi.dev/components/content/accordion/), [Avatar](https://tabler-ux-components.silarhi.dev/components/content/avatar/), [Badge](https://tabler-ux-components.silarhi.dev/components/content/badge/), [Card](https://tabler-ux-components.silarhi.dev/components/content/card/), [Carousel](https://tabler-ux-components.silarhi.dev/components/content/carousel/), [Chat](https://tabler-ux-components.silarhi.dev/components/content/chat/), [Datagrid](https://tabler-ux-components.silarhi.dev/components/content/datagrid/), [Divider](https://tabler-ux-components.silarhi.dev/components/content/divider/), [Icon](https://tabler-ux-components.silarhi.dev/components/content/icon/), [List group](https://tabler-ux-components.silarhi.dev/components/content/list-group/), [Mention](https://tabler-ux-components.silarhi.dev/components/content/mention/), [Prose](https://tabler-ux-components.silarhi.dev/components/content/prose/), [Ribbon](https://tabler-ux-components.silarhi.dev/components/content/ribbon/), [Status](https://tabler-ux-components.silarhi.dev/components/content/status/), [Table](https://tabler-ux-components.silarhi.dev/components/content/table/), [Tag](https://tabler-ux-components.silarhi.dev/components/content/tag/), [Timeline](https://tabler-ux-components.silarhi.dev/components/content/timeline/)
 - **Overlays**: [Modal](https://tabler-ux-components.silarhi.dev/components/overlays/modal/), [Offcanvas](https://tabler-ux-components.silarhi.dev/components/overlays/offcanvas/), [Popover](https://tabler-ux-components.silarhi.dev/components/overlays/popover/), [Tooltip](https://tabler-ux-components.silarhi.dev/components/overlays/tooltip/)
 - **Navigation**: [Breadcrumb](https://tabler-ux-components.silarhi.dev/components/navigation/breadcrumb/), [Nav](https://tabler-ux-components.silarhi.dev/components/navigation/nav/), [Pagination](https://tabler-ux-components.silarhi.dev/components/navigation/pagination/), [Step](https://tabler-ux-components.silarhi.dev/components/navigation/step/), [Tabs](https://tabler-ux-components.silarhi.dev/components/navigation/tabs/)
 - **Layout**: [Navbar](https://tabler-ux-components.silarhi.dev/components/layout/navbar/), [PageHeader](https://tabler-ux-components.silarhi.dev/components/layout/page-header/), [PageSection](https://tabler-ux-components.silarhi.dev/components/layout/page-section/)

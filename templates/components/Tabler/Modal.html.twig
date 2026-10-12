@@ -37,6 +37,7 @@
       staticBackdrop  — clicking the backdrop does not close the modal
       blur            — blur the page behind the backdrop (modal-blur)
 #}
+{% apply trim %}
 {% props
     id = null,
     size = 'md',
@@ -90,3 +91,4 @@
         </div>
     </div>
 </div>
+{% endapply %}

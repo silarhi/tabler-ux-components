@@ -25,6 +25,7 @@
       disabled  — item the user cannot pick (disabled)
       variant   — tint: primary | secondary | success | danger | warning | info | dark | light
 #}
+{% apply trim %}
 {% props
     label = null,
     href = null,
@@ -61,11 +62,13 @@
     disabled: disabled,
     variant: variant ?? '',
 }, attributes.render('class')) %}
+{# with an `href`, the item is a link even when `button` is set #}
 {% set element = href is not null ? 'a' : (button ? 'button' : tag) %}
 <{{ element }}
     {%- if href is not null and not disabled %} href="{{ href }}"{% endif %}
-    {%- if button %} type="button"{% endif %} class="{{ classes }}"
+    {%- if element == 'button' %} type="button"{% endif %} class="{{ classes }}"
     {%- if active %} aria-current="true"{% endif %}
-    {%- if disabled %}{% if button %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
+    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
     {%- block content %}{{ label }}{% endblock -%}
 </{{ element }}>
+{% endapply %}

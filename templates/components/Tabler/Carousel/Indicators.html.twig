@@ -18,6 +18,7 @@
       appearance  — default | dots | thumb
       vertical    — stack indicators vertically (carousel-indicators-vertical)
 #}
+{% apply trim %}
 {% props
     target = null,
     count = null,
@@ -46,3 +47,4 @@
         {%- endif -%}
     {%- endblock -%}
 </div>
+{% endapply %}

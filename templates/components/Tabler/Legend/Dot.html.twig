@@ -8,6 +8,7 @@
     Props:
       variant  — any color accepted by <twig:Tabler:Legend> (legend-{color})
 #}
+{% apply trim %}
 {% props
     variant = null,
 %}
@@ -42,3 +43,4 @@
 ) %}
 
 <span class="{{ dot.apply({variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}></span>
+{% endapply %}

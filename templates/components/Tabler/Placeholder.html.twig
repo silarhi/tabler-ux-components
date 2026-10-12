@@ -11,6 +11,7 @@
       width  — Bootstrap column span (1–12) for the placeholder width
       size   — xs | sm | (default) | lg
 #}
+{% apply trim %}
 {% props
     width = null,
     size = null,
@@ -24,3 +25,4 @@
 ) %}
 
 <div class="{{ placeholder.apply({size: size ?? ''}, width is not null ? 'col-' ~ width : null, attributes.render('class')) }}" {{ attributes.without('class') }}></div>
+{% endapply %}

@@ -5,4 +5,6 @@
     Usage:
         <twig:Tabler:Tag:Close aria-label="Remove Alpha" data-action="tags#remove" />
 #}
+{% apply trim %}
 <button type="button" {{ attributes.defaults({class: 'btn-close', 'aria-label': 'Remove'}) }}></button>
+{% endapply %}

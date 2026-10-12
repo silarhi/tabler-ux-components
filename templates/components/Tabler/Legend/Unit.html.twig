@@ -4,4 +4,6 @@
     Usage:
         <twig:Tabler:Legend:Value>124 <twig:Tabler:Legend:Unit>ms</twig:Tabler:Legend:Unit></twig:Tabler:Legend:Value>
 #}
+{% apply trim %}
 <span {{ attributes.defaults({class: 'legend-unit'}) }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

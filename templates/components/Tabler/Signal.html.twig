@@ -24,6 +24,7 @@
       variant  — primary | secondary | success | danger | warning | info | dark | light | muted,
                  or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
 #}
+{% apply trim %}
 {% props
     value = 0,
     max = 3,
@@ -67,3 +68,4 @@
         {%- endfor -%}
     {%- endblock -%}
 </span>
+{% endapply %}

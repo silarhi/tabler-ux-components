@@ -18,6 +18,7 @@
       fill       — tabs share the full width (nav-fill)
       card       — card-header tab style (card-header-tabs)
 #}
+{% apply trim %}
 {% props
     pills = false,
     underline = false,
@@ -39,3 +40,4 @@
 <ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </ul>
+{% endapply %}

@@ -24,6 +24,7 @@
       floating     — pinned to the bottom corner of the viewport (btn-floating)
       animateIcon  — animate the icon on hover: pulse | rotate | shake | tada | move-start (btn-animate-icon-*)
 #}
+{% apply trim %}
 {% props
     variant = 'primary',
     appearance = 'filled',
@@ -97,3 +98,4 @@
     {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>
     {%- block content %}{% endblock -%}
 </{{ tag }}>
+{% endapply %}

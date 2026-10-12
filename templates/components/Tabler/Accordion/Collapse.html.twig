@@ -12,6 +12,7 @@
       parent  — id of the accordion; when set, opening this panel closes the others (data-bs-parent)
       open    — shown on load (show)
 #}
+{% apply trim %}
 {% props
     id = null,
     parent = null,
@@ -28,3 +29,4 @@
 <div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ collapse.apply({open: open}, attributes.render('class')) }}"{% if parent is not null %} data-bs-parent="#{{ parent }}"{% endif %} {{ attributes.without('class', 'id') }}>
     {%- block content %}{% endblock -%}
 </div>
+{% endapply %}

@@ -10,6 +10,7 @@
       active    — marks the current item
       disabled  — non-interactive item
 #}
+{% apply trim %}
 {% props
     href = null,
     active = false,
@@ -27,3 +28,4 @@
 <li class="nav-item">
     <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
 </li>
+{% endapply %}

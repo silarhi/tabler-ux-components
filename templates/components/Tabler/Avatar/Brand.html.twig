@@ -9,8 +9,13 @@
     Props:
       image  — background image URL of the mark; or put markup in the `content` block
 #}
+{% apply trim %}
 {% props
     image = null,
 %}
 
-<span {{ attributes.defaults({class: 'avatar-brand'}).without('style') }}{% if image is not null %} style="background-image: url({{ image }})"{% endif %}>{%- block content %}{% endblock -%}</span>
+{# .avatar-brand sets no background size, so bg-cover scales the image to the mark; a user `style` goes last #}
+{% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+
+<span class="{{ ('avatar-brand' ~ (image is not null ? ' bg-cover' : '') ~ ' ' ~ attributes.render('class'))|trim }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

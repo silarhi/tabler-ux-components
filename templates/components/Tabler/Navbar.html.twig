@@ -33,6 +33,7 @@
                    (navbar-folded / navbar-folded-hover, Tabler 1.5+)
       floating   — gap between the navbar and the edges around it (navbar-floating, Tabler 1.6+)
 #}
+{% apply trim %}
 {% props
     expand = 'md',
     dark = false,
@@ -65,3 +66,4 @@
         {% block content %}{% endblock %}
     </div>
 </{{ tag }}>
+{% endapply %}

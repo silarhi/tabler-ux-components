@@ -6,4 +6,6 @@
           <twig:Tabler:Button variant="primary" size="sm">Edit</twig:Tabler:Button>
       </twig:Tabler:Card:Actions>
 #}
+{% apply trim %}
 <div {{ attributes.defaults({class: 'card-actions'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}

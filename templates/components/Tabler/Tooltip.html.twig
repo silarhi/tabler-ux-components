@@ -12,9 +12,11 @@
       title      — tooltip text
       placement  — top (default) | bottom | left | right
 #}
+{% apply trim %}
 {% props
     title,
     placement = 'top',
 %}
 
 <span data-bs-toggle="tooltip" data-bs-placement="{{ placement }}" data-bs-title="{{ title }}" {{ attributes }}>{%- block content %}{% endblock -%}</span>
+{% endapply %}

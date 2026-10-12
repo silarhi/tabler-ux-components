@@ -11,6 +11,7 @@
       field      — sort key, rendered as `data-sort`
       direction  — asc | desc: marks the current sort direction
 #}
+{% apply trim %}
 {% props
     field = null,
     direction = null,
@@ -26,3 +27,4 @@
 <button type="button" class="{{ sort.apply({direction: direction ?? ''}, attributes.render('class')) }}"{% if field is not null %} data-sort="{{ field }}"{% endif %} {{ attributes.without('class', 'type') }}>
     {%- block content %}{% endblock -%}
 </button>
+{% endapply %}

@@ -26,7 +26,7 @@
         {
             "name": "Documentation examples",
             "job": {
-                "php": "@latest",
+                "php": "8.5",
                 "dependencies": "latest",
                 "command": "php docs/scripts/render-examples.php --check"
             }

@@ -21,6 +21,7 @@
       text    — message text, wrapped in a <p>; mirrored by the `body` block
       me      — sent by the current user (chat-bubble-me)
 #}
+{% apply trim %}
 {% props
     author = null,
     date = null,
@@ -47,3 +48,4 @@
         {%- endblock -%}
     {%- endblock -%}
 </div>
+{% endapply %}

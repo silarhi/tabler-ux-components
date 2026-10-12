@@ -13,9 +13,10 @@
         </twig:Tabler:Dropdown>
 
     Props:
-      direction  — down (default) | up | end | start: where the menu opens (dropup / dropend / dropstart);
-                   `end` also turns a dropdown nested in a menu into a submenu
+      direction  — down (default) | up | end | start: where the menu opens (dropup / dropend / dropstart).
+                   Dropdown:Toggle is a button (.btn), so it cannot be the .dropdown-item trigger of a submenu
 #}
+{% apply trim %}
 {% props
     direction = 'down',
 %}
@@ -30,3 +31,4 @@
 <div class="{{ dropdown.apply({direction: direction}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     {% block content %}{% endblock %}
 </div>
+{% endapply %}

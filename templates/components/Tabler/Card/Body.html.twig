@@ -7,8 +7,10 @@
     Props:
       scrollable  — scrolls the body instead of growing the card (card-body-scrollable)
 #}
+{% apply trim %}
 {% props
     scrollable = false,
 %}
 
 <div {{ attributes.defaults({class: scrollable ? 'card-body card-body-scrollable' : 'card-body'}) }}>{%- block content %}{% endblock -%}</div>
+{% endapply %}
