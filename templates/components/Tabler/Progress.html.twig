@@ -15,7 +15,7 @@
     Props:
       value          — 0–100 percentage for the single-bar shortcut
       variant          — bar variant for the single-bar shortcut
-      size           — sm | md (default)
+      size           — sm | md (default) | lg | xl
       label          — visually-hidden label for the single bar
       indeterminate  — render an indeterminate single bar
 #}
@@ -30,7 +30,7 @@
 {% set progress = html_cva(
     base: 'progress',
     variants: {
-        size: {sm: 'progress-sm', md: ''},
+        size: {sm: 'progress-sm', md: '', lg: 'progress-lg', xl: 'progress-xl'},
     },
 ) %}
 

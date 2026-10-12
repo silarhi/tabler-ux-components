@@ -11,6 +11,7 @@
                 <twig:Tabler:Offcanvas:Close />
             </twig:Tabler:Offcanvas:Header>
             <twig:Tabler:Offcanvas:Body>…</twig:Tabler:Offcanvas:Body>
+            <twig:Tabler:Offcanvas:Footer>…</twig:Tabler:Offcanvas:Footer>
         </twig:Tabler:Offcanvas>
 
     Open with a trigger: data-bs-toggle="offcanvas" data-bs-target="#<id>".
@@ -20,16 +21,22 @@
       placement    — start (default) | end | top | bottom
       title        — optional title; mirrored by the `header` block
       text         — optional body text; mirrored by the `body` block
+      footer       — optional footer text; mirrored by the `footer` block
       dismissible  — show a close button in the header (default true)
       scrollable   — allow body scroll while open (data-bs-scroll)
+      narrow       — narrower panel, 20rem (offcanvas-narrow)
+      floating     — gap between the panel and the viewport edges (offcanvas-floating, Tabler 1.6+)
 #}
 {% props
     id = null,
     placement = 'start',
     title = null,
     text = null,
+    footer = null,
     dismissible = true,
     scrollable = false,
+    narrow = false,
+    floating = false,
 %}
 
 {% set offcanvas = html_cva(
@@ -41,10 +48,12 @@
             top: 'offcanvas-top',
             bottom: 'offcanvas-bottom',
         },
+        narrow: {true: 'offcanvas-narrow', false: ''},
+        floating: {true: 'offcanvas-floating', false: ''},
     },
 ) %}
 
-<div class="{{ offcanvas.apply({placement: placement}, attributes.render('class')) }}" tabindex="-1"{% if id is not null %} id="{{ id }}"{% endif %}{% if scrollable %} data-bs-scroll="true"{% endif %} {{ attributes.without('class', 'id') }}>
+<div class="{{ offcanvas.apply({placement: placement, narrow: narrow, floating: floating}, attributes.render('class')) }}" tabindex="-1"{% if id is not null %} id="{{ id }}"{% endif %}{% if scrollable %} data-bs-scroll="true"{% endif %} {{ attributes.without('class', 'id') }}>
     {% block content %}
         {% block header %}
             {%- if title is not null -%}
@@ -56,6 +65,9 @@
         {% endblock %}
         {% block body %}
             {%- if text is not null -%}<twig:Tabler:Offcanvas:Body>{{ text }}</twig:Tabler:Offcanvas:Body>{%- endif -%}
+        {% endblock %}
+        {% block footer %}
+            {%- if footer is not null -%}<twig:Tabler:Offcanvas:Footer>{{ footer }}</twig:Tabler:Offcanvas:Footer>{%- endif -%}
         {% endblock %}
     {% endblock %}
 </div>

@@ -25,7 +25,7 @@
 ) %}
 
 <li class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
-    <a class="nav-link" href="{{ href ?? '#' }}">
+    <a class="nav-link" href="{{ href ?? '#' }}"{% if active %} aria-current="page"{% endif %}>
         {%- if icon is not null -%}<span class="nav-link-icon"><twig:Tabler:Icon name="{{ icon }}" /></span>{%- endif -%}
         <span class="nav-link-title">{{ label|raw }}</span>
     </a>

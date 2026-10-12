@@ -44,4 +44,17 @@ final class AvatarTest extends ComponentTestCase
 
         self::assertHtmlSame('<span class="avatar avatar-sm me-2">CD</span>', $html);
     }
+
+    public function testSquareShape(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Avatar square>JL</twig:Tabler:Avatar>');
+
+        self::assertHtmlSame('<span class="avatar avatar-square">JL</span>', $html);
+    }
+
+    public function testSmallestAndLargestSizes(): void
+    {
+        self::assertHtmlSame('<span class="avatar avatar-xxs">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="xxs">JL</twig:Tabler:Avatar>'));
+        self::assertHtmlSame('<span class="avatar avatar-2xl">JL</span>', $this->renderComponent('<twig:Tabler:Avatar size="2xl">JL</twig:Tabler:Avatar>'));
+    }
 }

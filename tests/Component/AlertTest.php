@@ -204,4 +204,11 @@ final class AlertTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testMinorAddsQuietStyle(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Alert variant="info" minor />');
+
+        self::assertHtmlSame('<div class="alert alert-info alert-minor" role="alert"></div>', $html);
+    }
 }

@@ -76,7 +76,7 @@ final class CompositionComponentsTest extends ComponentTestCase
             TWIG);
 
         self::assertHtmlSame(
-            '<button class="switch-icon switch-icon-fade" data-bs-toggle="switch-icon">'
+            '<button type="button" class="switch-icon switch-icon-fade" data-bs-toggle="switch-icon" aria-pressed="false">'
             . '<span class="switch-icon-a">A</span>'
             . '<span class="switch-icon-b">B</span>'
             . '</button>',
@@ -89,7 +89,7 @@ final class CompositionComponentsTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:SwitchIcon iconA="moon" iconB="sun" />');
 
         self::assertHtmlSame(
-            '<button class="switch-icon" data-bs-toggle="switch-icon">'
+            '<button type="button" class="switch-icon" data-bs-toggle="switch-icon" aria-pressed="false">'
             . '<span class="switch-icon-a"><i class="ti ti-moon"></i></span>'
             . '<span class="switch-icon-b"><i class="ti ti-sun"></i></span>'
             . '</button>',
@@ -166,6 +166,19 @@ final class CompositionComponentsTest extends ComponentTestCase
             . '</div></div>'
             . '</li>'
             . '</ul>',
+            $html,
+        );
+    }
+
+    public function testSwitchIconActiveAndLoading(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:SwitchIcon animation="slide-end" active loading aria-label="Star" />');
+
+        self::assertHtmlSame(
+            '<button type="button" class="switch-icon switch-icon-slide-end active switch-icon-loading" data-bs-toggle="switch-icon" aria-pressed="true" aria-busy="true" aria-label="Star">'
+            . '<span class="switch-icon-a"></span>'
+            . '<span class="switch-icon-b"></span>'
+            . '</button>',
             $html,
         );
     }

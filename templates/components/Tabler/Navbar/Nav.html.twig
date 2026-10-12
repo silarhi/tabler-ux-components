@@ -6,6 +6,9 @@
             <twig:Tabler:Navbar:Item href="/" active>Home</twig:Tabler:Navbar:Item>
         </twig:Tabler:Navbar:Nav>
 
+    Trailing entries go in the `side` block, rendered after the list inside the
+    collapse panel (see <twig:Tabler:Navbar:Side>).
+
     Props:
       collapse  — wrap in `.collapse.navbar-collapse` (pairs with a Toggler)
       id        — id targeted by the toggler (required when `collapse`)
@@ -17,8 +20,10 @@
 
 {%- set list -%}<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{% block content %}{% endblock %}</ul>{%- endset -%}
 
+{%- set side -%}{% block side %}{% endblock %}{%- endset -%}
+
 {% if collapse %}
-    <div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{{ list|raw }}</div>
+    <div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{{ list|raw }}{{ side|raw }}</div>
 {% else %}
-    {{ list|raw }}
+    {{ list|raw }}{{ side|raw }}
 {% endif %}

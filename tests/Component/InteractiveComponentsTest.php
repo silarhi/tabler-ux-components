@@ -126,4 +126,17 @@ final class InteractiveComponentsTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testOffcanvasNarrowFloatingWithFooter(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Offcanvas id="filters" narrow floating text="Body" footer="Actions" />');
+
+        self::assertHtmlSame(
+            '<div class="offcanvas offcanvas-start offcanvas-narrow offcanvas-floating" tabindex="-1" id="filters">'
+            . '<div class="offcanvas-body">Body</div>'
+            . '<div class="offcanvas-footer">Actions</div>'
+            . '</div>',
+            $html,
+        );
+    }
 }

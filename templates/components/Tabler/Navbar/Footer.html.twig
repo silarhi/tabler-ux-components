@@ -1,0 +1,12 @@
+{#
+    Navbar footer — the zone pinned to the bottom of a vertical sidebar, below
+    the scrolling nav (`.navbar-footer`, Tabler 1.5+). Typically a user block.
+
+    Usage (inside a <twig:Tabler:Navbar vertical>):
+        <twig:Tabler:Navbar:Footer>
+            <twig:Tabler:Navbar:Item href="/profile" icon="user">Jane Doe</twig:Tabler:Navbar:Item>
+        </twig:Tabler:Navbar:Footer>
+#}
+<div {{ attributes.defaults({class: 'navbar-footer'}) }}>
+    <ul class="navbar-nav">{%- block content %}{% endblock -%}</ul>
+</div>

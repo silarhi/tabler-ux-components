@@ -1,0 +1,9 @@
+{#
+    Navbar section title — a label grouping the items that follow it in a
+    vertical sidebar (`.nav-section-title`, Tabler 1.5+). A folded sidebar shows
+    it as a short separator; a horizontal navbar hides it.
+
+    Usage (inside <twig:Tabler:Navbar:Nav>):
+        <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
+#}
+<li {{ attributes.defaults({class: 'nav-section-title'}) }}>{%- block content %}{% endblock -%}</li>

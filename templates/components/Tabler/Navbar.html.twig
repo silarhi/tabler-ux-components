@@ -1,7 +1,7 @@
 {#
-    Tabler Navbar — a responsive navigation header.
+    Tabler Navbar — a responsive navigation header, or a vertical sidebar.
 
-    Composed:
+    Horizontal (composed):
         <twig:Tabler:Navbar>
             <twig:Tabler:Navbar:Toggler target="navbar-menu" />
             <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
@@ -11,15 +11,35 @@
             </twig:Tabler:Navbar:Nav>
         </twig:Tabler:Navbar>
 
+    Vertical sidebar (renders an <aside>, folded into an icon rail that unfolds on hover):
+        <twig:Tabler:Navbar vertical expand="lg" folded="hover">
+            <twig:Tabler:Navbar:Toggler target="sidebar-menu" />
+            <twig:Tabler:Navbar:Brand href="/">My App</twig:Tabler:Navbar:Brand>
+            <twig:Tabler:Navbar:Nav id="sidebar-menu" collapse>
+                <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
+                <twig:Tabler:Navbar:Item href="/" icon="home" active>Home</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Nav>
+            <twig:Tabler:Navbar:Footer>
+                <twig:Tabler:Navbar:Item href="/profile" icon="user">Profile</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Footer>
+        </twig:Tabler:Navbar>
+
     Props:
       expand     — sm | md (default) | lg | xl | none (when the menu un-collapses)
       dark       — dark theme (navbar-dark)
-      container  — container width suffix: xl (default) | fluid | lg | …
+      container  — container width suffix: xl | fluid | lg | … (default: xl, or fluid when vertical)
+      vertical   — vertical sidebar (navbar-vertical), rendered as an <aside>
+      folded     — vertical only: fold into an icon rail; `hover` unfolds it on hover/focus
+                   (navbar-folded / navbar-folded-hover, Tabler 1.5+)
+      floating   — gap between the navbar and the edges around it (navbar-floating, Tabler 1.6+)
 #}
 {% props
     expand = 'md',
     dark = false,
-    container = 'xl',
+    container = null,
+    vertical = false,
+    folded = false,
+    floating = false,
 %}
 
 {% set navbar = html_cva(
@@ -33,11 +53,15 @@
             none: '',
         },
         dark: {true: 'navbar-dark', false: ''},
+        vertical: {true: 'navbar-vertical', false: ''},
+        folded: {true: 'navbar-folded', hover: 'navbar-folded-hover', false: ''},
+        floating: {true: 'navbar-floating', false: ''},
     },
 ) %}
 
-<header class="{{ navbar.apply({expand: expand, dark: dark}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    <div class="container-{{ container }}">
+{% set tag = vertical ? 'aside' : 'header' %}
+<{{ tag }} class="{{ navbar.apply({expand: expand, dark: dark, vertical: vertical, folded: folded, floating: floating}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    <div class="container-{{ container ?? (vertical ? 'fluid' : 'xl') }}">
         {% block content %}{% endblock %}
     </div>
-</header>
+</{{ tag }}>
