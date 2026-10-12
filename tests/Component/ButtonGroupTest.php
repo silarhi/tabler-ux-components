@@ -105,4 +105,14 @@ final class ButtonGroupTest extends ComponentTestCase
             $html,
         );
     }
+
+    public function testToggleLabelAttributesGoToTheLabel(): void
+    {
+        // A tooltip belongs on the visible label; everything else stays on the focusable input
+        self::assertHtmlSame(
+            '<input type="radio" class="btn-check" id="bold" autocomplete="off" aria-label="Bold">'
+            . '<label class="btn btn-icon" for="bold" title="Bold (Ctrl+B)" data-bs-toggle="tooltip">B</label>',
+            $this->renderComponent('<twig:Tabler:ButtonGroup:Toggle id="bold" class="btn-icon" aria-label="Bold" label:title="Bold (Ctrl+B)" label:data-bs-toggle="tooltip">B</twig:Tabler:ButtonGroup:Toggle>'),
+        );
+    }
 }

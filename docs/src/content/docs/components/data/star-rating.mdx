@@ -45,8 +45,9 @@ so it does not rely on color alone:
 ## Composed
 
 The tag content replaces the stars: place one `StarRating:Star` per star and color some with `active`. `value`,
-`max`, `variant`, `icon` and `filled` are then ignored, so give each star its own `variant`, `icon` and `filled`. Always pass an
-`aria-label`: the default one is built from `value` and `max` and would read "0 out of 5".
+`max`, `variant`, `icon` and `filled` are then ignored, so give each star its own `variant`, `icon` and `filled`. A
+composed rating gets no default label, since it cannot count the stars: pass an `aria-label`, and it gets
+`role="img"`.
 
 <Example name="star-rating/composed" />
 

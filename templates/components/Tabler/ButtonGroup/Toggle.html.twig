@@ -10,8 +10,10 @@
 
         <twig:Tabler:ButtonGroup:Toggle id="bold" type="checkbox" variant="primary" appearance="outline">Bold</twig:Tabler:ButtonGroup:Toggle>
 
-    The `class` attribute goes on the label (the visible button); every other
-    attribute (data-*, required, form, …) goes on the input.
+    The `class` attribute goes on the label (the visible button), and so do the
+    attributes prefixed with `label:` (label:title, label:data-bs-toggle…, e.g. for
+    a tooltip); every other attribute (data-*, required, form, aria-label, …) goes
+    on the input, which takes the focus.
 
     Props:
       id          — input id, referenced by the label's `for` (required)
@@ -70,7 +72,8 @@
 ) %}
 
 <input type="{{ type }}" class="btn-check" id="{{ id }}"{% if name is not null %} name="{{ name }}"{% endif %}{% if value is not null %} value="{{ value }}"{% endif %}{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %} {{ attributes.defaults({autocomplete: 'off'}).without('class', 'type', 'id') }}>
-<label class="{{ button.apply({appearance: appearance, variant: variant}, attributes.render('class')) }}" for="{{ id }}">
+{% set label_attributes = attributes.nested('label') %}
+<label class="{{ button.apply({appearance: appearance, variant: variant}, attributes.render('class'), label_attributes.render('class')) }}" for="{{ id }}" {{ label_attributes.without('class', 'for') }}>
     {%- block content %}{{ label }}{% endblock -%}
 </label>
 {% endapply ~%}

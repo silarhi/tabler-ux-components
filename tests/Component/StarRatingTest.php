@@ -81,4 +81,19 @@ final class StarRatingTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:StarRating:Star active variant="red" icon="heart" filled />'),
         );
     }
+
+    public function testComposedRatingGetsNoDefaultLabel(): void
+    {
+        // Composed stars ignore value and max: the default label would have read "0 out of 5"
+        $stars = '<span class="star text-yellow"><i class="ti ti-star" aria-hidden="true"></i></span><span class="star"><i class="ti ti-star" aria-hidden="true"></i></span>';
+
+        self::assertHtmlSame(
+            '<div class="stars">' . $stars . '</div>',
+            $this->renderComponent('<twig:Tabler:StarRating><twig:Tabler:StarRating:Star active /><twig:Tabler:StarRating:Star /></twig:Tabler:StarRating>'),
+        );
+        self::assertHtmlSame(
+            '<div class="stars" role="img" aria-label="1 out of 2">' . $stars . '</div>',
+            $this->renderComponent('<twig:Tabler:StarRating aria-label="1 out of 2"><twig:Tabler:StarRating:Star active /><twig:Tabler:StarRating:Star /></twig:Tabler:StarRating>'),
+        );
+    }
 }

@@ -3,6 +3,8 @@
 
     The row gets role="img" and an "N out of M" `aria-label` (pass your own
     `aria-label` to override it). Keep the score visible in text next to it too.
+    Composed stars ignore `value` and `max`, so a composed rating gets no default
+    label: pass an `aria-label` (it then gets role="img").
     The interactive star rating relies on a third-party library and is not
     covered.
 
@@ -35,14 +37,19 @@
     filled = false,
 %}
 
-<div {{ attributes.defaults({class: 'stars', role: 'img', 'aria-label': value ~ ' out of ' ~ max}) }}>
-    {%- block content -%}
-        {#- 1..0 counts down to [1, 0], so a zero `max` must skip the loop -#}
-        {%- if max > 0 -%}
-            {%- for i in 1..max -%}
-                <twig:Tabler:StarRating:Star active="{{ i <= value }}" variant="{{ variant }}" icon="{{ icon }}" filled="{{ filled }}" />
-            {%- endfor -%}
-        {%- endif -%}
-    {%- endblock -%}
-</div>
+{%- set default_stars -%}
+    {#- 1..0 counts down to [1, 0], so a zero `max` must skip the loop -#}
+    {%- if max > 0 -%}
+        {%- for i in 1..max -%}
+            <twig:Tabler:StarRating:Star active="{{ i <= value }}" variant="{{ variant }}" icon="{{ icon }}" filled="{{ filled }}" />
+        {%- endfor -%}
+    {%- endif -%}
+{%- endset -%}
+{%- set stars -%}{%- block content -%}{{ default_stars }}{%- endblock -%}{%- endset -%}
+{#- Composed stars ignore `value` and `max`: an "N out of M" label built from them would be wrong, so a composed
+    rating only gets role="img" when it has its own aria-label -#}
+{% set composed = stars != default_stars %}
+{% set labelled = 'aria-label' in attributes.all|keys %}
+
+<div {{ attributes.defaults({class: 'stars'}|merge(labelled or not composed ? {role: 'img'} : {})|merge(composed ? {} : {'aria-label': value ~ ' out of ' ~ max})) }}>{{ stars }}</div>
 {% endapply ~%}
