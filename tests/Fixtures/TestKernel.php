@@ -53,16 +53,6 @@ final class TestKernel extends Kernel
         return dirname(__DIR__, 2);
     }
 
-    public function getCacheDir(): string
-    {
-        return sys_get_temp_dir() . '/tabler-ux-components/cache/' . $this->getEnvironment();
-    }
-
-    public function getLogDir(): string
-    {
-        return sys_get_temp_dir() . '/tabler-ux-components/log';
-    }
-
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $container->extension('framework', [
