@@ -19,6 +19,7 @@ $config->setCacheFile(__DIR__ . '/var/tools/.twig-cs-fixer.cache');
 $finder = new TwigCsFixer\File\Finder();
 $finder->in([
     __DIR__ . '/templates',
+    __DIR__ . '/docs/examples',
 ]);
 $config->setRuleset($ruleset);
 

@@ -7,6 +7,7 @@ Contributions are welcome! Bug reports and feature requests go to the
 
 ```bash
 composer install
+yarn install # Git hooks: lint-staged formats the staged files on commit
 ```
 
 ## Quality checks
