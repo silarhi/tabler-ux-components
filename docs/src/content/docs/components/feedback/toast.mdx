@@ -19,8 +19,8 @@ Drop the header for a one-line message, and put the close button next to the bod
 
 ## Placement
 
-The component does not position the toast. Wrap toasts in a `.toast-container` with position utilities to pin them
-to a corner of the page; the container also stacks them:
+The toast does not position itself. Wrap toasts in a `Toast:Container`: it stacks them, and its `placement` pins the
+stack to a corner or the center of the viewport. Without `placement`, the container stays in the flow of its parent:
 
 <Example name="toast/placement" minHeight="20rem" />
 
@@ -46,8 +46,18 @@ Other attributes go to the root `<div role="alert">`, such as the `id` a trigger
 
 ## Sub-components
 
-| Component      | Renders                                                                                |
-| -------------- | -------------------------------------------------------------------------------------- |
-| `Toast:Header` | `<div class="toast-header">`                                                           |
-| `Toast:Body`   | `<div class="toast-body">`                                                             |
-| `Toast:Close`  | The close button, `<button class="ms-2 btn-close" data-bs-dismiss="toast">` (needs JS) |
+| Component         | Renders                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| `Toast:Header`    | `<div class="toast-header">`                                                           |
+| `Toast:Body`      | `<div class="toast-body">`                                                             |
+| `Toast:Close`     | The close button, `<button class="ms-2 btn-close" data-bs-dismiss="toast">` (needs JS) |
+| `Toast:Container` | `<div class="toast-container">`: stacks toasts, see its props below                    |
+
+### `Toast:Container` props
+
+| Prop        | Type    | Default | Description                                                                                    |
+| ----------- | ------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `placement` | string? | `null`  | `top-start` `top-center` `top-end` `middle-center` `bottom-start` `bottom-center` `bottom-end` |
+
+With a `placement`, the container gets `position-fixed p-3` and the position utilities of that place (for instance
+`top-0 end-0`). Other attributes go to the container `<div>`.

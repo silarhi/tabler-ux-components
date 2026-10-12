@@ -16,11 +16,35 @@ Combine them freely:
 
 <Example name="table/styles" />
 
+`size="sm"` tightens the cell padding, `borderless` removes the borders, and `nowrap` keeps the cell text on one line.
+`transparent` removes the background of the header cells, and `center` centers the cells horizontally:
+
+<Example name="table/compact" />
+
 ## Vertical centering
 
 `vcenter` centers the cells vertically, for rows with avatars or buttons:
 
 <Example name="table/vcenter" />
+
+## Stacked rows on phones
+
+`mobile` stacks each row into a block below a breakpoint (`table-mobile-{breakpoint}`): `sm`, `md`, `lg`, `xl` or
+`xxl`. The header row is hidden, and each cell is labelled by its `data-label` attribute. Narrow the window to see it:
+
+<Example name="table/mobile" />
+
+## Sortable headers and selectable rows
+
+`Table:Sort` renders a header button with a sort arrow (`table-sort`), to put in a `<th>`. `field` is rendered as
+`data-sort`, and `direction` (`asc` or `desc`) marks the current sort. The classes only style the header: sort the rows
+yourself, e.g. with List.js, which reads `data-sort`, or with a link that reloads the page sorted.
+
+`selectable` highlights the rows whose `Table:Check` is checked (`table-selectable`), with CSS only. `Table:Check`
+renders the row checkbox; give each one an `aria-label` naming its row. A "select all" checkbox in the header needs
+your own JavaScript:
+
+<Example name="table/selectable" />
 
 ## In a card
 
@@ -37,12 +61,44 @@ bare `<table>` (see [boolean props](/getting-started/composition/#boolean-props)
 
 ## Props
 
-| Prop         | Type | Default | Description                                         |
-| ------------ | ---- | ------- | --------------------------------------------------- |
-| `responsive` | bool | `true`  | Wraps the table in `<div class="table-responsive">` |
-| `vcenter`    | bool | `false` | Centers cells vertically (`table-vcenter`)          |
-| `striped`    | bool | `false` | Zebra rows (`table-striped`)                        |
-| `hover`      | bool | `false` | Highlights the hovered row (`table-hover`)          |
-| `bordered`   | bool | `false` | Borders on every cell (`table-bordered`)            |
+| Prop          | Type    | Default | Description                                                                         |
+| ------------- | ------- | ------- | ----------------------------------------------------------------------------------- |
+| `responsive`  | bool    | `true`  | Wraps the table in `<div class="table-responsive">`                                 |
+| `vcenter`     | bool    | `false` | Centers cells vertically (`table-vcenter`)                                          |
+| `center`      | bool    | `false` | Centers cells horizontally (`table-center`)                                         |
+| `striped`     | bool    | `false` | Zebra rows (`table-striped`)                                                        |
+| `hover`       | bool    | `false` | Highlights the hovered row (`table-hover`)                                          |
+| `bordered`    | bool    | `false` | Borders on every cell (`table-bordered`)                                            |
+| `borderless`  | bool    | `false` | No borders (`table-borderless`)                                                     |
+| `transparent` | bool    | `false` | No background on the header cells (`table-transparent`)                             |
+| `nowrap`      | bool    | `false` | Cell text does not wrap (`table-nowrap`)                                            |
+| `selectable`  | bool    | `false` | Highlights the rows whose `Table:Check` is checked (`table-selectable`)             |
+| `size`        | string  | `'md'`  | `sm` `md`: `sm` tightens the cell padding (`table-sm`)                              |
+| `mobile`      | string? | `null`  | `sm` `md` `lg` `xl` `xxl`: stacks the rows below this breakpoint (`table-mobile-*`) |
 
 Other attributes go to the `<table>`.
+
+`Table:Sort`:
+
+| Prop        | Type    | Default | Description                                    |
+| ----------- | ------- | ------- | ---------------------------------------------- |
+| `field`     | string? | `null`  | Sort key, rendered as `data-sort`              |
+| `direction` | string? | `null`  | `asc` `desc`: marks the current sort direction |
+
+Other attributes go to the `<button class="table-sort">`. `Table:Check` has no props: its attributes (`name`, `value`,
+`checked`, `aria-label`…) go to the `<input type="checkbox">`.
+
+## Sub-components
+
+| Component     | Renders                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------- |
+| `Table:Sort`  | `<button type="button" class="table-sort">`: a sortable header                            |
+| `Table:Check` | `<input type="checkbox" class="form-check-input table-selectable-check">`: a row checkbox |
+
+## Blocks
+
+| Block     | Default                                                   |
+| --------- | --------------------------------------------------------- |
+| `content` | Empty: the children, the `<thead>` and `<tbody>`, go here |
+
+`Table:Sort` has an empty `content` block too, for the header label.

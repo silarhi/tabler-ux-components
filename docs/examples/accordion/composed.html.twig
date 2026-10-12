@@ -1,0 +1,38 @@
+<twig:Tabler:Accordion id="api-docs">
+    <twig:Tabler:Accordion:Item>
+        <twig:Tabler:Accordion:Header>
+            <twig:Tabler:Accordion:Button target="api-docs-auth" open>
+                <twig:block name="icon">
+                    <twig:Tabler:Accordion:Icon><twig:Tabler:Icon name="key" aria-hidden="true" /></twig:Tabler:Accordion:Icon>
+                </twig:block>
+                Authentication
+                <twig:block name="toggle">
+                    <twig:Tabler:Accordion:Toggle plus />
+                </twig:block>
+            </twig:Tabler:Accordion:Button>
+        </twig:Tabler:Accordion:Header>
+        <twig:Tabler:Accordion:Collapse id="api-docs-auth" parent="api-docs" open>
+            <twig:Tabler:Accordion:Body>
+                Send the token in the <code>Authorization</code> header: <code>Bearer &lt;token&gt;</code>.
+            </twig:Tabler:Accordion:Body>
+        </twig:Tabler:Accordion:Collapse>
+    </twig:Tabler:Accordion:Item>
+    <twig:Tabler:Accordion:Item>
+        <twig:Tabler:Accordion:Header>
+            <twig:Tabler:Accordion:Button target="api-docs-limits">
+                <twig:block name="icon">
+                    <twig:Tabler:Accordion:Icon><twig:Tabler:Icon name="gauge" aria-hidden="true" /></twig:Tabler:Accordion:Icon>
+                </twig:block>
+                Rate limits
+                <twig:block name="toggle">
+                    <twig:Tabler:Accordion:Toggle plus />
+                </twig:block>
+            </twig:Tabler:Accordion:Button>
+        </twig:Tabler:Accordion:Header>
+        <twig:Tabler:Accordion:Collapse id="api-docs-limits" parent="api-docs">
+            <twig:Tabler:Accordion:Body>
+                600 requests per minute and per token. Over the limit, the API answers <code>429</code>.
+            </twig:Tabler:Accordion:Body>
+        </twig:Tabler:Accordion:Collapse>
+    </twig:Tabler:Accordion:Item>
+</twig:Tabler:Accordion>

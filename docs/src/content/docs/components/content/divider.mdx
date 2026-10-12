@@ -22,14 +22,22 @@ Separates two sections. Without children it renders a plain `<hr class="hr">`; w
 
 <Example name="divider/variants" />
 
-`position` and `variant` only apply to a labeled divider: the plain `<hr>` ignores them.
+## Spaceless
+
+`spaceless` replaces the vertical margin of a labeled divider with a small negative one (`hr-text-spaceless`), for a
+label between rows that already have padding, such as list items:
+
+<Example name="divider/spaceless" />
+
+`position`, `variant` and `spaceless` only apply to a labeled divider: the plain `<hr>` ignores them.
 
 ## Props
 
-| Prop       | Type    | Default    | Description                                                              |
-| ---------- | ------- | ---------- | ------------------------------------------------------------------------ |
-| `position` | string  | `'center'` | `start` `center` `end`: label alignment                                  |
-| `variant`  | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| Prop        | Type    | Default    | Description                                                              |
+| ----------- | ------- | ---------- | ------------------------------------------------------------------------ |
+| `position`  | string  | `'center'` | `start` `center` `end`: label alignment                                  |
+| `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `spaceless` | bool    | `false`    | No vertical margin around the label (`hr-text-spaceless`)                |
 
 Other attributes go to the root `<div class="hr-text">` or `<hr class="hr">`.
 

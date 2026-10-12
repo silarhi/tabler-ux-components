@@ -31,11 +31,26 @@ Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-s
 
 <Example name="avatar/shapes" />
 
-## Stacked list
+## Lists
 
-Group avatars with Tabler's `avatar-list` markup; `avatar-list-stacked` overlaps them:
+`Avatar:List` spaces several avatars in a row (`avatar-list`). `stacked` overlaps them (`avatar-list-stacked`), and
+`size` sizes every avatar in the list (`avatar-list-{size}`):
 
 <Example name="avatar/list" />
+
+## Brand mark
+
+`Avatar:Brand` adds a small mark in the bottom corner of an avatar (`avatar-brand`), e.g. the service an account comes
+from. Put it in the avatar, with an `image` or with markup such as an icon:
+
+<Example name="avatar/brand" />
+
+## Upload slot
+
+`Avatar:Upload` is a dashed empty slot for a picture that is not set yet (`avatar-upload`). It renders a
+`<button type="button">`, or an `<a>` with `href`. `icon` and `text` fill it; children replace both:
+
+<Example name="avatar/upload" />
 
 ## Props
 
@@ -47,10 +62,46 @@ Group avatars with Tabler's `avatar-list` markup; `avatar-list-stacked` overlaps
 | `square`  | bool    | `false` | Rounded corners instead of a circle (`avatar-square`)                                       |
 | `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
 
-Other attributes go to the root `<span class="avatar">`, except `style`, which is never forwarded.
+Other attributes go to the root `<span class="avatar">`. A `style` attribute is merged after the `background-image`,
+so it can still override it.
+
+`Avatar:List`:
+
+| Prop      | Type    | Default | Description                                                                     |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------- |
+| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                    |
+| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`) |
+
+`Avatar:Brand`:
+
+| Prop    | Type    | Default | Description                                                      |
+| ------- | ------- | ------- | ---------------------------------------------------------------- |
+| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style |
+
+A `style` attribute on `Avatar:Brand` is dropped; other attributes go to the `<span class="avatar-brand">`.
+
+`Avatar:Upload`:
+
+| Prop   | Type    | Default | Description                                                   |
+| ------ | ------- | ------- | ------------------------------------------------------------- |
+| `href` | string? | `null`  | Renders an `<a href>`; without it, a `<button type="button">` |
+| `size` | string  | `'md'`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`                          |
+| `icon` | string? | `null`  | Tabler icon name, rendered with `Icon`                        |
+| `text` | string? | `null`  | Label under the icon (`avatar-upload-text`)                   |
+
+## Sub-components
+
+| Component       | Renders                                                                 |
+| --------------- | ----------------------------------------------------------------------- |
+| `Avatar:List`   | `<div class="avatar-list">`: a row of avatars                           |
+| `Avatar:Brand`  | `<span class="avatar-brand">`: a mark in the bottom corner of an avatar |
+| `Avatar:Upload` | `<button class="avatar avatar-upload">` (or `<a>`): an empty slot       |
 
 ## Blocks
 
 | Block     | Default                                         |
 | --------- | ----------------------------------------------- |
 | `content` | Empty: the children (initials, an icon) go here |
+
+`Avatar:List` and `Avatar:Brand` have an empty `content` block for their children. The `content` block of
+`Avatar:Upload` renders the `icon` and the `text`.

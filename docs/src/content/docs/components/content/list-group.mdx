@@ -1,0 +1,141 @@
+---
+title: List group
+description: A series of related items in one bordered block, as links, buttons or plain rows.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A bordered block of rows: a settings menu, a list of records, an activity feed, the steps of an onboarding.
+
+<Example name="list-group/all-in-one" />
+
+`items` is an array of `{label, href?, active?, disabled?, variant?}`, rendered with `ListGroup:Item`. Pick the
+element of the root with `tag`, for the content: `nav` with link items for navigation, `ul` or `ol` for a list (the
+generated items then render as `<li>`), `div` (the default) otherwise.
+
+## Items
+
+`ListGroup:Item` renders an `<a>` when `href` is set and a `<button type="button">` when `button` is set. Both get
+the hover and focus style of an actionable item (`list-group-item-action`). Otherwise the item is a `<div>`. `action`
+forces that style on or off, here off for the last link:
+
+<Example name="list-group/elements" />
+
+In a `ul` or `ol` list group, set `tag="li"` on each item that is not a link nor a button:
+
+<Example name="list-group/list" />
+
+## Active and disabled
+
+`active` marks the current item, with `aria-current="true"`. `disabled` greys out an item the user cannot pick. A
+disabled link loses its `href` and gets `aria-disabled="true"` and `tabindex="-1"`, so it cannot be followed nor
+focused. A disabled button gets the `disabled` attribute.
+
+<Example name="list-group/states" />
+
+## Variants
+
+`variant` tints an item: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`.
+
+<Example name="list-group/variants" />
+
+## Numbered
+
+`numbered` numbers the items with a CSS counter. Use it on an `<ol>`, so the order is in the markup too:
+
+<Example name="list-group/numbered" />
+
+## Horizontal
+
+`horizontal` lays the items out in a row. As a bare attribute, the row applies at every width. With a breakpoint
+(`sm` `md` `lg` `xl` `xxl`), the items stack below it and line up from it:
+
+<Example name="list-group/horizontal" />
+
+## In a card
+
+`flush` removes the outer border and the rounded corners, so the list group sits edge to edge in a card. `card` gives
+the items the horizontal padding of the card (`card-list-group`). `ListGroup:Header` splits the list into sections,
+with a small uppercase label:
+
+<Example name="list-group/card" />
+
+## Hoverable
+
+`hoverable` highlights the row under the cursor, even for plain items, and reveals its `ListGroup:Actions`: a link on
+the trailing edge of the item. `show` keeps the action visible, here for a user already in the favorites. Lay the
+item out with a grid to put the action at the end:
+
+<Example name="list-group/hoverable" />
+
+`ListGroup:Actions` is hidden with `opacity` only: it stays in the tab order, and keyboard users reach it without
+seeing it. Never make it the only way to do something, and name it with an `aria-label`, since it usually holds an
+icon only.
+
+## Transparent
+
+`transparent` drops the background and the borders of the items, for a side menu. It also sets a negative horizontal
+margin of 1.25rem, the padding of a card body: in one, the labels line up with the rest of the content and the active
+highlight spans the full width of the card.
+
+<Example name="list-group/transparent" />
+
+## Props
+
+`ListGroup`:
+
+| Prop          | Type         | Default | Description                                                                                 |
+| ------------- | ------------ | ------- | ------------------------------------------------------------------------------------------- |
+| `tag`         | string       | `'div'` | `div` `ul` `ol` `nav`: the root element; generated items render as `<li>` in a `ul` or `ol` |
+| `items`       | array?       | `null`  | `{label, href?, active?, disabled?, variant?}` entries, rendered with `ListGroup:Item`      |
+| `flush`       | bool         | `false` | No outer border nor rounded corners (`list-group-flush`)                                    |
+| `hoverable`   | bool         | `false` | Highlights the row under the cursor and reveals its actions (`list-group-hoverable`)        |
+| `transparent` | bool         | `false` | No background nor borders on the items, for a side menu (`list-group-transparent`)          |
+| `numbered`    | bool         | `false` | Numbers the items (`list-group-numbered`)                                                   |
+| `horizontal`  | bool\|string | `false` | Items in a row: `true` for every width, or from a breakpoint `sm` `md` `lg` `xl` `xxl`      |
+| `card`        | bool         | `false` | Card padding on the items (`card-list-group`)                                               |
+
+Other attributes go to the root `<div class="list-group">` (or the `tag` set).
+
+`ListGroup:Item`:
+
+| Prop       | Type    | Default | Description                                                                             |
+| ---------- | ------- | ------- | --------------------------------------------------------------------------------------- |
+| `label`    | string? | `null`  | Item text                                                                               |
+| `href`     | string? | `null`  | Renders an `<a href>`                                                                   |
+| `button`   | bool    | `false` | Renders a `<button type="button">`                                                      |
+| `tag`      | string  | `'div'` | `div` `li`: the element of an item that is not a link nor a button                      |
+| `action`   | bool?   | `null`  | Hover and focus style (`list-group-item-action`): `true` for links and buttons          |
+| `active`   | bool    | `false` | Current item (`active`, `aria-current="true"`)                                          |
+| `disabled` | bool    | `false` | Item the user cannot pick (`disabled`): see [Active and disabled](#active-and-disabled) |
+| `variant`  | string? | `null`  | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`                |
+
+Other attributes go to the `<a>`, `<button>`, `<div>` or `<li class="list-group-item">`. To drop the hover style of a
+link, pass `action="{{ false }}"` (see [boolean props](/getting-started/composition/#boolean-props)).
+
+`ListGroup:Header` takes `tag`: `div` (the default) or `li`, in a `ul` or `ol` list group.
+
+`ListGroup:Actions`:
+
+| Prop   | Type    | Default | Description                                |
+| ------ | ------- | ------- | ------------------------------------------ |
+| `href` | string? | `null`  | Link target, `#` when not set              |
+| `show` | bool    | `false` | Always visible, not only on hover (`show`) |
+
+Other attributes go to the `<a class="list-group-item-actions">`.
+
+## Sub-components
+
+| Component           | Renders                                                                          |
+| ------------------- | -------------------------------------------------------------------------------- |
+| `ListGroup:Item`    | `<div class="list-group-item">`, or an `<a>`, a `<button>` or an `<li>`: one row |
+| `ListGroup:Header`  | `<div class="list-group-header">` (or `<li>`): a section label                   |
+| `ListGroup:Actions` | `<a href="#" class="list-group-item-actions">`: a trailing link, shown on hover  |
+
+## Blocks
+
+| Block     | Default                                                                      |
+| --------- | ---------------------------------------------------------------------------- |
+| `content` | A `ListGroup:Item` for each entry of the `items` prop: replace it to compose |
+
+The `content` block of `ListGroup:Item` holds its `label` prop: pass children for richer content.

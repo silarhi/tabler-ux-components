@@ -1,0 +1,10 @@
+<twig:Tabler:Card>
+    <twig:Tabler:Card:Header>
+        <twig:Tabler:Card:Title>Activity</twig:Tabler:Card:Title>
+    </twig:Tabler:Card:Header>
+    <twig:Tabler:Card:Body scrollable="{{ true }}" style="max-height: 10rem">
+        {% for hour in 9..17 %}
+            <p>{{ hour }}:00: invoice #2026-{{ 140 + hour }} sent to Acme Corp.</p>
+        {% endfor %}
+    </twig:Tabler:Card:Body>
+</twig:Tabler:Card>

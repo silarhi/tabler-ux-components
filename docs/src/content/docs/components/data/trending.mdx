@@ -1,0 +1,73 @@
+---
+title: Trending
+description: A change in a value, shown as the number, a direction arrow and a matching color on one line.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows how a value changed: the number, an arrow and a color, on one line. Use it next to a KPI in a card, in a table
+cell or in a sentence.
+
+<Example name="trending/all-in-one" />
+
+## Directions
+
+The direction comes from the sign of `value`. A positive value goes up (green, arrow up), a zero stays neutral (gray,
+minus), a negative value goes down (red, arrow down). `value` takes a number or a string, and renders as written, so
+keep the sign in it: `+12`, `-4.2`.
+
+<Example name="trending/directions" />
+
+## Units
+
+`unit` is the text after the value, `%` by default. Pass `unit=""` for a count, and start the unit with a space when
+it needs one: `unit=" ms"`.
+
+<Example name="trending/units" />
+
+## Forcing the direction
+
+`direction` (`up`, `down` or `neutral`) overrides the direction read from the value. Use it for an unsigned value, or
+for a value the sign check does not read: only a leading `-` reads as down and only a plain zero (`0`, `0.0`, `+0`)
+reads as neutral, so `0,0` or `N/A` read as up.
+
+<Example name="trending/direction" />
+
+## Accessibility
+
+The arrow is hidden from assistive technology (`aria-hidden="true"`). A visually-hidden prefix spells out the
+direction instead: "Increased by", "Decreased by" or "No change,". Screen readers read "Increased by 8%". Pass
+`label` to replace the prefix, for example with more context or a translation:
+
+<Example name="trending/label" />
+
+## In a card
+
+<Example name="trending/card" />
+
+## Composed
+
+Override the `icon` block to change the arrow, or the `value` block to format the value. Keep `aria-hidden="true"` on
+a replacement icon. Overriding `content` replaces all three blocks, the visually-hidden prefix included.
+
+<Example name="trending/composed" />
+
+## Props
+
+| Prop        | Type          | Default | Description                                                                         |
+| ----------- | ------------- | ------- | ----------------------------------------------------------------------------------- |
+| `value`     | number/string | `0`     | The change, rendered as written. Its sign sets the direction                        |
+| `unit`      | string        | `'%'`   | Text after the value, `''` for none                                                 |
+| `direction` | string?       | `null`  | `up`, `down` or `neutral`, to override the direction read from `value`              |
+| `label`     | string?       | `null`  | Visually-hidden prefix, `Increased by`, `Decreased by` or `No change,` when not set |
+
+Other attributes go to the root `<span>`, for example `class="h2 m-0"` for a bigger trend.
+
+## Blocks
+
+| Block     | Default                                                                    |
+| --------- | -------------------------------------------------------------------------- |
+| `label`   | The visually-hidden prefix                                                 |
+| `value`   | `value` followed by `unit`                                                 |
+| `icon`    | `arrow-up`, `minus` or `arrow-down` icon, hidden from assistive technology |
+| `content` | `label`, `value` and `icon`: replace it to compose freely                  |

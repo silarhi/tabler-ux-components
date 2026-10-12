@@ -12,19 +12,20 @@ Bootstrap 5 modal markup, opened by a trigger with `data-bs-toggle="modal"` and 
 
 ## Composed
 
-The sub-components take over for a form or custom actions. Attributes go to the root `<div class="modal">`: add
-`fade` for the open animation, and `modal-blur` to blur the page behind.
+The sub-components take over for a form or custom actions. `blur` blurs the page behind the modal (`modal-blur`).
+Attributes go to the root `<div class="modal">`: add `fade` for the open animation.
 
 <Example name="modal/composed" minHeight="20rem" />
 
 ## Size, position and status
 
-`size` sets the width of the dialog, `centered` centers it vertically, and `status` adds a colored bar at its top:
+`size` sets the width of the dialog (`fullscreen` covers the whole viewport), `centered` centers it vertically, and
+`status` adds a colored bar at its top:
 
 <Example name="modal/status" minHeight="18rem" />
 
-The status bar is rendered inside the `content` block: replacing `content` (by passing children) drops it, so add a
-`Modal:Status` yourself:
+The status bar is rendered outside the `content` block, so a composed modal keeps it: set `status` and pass the
+sub-components as children:
 
 <Example name="modal/composed-status" minHeight="20rem" />
 
@@ -48,18 +49,19 @@ footer button is the only way out:
 
 ## Props
 
-| Prop             | Type    | Default | Description                                                      |
-| ---------------- | ------- | ------- | ---------------------------------------------------------------- |
-| `id`             | string? | `null`  | DOM id targeted by triggers (`data-bs-target="#id"`)             |
-| `size`           | string  | `'md'`  | `sm` `md` `lg` `xl` `full` (`modal-full-width`)                  |
-| `centered`       | bool    | `false` | Vertically centered dialog (`modal-dialog-centered`)             |
-| `scrollable`     | bool    | `false` | Scrolls the body instead of the page (`modal-dialog-scrollable`) |
-| `status`         | string? | `null`  | Color of the status bar, rendered with `Modal:Status`            |
-| `title`          | string? | `null`  | Rendered with `Modal:Header` and `Modal:Title`                   |
-| `text`           | string? | `null`  | Rendered with `Modal:Body`                                       |
-| `footer`         | string? | `null`  | Rendered with `Modal:Footer`                                     |
-| `dismissible`    | bool    | `true`  | Close button in the header rendered from `title` (`Modal:Close`) |
-| `staticBackdrop` | bool    | `false` | The backdrop and the Escape key do not close the modal           |
+| Prop             | Type    | Default | Description                                                                       |
+| ---------------- | ------- | ------- | --------------------------------------------------------------------------------- |
+| `id`             | string? | `null`  | DOM id targeted by triggers (`data-bs-target="#id"`)                              |
+| `size`           | string  | `'md'`  | `sm` `md` `lg` `xl` `full` (`modal-full-width`) `fullscreen` (`modal-fullscreen`) |
+| `centered`       | bool    | `false` | Vertically centered dialog (`modal-dialog-centered`)                              |
+| `scrollable`     | bool    | `false` | Scrolls the body instead of the page (`modal-dialog-scrollable`)                  |
+| `status`         | string? | `null`  | Color of the status bar, rendered with `Modal:Status`                             |
+| `title`          | string? | `null`  | Rendered with `Modal:Header` and `Modal:Title`                                    |
+| `text`           | string? | `null`  | Rendered with `Modal:Body`                                                        |
+| `footer`         | string? | `null`  | Rendered with `Modal:Footer`                                                      |
+| `dismissible`    | bool    | `true`  | Close button in the header rendered from `title` (`Modal:Close`)                  |
+| `staticBackdrop` | bool    | `false` | The backdrop and the Escape key do not close the modal                            |
+| `blur`           | bool    | `false` | Blurs the page behind the backdrop (`modal-blur`)                                 |
 
 Other attributes go to the root `<div class="modal" tabindex="-1">`.
 
@@ -78,9 +80,9 @@ Other attributes go to the root `<div class="modal" tabindex="-1">`.
 
 ## Blocks
 
-| Block     | Default                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------- |
-| `header`  | `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set      |
-| `body`    | `Modal:Body` with the `text` prop, when set                                                        |
-| `footer`  | `Modal:Footer` with the `footer` prop, when set                                                    |
-| `content` | `Modal:Status` (when `status` is set), `header`, `body` and `footer`: replace it to compose freely |
+| Block     | Default                                                                                       |
+| --------- | --------------------------------------------------------------------------------------------- |
+| `header`  | `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set |
+| `body`    | `Modal:Body` with the `text` prop, when set                                                   |
+| `footer`  | `Modal:Footer` with the `footer` prop, when set                                               |
+| `content` | `header`, `body` and `footer`: replace it to compose freely; the status bar stays outside it  |

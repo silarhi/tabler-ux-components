@@ -18,7 +18,7 @@ Renders a `<button type="button">`, or an `<a role="button">` when `href` is set
 ## Appearances
 
 `appearance` switches between a filled background, an `outline` border and a `ghost` button that only shows its
-background on hover:
+background on hover. `link` looks like a link (`btn-link`) and ignores `variant`:
 
 <Example name="button/appearances" />
 
@@ -32,6 +32,10 @@ Put an icon before the label, with the `icon` class so Tabler spaces it. `iconOn
 the button an `aria-label`.
 
 <Example name="button/icons" />
+
+`animateIcon` animates the icon when the button is hovered:
+
+<Example name="button/animate-icon" />
 
 ## Shapes
 
@@ -57,6 +61,12 @@ default:
 
 <Example name="button/block" />
 
+## Floating
+
+`floating` pins the button to the bottom corner of the viewport (`btn-floating`), for the main action of a page:
+
+<Example name="button/floating" minHeight="8rem" />
+
 ## Confetti
 
 Confetti needs no component: `tabler.js` binds it to any element with `data-bs-toggle="confetti"`, and attributes are
@@ -66,18 +76,20 @@ forwarded to the button:
 
 ## Props
 
-| Prop         | Type    | Default     | Description                                                                                   |
-| ------------ | ------- | ----------- | --------------------------------------------------------------------------------------------- |
-| `variant`    | string  | `'primary'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`  |
-| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                                                    |
-| `size`       | string  | `'md'`      | `sm` `md` `lg` `xl`                                                                           |
-| `href`       | string? | `null`      | Renders `<a href role="button">` instead of `<button>`                                        |
-| `type`       | string  | `'button'`  | `button` `submit` `reset`, ignored for links                                                  |
-| `pill`       | bool    | `false`     | Fully rounded corners (`btn-pill`)                                                            |
-| `square`     | bool    | `false`     | No border radius (`btn-square`)                                                               |
-| `iconOnly`   | bool    | `false`     | Icon-only button (`btn-icon`)                                                                 |
-| `loading`    | bool    | `false`     | Spinner instead of the label (`btn-loading`)                                                  |
-| `block`      | bool    | `false`     | Full width (`w-100`)                                                                          |
-| `disabled`   | bool    | `false`     | `disabled` attribute on `<button>`; `disabled` class, `aria-disabled` and `tabindex` on `<a>` |
+| Prop          | Type    | Default     | Description                                                                                     |
+| ------------- | ------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| `variant`     | string  | `'primary'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`    |
+| `appearance`  | string  | `'filled'`  | `filled` `outline` `ghost` `link` (`btn-link`, ignores `variant`)                               |
+| `size`        | string  | `'md'`      | `sm` `md` `lg` `xl`                                                                             |
+| `href`        | string? | `null`      | Renders `<a href role="button">` instead of `<button>`                                          |
+| `type`        | string  | `'button'`  | `button` `submit` `reset`, ignored for links                                                    |
+| `pill`        | bool    | `false`     | Fully rounded corners (`btn-pill`)                                                              |
+| `square`      | bool    | `false`     | No border radius (`btn-square`)                                                                 |
+| `iconOnly`    | bool    | `false`     | Icon-only button (`btn-icon`)                                                                   |
+| `loading`     | bool    | `false`     | Spinner instead of the label (`btn-loading`)                                                    |
+| `block`       | bool    | `false`     | Full width (`w-100`)                                                                            |
+| `disabled`    | bool    | `false`     | `disabled` attribute on `<button>`; `disabled` class, `aria-disabled` and `tabindex` on `<a>`   |
+| `floating`    | bool    | `false`     | Pinned to the bottom corner of the viewport (`btn-floating`)                                    |
+| `animateIcon` | string? | `null`      | Animates the icon on hover: `pulse` `rotate` `shake` `tada` `move-start` (`btn-animate-icon-*`) |
 
 Other attributes go to the `<button>` or `<a>`. The children are the label.

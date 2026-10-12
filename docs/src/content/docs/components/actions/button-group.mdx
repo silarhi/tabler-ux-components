@@ -1,0 +1,101 @@
+---
+title: ButtonGroup
+description: Related buttons joined into one bar, or radio and checkbox inputs styled as buttons.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Joins its children into one bar with shared borders, Bootstrap's `btn-group`. The root gets `role="group"`: give it an
+`aria-label` naming what the buttons control. Pass `variant="default"` to each `Button` for Tabler's neutral look,
+since `Button` defaults to `primary`.
+
+<Example name="button-group/all-in-one" />
+
+## Radio toggles
+
+`ButtonGroup:Toggle` renders a hidden `<input class="btn-check">` followed by its `<label class="btn">`. It is a radio
+by default: give the toggles of one group the same `name`. `checked` selects one, `disabled` grays it out:
+
+<Example name="button-group/radios" />
+
+The `id` prop is required, since the label points to the input with `for`. The browser handles the selection: no
+JavaScript is needed, and the value is submitted with the enclosing form.
+
+## Checkboxes
+
+`type="checkbox"` lets several toggles be on at once. The label comes from the children or from the `label` prop:
+
+<Example name="button-group/checkboxes" />
+
+## Variants and appearances
+
+A toggle takes the same `variant` and `appearance` values as `Button`, but defaults to `variant="default"`, the
+neutral button. The checked toggle shows the active state of its color:
+
+<Example name="button-group/appearances" />
+
+## Sizes
+
+`size` sizes every button of the group (`btn-group-sm`, `btn-group-lg`). Toggles have no size of their own:
+
+<Example name="button-group/sizes" />
+
+## Vertical
+
+`vertical` stacks the buttons (`btn-group-vertical`, instead of `btn-group`):
+
+<Example name="button-group/vertical" />
+
+## Icons
+
+Put an icon in the toggle and add the `btn-icon` class. The `class` attribute goes to the `<label>`, the visible
+button; every other attribute goes to the `<input>`, so `aria-label` names the input that receives focus:
+
+<Example name="button-group/icons" />
+
+## Dropdowns
+
+To put a dropdown in a group, give the `Dropdown` the `btn-group` class and `role="group"`. For a split button, put a
+`Dropdown:Toggle` with `split` right after the main button, followed by its `Dropdown:Menu`: the group wraps the
+dropdown, so no `Dropdown` is needed.
+
+<Example name="button-group/dropdowns" />
+
+## Props
+
+| Prop       | Type   | Default | Description                                     |
+| ---------- | ------ | ------- | ----------------------------------------------- |
+| `vertical` | bool   | `false` | Stacks the buttons (`btn-group-vertical`)       |
+| `size`     | string | `'md'`  | `sm` `md` `lg` (`btn-group-sm`, `btn-group-lg`) |
+
+Other attributes go to the root `<div class="btn-group">`. `role="group"` is a default: pass `role` to replace it.
+
+## Sub-components
+
+| Component            | Renders                                                                          |
+| -------------------- | -------------------------------------------------------------------------------- |
+| `ButtonGroup:Toggle` | `<input class="btn-check" autocomplete="off">` followed by `<label class="btn">` |
+
+`ButtonGroup:Toggle` takes these props:
+
+| Prop         | Type    | Default     | Description                                                                                  |
+| ------------ | ------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `id`         | string  |             | Input `id`, referenced by the label's `for`. Required                                        |
+| `name`       | string? | `null`      | Input `name`, shared by the radios of one group                                              |
+| `value`      | string? | `null`      | Input `value`                                                                                |
+| `type`       | string  | `'radio'`   | `radio` `checkbox`                                                                           |
+| `checked`    | bool    | `false`     | Selected state (`checked` attribute)                                                         |
+| `disabled`   | bool    | `false`     | Inactive state (`disabled` attribute)                                                        |
+| `label`      | string? | `null`      | Label text, rendered in the `content` block                                                  |
+| `variant`    | string  | `'default'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `appearance` | string  | `'filled'`  | `filled` `outline` `ghost`                                                                   |
+
+The `class` attribute goes to the `<label>`. Other attributes (`aria-label`, `data-*`, `required`, `form`…) go to the
+`<input>`.
+
+## Blocks
+
+| Component            | Block     | Default                          |
+| -------------------- | --------- | -------------------------------- |
+| `ButtonGroup`        | `content` | Empty: the children, the buttons |
+| `ButtonGroup:Toggle` | `content` | The `label` prop                 |

@@ -18,6 +18,16 @@ and the subtitle keep coming from the props. See [blocks](/getting-started/compo
 
 <Example name="empty/blocks" />
 
+## Header and image
+
+Instead of an icon, lead with a large text in `Empty:Header`, such as an error code:
+
+<Example name="empty/header" />
+
+Or with an illustration in `Empty:Img`. `bordered` draws a border around the empty state:
+
+<Example name="empty/img" />
+
 ## Composed
 
 Children replace the whole content, for rich text in the subtitle:
@@ -26,10 +36,11 @@ Children replace the whole content, for rich text in the subtitle:
 
 ## Props
 
-| Prop       | Type    | Default | Description                    |
-| ---------- | ------- | ------- | ------------------------------ |
-| `title`    | string? | `null`  | Rendered with `Empty:Title`    |
-| `subtitle` | string? | `null`  | Rendered with `Empty:Subtitle` |
+| Prop       | Type    | Default | Description                                      |
+| ---------- | ------- | ------- | ------------------------------------------------ |
+| `title`    | string? | `null`  | Rendered with `Empty:Title`                      |
+| `subtitle` | string? | `null`  | Rendered with `Empty:Subtitle`                   |
+| `bordered` | bool    | `false` | Border around the empty state (`empty-bordered`) |
 
 Other attributes go to the root `<div class="empty">`.
 
@@ -38,6 +49,8 @@ Other attributes go to the root `<div class="empty">`.
 | Component        | Renders                                                                       |
 | ---------------- | ----------------------------------------------------------------------------- |
 | `Empty:Icon`     | `<div class="empty-icon">`: put any icon inside (Tabler Icons, SVG, ux-icons) |
+| `Empty:Header`   | `<div class="empty-header">`: a large text, such as an error code             |
+| `Empty:Img`      | `<div class="empty-img">`: put an illustration inside                         |
 | `Empty:Title`    | `<p class="empty-title">`                                                     |
 | `Empty:Subtitle` | `<p class="empty-subtitle text-secondary">`                                   |
 | `Empty:Action`   | `<div class="empty-action">`: buttons or links                                |
@@ -46,7 +59,7 @@ Other attributes go to the root `<div class="empty">`.
 
 | Block      | Default                                                                |
 | ---------- | ---------------------------------------------------------------------- |
-| `icon`     | Nothing: put an `Empty:Icon` in it                                     |
+| `icon`     | Nothing: put an `Empty:Icon`, `Empty:Header` or `Empty:Img` in it      |
 | `title`    | `Empty:Title` with the `title` prop, when set                          |
 | `subtitle` | `Empty:Subtitle` with the `subtitle` prop, when set                    |
 | `action`   | Nothing: put an `Empty:Action` in it                                   |

@@ -6,7 +6,8 @@ description: A compact group of mutually exclusive options, such as a period or 
 import Example from '../../../../components/Example.astro'
 
 A row of segments where one is selected, rendered as Tabler's `nav-segmented`. Each segment is a Bootstrap tab
-(`data-bs-toggle="tab"`), so `tabler.js` moves the selection on click.
+(`data-bs-toggle="tab"`), so `tabler.js` moves the selection on click. Segments are `<button type="button">`, so they
+never submit an enclosing form.
 
 <Example name="segmented-control/all-in-one" />
 
@@ -27,22 +28,36 @@ Put an icon before the label with the `nav-link-icon` class:
 
 <Example name="segmented-control/full-width" />
 
+## Sizes
+
+<Example name="segmented-control/sizes" />
+
+## Vertical
+
+`vertical` stacks the segments in a column:
+
+<Example name="segmented-control/vertical" />
+
 ## Props
 
-| Prop        | Type | Default | Description                          |
-| ----------- | ---- | ------- | ------------------------------------ |
-| `fullWidth` | bool | `false` | Stretches to the container (`w-100`) |
+| Prop        | Type   | Default | Description                                    |
+| ----------- | ------ | ------- | ---------------------------------------------- |
+| `fullWidth` | bool   | `false` | Stretches to the container (`w-100`)           |
+| `vertical`  | bool   | `false` | Stacks the segments (`nav-segmented-vertical`) |
+| `size`      | string | `'md'`  | `sm` `md` `lg` (`nav-sm`, `nav-lg`)            |
 
 Other attributes go to the root `<nav role="tablist">`: give it an `aria-label`.
 
 ## Sub-components
 
-| Component               | Renders                                                                           |
-| ----------------------- | --------------------------------------------------------------------------------- |
-| `SegmentedControl:Item` | `<button class="nav-link" role="tab" data-bs-toggle="tab">`, with `aria-selected` |
+| Component               | Renders                                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| `SegmentedControl:Item` | `<button type="button" class="nav-link" role="tab" data-bs-toggle="tab">`, with `aria-selected` |
 
 `SegmentedControl:Item` takes one prop:
 
 | Prop     | Type | Default | Description                                                                             |
 | -------- | ---- | ------- | --------------------------------------------------------------------------------------- |
 | `active` | bool | `false` | The selected segment (`active`, `aria-selected="true"`); the others get `tabindex="-1"` |
+
+Its `type` is `button` unless you pass another one, such as `type="submit"`.

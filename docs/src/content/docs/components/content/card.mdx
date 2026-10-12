@@ -23,9 +23,11 @@ and the subtitle in a `<div>` so they stack:
 
 <Example name="card/status" />
 
-In a composed card, render the border yourself with `Card:Status`, first in the card:
+The border is rendered outside the `content` block, so a composed card keeps it:
 
 <Example name="card/status-composed" />
+
+`Card:Status` renders the same border on its own, for a card that does not use the `status` prop.
 
 ## Gradients
 
@@ -46,6 +48,16 @@ It also takes a color (`primary` `secondary` `success` `danger` `warning` `info`
 
 <Example name="card/dashed" />
 
+## Appearance
+
+`borderless` removes the borders of the card, its header and its footer (`card-borderless`). `transparent` removes the
+background and the shadow and keeps a dashed border (`card-transparent`). `stacked` draws a second card behind this one
+(`card-stacked`). `active` marks the card as selected with a primary border (`card-active`), and `inactive` dims its
+body and disables pointer events (`card-inactive`). `rotate` tilts the card: `start` or `left` to one side, `end` or
+`right` to the other (`card-rotate-*`).
+
+<Example name="card/appearance" />
+
 ## Sizes
 
 `size` sets the padding: `sm`, `md` (the default) or `lg`.
@@ -54,16 +66,48 @@ It also takes a color (`primary` `secondary` `success` `danger` `warning` `info`
 
 ## Links
 
-With `href`, the card renders as an `<a>`, so the whole card is clickable. Add Tabler's `card-link` class for a hover
-shadow, and `card-link-pop` or `card-link-rotate` for a hover effect:
+With `href`, the card renders as an `<a>`, so the whole card is clickable. `link` adds a hover effect: `true` (a bare
+`link` attribute) for a hover shadow (`card-link`), `pop` to lift the card (`card-link-pop`) or `rotate` to tilt it
+(`card-link-rotate`):
 
 <Example name="card/link" />
 
 ## Images
 
-There is no image sub-component: put an `<img class="card-img-top">` (or `card-img-bottom`) directly in the card.
+`Card:Img` renders an image on an edge of the card. `position` sets the edge whose corners are rounded: `top` (the
+default), `bottom`, `start` or `end`. Put it first in the card for `top`, last for `bottom`. `alt` defaults to an empty
+string, for a decorative image.
 
 <Example name="card/image" />
+
+## Stamp
+
+`Card:Stamp` adds a large decorative icon in the top end corner (`card-stamp`). Put it in the card, before the body.
+`variant` colors the circle (a theme color or a palette color such as `yellow`), and `size="lg"` makes it bigger. It is
+hidden from assistive technology:
+
+<Example name="card/stamp" />
+
+## Progress
+
+`Card:Progress` attaches a thin progress bar to the bottom edge of the card. Put it last in the card. `label` is read by
+screen readers, and defaults to the percentage. `Card:Meta` renders a muted secondary line:
+
+<Example name="card/progress" />
+
+## Bottom buttons
+
+`Card:Btn` is a full-width action along the bottom edge of the card (`card-btn`): an `<a>` with `href`, a
+`<button type="button">` without. Wrap several of them in a `<div class="d-flex">` to share the edge:
+
+<Example name="card/buttons" />
+
+## Scrollable body
+
+`Card:Body` takes `scrollable`, which scrolls the body instead of growing the card (`card-body-scrollable`). Give the
+body a height or a `max-height`:
+
+<Example name="card/scrollable" />
 
 ## Blocks
 
@@ -71,8 +115,8 @@ There is no image sub-component: put an `<img class="card-img-top">` (or `card-i
 
 <Example name="card/block" />
 
-The status border is rendered inside the `content` block: replacing `content` (by passing children) drops it, so add a
-`Card:Status` yourself, as above. See [Composition](/getting-started/composition/) for how blocks work.
+Passing children replaces the `content` block, and so the three blocks. The status border is rendered before
+`content`, so it is kept. See [Composition](/getting-started/composition/) for how blocks work.
 
 ## Props
 
@@ -85,6 +129,13 @@ The status border is rendered inside the `content` block: replacing `content` (b
 | `gradientDirection` | string?      | `null`  | `start` `end` `bottom`: where the gradient starts                                                                          |
 | `gradientAnimated`  | bool         | `false` | Slowly shifts the gradient (`card-gradient-animated`)                                                                      |
 | `dashed`            | bool         | `false` | Dashed border (`card-dashed`)                                                                                              |
+| `borderless`        | bool         | `false` | No border on the card, its header and its footer (`card-borderless`)                                                       |
+| `transparent`       | bool         | `false` | No background and no shadow, a dashed border (`card-transparent`)                                                          |
+| `stacked`           | bool         | `false` | Draws a second card behind this one (`card-stacked`)                                                                       |
+| `active`            | bool         | `false` | Marks the card as selected (`card-active`)                                                                                 |
+| `inactive`          | bool         | `false` | Dims the body and disables pointer events (`card-inactive`)                                                                |
+| `rotate`            | string?      | `null`  | `start` `end` `left` `right`: tilts the card (`card-rotate-*`)                                                             |
+| `link`              | bool\|string | `false` | Hover effect for a link card: `true` (`card-link`), `pop` (`card-link-pop`) or `rotate` (`card-link-rotate`)               |
 | `title`             | string?      | `null`  | Rendered with `Card:Header` and `Card:Title`                                                                               |
 | `text`              | string?      | `null`  | Rendered with `Card:Body`                                                                                                  |
 | `footer`            | string?      | `null`  | Rendered with `Card:Footer`                                                                                                |
@@ -103,15 +154,60 @@ Other attributes go to the root `<div class="card">` (or `<a>`).
 | `Card:Body`     | `<div class="card-body">`                                                          |
 | `Card:Footer`   | `<div class="card-footer">`                                                        |
 | `Card:Status`   | `<div class="card-status-top bg-primary">`: the status border, see its props below |
+| `Card:Img`      | `<img class="card-img-top">`: an image on an edge of the card                      |
+| `Card:Stamp`    | `<div class="card-stamp">`: a large icon in the top end corner                     |
+| `Card:Progress` | `<div class="progress card-progress">`: a progress bar on the bottom edge          |
+| `Card:Meta`     | `<div class="card-meta">`: a muted secondary line                                  |
+| `Card:Btn`      | `<a class="card-btn">` (or `<button>`): a full-width action on the bottom edge     |
 
 `Card:Status` takes `variant` (default `'primary'`) and `position` (default `'top'`), with the same values as the
 `status` and `statusPosition` props of the card.
 
+`Card:Body`:
+
+| Prop         | Type | Default | Description                                                           |
+| ------------ | ---- | ------- | --------------------------------------------------------------------- |
+| `scrollable` | bool | `false` | Scrolls the body instead of growing the card (`card-body-scrollable`) |
+
+`Card:Img`:
+
+| Prop       | Type   | Default | Description                                                                              |
+| ---------- | ------ | ------- | ---------------------------------------------------------------------------------------- |
+| `src`      | string |         | Image URL (required)                                                                     |
+| `alt`      | string | `''`    | Alternative text; empty for a decorative image                                           |
+| `position` | string | `'top'` | `top` `bottom` `start` `end`: the edge whose corners are rounded (`card-img-{position}`) |
+
+`Card:Stamp`:
+
+| Prop      | Type    | Default | Description                                                                                                                                   |
+| --------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `icon`    | string? | `null`  | Tabler icon name; or put any markup in the `content` block                                                                                    |
+| `variant` | string? | `null`  | Circle color (`bg-{variant}`): a theme color, or `blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green` `teal` `cyan` |
+| `size`    | string  | `'md'`  | `md` `lg` (`card-stamp-lg`)                                                                                                                   |
+
+`Card:Progress`:
+
+| Prop      | Type    | Default     | Description                                                        |
+| --------- | ------- | ----------- | ------------------------------------------------------------------ |
+| `value`   | int     | `0`         | Percentage, from 0 to 100                                          |
+| `variant` | string  | `'primary'` | Bar color, as for [`Progress:Bar`](/components/feedback/progress/) |
+| `label`   | string? | `null`      | `aria-label` of the bar; defaults to the percentage, e.g. `94%`    |
+
+`Card:Btn`:
+
+| Prop   | Type    | Default | Description                                                   |
+| ------ | ------- | ------- | ------------------------------------------------------------- |
+| `href` | string? | `null`  | Renders an `<a href>`; without it, a `<button type="button">` |
+
 ## Blocks
 
-| Block     | Default                                                                                           |
-| --------- | ------------------------------------------------------------------------------------------------- |
-| `header`  | `Card:Header` with a `Card:Title` holding the `title` prop, when set                              |
-| `body`    | `Card:Body` with the `text` prop, when set                                                        |
-| `footer`  | `Card:Footer` with the `footer` prop, when set                                                    |
-| `content` | `Card:Status` (when `status` is set), `header`, `body` and `footer`: replace it to compose freely |
+| Block     | Default                                                              |
+| --------- | -------------------------------------------------------------------- |
+| `header`  | `Card:Header` with a `Card:Title` holding the `title` prop, when set |
+| `body`    | `Card:Body` with the `text` prop, when set                           |
+| `footer`  | `Card:Footer` with the `footer` prop, when set                       |
+| `content` | `header`, `body` and `footer`: replace it to compose freely          |
+
+The status border (when `status` is set) is rendered before the `content` block, so replacing `content` keeps it.
+`Card:Stamp` has a `content` block holding the icon. The other sub-components, except `Card:Status`, `Card:Img` and
+`Card:Progress`, have an empty `content` block for their children.

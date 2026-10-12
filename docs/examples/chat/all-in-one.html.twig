@@ -1,0 +1,7 @@
+{% set messages = [
+    {author: 'Jane Cooper', date: '10:24', text: 'Hi, invoice INV-0142 was charged twice this month.', avatar: '/examples/avatar-1.jpg'},
+    {author: 'Wade Warren', date: '10:26', text: 'Sorry about that. I can see both payments, let me check.', avatar: '/examples/avatar-2.jpg', me: true},
+    {author: 'Wade Warren', date: '10:31', text: 'The second payment is refunded. It shows up in 3 to 5 days.', avatar: '/examples/avatar-2.jpg', me: true},
+    {author: 'Jane Cooper', date: '10:32', text: 'Great, thank you!', avatar: '/examples/avatar-1.jpg'},
+] %}
+<twig:Tabler:Chat messages="{{ messages }}" />

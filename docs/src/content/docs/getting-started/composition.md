@@ -65,6 +65,24 @@ A bare attribute is `true`: `<twig:Tabler:Alert dismissible />`. To pass `false`
 <twig:Tabler:Modal id="confirm" title="Delete item?" dismissible="{{ false }}" />
 ```
 
+## Escaping
+
+Prop values are text: they are always escaped, so `title="<b>Saved</b>"` prints the tags as text. HTML comes in
+through blocks and sub-components only. A prop that names something renders it for you: Alert's `icon` prop takes a
+[Tabler icon](https://tabler.io/icons) name, and custom markup, such as an inline SVG, goes in its `icon` block:
+
+```twig
+<twig:Tabler:Alert variant="info" icon="info-circle" title="Heads up" />
+
+<twig:Tabler:Alert variant="info" title="Heads up">
+    <twig:block name="icon">
+        <twig:Tabler:Alert:Icon><svg class="icon">…</svg></twig:Tabler:Alert:Icon>
+    </twig:block>
+</twig:Tabler:Alert>
+```
+
+The components never bypass Twig's autoescaping: no `|raw` and no `{% autoescape false %}` in a template.
+
 ## Variants
 
 Classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html) from
@@ -113,5 +131,6 @@ templates/components/Tabler/
 ## Not included
 
 Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline
-player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker. Form controls (OTP input, password strength) are not
-covered yet.
+player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker, and the interactive star rating (the read-only
+[StarRating](/components/data/star-rating/) is included). Form controls (OTP input, password strength) are not covered
+yet.

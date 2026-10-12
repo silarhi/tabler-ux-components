@@ -1,0 +1,98 @@
+---
+title: Mention
+description: An inline chip in running text that points at a person, a tag, an app or a color.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A rounded chip inside a sentence: a user in a comment, a tag in a post, an app or a color in release notes.
+
+<Example name="mention/all-in-one" />
+
+The mention is a `<span>`. With `href`, it renders as an `<a>`, so a chip that leads somewhere is reachable with the
+keyboard.
+
+## People
+
+`avatar` adds a round picture of the person. `prefix` puts a sign before the label, such as `@`. With `prefixHidden`,
+the sign is kept for assistive technology only (`visually-hidden`), when the design drops it:
+
+<Example name="mention/people" />
+
+## Tags
+
+`count` appends a muted number, for example how many posts carry the tag:
+
+<Example name="mention/tags" />
+
+## Colors
+
+`swatch` adds a color dot. It takes a theme color (`primary` `secondary` `success` `danger` `warning` `info` `dark`
+`light` `muted`) or a palette color (`blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green`
+`teal` `cyan`); any other value renders a dot with no color class. Keep the color value or name in the label: the dot
+alone says nothing to a screen reader or to a color-blind user.
+
+<Example name="mention/colors" />
+
+## Apps
+
+`logo` adds the square logo of an app or a brand (`Mention:App`). Tabler 1.6.1 resets the background of `mention-app`,
+so the image is drawn at its natural size and is cropped when it is larger than the chip. To scale it down, render
+`Mention:App` with Tabler's `bg-cover` class in the `leading` block:
+
+<Example name="mention/apps" />
+
+## Composed
+
+Pass children to build the mention yourself. Children replace the whole content, so the props are ignored, except
+`href`:
+
+<Example name="mention/composed" />
+
+## Blocks
+
+Override a block to change one part and keep the others:
+
+<Example name="mention/block" />
+
+See [Composition](/getting-started/composition/) for how blocks work.
+
+## Accessibility
+
+The avatar, the logo and the color dot carry no text, so the label must say who or what the chip is. Keep the `@` or
+`#` sign in the text, with `prefixHidden` when it should not show.
+
+## Props
+
+| Prop           | Type    | Default | Description                                                          |
+| -------------- | ------- | ------- | -------------------------------------------------------------------- |
+| `label`        | string? | `null`  | The chip text                                                        |
+| `href`         | string? | `null`  | Renders an `<a href>` instead of a `<span>`                          |
+| `prefix`       | string? | `null`  | Sign before the label, such as `@` or `#`                            |
+| `prefixHidden` | bool    | `false` | Keeps the prefix for assistive technology only (`visually-hidden`)   |
+| `avatar`       | string? | `null`  | Round picture URL of a person, rendered with `Mention:Avatar`        |
+| `logo`         | string? | `null`  | Square logo URL of an app or a brand, rendered with `Mention:App`    |
+| `swatch`       | string? | `null`  | Color dot, rendered with `Mention:Color`: a theme or a palette color |
+| `count`        | string? | `null`  | Muted number at the end, rendered with `Mention:Count`               |
+
+Other attributes go to the root `<span class="mention">` (or `<a>`).
+
+## Sub-components
+
+| Component        | Renders                                                                                |
+| ---------------- | -------------------------------------------------------------------------------------- |
+| `Mention:Avatar` | `<span class="mention-avatar">`; `image` (default `null`) sets its background image    |
+| `Mention:App`    | `<span class="mention-app">`; `image` (default `null`) sets its background image       |
+| `Mention:Color`  | `<span class="mention-color">`; `variant` (default `null`) sets the color, as `swatch` |
+| `Mention:Count`  | `<span class="mention-count">`                                                         |
+
+`Mention:Avatar` and `Mention:App` never forward a `style` attribute.
+
+## Blocks
+
+| Block     | Default                                                              |
+| --------- | -------------------------------------------------------------------- |
+| `leading` | The avatar, logo and color dot, each when its prop is set            |
+| `label`   | The `prefix` (visually hidden with `prefixHidden`), then the `label` |
+| `count`   | `Mention:Count` with the `count` prop, when set                      |
+| `content` | `leading`, `label` and `count`: replace it to compose freely         |

@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="list-group list-group-flush">
+        {% for review in [
+            {author: 'Camille Martin', product: 'Wireless keyboard', score: 5, text: 'Quiet keys and the battery lasts for weeks.'},
+            {author: 'Julien Petit', product: 'USB-C dock', score: 3, text: 'Works well, but the HDMI port only runs at 30 Hz.'},
+            {author: 'Sarah Lefèvre', product: 'Office chair', score: 2, text: 'The armrest broke after two months.'},
+        ] %}
+            <div class="list-group-item">
+                <div class="d-flex align-items-center mb-1">
+                    <strong class="me-2">{{ review.product }}</strong>
+                    <twig:Tabler:StarRating value="{{ review.score }}" />
+                    <span class="ms-2 text-secondary small">{{ review.score }}/5</span>
+                </div>
+                <div>{{ review.text }}</div>
+                <div class="text-secondary small">{{ review.author }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -11,9 +11,17 @@ A Bootstrap dropdown: a toggle and a menu of items, built from sub-components. I
 
 ## Toggle
 
-Without `variant`, the toggle is a plain `.btn`. `noCaret` hides the caret, for an icon-only toggle:
+The toggle is a `<button type="button">`, so it never submits an enclosing form. Without `variant`, it is a plain
+`.btn`. `noCaret` hides the caret, for an icon-only toggle:
 
 <Example name="dropdown/toggle" minHeight="11rem" />
+
+## Split button
+
+`split` makes the toggle the caret-only half of a split button: put it after a [Button](/components/actions/button/)
+in a [ButtonGroup](/components/actions/button-group/), followed by the menu. Give it an `aria-label`:
+
+<Example name="dropdown/split" minHeight="10rem" />
 
 ## Menu alignment
 
@@ -21,9 +29,33 @@ Without `variant`, the toggle is a plain `.btn`. `noCaret` hides the caret, for 
 
 <Example name="dropdown/menu-end" minHeight="14rem" />
 
+## Direction
+
+`direction` sets where the menu opens: `up` (`dropup`), `end` (`dropend`) or `start` (`dropstart`). The menu flips to
+the other side when there is no room:
+
+<Example name="dropdown/directions" minHeight="12rem" />
+
+## Menu styles
+
+`arrow` adds a small arrow pointing at the toggle, `dark` a dark menu on a light page, and `scrollable` caps the menu
+height and scrolls the rest:
+
+<Example name="dropdown/menu-styles" minHeight="17rem" />
+
+`card` turns the menu into a panel for rich content: put a [Card](/components/content/card/) in it.
+
+<Example name="dropdown/card" minHeight="14rem" />
+
+## Columns and text
+
+`Dropdown:Columns` splits a long menu into `Dropdown:Column`s. `Dropdown:Text` is plain text that is not an action:
+
+<Example name="dropdown/columns" minHeight="16rem" />
+
 ## Items
 
-`active` highlights an item, `disabled` makes it non-interactive. Put an icon before the label with the
+`active` highlights an item, `disabled` makes it non-interactive. `icon` puts a Tabler icon before the label, with the
 `dropdown-item-icon` class:
 
 <Example name="dropdown/items" minHeight="13rem" />
@@ -33,17 +65,26 @@ Without `variant`, the toggle is a plain `.btn`. `noCaret` hides the caret, for 
 | Component          | Renders                                                                         |
 | ------------------ | ------------------------------------------------------------------------------- |
 | `Dropdown`         | `<div class="dropdown">` around the toggle and the menu                         |
-| `Dropdown:Toggle`  | `<a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">`            |
+| `Dropdown:Toggle`  | `<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">`  |
 | `Dropdown:Menu`    | `<div class="dropdown-menu">`                                                   |
 | `Dropdown:Item`    | `<a class="dropdown-item">`                                                     |
 | `Dropdown:Header`  | `<div class="dropdown-header">`: a non-interactive label above a group of items |
+| `Dropdown:Text`    | `<span class="dropdown-item-text">`: plain text that is not an action           |
 | `Dropdown:Divider` | `<div class="dropdown-divider">`: a separator between groups of items           |
+| `Dropdown:Columns` | `<div class="dropdown-menu-columns">`: splits the menu into columns             |
+| `Dropdown:Column`  | `<div class="dropdown-menu-column">`: one column of `Dropdown:Columns`          |
 
 Attributes of each component go to its root element.
 
 ## Props
 
-`Dropdown`, `Dropdown:Header` and `Dropdown:Divider` take no props.
+`Dropdown:Header`, `Dropdown:Text`, `Dropdown:Divider`, `Dropdown:Columns` and `Dropdown:Column` take no props.
+
+### Dropdown
+
+| Prop        | Type   | Default  | Description                                                                      |
+| ----------- | ------ | -------- | -------------------------------------------------------------------------------- |
+| `direction` | string | `'down'` | `down` `up` `end` `start`: where the menu opens (`dropup` `dropend` `dropstart`) |
 
 ### Dropdown:Toggle
 
@@ -51,12 +92,17 @@ Attributes of each component go to its root element.
 | --------- | ------- | ------- | --------------------------------------------------------------------------------------------------- |
 | `variant` | string? | `null`  | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`; `null` for a plain `.btn` |
 | `noCaret` | bool    | `false` | Hides the caret (no `dropdown-toggle` class)                                                        |
+| `split`   | bool    | `false` | Caret-only half of a split button (`dropdown-toggle-split`)                                         |
 
 ### Dropdown:Menu
 
-| Prop  | Type | Default | Description                                      |
-| ----- | ---- | ------- | ------------------------------------------------ |
-| `end` | bool | `false` | Aligns the menu to the end (`dropdown-menu-end`) |
+| Prop         | Type | Default | Description                                              |
+| ------------ | ---- | ------- | -------------------------------------------------------- |
+| `end`        | bool | `false` | Aligns the menu to the end (`dropdown-menu-end`)         |
+| `arrow`      | bool | `false` | Arrow pointing at the toggle (`dropdown-menu-arrow`)     |
+| `dark`       | bool | `false` | Dark menu (`dropdown-menu-dark`)                         |
+| `scrollable` | bool | `false` | Caps the height and scrolls (`dropdown-menu-scrollable`) |
+| `card`       | bool | `false` | Panel for rich content (`dropdown-menu-card`)            |
 
 ### Dropdown:Item
 
@@ -65,3 +111,4 @@ Attributes of each component go to its root element.
 | `href`     | string? | `null`  | Link target, `#` when `null`                       |
 | `active`   | bool    | `false` | Highlighted item (`active`)                        |
 | `disabled` | bool    | `false` | Non-interactive item (`disabled`, `aria-disabled`) |
+| `icon`     | string? | `null`  | Leading Tabler icon name (`dropdown-item-icon`)    |

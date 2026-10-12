@@ -17,32 +17,50 @@ A `disabled` item renders a `<span>` instead of a link. An item without `href` l
 
 <Example name="pagination/styles" />
 
+## Sizes
+
+`size` sets the size of the links: `sm`, `md` (the default) or `lg`:
+
+<Example name="pagination/sizes" />
+
 ## Labels and icons
 
 The content of an item is free: text, icons, an ellipsis. Compute `active` and `disabled` from the current page:
 
 <Example name="pagination/labels" />
 
+## Named pager
+
+A pager links to the previous and next pages by name, at the end of a help article or a wizard step. `direction` sets
+the side (`page-prev` or `page-next`) and adds `rel="prev"` or `rel="next"` to the link. `title` names the page and
+`subtitle` adds a small uppercase label above it:
+
+<Example name="pagination/pager" />
+
 ## Props
 
 `Pagination`:
 
-| Prop      | Type | Default | Description                           |
-| --------- | ---- | ------- | ------------------------------------- |
-| `outline` | bool | `false` | Bordered links (`pagination-outline`) |
-| `circle`  | bool | `false` | Round links (`pagination-circle`)     |
+| Prop      | Type   | Default | Description                                        |
+| --------- | ------ | ------- | -------------------------------------------------- |
+| `outline` | bool   | `false` | Bordered links (`pagination-outline`)              |
+| `circle`  | bool   | `false` | Round links (`pagination-circle`)                  |
+| `size`    | string | `'md'`  | `sm` (`pagination-sm`) `md` `lg` (`pagination-lg`) |
 
 Other attributes go to the root `<ul class="pagination">`.
 
 `Pagination:Item`:
 
-| Prop       | Type    | Default | Description                                                      |
-| ---------- | ------- | ------- | ---------------------------------------------------------------- |
-| `href`     | string? | `null`  | Link target; `#` when not set                                    |
-| `active`   | bool    | `false` | The current page (`active`, with `aria-current="page"`)          |
-| `disabled` | bool    | `false` | Not clickable (`disabled`): renders a `<span>` instead of a link |
+| Prop        | Type    | Default | Description                                                                       |
+| ----------- | ------- | ------- | --------------------------------------------------------------------------------- |
+| `href`      | string? | `null`  | Link target; `#` when not set                                                     |
+| `active`    | bool    | `false` | The current page (`active`, with `aria-current="page"` on the link)               |
+| `disabled`  | bool    | `false` | Not clickable (`disabled`): renders a `<span>` instead of a link                  |
+| `direction` | string? | `null`  | `prev` (`page-prev`) `next` (`page-next`): a pager step, with a `rel` on the link |
+| `title`     | string? | `null`  | Page name, for a named pager (`page-item-title`)                                  |
+| `subtitle`  | string? | `null`  | Small uppercase label above the title (`page-item-subtitle`)                      |
 
-Other attributes go to the `<li class="page-item">`.
+Other attributes go to the `<li class="page-item">`. The `subtitle` and `title` render before the content of the item.
 
 ## Sub-components
 

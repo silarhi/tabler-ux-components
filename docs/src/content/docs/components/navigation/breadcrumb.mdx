@@ -14,7 +14,7 @@ An item with an `href` renders a link. Mark the current page `active`: it render
 
 ## Separators
 
-`separator` sets the character between items: `default` (a slash), `dots` or `arrows`:
+`separator` sets the character between items: `default` (a slash), `dots`, `arrows` or `bullets`:
 
 <Example name="breadcrumb/separators" />
 
@@ -28,10 +28,10 @@ An item with an `href` renders a link. Mark the current page `active`: it render
 
 `Breadcrumb`:
 
-| Prop        | Type   | Default     | Description                                                         |
-| ----------- | ------ | ----------- | ------------------------------------------------------------------- |
-| `separator` | string | `'default'` | `default` `dots` (`breadcrumb-dots`) `arrows` (`breadcrumb-arrows`) |
-| `muted`     | bool   | `false`     | Muted links (`breadcrumb-muted`)                                    |
+| Prop        | Type   | Default     | Description                                                                                          |
+| ----------- | ------ | ----------- | ---------------------------------------------------------------------------------------------------- |
+| `separator` | string | `'default'` | `default` `dots` (`breadcrumb-dots`) `arrows` (`breadcrumb-arrows`) `bullets` (`breadcrumb-bullets`) |
+| `muted`     | bool   | `false`     | Muted links (`breadcrumb-muted`)                                                                     |
 
 The component renders a `<nav aria-label="breadcrumbs">` around the list; other attributes go to the
 `<ol class="breadcrumb">`.

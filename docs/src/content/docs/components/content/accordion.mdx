@@ -1,0 +1,165 @@
+---
+title: Accordion
+description: Collapsible sections that open one at a time, for FAQs, settings groups and long forms.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A stack of sections, each with a header button that shows or hides its panel. It uses the Bootstrap collapse plugin
+bundled in `tabler.js`. By default, opening a section closes the one that was open.
+
+<Example name="accordion/all-in-one" />
+
+`items` is an array of `{title, text, open?, icon?, id?}`. Each item gets the id `<id>-<n>`, starting at 1, unless it
+has its own `id`. Always set the `id` of the accordion: the generated items use it as their `data-bs-parent`, so that
+opening one closes the others. Without it, every item opens on its own, and the item ids fall back to `accordion-1`,
+`accordion-2`…, which clash when a page has two such accordions.
+
+## Items
+
+`Accordion:Item` renders one section from its props. Give each item an `id` for its panel, and the id of the
+accordion as `parent`: opening the item then closes the others. Mark the section to show on load `open`.
+
+<Example name="accordion/items" />
+
+The header is an `<h3>` by default. Set `level` on the item (1 to 6) to fit the outline of the page. The button
+inherits the font size of the heading, so the level changes the size of the label too. The `items` prop always renders
+`<h3>`.
+
+## Always open
+
+`alwaysOpen` leaves out `data-bs-parent` on the generated items, so several sections can stay open at once. Several
+items can then be `open` on load. With `Accordion:Item`, leave out `parent` instead.
+
+<Example name="accordion/always-open" />
+
+## Flush
+
+`flush` removes the outer border and the rounded corners, to fit the accordion edge to edge in a card or a list:
+
+<Example name="accordion/flush" />
+
+## Tabs
+
+`tabs` spaces the items out and gives each one its own border and rounded corners:
+
+<Example name="accordion/tabs" />
+
+## Inverted
+
+`inverted` moves the toggle indicator to the start of the header, before the label:
+
+<Example name="accordion/inverted" />
+
+## Icons and toggles
+
+`icon` adds a leading [Tabler icon](https://tabler.io/icons) before the label. `plus` swaps the chevron for a plus
+that turns into a close icon when the section opens. On the accordion, `plus` applies to every generated item; `icon`
+is set per item.
+
+<Example name="accordion/icons" />
+
+`toggleIcon` on `Accordion:Item` (or `Accordion:Button`) picks another icon for the indicator. It rotates half a turn
+when the section opens:
+
+<Example name="accordion/toggle-icon" />
+
+## Blocks
+
+The `title` and `body` blocks of `Accordion:Item` replace the label and the panel content, while the item keeps the
+header, the button and the collapse wiring. Wrap the `body` block in `Accordion:Body` to keep the padding:
+
+<Example name="accordion/block" />
+
+See [Composition](/getting-started/composition/) for how blocks work.
+
+## Composed
+
+To build a section from its parts, pass children to `Accordion:Item`: they replace its `content` block. Keep the ids in
+sync: the `target` of `Accordion:Button` is the `id` of `Accordion:Collapse`, without `#`. The `icon` and `toggle`
+blocks of `Accordion:Button` frame its label:
+
+<Example name="accordion/composed" />
+
+## Accessibility
+
+`Accordion:Button` is a `<button type="button">` with `aria-controls` set to the panel id and `aria-expanded` set
+from `open`. Bootstrap updates `aria-expanded` and the `collapsed` class when the section opens or closes. The leading
+icon and the toggle indicator are `aria-hidden="true"`. Each button sits in a heading (`Accordion:Header`), so screen
+reader users can jump from section to section.
+
+## Props
+
+`Accordion`:
+
+| Prop         | Type    | Default | Description                                                                     |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------- |
+| `id`         | string? | `null`  | DOM id, the `data-bs-parent` of the generated items and the prefix of their ids |
+| `items`      | array?  | `null`  | `{title, text, open?, icon?, id?}` entries, rendered with `Accordion:Item`      |
+| `flush`      | bool    | `false` | No outer border nor rounded corners (`accordion-flush`)                         |
+| `inverted`   | bool    | `false` | Toggle indicator at the start of the header (`accordion-inverted`)              |
+| `tabs`       | bool    | `false` | Spaced items, each fully bordered (`accordion-tabs`)                            |
+| `alwaysOpen` | bool    | `false` | Generated items stay open when another one opens (no `data-bs-parent`)          |
+| `plus`       | bool    | `false` | Generated items use the plus indicator (`accordion-button-toggle-plus`)         |
+
+Other attributes go to the root `<div class="accordion">`.
+
+`Accordion:Item`:
+
+| Prop         | Type    | Default | Description                                                                           |
+| ------------ | ------- | ------- | ------------------------------------------------------------------------------------- |
+| `id`         | string? | `null`  | Id of the panel, targeted by the button                                               |
+| `parent`     | string? | `null`  | Id of the accordion: when set, opening this item closes the others (`data-bs-parent`) |
+| `title`      | string? | `null`  | Button label                                                                          |
+| `text`       | string? | `null`  | Panel text, rendered with `Accordion:Body`                                            |
+| `open`       | bool    | `false` | Expanded on load                                                                      |
+| `icon`       | string? | `null`  | Leading Tabler icon name, rendered with `Accordion:Icon`                              |
+| `plus`       | bool    | `false` | Plus indicator that turns into a close icon (`accordion-button-toggle-plus`)          |
+| `toggleIcon` | string? | `null`  | Tabler icon name of the indicator (default `chevron-down`, or `plus`)                 |
+| `level`      | int     | `3`     | Heading level of the header, 1 to 6                                                   |
+
+Other attributes go to the `<div class="accordion-item">`.
+
+`Accordion:Button` takes `target` (the panel id, without `#`), `open`, `icon`, `plus` and `toggleIcon`, as on the
+item. `Accordion:Collapse` takes `id`, `parent` and `open` (`show`). `Accordion:Toggle` takes `plus` and `icon` (the
+indicator icon name). `Accordion:Header` takes `level` (default `3`). On each of them, other attributes go to the
+rendered element.
+
+## Sub-components
+
+| Component            | Renders                                                                                  |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| `Accordion:Item`     | `<div class="accordion-item">`: one section, with its header and its panel               |
+| `Accordion:Header`   | `<h3 class="accordion-header">` (or the `level` set): holds the button                   |
+| `Accordion:Button`   | `<button class="accordion-button" data-bs-toggle="collapse">`: the label and indicator   |
+| `Accordion:Icon`     | `<span class="accordion-button-icon">`: a leading icon before the label                  |
+| `Accordion:Toggle`   | `<span class="accordion-button-toggle">`: the indicator at the end, a chevron by default |
+| `Accordion:Collapse` | `<div class="accordion-collapse collapse">`: the panel the button opens                  |
+| `Accordion:Body`     | `<div class="accordion-body">`: the padded content of the panel                          |
+
+## Blocks
+
+`Accordion`:
+
+| Block     | Default                                                |
+| --------- | ------------------------------------------------------ |
+| `content` | An `Accordion:Item` for each entry of the `items` prop |
+
+`Accordion:Item`:
+
+| Block     | Default                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------ |
+| `title`   | The `title` prop                                                                           |
+| `body`    | `Accordion:Body` with the `text` prop, when set                                            |
+| `header`  | `Accordion:Header` with an `Accordion:Button` holding the `title` block                    |
+| `content` | `header`, then `Accordion:Collapse` holding the `body` block: replace it to compose freely |
+
+`Accordion:Button`:
+
+| Block    | Default                                                    |
+| -------- | ---------------------------------------------------------- |
+| `icon`   | `Accordion:Icon` with the `icon` prop, when set            |
+| `toggle` | `Accordion:Toggle`, with the `plus` and `toggleIcon` props |
+
+The content of `Accordion:Button` is its label. `Accordion:Toggle` has a `content` block too: it holds the indicator
+icon, so pass children to use your own SVG.

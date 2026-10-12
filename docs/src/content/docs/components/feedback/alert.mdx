@@ -9,12 +9,24 @@ Contextual feedback messages: the result of an action, a warning, an error.
 
 <Example name="alert/all-in-one" />
 
+`icon` takes a [Tabler icon](/components/content/icon/) name. For any other icon (inline SVG, ux-icons), override the
+`icon` block with `Alert:Icon`:
+
+<Example name="alert/icon-block" />
+
 ## Composed
 
 Bring your own icon, or rich content, with the sub-components. Wrap the title and the description in a `<div>` so
 they stack next to the icon, as the all-in-one version does:
 
 <Example name="alert/composed" />
+
+## Links, actions and lists
+
+`Alert:Link` is a link inside the message, in the alert color. `Alert:Action` is the next step to take, on its own
+line. `Alert:List` lists several messages, such as validation errors:
+
+<Example name="alert/links" />
 
 ## Variants
 
@@ -35,15 +47,15 @@ Each prop has a matching block. Override one, and the others keep rendering from
 
 ## Props
 
-| Prop          | Type    | Default  | Description                                                               |
-| ------------- | ------- | -------- | ------------------------------------------------------------------------- |
-| `variant`     | string  | `'info'` | `primary` `secondary` `success` `danger` `warning` `info`                 |
-| `important`   | bool    | `false`  | Filled background (`alert-important`)                                     |
-| `minor`       | bool    | `false`  | Plain border, no tinted background (`alert-minor`)                        |
-| `icon`        | string? | `null`   | Icon HTML, rendered raw inside `Alert:Icon`: keep it developer-controlled |
-| `title`       | string? | `null`   | Rendered with `Alert:Title`                                               |
-| `description` | string? | `null`   | Rendered with `Alert:Description`                                         |
-| `dismissible` | bool    | `false`  | Adds a close button (`Alert:Dismiss`)                                     |
+| Prop          | Type    | Default  | Description                                                       |
+| ------------- | ------- | -------- | ----------------------------------------------------------------- |
+| `variant`     | string  | `'info'` | `primary` `secondary` `success` `danger` `warning` `info`         |
+| `important`   | bool    | `false`  | Filled background (`alert-important`)                             |
+| `minor`       | bool    | `false`  | Plain border, no tinted background (`alert-minor`)                |
+| `icon`        | string? | `null`   | Tabler icon name, rendered with `Tabler:Icon` inside `Alert:Icon` |
+| `title`       | string? | `null`   | Rendered with `Alert:Title`                                       |
+| `description` | string? | `null`   | Rendered with `Alert:Description`                                 |
+| `dismissible` | bool    | `false`  | Adds a close button (`Alert:Dismiss`)                             |
 
 Other attributes go to the root `<div role="alert">`.
 
@@ -54,13 +66,16 @@ Other attributes go to the root `<div role="alert">`.
 | `Alert:Icon`        | `<div class="alert-icon">`: put any icon inside (Tabler Icons, SVG, ux-icons) |
 | `Alert:Title`       | `<h4 class="alert-heading">`                                                  |
 | `Alert:Description` | `<div class="alert-description">`                                             |
+| `Alert:Link`        | `<a class="alert-link">`: a link in the alert color; `href` defaults to `#`   |
+| `Alert:Action`      | `<a class="alert-action">`: a link on its own line; `href` defaults to `#`    |
+| `Alert:List`        | `<ul class="alert-list">`: without the default list margin                    |
 | `Alert:Dismiss`     | The close button, `<button class="btn-close" data-bs-dismiss="alert">`        |
 
 ## Blocks
 
 | Block         | Default                                                              |
 | ------------- | -------------------------------------------------------------------- |
-| `icon`        | `Alert:Icon` with the `icon` prop, when set                          |
+| `icon`        | `Alert:Icon` with a `Tabler:Icon` named `icon`, when set             |
 | `title`       | `Alert:Title` with the `title` prop, when set                        |
 | `description` | `Alert:Description` with the `description` prop, when set            |
 | `body`        | A `<div>` around `title` and `description`, when one of them renders |

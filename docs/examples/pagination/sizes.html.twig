@@ -1,0 +1,7 @@
+{% for size in ['sm', 'md', 'lg'] %}
+    <twig:Tabler:Pagination size="{{ size }}">
+        <twig:Tabler:Pagination:Item href="?page=1">1</twig:Tabler:Pagination:Item>
+        <twig:Tabler:Pagination:Item href="?page=2" active>2</twig:Tabler:Pagination:Item>
+        <twig:Tabler:Pagination:Item href="?page=3">3</twig:Tabler:Pagination:Item>
+    </twig:Tabler:Pagination>
+{% endfor %}

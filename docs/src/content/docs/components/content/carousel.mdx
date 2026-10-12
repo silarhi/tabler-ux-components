@@ -91,7 +91,8 @@ Other attributes go to the root `<div class="carousel slide">`.
 | `active`  | bool    | `false` | Marks the current slide                                                                         |
 | `image`   | string? | `null`  | Thumbnail URL, set as background image in a 4:3 box (`ratio ratio-4x3`), for `thumb` indicators |
 
-A `style` attribute on `Carousel:Indicator` is dropped; other attributes go to the `<button>`.
+Other attributes go to the `<button>`. A `style` attribute is merged after the thumbnail `background-image`, so it can
+still override it.
 
 `Carousel:Control`:
 
