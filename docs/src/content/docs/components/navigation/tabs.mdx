@@ -1,0 +1,82 @@
+---
+title: Tabs
+description: A tab bar that switches between content panes, with JavaScript.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A tab bar that switches between panes already in the page, with the Bootstrap JavaScript bundled in `tabler.js`.
+
+<Example name="tabs/basic" />
+
+`Tabs` renders the bar, `Tabs:Content` the panes. Each `Tabs:Item` targets the `id` of a `Tabs:Pane`, without the `#`.
+Mark the first tab and its pane `active`.
+
+## Tabs, Nav or Navbar
+
+- **Tabs**: switches between panes in the page, without loading a new page.
+- **[Nav](/components/navigation/nav/)**: static navigation, each item links to a URL. Use it when each tab is its own
+  page.
+- **[Navbar](/components/layout/navbar/)**: the header or sidebar of the app.
+
+## Pills
+
+`pills` swaps the tabs for pills:
+
+<Example name="tabs/pills" />
+
+## Underline, bordered and fill
+
+`underline` swaps the tabs for underlined links. `bordered` draws a border under the whole bar and underlines the active
+tab. `fill` makes the tabs share the full width. The panes are left out of this example:
+
+<Example name="tabs/styles" />
+
+`pills` wins over `underline` when both are set. `bordered` and `fill` combine with any style.
+
+## In a card
+
+`card` fits the tab bar in a card header. Put the panes in the card body:
+
+<Example name="tabs/card" />
+
+## Props
+
+`Tabs`:
+
+| Prop        | Type | Default | Description                                                              |
+| ----------- | ---- | ------- | ------------------------------------------------------------------------ |
+| `pills`     | bool | `false` | Pills (`nav-pills`) instead of tabs (`nav-tabs`)                         |
+| `underline` | bool | `false` | Underlined links (`nav-underline`) instead of tabs; ignored with `pills` |
+| `bordered`  | bool | `false` | Border under the whole bar, active tab underlined (`nav-bordered`)       |
+| `fill`      | bool | `false` | Tabs share the full width (`nav-fill`)                                   |
+| `card`      | bool | `false` | Tab bar for a card header (`card-header-tabs`)                           |
+
+Other attributes go to the root `<ul class="nav" role="tablist">`.
+
+`Tabs:Item`:
+
+| Prop     | Type   | Default    | Description                            |
+| -------- | ------ | ---------- | -------------------------------------- |
+| `target` | string | (required) | `id` of the pane it shows, without `#` |
+| `active` | bool   | `false`    | The tab selected first                 |
+
+Other attributes go to the `<a class="nav-link" data-bs-toggle="tab">`, not to the `<li>`.
+
+`Tabs:Pane`:
+
+| Prop     | Type   | Default    | Description                                      |
+| -------- | ------ | ---------- | ------------------------------------------------ |
+| `id`     | string | (required) | DOM id, matching the `target` of its `Tabs:Item` |
+| `active` | bool   | `false`    | The pane shown first (`active show`)             |
+
+Other attributes go to the `<div class="tab-pane">`. `Tabs:Content` has no props: attributes go to its
+`<div class="tab-content">`.
+
+## Sub-components
+
+| Component      | Renders                                                                     |
+| -------------- | --------------------------------------------------------------------------- |
+| `Tabs:Item`    | `<li class="nav-item">` around an `<a href="#target" data-bs-toggle="tab">` |
+| `Tabs:Content` | `<div class="tab-content">`, the container of the panes                     |
+| `Tabs:Pane`    | `<div class="tab-pane" role="tabpanel">`, one pane                          |

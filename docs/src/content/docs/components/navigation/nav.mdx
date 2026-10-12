@@ -1,0 +1,68 @@
+---
+title: Nav
+description: A list of navigation links, as plain links, tabs, pills or underlined.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A list of links between pages, sections or filters. Each item is a real link: the server renders the page with the
+right item `active`.
+
+<Example name="nav/basic" />
+
+## Nav, Tabs or Navbar
+
+- **Nav**: static navigation, each item links to a URL. Use it for sub-pages, settings sections, list filters.
+- **[Tabs](/components/navigation/tabs/)**: switches between panes already in the page, with JavaScript, without
+  loading a new page.
+- **[Navbar](/components/layout/navbar/)**: the header or sidebar of the app, with the brand, the main menu and a
+  collapse toggler.
+
+A Nav with `variant="tabs"` looks like Tabs, but its items are links, not pane switchers.
+
+## Variants
+
+`variant` sets the look: `default` (plain links), `tabs`, `pills` or `underline`:
+
+<Example name="nav/variants" />
+
+## Vertical
+
+`vertical` stacks the items in a column, for a side menu:
+
+<Example name="nav/vertical" />
+
+## Fill and justified
+
+`fill` makes the items take the full width, each in proportion to its text. `justified` gives them all the same width:
+
+<Example name="nav/fill" />
+
+## Props
+
+`Nav`:
+
+| Prop        | Type   | Default     | Description                                                                       |
+| ----------- | ------ | ----------- | --------------------------------------------------------------------------------- |
+| `variant`   | string | `'default'` | `default` `tabs` (`nav-tabs`) `pills` (`nav-pills`) `underline` (`nav-underline`) |
+| `vertical`  | bool   | `false`     | Stacks the items in a column (`flex-column`)                                      |
+| `fill`      | bool   | `false`     | Items share the full width, in proportion to their content (`nav-fill`)           |
+| `justified` | bool   | `false`     | Items share the full width equally (`nav-justified`)                              |
+
+Other attributes go to the root `<ul class="nav">`.
+
+`Nav:Item`:
+
+| Prop       | Type    | Default | Description                                             |
+| ---------- | ------- | ------- | ------------------------------------------------------- |
+| `href`     | string? | `null`  | Link target; without it, the `<a>` has no `href`        |
+| `active`   | bool    | `false` | The current item (`active`, with `aria-current="page"`) |
+| `disabled` | bool    | `false` | Not clickable (`disabled`, with `aria-disabled="true"`) |
+
+Other attributes go to the `<a class="nav-link">`, not to the `<li>`.
+
+## Sub-components
+
+| Component  | Renders                                                  |
+| ---------- | -------------------------------------------------------- |
+| `Nav:Item` | `<li class="nav-item">` around an `<a class="nav-link">` |

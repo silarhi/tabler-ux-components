@@ -1,0 +1,101 @@
+---
+title: Button
+description: A button or a link styled as a button, with colors, appearances, sizes and states.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Renders a `<button type="button">`, or an `<a role="button">` when `href` is set.
+
+<Example name="button/all-in-one" />
+
+## Variants
+
+`variant` sets the color. `default` is Tabler's neutral button, a plain `.btn`:
+
+<Example name="button/variants" />
+
+## Appearances
+
+`appearance` switches between a filled background, an `outline` border and a `ghost` button that only shows its
+background on hover. `link` looks like a link (`btn-link`) and ignores `variant`:
+
+<Example name="button/appearances" />
+
+`action` is a quiet, square icon button for a card header or a table row (`btn-action`): it ignores `variant` and only
+shows a background on hover. Give it an `aria-label`, and group several in
+[ButtonActions](/components/actions/button-actions/):
+
+<Example name="button/action" />
+
+## Sizes
+
+<Example name="button/sizes" />
+
+## Icons
+
+Put an icon before the label, with the `icon` class so Tabler spaces it. `iconOnly` removes the label padding: give
+the button an `aria-label`.
+
+<Example name="button/icons" />
+
+`animateIcon` animates the icon when the button is hovered:
+
+<Example name="button/animate-icon" />
+
+## Shapes
+
+`pill` rounds the corners fully, `square` removes the radius:
+
+<Example name="button/shapes" />
+
+## States
+
+`loading` replaces the label with a spinner. `disabled` sets the `disabled` attribute on a `<button>`; on a link it
+adds the `disabled` class, `aria-disabled="true"` and `tabindex="-1"`.
+
+<Example name="button/states" />
+
+## Links and form buttons
+
+With `href`, the button renders an `<a>` and `type` is ignored. Without it, `type` sets the button type, `button` by
+default:
+
+<Example name="button/links" />
+
+## Full width
+
+<Example name="button/block" />
+
+## Floating
+
+`floating` pins the button to the bottom corner of the viewport (`btn-floating`), for the main action of a page:
+
+<Example name="button/floating" minHeight="8rem" />
+
+## Confetti
+
+Confetti needs no component: `tabler.js` binds it to any element with `data-bs-toggle="confetti"`, and attributes are
+forwarded to the button:
+
+<Example name="button/confetti" />
+
+## Props
+
+| Prop          | Type    | Default     | Description                                                                                                  |
+| ------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------------ |
+| `variant`     | string  | `'primary'` | `default` (neutral) `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`                 |
+| `appearance`  | string  | `'filled'`  | `filled` `outline` `ghost` `link` (`btn-link`) `action` (`btn-action`); `link` and `action` ignore `variant` |
+| `size`        | string  | `'md'`      | `sm` `md` `lg` `xl`                                                                                          |
+| `href`        | string? | `null`      | Renders `<a href role="button">` instead of `<button>`                                                       |
+| `type`        | string  | `'button'`  | `button` `submit` `reset`, ignored for links                                                                 |
+| `pill`        | bool    | `false`     | Fully rounded corners (`btn-pill`)                                                                           |
+| `square`      | bool    | `false`     | No border radius (`btn-square`)                                                                              |
+| `iconOnly`    | bool    | `false`     | Icon-only button (`btn-icon`)                                                                                |
+| `loading`     | bool    | `false`     | Spinner instead of the label (`btn-loading`)                                                                 |
+| `block`       | bool    | `false`     | Full width (`w-100`)                                                                                         |
+| `disabled`    | bool    | `false`     | `disabled` attribute on `<button>`; `disabled` class, `aria-disabled` and `tabindex` on `<a>`                |
+| `floating`    | bool    | `false`     | Pinned to the bottom corner of the viewport (`btn-floating`)                                                 |
+| `animateIcon` | string? | `null`      | Animates the icon on hover: `pulse` `rotate` `shake` `tada` `move-start` (`btn-animate-icon-*`)              |
+
+Other attributes go to the `<button>` or `<a>`. The children are the label.

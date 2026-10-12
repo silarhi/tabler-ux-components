@@ -1,0 +1,116 @@
+---
+title: Avatar
+description: A user picture, initials or an icon in a round or square frame.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows who a user is: their photo, their initials on a tinted background, or an icon.
+
+<Example name="avatar/all-in-one" />
+
+`image` sets the picture as a background image. Without it, the children (initials, an icon) are centered in the
+avatar.
+
+## Sizes
+
+`size` goes from `xxs` to `2xl`; `md` is the default.
+
+<Example name="avatar/sizes" />
+
+## Variants
+
+`variant` gives initials or icons a tinted background (`bg-{variant}-lt`):
+
+<Example name="avatar/variants" />
+
+## Shapes
+
+Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-square`). `rounded` adds Bootstrap's
+`rounded-circle`, which forces a circle when your CSS gives avatars another shape.
+
+<Example name="avatar/shapes" />
+
+## Cover
+
+`cover` pulls the avatar up by half its height over the element above it, such as a
+[`Card:Cover`](/components/content/card/#cover), and draws a ring in the card background around it (`avatar-cover`):
+
+<Example name="avatar/cover" />
+
+## Lists
+
+`Avatar:List` spaces several avatars in a row (`avatar-list`). `stacked` overlaps them (`avatar-list-stacked`), and
+`size` sizes every avatar in the list (`avatar-list-{size}`):
+
+<Example name="avatar/list" />
+
+## Brand mark
+
+`Avatar:Brand` adds a small mark in the bottom corner of an avatar (`avatar-brand`), e.g. the service an account comes
+from. Put it in the avatar, with an `image` or with markup such as an icon:
+
+<Example name="avatar/brand" />
+
+## Upload slot
+
+`Avatar:Upload` is a dashed empty slot for a picture that is not set yet (`avatar-upload`). It renders a
+`<button type="button">`, or an `<a>` with `href`. `icon` and `text` fill it; children replace both:
+
+<Example name="avatar/upload" />
+
+## Props
+
+| Prop      | Type    | Default | Description                                                                                 |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------------------- |
+| `size`    | string  | `'md'`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`                                                        |
+| `variant` | string? | `null`  | Tinted background: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `rounded` | bool    | `false` | Circle (`rounded-circle`)                                                                   |
+| `square`  | bool    | `false` | Rounded corners instead of a circle (`avatar-square`)                                       |
+| `cover`   | bool    | `false` | Pulled over the element above, with a ring (`avatar-cover`)                                 |
+| `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
+
+Other attributes go to the root `<span class="avatar">`. A `style` attribute is merged after the `background-image`,
+so it can still override it.
+
+`Avatar:List`:
+
+| Prop      | Type    | Default | Description                                                                     |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------- |
+| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                    |
+| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`) |
+
+`Avatar:Brand`:
+
+| Prop    | Type    | Default | Description                                                                                          |
+| ------- | ------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `image` | string? | `null`  | Image URL of the mark, set as an inline `background-image` style and scaled to the mark (`bg-cover`) |
+
+Other attributes go to the `<span class="avatar-brand">`. A `style` attribute is merged after the `background-image`,
+so it can still override it.
+
+`Avatar:Upload`:
+
+| Prop   | Type    | Default | Description                                                   |
+| ------ | ------- | ------- | ------------------------------------------------------------- |
+| `href` | string? | `null`  | Renders an `<a href>`; without it, a `<button type="button">` |
+| `size` | string  | `'md'`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`                          |
+| `icon` | string? | `null`  | Tabler icon name, rendered with `Icon`                        |
+| `text` | string? | `null`  | Label under the icon (`avatar-upload-text`)                   |
+
+## Sub-components
+
+| Component       | Renders                                                                 |
+| --------------- | ----------------------------------------------------------------------- |
+| `Avatar:List`   | `<div class="avatar-list">`: a row of avatars                           |
+| `Avatar:Brand`  | `<span class="avatar-brand">`: a mark in the bottom corner of an avatar |
+| `Avatar:Upload` | `<button class="avatar avatar-upload">` (or `<a>`): an empty slot       |
+
+## Blocks
+
+| Block     | Default                                         |
+| --------- | ----------------------------------------------- |
+| `content` | Empty: the children (initials, an icon) go here |
+
+`Avatar:List` and `Avatar:Brand` have an empty `content` block for their children. The `content` block of
+`Avatar:Upload` renders the `icon` and the `text`.

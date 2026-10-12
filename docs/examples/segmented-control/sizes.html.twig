@@ -1,0 +1,9 @@
+{% for size in ['sm', 'md', 'lg'] %}
+    <div class="mb-3">
+        <twig:Tabler:SegmentedControl size="{{ size }}" aria-label="Period">
+            <twig:Tabler:SegmentedControl:Item active="{{ true }}">Day</twig:Tabler:SegmentedControl:Item>
+            <twig:Tabler:SegmentedControl:Item>Week</twig:Tabler:SegmentedControl:Item>
+            <twig:Tabler:SegmentedControl:Item>Month</twig:Tabler:SegmentedControl:Item>
+        </twig:Tabler:SegmentedControl>
+    </div>
+{% endfor %}

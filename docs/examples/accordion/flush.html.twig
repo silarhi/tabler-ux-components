@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Notification settings</h3>
+    </div>
+    <twig:Tabler:Accordion id="notification-settings" flush items="{{ [
+        {title: 'Email', text: 'A daily digest at 8:00, plus an email for each failed payment.', open: true},
+        {title: 'Push', text: 'Mentions and direct messages only.'},
+        {title: 'SMS', text: 'Security alerts, to +33 6 12 34 56 78.'},
+    ] }}" />
+</div>

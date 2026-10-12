@@ -1,0 +1,119 @@
+---
+title: Navbar
+description: A responsive navigation header, or a vertical sidebar that can fold into an icon rail.
+---
+
+import Example from '../../../../components/Example.astro'
+
+The main navigation of an app: a header across the top of the page, or a vertical sidebar.
+
+<Example name="navbar/horizontal" background="body" />
+
+`Navbar:Toggler` opens the `Navbar:Nav` whose `id` it targets, below the `expand` breakpoint. The examples on this page
+use `expand="sm"`, so the menu is expanded in the narrow preview; the default is `md`. Tabler hides the item icons of
+a horizontal navbar between the `expand` breakpoint and the next one, where space is tight.
+
+## Collapsed menu
+
+Below the `expand` breakpoint, the nav collapses behind the toggler (it needs `tabler.js`). With `expand="xl"`, it is
+collapsed here: click the toggler.
+
+<Example name="navbar/collapsed" background="body" minHeight="16rem" />
+
+## Side group
+
+Put a `Navbar:Side` in the `side` block of `Navbar:Nav` for a trailing group: it renders after the list, inside the
+collapse panel. Tabler 1.6.1 does not align it in a horizontal navbar, where it follows the list directly: add
+`class="ms-auto"`, as here, to push it to the end side.
+
+<Example name="navbar/side" background="body" />
+
+## Dark
+
+`dark` adds `navbar-dark`, which only switches the text colors to light ones: give the navbar a dark background too,
+with a `bg-*` class as here. `data-bs-theme="dark"` on the navbar switches both.
+
+<Example name="navbar/dark" background="body" />
+
+## Floating
+
+`floating` detaches the navbar from the edges around it, with a margin and rounded corners:
+
+<Example name="navbar/floating" background="body" />
+
+## Vertical sidebar
+
+`vertical` renders an `<aside>`, fixed to the start edge of the page from the `expand` breakpoint, with a fluid
+container. `Navbar:SectionTitle` labels a group of items, `Navbar:Side` pins its items to the bottom of the scrolling
+nav, and `Navbar:Footer`, outside the nav, holds a zone below it, such as the user menu.
+
+<Example name="navbar/vertical" background="body" minHeight="28rem" />
+
+## Folded sidebar
+
+`folded` shrinks a vertical sidebar into an icon rail: item titles are hidden and section titles become short
+separators. `folded="hover"` unfolds it on hover and keyboard focus, as here:
+
+<Example name="navbar/folded" background="body" minHeight="20rem" />
+
+## Props
+
+| Prop        | Type         | Default | Description                                                                                                       |
+| ----------- | ------------ | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| `expand`    | string       | `'md'`  | Breakpoint where the menu un-collapses: `sm` `md` `lg` `xl` `none`                                                |
+| `dark`      | bool         | `false` | Light text colors for a dark background (`navbar-dark`)                                                           |
+| `container` | string?      | `null`  | Suffix of the inner `container-*`: `xl`, or `fluid` when `vertical`, by default                                   |
+| `vertical`  | bool         | `false` | Vertical sidebar (`navbar-vertical`), rendered as an `<aside>`                                                    |
+| `folded`    | bool\|string | `false` | Vertical only: `true` for an icon rail (`navbar-folded`), `'hover'` to unfold it on hover (`navbar-folded-hover`) |
+| `floating`  | bool         | `false` | Gap between the navbar and the edges around it (`navbar-floating`)                                                |
+
+Other attributes go to the root `<header>`, or `<aside>` when `vertical`.
+
+## Sub-components
+
+| Component             | Renders                                                                                      |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| `Navbar:Brand`        | `<a class="navbar-brand">` with an `href`, `<span class="navbar-brand">` without             |
+| `Navbar:Toggler`      | `<button class="navbar-toggler" data-bs-toggle="collapse">`, targeting `#{target}`           |
+| `Navbar:Nav`          | `<ul class="navbar-nav">`, inside a `<div class="collapse navbar-collapse">` with `collapse` |
+| `Navbar:Item`         | `<li class="nav-item">` around an `<a class="nav-link">`, with an optional icon              |
+| `Navbar:SectionTitle` | `<li class="nav-section-title">`: hidden in a horizontal navbar                              |
+| `Navbar:Side`         | `<div class="navbar-side">` around a `<ul class="navbar-nav">`                               |
+| `Navbar:Footer`       | `<div class="navbar-footer">` around a `<ul class="navbar-nav">`                             |
+
+### `Navbar:Brand` props
+
+| Prop   | Type    | Default | Description                                       |
+| ------ | ------- | ------- | ------------------------------------------------- |
+| `href` | string? | `null`  | Link target, usually the home page; renders `<a>` |
+
+### `Navbar:Toggler` props
+
+| Prop     | Type   | Default  | Description                                    |
+| -------- | ------ | -------- | ---------------------------------------------- |
+| `target` | string | required | `id` of the `Navbar:Nav` it opens, without `#` |
+
+### `Navbar:Nav` props
+
+| Prop       | Type    | Default | Description                                                                   |
+| ---------- | ------- | ------- | ----------------------------------------------------------------------------- |
+| `collapse` | bool    | `false` | Wraps the list in a `.collapse.navbar-collapse` panel, for a `Navbar:Toggler` |
+| `id`       | string? | `null`  | `id` of the collapse panel; only rendered with `collapse`                     |
+
+Other attributes go to the `<ul>`.
+
+### `Navbar:Item` props
+
+| Prop     | Type    | Default | Description                                                                      |
+| -------- | ------- | ------- | -------------------------------------------------------------------------------- |
+| `href`   | string? | `null`  | Link target; `#` when `null`                                                     |
+| `active` | bool    | `false` | Marks the current page (`active`, `aria-current="page"`)                         |
+| `icon`   | string? | `null`  | Leading [Tabler icon](https://tabler.io/icons) name, rendered with `Tabler:Icon` |
+
+Other attributes go to the `<li>`, not to the link.
+
+## Blocks
+
+| Block                 | Default                                                                                |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `side` (`Navbar:Nav`) | Nothing: put a `Navbar:Side` in it; rendered after the list, inside the collapse panel |

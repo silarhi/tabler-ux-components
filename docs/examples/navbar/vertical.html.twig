@@ -1,0 +1,20 @@
+<twig:Tabler:Navbar vertical expand="sm">
+    <twig:Tabler:Navbar:Toggler target="sidebar-menu" />
+    <twig:Tabler:Navbar:Brand href="/">Acme Admin</twig:Tabler:Navbar:Brand>
+    <twig:Tabler:Navbar:Nav id="sidebar-menu" collapse>
+        <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
+        <twig:Tabler:Navbar:Item href="/" icon="home" active>Dashboard</twig:Tabler:Navbar:Item>
+        <twig:Tabler:Navbar:Item href="/deployments" icon="rocket">Deployments</twig:Tabler:Navbar:Item>
+        <twig:Tabler:Navbar:SectionTitle>Billing</twig:Tabler:Navbar:SectionTitle>
+        <twig:Tabler:Navbar:Item href="/invoices" icon="file-invoice">Invoices</twig:Tabler:Navbar:Item>
+        <twig:Tabler:Navbar:Item href="/customers" icon="users">Customers</twig:Tabler:Navbar:Item>
+        <twig:block name="side">
+            <twig:Tabler:Navbar:Side>
+                <twig:Tabler:Navbar:Item href="/help" icon="help">Help</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Side>
+        </twig:block>
+    </twig:Tabler:Navbar:Nav>
+    <twig:Tabler:Navbar:Footer>
+        <twig:Tabler:Navbar:Item href="/me" icon="user">Jane Doe</twig:Tabler:Navbar:Item>
+    </twig:Tabler:Navbar:Footer>
+</twig:Tabler:Navbar>

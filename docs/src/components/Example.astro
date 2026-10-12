@@ -1,0 +1,137 @@
+---
+/**
+ * A component example, in three tabs: a live preview with Tabler loaded, the Twig source and the HTML the components
+ * render.
+ *
+ *     import Example from '../../../components/Example.astro'
+ *     <Example name="alert/all-in-one" />
+ *
+ * Reads docs/examples/<name>.html.twig and its render, docs/src/data/examples/<name>.html
+ * (`php docs/scripts/render-examples.php`). The preview is an iframe, so Tabler's CSS never reaches the page.
+ */
+import { Code, TabItem, Tabs } from '@astrojs/starlight/components'
+import { format } from 'prettier'
+
+interface Props {
+    name: string
+    /** Minimum height of the preview, for what opens over it: modals, dropdowns, offcanvas… */
+    minHeight?: string
+    /** Preview background: the page (`body`) or a card-like surface (`surface`, the default). */
+    background?: 'body' | 'surface'
+}
+
+// Tabler loaded by the previews, at the version the components target
+const TABLER = 'https://cdn.jsdelivr.net/npm/@tabler/core@1.6.1/dist'
+const ICONS = 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist'
+
+const sources = import.meta.glob<string>('../../examples/**/*.html.twig', {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+})
+const renders = import.meta.glob<string>('../data/examples/**/*.html', { query: '?raw', import: 'default', eager: true })
+
+const { name, minHeight = '0', background = 'surface' } = Astro.props
+const twig = sources[`../../examples/${name}.html.twig`]
+const html = renders[`../data/examples/${name}.html`]
+if (twig === undefined || html === undefined) {
+    throw new Error(
+        `Example "${name}" not found: add docs/examples/${name}.html.twig, then run php docs/scripts/render-examples.php`
+    )
+}
+
+const formatted = await format(html, { parser: 'html', printWidth: 120, tabWidth: 4, htmlWhitespaceSensitivity: 'ignore' })
+const srcdoc = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${TABLER}/css/tabler.min.css">
+<link rel="stylesheet" href="${ICONS}/tabler-icons.min.css">
+<style>body{padding:1.5rem;background:var(--tblr-${background === 'body' ? 'body-bg' : 'bg-surface'})}.tuc-root{display:flow-root}</style>
+</head>
+<body>
+<div class="tuc-root">
+${html}
+</div>
+<script src="${TABLER}/js/tabler.min.js"></script>
+<script>
+// tabler.js initializes tooltips, popovers, sparklines… on load; links must not navigate the preview away
+document.addEventListener('click', (event) => { const a = event.target.closest('a[href]'); if (a && !a.matches('[data-bs-toggle]')) event.preventDefault() });
+</script>
+</body>
+</html>`
+---
+
+<Tabs>
+    <TabItem label="Preview">
+        <div class="tuc-example not-content">
+            <iframe
+                class="tuc-preview"
+                title={`Preview: ${name}`}
+                srcdoc={srcdoc}
+                loading="lazy"
+                style={`min-height: ${minHeight}`}></iframe>
+        </div>
+    </TabItem>
+    <TabItem label="Twig">
+        <Code code={twig.trimEnd()} lang="twig" />
+    </TabItem>
+    <TabItem label="HTML">
+        <Code code={formatted.trimEnd()} lang="html" />
+    </TabItem>
+</Tabs>
+
+<script>
+    // Fit each preview to its content, and give it the light or dark theme of the page
+    const theme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+
+    const setup = (frame: HTMLIFrameElement) => {
+        const doc = frame.contentDocument
+        if (!doc?.body) {
+            return
+        }
+        doc.documentElement.dataset.bsTheme = theme()
+        // The wrapper of the example, not <body>: the body keeps the height of the frame and overflows, so it is
+        // never resized when the content grows (web fonts, images, sparklines drawn by tabler.js)
+        const root = doc.querySelector<HTMLElement>('.tuc-root')
+        if (!root) {
+            return
+        }
+        const fit = () => {
+            const padding = parseFloat((doc.defaultView ?? window).getComputedStyle(doc.body).paddingBottom)
+            frame.style.height = `${Math.ceil(root.getBoundingClientRect().bottom + padding)}px`
+        }
+        new ResizeObserver(fit).observe(root)
+        fit()
+    }
+
+    for (const frame of document.querySelectorAll<HTMLIFrameElement>('.tuc-preview')) {
+        frame.addEventListener('load', () => setup(frame))
+        if (frame.contentDocument?.readyState === 'complete') {
+            setup(frame)
+        }
+    }
+
+    new MutationObserver(() => {
+        for (const frame of document.querySelectorAll<HTMLIFrameElement>('.tuc-preview')) {
+            if (frame.contentDocument) {
+                frame.contentDocument.documentElement.dataset.bsTheme = theme()
+            }
+        }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+</script>
+
+<style>
+    .tuc-example {
+        border: 1px solid var(--sl-color-hairline);
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .tuc-preview {
+        display: block;
+        width: 100%;
+        height: 6rem;
+        border: 0;
+    }
+</style>

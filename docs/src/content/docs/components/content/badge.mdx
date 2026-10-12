@@ -1,0 +1,98 @@
+---
+title: Badge
+description: A small label for a state, a count or a tag, filled, tinted or outlined, optionally a link.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A short label next to other content: a status, a counter, a tag.
+
+<Example name="badge/all-in-one" />
+
+## Variants
+
+<Example name="badge/variants" />
+
+## Light
+
+`light` uses a tinted background with colored text (`bg-{variant}-lt`) instead of a filled one:
+
+<Example name="badge/light" />
+
+## Outline
+
+`outline` keeps the background transparent and draws a border in the variant color (`badge-outline text-{variant}`):
+
+<Example name="badge/outline" />
+
+## Pill
+
+`pill` fully rounds the corners, for counters:
+
+<Example name="badge/pill" />
+
+## Sizes
+
+`size` is `sm`, `md` (the default) or `lg`.
+
+<Example name="badge/sizes" />
+
+## Dots
+
+`dot` renders a small dot with no text (`badge-dot`), as a status marker. Give it an `aria-label`:
+
+<Example name="badge/dot" />
+
+## Notifications
+
+`notification` places the badge over the top end corner of its parent (`badge-notification`); the parent needs
+`position-relative`. `blink` makes it pulse (`badge-blink`), for a live counter:
+
+<Example name="badge/notification" />
+
+## Icon only
+
+`iconOnly` makes a square badge that holds only an icon (`badge-icononly`):
+
+<Example name="badge/icon-only" />
+
+## Lists
+
+`Badge:List` spaces several badges in a row and wraps them on narrow screens (`badge-list`):
+
+<Example name="badge/list" />
+
+## Links
+
+With `href`, the badge renders as an `<a>`:
+
+<Example name="badge/link" />
+
+## Props
+
+| Prop           | Type    | Default     | Description                                                                                                 |
+| -------------- | ------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| `variant`      | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`                                    |
+| `light`        | bool    | `false`     | Tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`                                        |
+| `outline`      | bool    | `false`     | Transparent background and a colored border (`badge-outline text-{variant}`); takes precedence over `light` |
+| `pill`         | bool    | `false`     | Fully rounded corners (`badge-pill`)                                                                        |
+| `size`         | string  | `'md'`      | `sm` `md` `lg`                                                                                              |
+| `dot`          | bool    | `false`     | Small dot with no text (`badge-dot`)                                                                        |
+| `iconOnly`     | bool    | `false`     | Square badge holding only an icon (`badge-icononly`)                                                        |
+| `notification` | bool    | `false`     | Over the top end corner of its parent (`badge-notification`)                                                |
+| `blink`        | bool    | `false`     | Pulsing animation (`badge-blink`)                                                                           |
+| `href`         | string? | `null`      | Renders an `<a href>` instead of a `<span>`                                                                 |
+
+Other attributes go to the root `<span class="badge">` (or `<a>`). Any other `variant` value renders no color class.
+
+## Sub-components
+
+| Component    | Renders                                              |
+| ------------ | ---------------------------------------------------- |
+| `Badge:List` | `<div class="badge-list">`: a wrapping row of badges |
+
+## Blocks
+
+| Block     | Default                        |
+| --------- | ------------------------------ |
+| `content` | Empty: the children, the label |

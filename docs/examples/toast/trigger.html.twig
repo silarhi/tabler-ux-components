@@ -1,0 +1,11 @@
+<twig:Tabler:Button variant="primary" data-bs-toggle="toast" data-bs-target="#deploy-toast">Deploy</twig:Tabler:Button>
+
+<twig:Tabler:Toast:Container placement="bottom-end">
+    <twig:Tabler:Toast id="deploy-toast" autohide="{{ false }}">
+        <twig:Tabler:Toast:Header>
+            <strong class="me-auto">Deployment started</strong>
+            <twig:Tabler:Toast:Close />
+        </twig:Tabler:Toast:Header>
+        <twig:Tabler:Toast:Body>Production will be updated in a few minutes.</twig:Tabler:Toast:Body>
+    </twig:Tabler:Toast>
+</twig:Tabler:Toast:Container>

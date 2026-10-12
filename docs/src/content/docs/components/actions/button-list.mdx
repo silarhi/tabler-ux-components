@@ -1,0 +1,43 @@
+---
+title: ButtonList
+description: A row of buttons with a consistent gap that wraps onto the next line.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Lays its children out in a row with Tabler's `btn-list`: a flex container with a `0.5rem` gap that wraps when the row
+is too narrow. Unlike `ButtonGroup`, the buttons keep their own borders and radius.
+
+<Example name="button-list/all-in-one" />
+
+## Alignment
+
+`center` centers the row (`btn-list-center`). To push the buttons to the end, add the `justify-content-end` class:
+
+<Example name="button-list/alignment" />
+
+## Wrapping
+
+The buttons move to the next line when they do not fit, with the same gap between rows:
+
+<Example name="button-list/wrapping" />
+
+## Mixed content
+
+Any child is spaced the same way: a button group or a dropdown sits next to plain buttons.
+
+<Example name="button-list/mixed" />
+
+## Props
+
+| Prop     | Type | Default | Description                         |
+| -------- | ---- | ------- | ----------------------------------- |
+| `center` | bool | `false` | Centers the row (`btn-list-center`) |
+
+Other attributes go to the root `<div class="btn-list">`.
+
+## Blocks
+
+| Block     | Default                          |
+| --------- | -------------------------------- |
+| `content` | Empty: the children, the buttons |

@@ -1,0 +1,26 @@
+<div class="card">
+    <twig:Tabler:ListGroup flush hoverable>
+        {% for user in [
+            {id: 12, name: 'Jane Cooper', email: 'jane.cooper@example.com', avatar: '/examples/avatar-1.jpg', favorite: true},
+            {id: 27, name: 'Paul Martin', email: 'paul.martin@example.com', avatar: '/examples/avatar-2.jpg', favorite: false},
+            {id: 31, name: 'Sophie Laurent', email: 'sophie.laurent@example.com', avatar: '/examples/avatar-3.jpg', favorite: false},
+        ] %}
+            <twig:Tabler:ListGroup:Item>
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <twig:Tabler:Avatar image="{{ user.avatar }}" />
+                    </div>
+                    <div class="col text-truncate">
+                        <a href="/users/{{ user.id }}" class="text-reset d-block">{{ user.name }}</a>
+                        <div class="text-secondary text-truncate">{{ user.email }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <twig:Tabler:ListGroup:Actions href="/users/{{ user.id }}/favorite" show="{{ user.favorite }}" aria-label="{{ user.favorite ? 'Remove ' ~ user.name ~ ' from favorites' : 'Add ' ~ user.name ~ ' to favorites' }}">
+                            <twig:Tabler:Icon name="star" class="icon {{ user.favorite ? 'text-yellow' : 'text-secondary' }}" aria-hidden="true" />
+                        </twig:Tabler:ListGroup:Actions>
+                    </div>
+                </div>
+            </twig:Tabler:ListGroup:Item>
+        {% endfor %}
+    </twig:Tabler:ListGroup>
+</div>

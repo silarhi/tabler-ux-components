@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `silarhi/tabler-ux-components` is a Symfony bundle of [Tabler](https://tabler.io/) UI components built as anonymous [Symfony UX Twig Components](https://symfony.com/bundles/ux-twig-component/current/index.html): `<twig:Tabler:Alert>`, `<twig:Tabler:Card>`, … Almost all of the code is Twig templates under `templates/components/Tabler/`; the only PHP class is the bundle. Published on Packagist under MIT license.
 
-The README documents every component, the design pattern and the escaping rules: keep it in sync with the templates.
+The documentation site ([tabler-ux-components.silarhi.dev](https://tabler-ux-components.silarhi.dev), built from `docs/`) documents every component: a page per component in `docs/src/content/docs/components/<group>/`, with examples in `docs/examples/<component>/` rendered by `php docs/scripts/render-examples.php` into `docs/src/data/examples/` (commit the renders: CI runs it with `--check`). Keep it in sync with the templates. The README stays short: features, installation, quick start, links to the site. Template authoring rules (escaping) are in `CONTRIBUTING.md`.
 
 ## Development Commands
 
@@ -38,13 +38,13 @@ composer normalize --dry-run
 
 - `src/TablerUxComponentsBundle.php` (`AbstractBundle`) only prepends the bundle's `templates/` directory as a non-namespaced Twig path, so ux-twig-component's anonymous component finder resolves everything under `components/Tabler/` with the `Tabler:` prefix. There are no PHP components, services or configuration.
 - **shadcn composition pattern**: each component is a main template with every prop (`Alert.html.twig`) plus one sub-component per part (`Alert/Title.html.twig` → `<twig:Tabler:Alert:Title>`). Each prop of the main component has a matching block whose default renders the sub-component wrapping the prop value, so users can override a block, or the whole `content` block, to compose freely.
-- Every template starts with a `{# … #}` doc comment: what it renders, usage examples and the list of props. Keep it accurate; it is the reference the README is written from.
+- Every template starts with a `{# … #}` doc comment: what it renders, usage examples and the list of props. Keep it accurate; it is the reference the documentation pages are written from.
 - **Variants** are declared with `html_cva()` (twig/html-extra) and applied with `attributes.render('class')` so users' classes are merged. Booleans become the string keys `true`/`false`. When two axes both emit a color class (Button `appearance` × `variant`, Badge `light` × `variant`), the classes live entirely in `compound_variants` so only one wins.
 - **Nullable props passed to `html_cva`** (`variant = null`, `size = null`, `animation = null`…) go through `?? ''` in `.apply({…})`: PHP 8.5 deprecates `null` as an array offset, which Cva uses for the lookup, and the suite fails on deprecations. `''` selects the same (absent) variant.
-- **Escaping**: props are text and always escaped; markup only comes in through blocks and sub-components. Never `|raw` nor `{% autoescape false %}` (`tests/TemplateConventionsTest.php` fails on both, outside comments). A captured `{% set x %}…{% endset %}` is already safe: print it as `{{ x }}`, never through `|raw` and never joined with `~` for output. Never forward a possibly-null value as an HTML attribute (older ux-twig-component releases render `null` as `"true"`): guard it with `{% if %}` or declare it as a prop. See the README's "Escaping rules".
+- **Escaping**: props are text and always escaped; markup only comes in through blocks and sub-components. Never `|raw` nor `{% autoescape false %}` (`tests/TemplateConventionsTest.php` fails on both, outside comments). A captured `{% set x %}…{% endset %}` is already safe: print it as `{{ x }}`, never through `|raw` and never joined with `~` for output. Never forward a possibly-null value as an HTML attribute (older ux-twig-component releases render `null` as `"true"`): guard it with `{% if %}` or declare it as a prop. See "Template rules" in `CONTRIBUTING.md`.
 - **Whitespace**: each template wraps everything after its doc comment in `{% apply trim %}…{% endapply ~%}`, and the file ends with a newline (`TemplateConventionsTest`). The trim drops the blank lines between `{% props %}` and `{% set %}`, so nothing precedes the markup. The `~` keeps the final newline, which Twig drops after a plain `%}`: it stands in for the newline Twig also drops after the `{% endcomponent %}` a `</twig:…>` closing tag compiles to, so components on consecutive lines stay apart.
 - **Prop syntax** in templates and docs: always the explicit string form `<twig:Tabler:Icon name="{{ icon }}" />`, never the `:prop` shorthand.
-- Front-end: components target Tabler **1.6+** (`@tabler/core` CSS and `tabler.js`, which bundles Bootstrap's JavaScript since 1.5) and the `@tabler/icons-webfont` font. Components needing third-party JavaScript (charts, datepicker, …) are out of scope (README "Not included").
+- Front-end: components target Tabler **1.6+** (`@tabler/core` CSS and `tabler.js`, which bundles Bootstrap's JavaScript since 1.5) and the `@tabler/icons-webfont` font. Components needing third-party JavaScript (charts, datepicker, …) are out of scope (the "Not included" section of `docs/src/content/docs/getting-started/composition.md`).
 
 ## Testing
 
@@ -56,7 +56,7 @@ composer normalize --dry-run
 
 1. `templates/components/Tabler/<Name>.html.twig` with its doc comment, `{% props %}`, `html_cva` variants and one block per prop, plus `templates/components/Tabler/<Name>/<Part>.html.twig` sub-components.
 2. A test in `tests/Component/<Name>Test.php` covering the all-in-one and composed usages, each variant and the attributes merge.
-3. A README section (all-in-one and composed usage, props, sub-components, blocks), and the table of contents.
+3. A documentation page in `docs/src/content/docs/components/<group>/<name>.mdx` (all-in-one and composed usage, props, sub-components, blocks), its examples in `docs/examples/<name>/`, rendered with `php docs/scripts/render-examples.php <name>`, and a link in the README's "Documentation" list.
 4. `vendor/bin/twig-cs-fixer lint --fix` and the full test suite.
 
 ## Code Standards

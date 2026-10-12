@@ -1,0 +1,45 @@
+---
+title: Ribbon
+description: A corner ribbon or bookmark that flags a card as new, featured or recommended.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Flags a card. The ribbon is absolutely positioned, so place it inside a positioned parent such as a
+[Card](/components/content/card/).
+
+<Example name="ribbon/all-in-one" />
+
+## Positions
+
+`position` is `end` (the default, the top-right corner), `start`, `top`, `top-start`, `bottom` or `bottom-start`:
+
+<Example name="ribbon/positions" />
+
+## Bookmark
+
+`bookmark` turns the ribbon into a bookmark with a notched end:
+
+<Example name="ribbon/bookmark" />
+
+## Variants
+
+Without `variant`, the ribbon uses Tabler's default color, the primary one.
+
+<Example name="ribbon/variants" />
+
+## Props
+
+| Prop       | Type    | Default | Description                                                                          |
+| ---------- | ------- | ------- | ------------------------------------------------------------------------------------ |
+| `variant`  | string? | `null`  | Background: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` |
+| `position` | string  | `'end'` | `end` `start` `top` `top-start` `bottom` `bottom-start`                              |
+| `bookmark` | bool    | `false` | Bookmark style (`ribbon-bookmark`)                                                   |
+
+Other attributes go to the root `<div class="ribbon">`. Any other `variant` value renders no color class.
+
+## Blocks
+
+| Block     | Default                                       |
+| --------- | --------------------------------------------- |
+| `content` | Empty: the children, a short label or an icon |

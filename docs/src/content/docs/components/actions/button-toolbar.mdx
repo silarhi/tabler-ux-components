@@ -1,0 +1,35 @@
+---
+title: ButtonToolbar
+description: Several button groups combined into one toolbar.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Combines button groups into one toolbar, Bootstrap's `btn-toolbar`: a flex row that wraps. The root gets
+`role="toolbar"`: give it an `aria-label`. The toolbar adds no space between its children, so add a gap class such as
+`gap-2`.
+
+<Example name="button-toolbar/all-in-one" />
+
+## Input groups
+
+An input group placed in the toolbar keeps its natural width instead of stretching:
+
+<Example name="button-toolbar/input-group" />
+
+## Spacing
+
+Flex utilities lay the groups out, for example `justify-content-between` to push them to both ends:
+
+<Example name="button-toolbar/spacing" />
+
+## Props
+
+The component has no props. Other attributes go to the root `<div class="btn-toolbar" role="toolbar">`: a `class` is
+added to `btn-toolbar`, a `role` replaces `toolbar`.
+
+## Blocks
+
+| Block     | Default                                |
+| --------- | -------------------------------------- |
+| `content` | Empty: the children, the button groups |

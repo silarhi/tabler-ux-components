@@ -1,0 +1,60 @@
+---
+title: Icon
+description: A Tabler icon from the icon webfont, with a color, a size and an animation.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Renders one of the [Tabler Icons](https://tabler.io/icons) as `<i class="ti ti-{name}">`. It needs the
+`@tabler/icons-webfont` stylesheet, see [Installation](/getting-started/installation/).
+
+<Example name="icon/all-in-one" />
+
+`name` is the icon name without the `ti-` prefix, as listed on [tabler.io/icons](https://tabler.io/icons).
+
+## Sizes
+
+Without `size`, the icon follows the font size of its parent. `size` gives it a fixed size, with Tabler's `icon` class:
+`sm` (1rem), `md` (2.5rem) or `lg` (3.5rem). `inline` is 1rem and aligned with the text around it:
+
+<Example name="icon/sizes" />
+
+## Filled
+
+`filled` renders the filled variant of the icon, `ti-{name}-filled`.
+
+:::caution
+`@tabler/icons-webfont` defines the `ti-{name}-filled` classes up to version 3.36.0 only. From 3.36.1, the filled icons
+moved to a separate stylesheet, `tabler-icons-filled.css`, which uses the plain `ti-{name}` classes, so `filled`
+renders nothing with a recent webfont (the previews on this site use 3.49.0).
+:::
+
+## Variants
+
+`variant` sets the color (`text-{variant}`):
+
+<Example name="icon/variants" />
+
+## Animations
+
+`animation` is `pulse`, `tada` or `rotate`:
+
+<Example name="icon/animations" />
+
+## Attributes
+
+Without `size` and `variant`, the icon inherits the font size and color of its parent. Other attributes go to the
+`<i>`: a spacing class next to a label, a font-size class, or `role="img"` and an `aria-label` when the icon carries
+meaning on its own:
+
+<Example name="icon/attributes" />
+
+## Props
+
+| Prop        | Type    | Default    | Description                                                                |
+| ----------- | ------- | ---------- | -------------------------------------------------------------------------- |
+| `name`      | string  | (required) | Icon name, without the `ti-` prefix                                        |
+| `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`   |
+| `animation` | string? | `null`     | `pulse` `tada` `rotate`                                                    |
+| `size`      | string? | `null`     | `sm` `md` `lg` `inline` (`icon icon-{size}`); unset, follows the font size |
+| `filled`    | bool    | `false`    | Filled variant: `ti-{name}-filled` instead of `ti-{name}`                  |

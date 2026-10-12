@@ -1,0 +1,88 @@
+---
+title: Modal
+description: A dialog over the page, for confirmations, forms and details.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Bootstrap 5 modal markup, opened by a trigger with `data-bs-toggle="modal"` and `data-bs-target="#<id>"`. It needs
+`tabler.js`.
+
+<Example name="modal/all-in-one" minHeight="14rem" />
+
+## Composed
+
+The sub-components take over for a form or custom actions. `blur` blurs the page behind the modal (`modal-blur`).
+Attributes go to the root `<div class="modal">`: add `fade` for the open animation.
+
+<Example name="modal/composed" minHeight="20rem" />
+
+## Size, position and status
+
+`size` sets the width of the dialog (`fullscreen` covers the whole viewport), `centered` centers it vertically, and
+`status` adds a colored bar at its top:
+
+<Example name="modal/status" minHeight="18rem" />
+
+The status bar is rendered outside the `content` block, so a composed modal keeps it: set `status` and pass the
+sub-components as children:
+
+<Example name="modal/composed-status" minHeight="20rem" />
+
+For long content, `scrollable` scrolls the body of the dialog instead of the page.
+
+## Blocks
+
+`title`, `text` and `footer` are plain strings. For richer content, such as buttons in the footer, override the
+matching block: `header`, `body` or `footer`. The other blocks keep rendering from their props. See
+[Composition](/getting-started/composition/) for how blocks work.
+
+<Example name="modal/block" minHeight="16rem" />
+
+## Static backdrop
+
+With `staticBackdrop`, neither a click on the backdrop nor the Escape key closes the modal. `dismissible="{{ false }}"`
+removes the close button of the header (see [boolean props](/getting-started/composition/#boolean-props)), so the
+footer button is the only way out:
+
+<Example name="modal/static-backdrop" minHeight="16rem" />
+
+## Props
+
+| Prop             | Type    | Default | Description                                                                       |
+| ---------------- | ------- | ------- | --------------------------------------------------------------------------------- |
+| `id`             | string? | `null`  | DOM id targeted by triggers (`data-bs-target="#id"`)                              |
+| `size`           | string  | `'md'`  | `sm` `md` `lg` `xl` `full` (`modal-full-width`) `fullscreen` (`modal-fullscreen`) |
+| `centered`       | bool    | `false` | Vertically centered dialog (`modal-dialog-centered`)                              |
+| `scrollable`     | bool    | `false` | Scrolls the body instead of the page (`modal-dialog-scrollable`)                  |
+| `status`         | string? | `null`  | Color of the status bar, rendered with `Modal:Status`                             |
+| `title`          | string? | `null`  | Rendered with `Modal:Header` and `Modal:Title`                                    |
+| `text`           | string? | `null`  | Rendered with `Modal:Body`                                                        |
+| `footer`         | string? | `null`  | Rendered with `Modal:Footer`                                                      |
+| `dismissible`    | bool    | `true`  | Close button in the header rendered from `title` (`Modal:Close`)                  |
+| `staticBackdrop` | bool    | `false` | The backdrop and the Escape key do not close the modal                            |
+| `blur`           | bool    | `false` | Blurs the page behind the backdrop (`modal-blur`)                                 |
+
+Other attributes go to the root `<div class="modal" tabindex="-1">`.
+
+## Sub-components
+
+| Component      | Renders                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `Modal:Header` | `<div class="modal-header">`: holds the title and the close button                         |
+| `Modal:Title`  | `<h5 class="modal-title">`                                                                 |
+| `Modal:Close`  | `<button class="btn-close" data-bs-dismiss="modal" aria-label="Close">`                    |
+| `Modal:Body`   | `<div class="modal-body">`                                                                 |
+| `Modal:Footer` | `<div class="modal-footer">`: usually the actions                                          |
+| `Modal:Status` | `<div class="modal-status bg-…">`: the colored bar; `variant` prop, `'primary'` by default |
+
+`Modal:Status` takes `variant`: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`.
+
+## Blocks
+
+| Block     | Default                                                                                       |
+| --------- | --------------------------------------------------------------------------------------------- |
+| `header`  | `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set |
+| `body`    | `Modal:Body` with the `text` prop, when set                                                   |
+| `footer`  | `Modal:Footer` with the `footer` prop, when set                                               |
+| `content` | `header`, `body` and `footer`: replace it to compose freely; the status bar stays outside it  |

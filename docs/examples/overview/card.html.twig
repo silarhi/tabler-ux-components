@@ -1,0 +1,24 @@
+<div class="row row-cards">
+    <div class="col-md-6">
+        <twig:Tabler:Card status="success">
+            <twig:Tabler:Card:Header>
+                <twig:Tabler:Card:Title>Deployments</twig:Tabler:Card:Title>
+                <twig:Tabler:Card:Actions>
+                    <twig:Tabler:Badge variant="success" light="{{ true }}">Healthy</twig:Tabler:Badge>
+                </twig:Tabler:Card:Actions>
+            </twig:Tabler:Card:Header>
+            <twig:Tabler:Card:Body>
+                <twig:Tabler:Progress value="72" variant="success" size="sm" label="72% of the rollout" />
+                <div class="mt-3"><twig:Tabler:Status variant="success" dot="{{ true }}" animated="{{ true }}" label="Live on 18 of 25 servers" /></div>
+            </twig:Tabler:Card:Body>
+            <twig:Tabler:Card:Footer>
+                <twig:Tabler:Button variant="primary" size="sm">Promote</twig:Tabler:Button>
+                <twig:Tabler:Button appearance="ghost" variant="secondary" size="sm">Roll back</twig:Tabler:Button>
+            </twig:Tabler:Card:Footer>
+        </twig:Tabler:Card>
+    </div>
+    <div class="col-md-6">
+        <twig:Tabler:Alert variant="success" title="Saved!" description="Your changes are live." dismissible="{{ true }}" />
+        <twig:Tabler:Alert variant="warning" important="{{ true }}" title="Disk almost full" description="92% used on db-1." />
+    </div>
+</div>

@@ -1,0 +1,7 @@
+{% for separator in ['default', 'dots', 'arrows', 'bullets'] %}
+    <twig:Tabler:Breadcrumb separator="{{ separator }}">
+        <twig:Tabler:Breadcrumb:Item href="/">Home</twig:Tabler:Breadcrumb:Item>
+        <twig:Tabler:Breadcrumb:Item href="/invoices">Invoices</twig:Tabler:Breadcrumb:Item>
+        <twig:Tabler:Breadcrumb:Item active>INV-0142</twig:Tabler:Breadcrumb:Item>
+    </twig:Tabler:Breadcrumb>
+{% endfor %}

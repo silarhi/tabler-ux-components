@@ -1,0 +1,54 @@
+---
+title: Datagrid
+description: A responsive grid of title and value pairs, for the details of a record.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A responsive grid of title and value pairs: the details of a server, an invoice, a user.
+
+<Example name="datagrid/all-in-one" />
+
+## Composed
+
+When the value is more than a string, compose the item with `Datagrid:Item:Title` and `Datagrid:Item:Content`. Both
+forms mix freely in the same grid:
+
+<Example name="datagrid/composed" />
+
+## Blocks
+
+`Datagrid:Item` has a block per prop. Override `body` to keep the `title` prop and render a custom value:
+
+<Example name="datagrid/block" />
+
+## Props
+
+`Datagrid` has no props: attributes go to the root `<div class="datagrid">`.
+
+`Datagrid:Item`:
+
+| Prop    | Type    | Default | Description                           |
+| ------- | ------- | ------- | ------------------------------------- |
+| `title` | string? | `null`  | Rendered with `Datagrid:Item:Title`   |
+| `text`  | string? | `null`  | Rendered with `Datagrid:Item:Content` |
+
+Other attributes go to the `<div class="datagrid-item">`.
+
+## Sub-components
+
+| Component               | Renders                                 |
+| ----------------------- | --------------------------------------- |
+| `Datagrid:Item`         | `<div class="datagrid-item">`, one pair |
+| `Datagrid:Item:Title`   | `<div class="datagrid-title">`          |
+| `Datagrid:Item:Content` | `<div class="datagrid-content">`        |
+
+## Blocks
+
+Blocks of `Datagrid:Item`:
+
+| Block     | Default                                                |
+| --------- | ------------------------------------------------------ |
+| `title`   | `Datagrid:Item:Title` with the `title` prop, when set  |
+| `body`    | `Datagrid:Item:Content` with the `text` prop, when set |
+| `content` | `title` and `body`: replace it to compose freely       |

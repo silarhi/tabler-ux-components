@@ -1,0 +1,8 @@
+<div class="d-flex flex-wrap gap-4">
+    {% for animation in ['fade', 'scale', 'flip', 'slide-up', 'slide-down', 'slide-left', 'slide-right', 'slide-start', 'slide-end'] %}
+        <div class="text-center">
+            <twig:Tabler:SwitchIcon iconA="bell" iconB="bell-off" animation="{{ animation }}" aria-label="Mute notifications" />
+            <div class="text-secondary small">{{ animation }}</div>
+        </div>
+    {% endfor %}
+</div>

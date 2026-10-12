@@ -1,0 +1,10 @@
+{% for appearance in ['filled', 'outline', 'ghost'] %}
+    <div class="btn-list mb-2">
+        {% for variant in ['default', 'primary', 'success', 'danger'] %}
+            <twig:Tabler:Button variant="{{ variant }}" appearance="{{ appearance }}">{{ appearance|capitalize }}</twig:Tabler:Button>
+        {% endfor %}
+    </div>
+{% endfor %}
+<div class="btn-list">
+    <twig:Tabler:Button appearance="link">Link</twig:Tabler:Button>
+</div>

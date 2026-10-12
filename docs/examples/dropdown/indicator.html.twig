@@ -1,0 +1,15 @@
+<twig:Tabler:Dropdown>
+    <twig:Tabler:Dropdown:Toggle>Assign to</twig:Tabler:Dropdown:Toggle>
+    <twig:Tabler:Dropdown:Menu>
+        {% for person in [
+            {name: 'Jane Cooper', avatar: '/examples/avatar-1.jpg'},
+            {name: 'Wade Warren', avatar: '/examples/avatar-2.jpg'},
+            {name: 'Esther Howard', avatar: '/examples/avatar-3.jpg'},
+        ] %}
+            <twig:Tabler:Dropdown:Item href="?assignee={{ loop.index }}">
+                <twig:Tabler:Dropdown:Indicator><twig:Tabler:Avatar size="xs" image="{{ person.avatar }}" /></twig:Tabler:Dropdown:Indicator>
+                {{ person.name }}
+            </twig:Tabler:Dropdown:Item>
+        {% endfor %}
+    </twig:Tabler:Dropdown:Menu>
+</twig:Tabler:Dropdown>

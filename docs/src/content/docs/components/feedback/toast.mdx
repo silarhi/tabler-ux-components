@@ -1,0 +1,63 @@
+---
+title: Toast
+description: Lightweight notifications with a header, a body and a close button, shown and hidden by Bootstrap.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A lightweight notification: a background job that finished, a message from a teammate.
+
+<Example name="toast/basic" />
+
+Toast has no content props: compose it with `Toast:Header`, `Toast:Body` and `Toast:Close`.
+
+## Body only
+
+Drop the header for a one-line message, and put the close button next to the body:
+
+<Example name="toast/body-only" />
+
+## Placement
+
+The toast does not position itself. Wrap toasts in a `Toast:Container`: it stacks them, and its `placement` pins the
+stack to a corner or the center of the viewport. Without `placement`, the container stays in the flow of its parent:
+
+<Example name="toast/placement" minHeight="20rem" />
+
+## Showing a toast
+
+Without `show`, a toast stays hidden until Bootstrap shows it. With `tabler.js`, a trigger carrying
+`data-bs-toggle="toast"` and a `data-bs-target` shows it on click; from your own code, call
+`bootstrap.Toast.getOrCreateInstance(element).show()`.
+
+A shown toast hides itself after Bootstrap's delay (5 seconds, set `data-bs-delay` to change it). `autohide` set to
+`false` keeps it until it is closed, as here:
+
+<Example name="toast/trigger" minHeight="20rem" />
+
+## Props
+
+| Prop       | Type | Default | Description                                                                 |
+| ---------- | ---- | ------- | --------------------------------------------------------------------------- |
+| `show`     | bool | `false` | Renders the toast visible (`show`)                                          |
+| `autohide` | bool | `true`  | `false` adds `data-bs-autohide="false"`: the toast stays until it is closed |
+
+Other attributes go to the root `<div role="alert">`, such as the `id` a trigger targets.
+
+## Sub-components
+
+| Component         | Renders                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| `Toast:Header`    | `<div class="toast-header">`                                                           |
+| `Toast:Body`      | `<div class="toast-body">`                                                             |
+| `Toast:Close`     | The close button, `<button class="ms-2 btn-close" data-bs-dismiss="toast">` (needs JS) |
+| `Toast:Container` | `<div class="toast-container">`: stacks toasts, see its props below                    |
+
+### `Toast:Container` props
+
+| Prop        | Type    | Default | Description                                                                                    |
+| ----------- | ------- | ------- | ---------------------------------------------------------------------------------------------- |
+| `placement` | string? | `null`  | `top-start` `top-center` `top-end` `middle-center` `bottom-start` `bottom-center` `bottom-end` |
+
+With a `placement`, the container gets `position-fixed p-3` and the position utilities of that place (for instance
+`top-0 end-0`). Other attributes go to the container `<div>`.

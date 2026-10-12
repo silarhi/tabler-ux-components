@@ -1,0 +1,86 @@
+---
+title: StarRating
+description: A read-only row of stars showing a score, such as the rating of a product review.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Shows a score as a row of stars: the rating of a review, a product or a supplier. The stars are read-only. Tabler's
+interactive star rating, which lets the user pick a score, relies on a third-party JavaScript library and is not
+covered.
+
+<Example name="star-rating/all-in-one" />
+
+## Values
+
+`value` is the number of colored stars, `max` the total number of stars (5 by default). Stars are whole:
+`value="3.5"` colors 3 stars. Round the score yourself and pass the exact one in `aria-label`:
+
+<Example name="star-rating/values" />
+
+## Colors
+
+`variant` colors the active stars, `yellow` by default. It takes the same colors as Legend: see
+[the list](/components/data/legend/#colors). `icon` replaces the star with another Tabler icon. Change the
+`aria-label` to match. The `-filled` icons, such as `star-filled`, only exist up to `@tabler/icons-webfont` 3.36.0: see
+[Icon](/components/content/icon/#filled).
+
+<Example name="star-rating/colors" />
+
+## Sizes
+
+The stars follow the font size of the row, `0.75rem` by default. Pass a font size class such as `fs-3`. The
+`--tblr-stars-gap` CSS variable sets the space between the stars.
+
+<Example name="star-rating/sizes" />
+
+## Accessibility
+
+The row gets `role="img"` and an `aria-label` such as "4 out of 5". Pass your own `aria-label` to replace it. The
+star icons are hidden from assistive technology (`aria-hidden="true"`). Also show the score as text next to the stars,
+so it does not rely on color alone:
+
+<Example name="star-rating/reviews" />
+
+## Composed
+
+The tag content replaces the stars: place one `StarRating:Star` per star and color some with `active`. `value`,
+`max`, `variant` and `icon` are then ignored, so give each star its own `variant` and `icon`. Always pass an
+`aria-label`: the default one is built from `value` and `max` and would read "0 out of 5".
+
+<Example name="star-rating/composed" />
+
+## Props
+
+| Prop      | Type   | Default    | Description                                                              |
+| --------- | ------ | ---------- | ------------------------------------------------------------------------ |
+| `value`   | int    | `0`        | Number of active stars                                                   |
+| `max`     | int    | `5`        | Total number of stars; `0` renders none                                  |
+| `variant` | string | `'yellow'` | Color of the active stars, see [Colors](/components/data/legend/#colors) |
+| `icon`    | string | `'star'`   | Tabler icon name of each star                                            |
+
+Other attributes go to the root `<div class="stars">`. It gets `role="img"` and an `aria-label` of "`value` out of
+`max`", unless you pass your own.
+
+### StarRating:Star
+
+| Prop      | Type   | Default    | Description                                                      |
+| --------- | ------ | ---------- | ---------------------------------------------------------------- |
+| `active`  | bool   | `false`    | Colors the star with `variant`. Inactive stars stay gray         |
+| `variant` | string | `'yellow'` | Color when active, see [Colors](/components/data/legend/#colors) |
+| `icon`    | string | `'star'`   | Tabler icon name                                                 |
+
+Other attributes go to the star `<span>`.
+
+## Sub-components
+
+| Component         | Renders                         |
+| ----------------- | ------------------------------- |
+| `StarRating:Star` | `<span class="star">`, one star |
+
+## Blocks
+
+| Block                         | Default                                                    |
+| ----------------------------- | ---------------------------------------------------------- |
+| `content`                     | `max` × `StarRating:Star`, the first `value` ones `active` |
+| `content` (`StarRating:Star`) | The `icon`, hidden from assistive technology               |

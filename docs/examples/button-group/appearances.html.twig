@@ -1,0 +1,16 @@
+<div class="btn-list">
+    <twig:Tabler:ButtonGroup aria-label="Status filter">
+        <twig:Tabler:ButtonGroup:Toggle id="status-all" name="status" value="all" variant="primary" checked="{{ true }}">All</twig:Tabler:ButtonGroup:Toggle>
+        <twig:Tabler:ButtonGroup:Toggle id="status-paid" name="status" value="paid" variant="primary">Paid</twig:Tabler:ButtonGroup:Toggle>
+        <twig:Tabler:ButtonGroup:Toggle id="status-overdue" name="status" value="overdue" variant="primary">Overdue</twig:Tabler:ButtonGroup:Toggle>
+    </twig:Tabler:ButtonGroup>
+    <twig:Tabler:ButtonGroup aria-label="Customer type">
+        <twig:Tabler:ButtonGroup:Toggle id="customer-all" name="customer" value="all" appearance="outline" checked="{{ true }}">All</twig:Tabler:ButtonGroup:Toggle>
+        <twig:Tabler:ButtonGroup:Toggle id="customer-company" name="customer" value="company" appearance="outline">Companies</twig:Tabler:ButtonGroup:Toggle>
+        <twig:Tabler:ButtonGroup:Toggle id="customer-person" name="customer" value="person" appearance="outline">Individuals</twig:Tabler:ButtonGroup:Toggle>
+    </twig:Tabler:ButtonGroup>
+    <twig:Tabler:ButtonGroup aria-label="Sort order">
+        <twig:Tabler:ButtonGroup:Toggle id="sort-newest" name="sort" value="newest" appearance="ghost" checked="{{ true }}">Newest</twig:Tabler:ButtonGroup:Toggle>
+        <twig:Tabler:ButtonGroup:Toggle id="sort-oldest" name="sort" value="oldest" appearance="ghost">Oldest</twig:Tabler:ButtonGroup:Toggle>
+    </twig:Tabler:ButtonGroup>
+</div>

@@ -1,0 +1,62 @@
+---
+title: SwitchIcon
+description: A button that toggles between two icons, such as a dark mode or a favorite toggle.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A toggle button that swaps two icons with an animation. `tabler.js` (`data-bs-toggle="switch-icon"`) toggles it on
+click and keeps `aria-pressed` in sync. Give the button an `aria-label` saying what it toggles.
+
+<Example name="switch-icon/all-in-one" />
+
+## Composed
+
+`iconA` and `iconB` take [Icon](/components/content/icon/) names. For anything else (a color, an SVG), use the
+`SwitchIcon:A` and `SwitchIcon:B` sub-components:
+
+<Example name="switch-icon/composed" />
+
+## Animations
+
+<Example name="switch-icon/animations" />
+
+## States
+
+`active` starts on the second icon. `loading` (Tabler 1.6+) shows a spinner instead of the icons, ignores clicks and
+sets `aria-busy="true"`:
+
+<Example name="switch-icon/states" />
+
+## Blocks
+
+`a` and `b` each have a matching block. Override one, and the other keeps rendering from its prop:
+
+<Example name="switch-icon/block" />
+
+## Props
+
+| Prop        | Type    | Default | Description                                                                                                                |
+| ----------- | ------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `animation` | string? | `null`  | `fade` `scale` `flip` `slide-up` `slide-down` `slide-left` `slide-right` `slide-start` `slide-end`; `null` swaps instantly |
+| `active`    | bool    | `false` | Starts switched on, showing icon B (`active`, `aria-pressed="true"`)                                                       |
+| `loading`   | bool    | `false` | Spinner instead of the icons, clicks ignored (`switch-icon-loading`, `aria-busy`)                                          |
+| `iconA`     | string? | `null`  | Name of the first icon, rendered with `Icon` inside `SwitchIcon:A`                                                         |
+| `iconB`     | string? | `null`  | Name of the second icon, rendered with `Icon` inside `SwitchIcon:B`                                                        |
+
+Other attributes go to the root `<button class="switch-icon">`.
+
+## Sub-components
+
+| Component      | Renders                                                 |
+| -------------- | ------------------------------------------------------- |
+| `SwitchIcon:A` | `<span class="switch-icon-a">`: the first, default icon |
+| `SwitchIcon:B` | `<span class="switch-icon-b">`: the toggled icon        |
+
+## Blocks
+
+| Block     | Default                                               |
+| --------- | ----------------------------------------------------- |
+| `a`       | `SwitchIcon:A`, with an `Icon` named `iconA` when set |
+| `b`       | `SwitchIcon:B`, with an `Icon` named `iconB` when set |
+| `content` | `a` and `b`: replace it to compose freely             |

@@ -1,0 +1,40 @@
+---
+title: PageSection
+description: A heading that splits a long page body into sections, for instance between groups of cards.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A heading inside the page body, with an optional description, to split a long page into sections.
+
+<Example name="page-section/all-in-one" background="body" />
+
+The root `<div>` has no class of its own: give it the column class it needs in the grid, such as `col-12` in a `.row`.
+
+## Composed
+
+<Example name="page-section/composed" background="body" />
+
+## Props
+
+| Prop          | Type    | Default | Description                             |
+| ------------- | ------- | ------- | --------------------------------------- |
+| `title`       | string? | `null`  | Rendered with `PageSection:Title`       |
+| `description` | string? | `null`  | Rendered with `PageSection:Description` |
+
+Other attributes go to the root `<div>`.
+
+## Sub-components
+
+| Component                 | Renders                                |
+| ------------------------- | -------------------------------------- |
+| `PageSection:Title`       | `<h2 class="page-section-title">`      |
+| `PageSection:Description` | `<p class="page-section-description">` |
+
+## Blocks
+
+| Block         | Default                                                         |
+| ------------- | --------------------------------------------------------------- |
+| `title`       | `PageSection:Title` with the `title` prop, when set             |
+| `description` | `PageSection:Description` with the `description` prop, when set |
+| `content`     | `title` and `description`: replace it to compose freely         |

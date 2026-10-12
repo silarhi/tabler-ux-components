@@ -1,0 +1,50 @@
+---
+title: PageHeader
+description: The title block at the top of a page, with an optional pretitle and action buttons.
+---
+
+import Example from '../../../../components/Example.astro'
+
+The title block at the top of a page, with a pretitle above the title and buttons on the end side.
+
+<Example name="page-header/all-in-one" background="body" />
+
+## Actions
+
+Fill the `actions` block with `PageHeader:Actions`: it lays the buttons out in a `btn-list` on the end side, and the
+title keeps coming from the props.
+
+<Example name="page-header/actions" background="body" />
+
+## Composed
+
+Direct children replace the `content` block, which holds the whole grid row: the `pretitle` and `title` props are no
+longer rendered. Rebuild the `.row` yourself, here to add an avatar next to the title.
+
+<Example name="page-header/composed" background="body" />
+
+## Props
+
+| Prop       | Type    | Default | Description                         |
+| ---------- | ------- | ------- | ----------------------------------- |
+| `pretitle` | string? | `null`  | Rendered with `PageHeader:Pretitle` |
+| `title`    | string? | `null`  | Rendered with `PageHeader:Title`    |
+
+Other attributes go to the root `<div class="page-header d-print-none">`.
+
+## Sub-components
+
+| Component             | Renders                                                            |
+| --------------------- | ------------------------------------------------------------------ |
+| `PageHeader:Pretitle` | `<div class="page-pretitle">`                                      |
+| `PageHeader:Title`    | `<h2 class="page-title">`                                          |
+| `PageHeader:Actions`  | `<div class="col-auto ms-auto">` around a `<div class="btn-list">` |
+
+## Blocks
+
+| Block      | Default                                                          |
+| ---------- | ---------------------------------------------------------------- |
+| `pretitle` | `PageHeader:Pretitle` with the `pretitle` prop, when set         |
+| `title`    | `PageHeader:Title` with the `title` prop, when set               |
+| `actions`  | Nothing: put a `PageHeader:Actions` in it                        |
+| `content`  | A `.row`: a `.col` around `pretitle` and `title`, then `actions` |

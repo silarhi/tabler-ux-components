@@ -1,0 +1,107 @@
+---
+title: Sparkline
+description: A tiny inline chart (line, bar, win/loss or circle) drawn by tabler.js from data attributes.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A tiny inline SVG chart, drawn by `tabler.js` from data attributes: no chart library needed. Requires Tabler 1.6+.
+
+<Example name="sparkline/all-in-one" />
+
+`tabler.js` draws the sparklines already in the page when it loads. For content added later (a Turbo frame, a Live
+Component render), draw it with `tabler.Sparkline.getOrCreateInstance(element)`.
+
+## Accessibility
+
+The SVG that `tabler.js` draws is hidden from assistive technology: give the sparkline an `aria-label` describing the
+data. It then gets `role="img"`.
+
+## Values
+
+`values` takes a comma-separated string or a Twig array:
+
+<Example name="sparkline/values" />
+
+## Types
+
+`type` picks the chart: `line` (the default), `bar`, `tristate` and `circle`:
+
+<Example name="sparkline/types" />
+
+- **`line`**: a polyline through the values.
+- **`bar`**: one bar per value, from zero. Negative values are drawn in red, below a gray zero line.
+- **`tristate`**: win/loss bars. A positive value draws an upper bar, a negative one a red lower bar, zero a small
+  tick.
+- **`circle`**: a progress ring for the first value, out of `max`. Always square.
+
+## Line options
+
+`fill` tints the area under the line. `spot` marks one value with a dot: the `last`, the `min` or the `max`:
+
+<Example name="sparkline/line" />
+
+## Range and threshold
+
+By default the chart fits its values. `min` and `max` fix the range, to compare charts or to show a percentage on its
+full scale. `threshold` draws a dashed guide line at that value:
+
+<Example name="sparkline/range" />
+
+## Bars
+
+Bars below the `threshold` are drawn in red, like negative values. `barGap` sets the space between the bars and
+`barRadius` their corner rounding, both in SVG units (2 by default):
+
+<Example name="sparkline/bar" />
+
+## Circle
+
+The ring shows the first value out of `max` (100 by default), from `min` (0 by default). `label` prints a text in the
+center; `auto` prints the percentage:
+
+<Example name="sparkline/circle" />
+
+`label` works on every type, and the text is centered over the chart. On the other types, `auto` prints the last
+value.
+
+## Sizes
+
+`size` is `sm`, `md` (the default) or `lg`. `square` makes the width equal to the height:
+
+<Example name="sparkline/sizes" />
+
+## Colors
+
+`variant` sets the text color the chart draws with: it takes the same colors as Legend, see
+[the list](/components/data/legend/#colors).
+
+<Example name="sparkline/colors" />
+
+## Disabled
+
+`disabled` greys the chart out:
+
+<Example name="sparkline/disabled" />
+
+## Props
+
+| Prop        | Type          | Default  | Description                                                                                      |
+| ----------- | ------------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `values`    | array\|string | required | The numbers to draw: an array or a comma-separated string                                        |
+| `type`      | string        | `'line'` | `line` `bar` `tristate` `circle`                                                                 |
+| `variant`   | string?       | `null`   | Text color the chart draws with (`text-{color}`), see [Colors](/components/data/legend/#colors)  |
+| `size`      | string        | `'md'`   | `sm` `md` `lg` (`sparkline-sm`, `sparkline-lg`)                                                  |
+| `square`    | bool          | `false`  | Width equal to the height (`sparkline-square`), always on for `circle`                           |
+| `fill`      | bool          | `false`  | Tinted area under a line                                                                         |
+| `spot`      | string?       | `null`   | Marks one value of a line: `last` `min` `max`                                                    |
+| `min`       | number?       | `null`   | Bottom of the value range; for `circle`, the 0% value                                            |
+| `max`       | number?       | `null`   | Top of the value range; for `circle`, the 100% value                                             |
+| `threshold` | number?       | `null`   | Dashed guide line at this value; bars below it are drawn in red                                  |
+| `label`     | string?       | `null`   | Text centered over the chart; `auto` prints the percentage of a circle, the last value otherwise |
+| `barGap`    | number?       | `null`   | Space between bars, in SVG units (`tabler.js` default: 2)                                        |
+| `barRadius` | number?       | `null`   | Bar corner rounding, in SVG units (`tabler.js` default: 2)                                       |
+| `disabled`  | bool          | `false`  | Greys the chart out (`sparkline-disabled`)                                                       |
+
+The props become `data-bs-*` attributes of a `<span class="sparkline" data-bs-toggle="sparkline">`. Other attributes
+go to that element too; with an `aria-label`, it gets `role="img"`.

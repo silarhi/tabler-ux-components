@@ -1,0 +1,26 @@
+<twig:Tabler:Table selectable="{{ true }}" vcenter="{{ true }}">
+    <thead>
+        <tr>
+            <th class="w-1"><twig:Tabler:Table:Check aria-label="Select all invoices" /></th>
+            <th><twig:Tabler:Table:Sort field="invoice" direction="asc">Invoice</twig:Tabler:Table:Sort></th>
+            <th><twig:Tabler:Table:Sort field="customer">Customer</twig:Tabler:Table:Sort></th>
+            <th class="text-end"><twig:Tabler:Table:Sort field="amount">Amount</twig:Tabler:Table:Sort></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for invoice in [
+            {number: 'INV-0142', customer: 'Acme Corp', amount: '€1,250.00', checked: true},
+            {number: 'INV-0143', customer: 'Globex', amount: '€480.00', checked: false},
+            {number: 'INV-0144', customer: 'Initech', amount: '€3,100.00', checked: false},
+        ] %}
+            <tr>
+                <td>
+                    <twig:Tabler:Table:Check name="invoices[]" value="{{ invoice.number }}" checked="{{ invoice.checked }}" aria-label="Select {{ invoice.number }}" />
+                </td>
+                <td>{{ invoice.number }}</td>
+                <td>{{ invoice.customer }}</td>
+                <td class="text-end">{{ invoice.amount }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</twig:Tabler:Table>

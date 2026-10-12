@@ -1,0 +1,5 @@
+<div class="d-flex flex-wrap gap-3">
+    {% for color in ['primary', 'success', 'danger', 'warning', 'muted', 'purple', 'pink', 'orange', 'lime', 'cyan'] %}
+        <twig:Tabler:Sparkline values="3,4,2,6,5,8,7" variant="{{ color }}" aria-label="{{ color }} trend" />
+    {% endfor %}
+</div>

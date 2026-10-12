@@ -1,0 +1,11 @@
+<twig:Tabler:Tracking squares>
+    {% for day in 1..30 %}
+        {% if day == 12 %}
+            <twig:Tabler:Tracking:Block variant="danger" tooltip="Oct {{ day }}: 3 failed backups" />
+        {% elseif day in [5, 26] %}
+            <twig:Tabler:Tracking:Block variant="warning" tooltip="Oct {{ day }}: backup took over 2 hours" />
+        {% else %}
+            <twig:Tabler:Tracking:Block variant="success" tooltip="Oct {{ day }}: all backups succeeded" />
+        {% endif %}
+    {% endfor %}
+</twig:Tabler:Tracking>

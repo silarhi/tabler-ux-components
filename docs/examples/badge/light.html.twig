@@ -1,0 +1,3 @@
+{% for variant in ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', 'light'] %}
+    <twig:Tabler:Badge variant="{{ variant }}" light="{{ true }}">{{ variant|capitalize }}</twig:Tabler:Badge>
+{% endfor %}

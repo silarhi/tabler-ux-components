@@ -1,0 +1,32 @@
+---
+title: ButtonActions
+description: A row of quiet icon buttons for a card header or a table row.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Groups the small icon buttons that act on one item: edit, download, delete. Put
+[Buttons](/components/actions/button/) with `appearance="action"` in it: each one is a square, borderless icon button
+that only shows a background on hover (`btn-action`). The wrapper lines them up in a row (`btn-actions`). Both are
+hidden when the page is printed.
+
+<Example name="button-actions/all-in-one" />
+
+An action button has no text, so give each one an `aria-label`.
+
+## In a table
+
+Put the actions in the last cell of each row, and name the item in each `aria-label`. A dropdown fits in too: give its
+`Dropdown:Toggle` the `btn-action` class and `noCaret`:
+
+<Example name="button-actions/table" minHeight="12rem" />
+
+## Props
+
+`ButtonActions` has no props. Other attributes go to the root `<div class="btn-actions">`.
+
+## Blocks
+
+| Block     | Default                          |
+| --------- | -------------------------------- |
+| `content` | Empty: the children, the buttons |

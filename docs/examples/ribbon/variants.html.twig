@@ -1,0 +1,10 @@
+<div class="row row-cards">
+    {% for variant in ['primary', 'success', 'danger', 'dark'] %}
+        <div class="col-6 col-sm-3">
+            <twig:Tabler:Card>
+                <twig:Tabler:Ribbon variant="{{ variant }}">{{ variant|slice(0, 3)|upper }}</twig:Tabler:Ribbon>
+                <twig:Tabler:Card:Body class="py-5 text-center">{{ variant }}</twig:Tabler:Card:Body>
+            </twig:Tabler:Card>
+        </div>
+    {% endfor %}
+</div>

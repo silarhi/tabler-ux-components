@@ -1,0 +1,67 @@
+---
+title: ProgressSteps
+description: A segmented bar showing where the user is in a short flow, such as setup or onboarding.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A segmented bar showing where the user is in a short flow: setup, onboarding, checkout.
+
+<Example name="progress-steps/all-in-one" />
+
+Steps up to `active` are filled with the `variant` color, and the `active` one is marked as the current step
+(`aria-current="step"`). Each step carries a visually-hidden name, `Step 1`, `Step 2`… by default: give the list an
+`aria-label` to say what the steps are about.
+
+## Labels
+
+`labels` names the steps; their number replaces `count`:
+
+<Example name="progress-steps/labels" />
+
+## Variants
+
+`variant` takes the theme colors and the palette colors:
+
+<Example name="progress-steps/variants" />
+
+## Composed
+
+One `ProgressSteps:Item` per step gives each step its own color, for instance to keep completed steps green:
+
+<Example name="progress-steps/composed" />
+
+## Props
+
+| Prop      | Type      | Default     | Description                                                      |
+| --------- | --------- | ----------- | ---------------------------------------------------------------- |
+| `count`   | int       | `0`         | Number of steps; ignored when `labels` is set                    |
+| `labels`  | string[]? | `null`      | Step names, announced to assistive technology (default `Step n`) |
+| `active`  | int       | `1`         | 1-based index of the current step; `0` fills none                |
+| `variant` | string    | `'primary'` | Color of the reached steps, see below                            |
+
+`variant` takes `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` `muted`, or a palette color:
+`blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green` `teal` `cyan` (`bg-*`).
+
+Other attributes go to the root `<ol class="progress-steps">`.
+
+## Sub-components
+
+| Component            | Renders                            |
+| -------------------- | ---------------------------------- |
+| `ProgressSteps:Item` | `<li class="progress-steps-item">` |
+
+### `ProgressSteps:Item` props
+
+| Prop      | Type    | Default | Description                                                                   |
+| --------- | ------- | ------- | ----------------------------------------------------------------------------- |
+| `variant` | string? | `null`  | Fill color of a reached step, same values as above; none for an upcoming step |
+| `current` | bool    | `false` | Marks the current step (`aria-current="step"`)                                |
+| `label`   | string? | `null`  | Visually-hidden step name                                                     |
+
+## Blocks
+
+| Block                            | Default                                                     |
+| -------------------------------- | ----------------------------------------------------------- |
+| `content`                        | One `ProgressSteps:Item` per step, from `count` or `labels` |
+| `content` (`ProgressSteps:Item`) | The visually-hidden `label`, when it is set                 |

@@ -1,0 +1,24 @@
+<div class="btn-list">
+    <twig:Tabler:Dropdown>
+        <twig:Tabler:Dropdown:Toggle>Arrow</twig:Tabler:Dropdown:Toggle>
+        <twig:Tabler:Dropdown:Menu arrow="{{ true }}">
+            <twig:Tabler:Dropdown:Item href="/profile">Profile</twig:Tabler:Dropdown:Item>
+            <twig:Tabler:Dropdown:Item href="/settings">Settings</twig:Tabler:Dropdown:Item>
+        </twig:Tabler:Dropdown:Menu>
+    </twig:Tabler:Dropdown>
+    <twig:Tabler:Dropdown>
+        <twig:Tabler:Dropdown:Toggle>Dark</twig:Tabler:Dropdown:Toggle>
+        <twig:Tabler:Dropdown:Menu dark="{{ true }}">
+            <twig:Tabler:Dropdown:Item href="/profile">Profile</twig:Tabler:Dropdown:Item>
+            <twig:Tabler:Dropdown:Item href="/settings">Settings</twig:Tabler:Dropdown:Item>
+        </twig:Tabler:Dropdown:Menu>
+    </twig:Tabler:Dropdown>
+    <twig:Tabler:Dropdown>
+        <twig:Tabler:Dropdown:Toggle>Scrollable</twig:Tabler:Dropdown:Toggle>
+        <twig:Tabler:Dropdown:Menu scrollable="{{ true }}">
+            {% for country in ['Austria', 'Belgium', 'Denmark', 'Finland', 'France', 'Germany', 'Ireland', 'Italy', 'Netherlands', 'Portugal', 'Spain', 'Sweden'] %}
+                <twig:Tabler:Dropdown:Item href="?country={{ country|lower }}">{{ country }}</twig:Tabler:Dropdown:Item>
+            {% endfor %}
+        </twig:Tabler:Dropdown:Menu>
+    </twig:Tabler:Dropdown>
+</div>

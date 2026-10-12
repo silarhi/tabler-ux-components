@@ -1,0 +1,11 @@
+<twig:Tabler:Tracking>
+    {% for day in 1..30 %}
+        {% if day == 9 %}
+            <twig:Tabler:Tracking:Block variant="danger" tooltip="Oct {{ day }}: downtime (42 min)" />
+        {% elseif day == 21 %}
+            <twig:Tabler:Tracking:Block variant="warning" tooltip="Oct {{ day }}: degraded performance" />
+        {% else %}
+            <twig:Tabler:Tracking:Block variant="success" tooltip="Oct {{ day }}: operational" />
+        {% endif %}
+    {% endfor %}
+</twig:Tabler:Tracking>

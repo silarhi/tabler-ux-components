@@ -1,0 +1,21 @@
+<div class="btn-list">
+    <twig:Tabler:ButtonGroup aria-label="Order actions">
+        <twig:Tabler:Button variant="default">Edit</twig:Tabler:Button>
+        <twig:Tabler:Button variant="default">Print</twig:Tabler:Button>
+        <twig:Tabler:Dropdown class="btn-group" role="group">
+            <twig:Tabler:Dropdown:Toggle>More</twig:Tabler:Dropdown:Toggle>
+            <twig:Tabler:Dropdown:Menu>
+                <twig:Tabler:Dropdown:Item href="/orders/1042/refund">Refund</twig:Tabler:Dropdown:Item>
+                <twig:Tabler:Dropdown:Item href="/orders/1042/cancel" class="text-danger">Cancel order</twig:Tabler:Dropdown:Item>
+            </twig:Tabler:Dropdown:Menu>
+        </twig:Tabler:Dropdown>
+    </twig:Tabler:ButtonGroup>
+    <twig:Tabler:ButtonGroup aria-label="Save options">
+        <twig:Tabler:Button variant="primary">Save</twig:Tabler:Button>
+        <twig:Tabler:Dropdown:Toggle variant="primary" split="{{ true }}" aria-label="More save options" />
+        <twig:Tabler:Dropdown:Menu>
+            <twig:Tabler:Dropdown:Item>Save as draft</twig:Tabler:Dropdown:Item>
+            <twig:Tabler:Dropdown:Item>Save and send</twig:Tabler:Dropdown:Item>
+        </twig:Tabler:Dropdown:Menu>
+    </twig:Tabler:ButtonGroup>
+</div>

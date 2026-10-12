@@ -1,0 +1,7 @@
+<div class="row row-cards">
+    {% for size in ['sm', 'md', 'lg'] %}
+        <div class="col-sm-4">
+            <twig:Tabler:Card size="{{ size }}" title="Size {{ size }}" text="Padding follows the size." />
+        </div>
+    {% endfor %}
+</div>

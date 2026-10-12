@@ -1,0 +1,13 @@
+<twig:Tabler:Accordion id="team-access">
+    <twig:Tabler:Accordion:Item id="team-access-admins" parent="team-access" open>
+        <twig:block name="title">
+            Administrators <twig:Tabler:Badge variant="primary" light="{{ true }}" class="ms-2">2</twig:Tabler:Badge>
+        </twig:block>
+        <twig:block name="body">
+            <twig:Tabler:Accordion:Body>
+                <strong>Jane Cooper</strong> and <strong>Paul Martin</strong> can manage billing and members.
+            </twig:Tabler:Accordion:Body>
+        </twig:block>
+    </twig:Tabler:Accordion:Item>
+    <twig:Tabler:Accordion:Item id="team-access-viewers" parent="team-access" title="Viewers" text="Viewers can read reports but not edit them." />
+</twig:Tabler:Accordion>

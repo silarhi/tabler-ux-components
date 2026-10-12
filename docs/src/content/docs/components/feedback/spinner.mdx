@@ -1,0 +1,47 @@
+---
+title: Spinner
+description: A loading indicator, spinning or pulsing, with a label for screen readers.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A loading indicator for a section, a button or a table that is still fetching data.
+
+<Example name="spinner/all-in-one" />
+
+The `label` is visually hidden: screen readers announce it, nothing shows on screen.
+
+## Variants
+
+<Example name="spinner/variants" />
+
+Without `variant`, the spinner takes the color of the surrounding text.
+
+## Types and sizes
+
+`type="grow"` pulses instead of spinning; `size="sm"` shrinks either type:
+
+<Example name="spinner/types" />
+
+## Inline
+
+A small spinner next to a short message:
+
+<Example name="spinner/inline" />
+
+## Props
+
+| Prop      | Type    | Default    | Description                                                                         |
+| --------- | ------- | ---------- | ----------------------------------------------------------------------------------- |
+| `type`    | string  | `'border'` | `border` (spinning ring) `grow` (pulsing dot)                                       |
+| `variant` | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light` (`text-*`) |
+| `size`    | string  | `'md'`     | `md` `sm`                                                                           |
+| `label`   | string? | `null`     | Visually-hidden text (`<span class="visually-hidden">`)                             |
+
+Other attributes go to the root `<div role="status">`.
+
+## Blocks
+
+| Block     | Default                                     |
+| --------- | ------------------------------------------- |
+| `content` | The visually-hidden `label`, when it is set |
