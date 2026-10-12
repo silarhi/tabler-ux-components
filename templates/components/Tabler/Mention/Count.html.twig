@@ -1,0 +1,8 @@
+{#
+    Mention count — a muted number at the end of a mention, e.g. how many posts
+    carry a tag (`.mention-count`).
+
+    Usage:
+        <twig:Tabler:Mention:Count>16</twig:Tabler:Mention:Count>
+#}
+<span {{ attributes.defaults({class: 'mention-count'}) }}>{%- block content %}{% endblock -%}</span>

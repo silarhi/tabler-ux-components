@@ -1,0 +1,20 @@
+{#
+    Tabler ButtonToolbar — groups several button groups into one toolbar
+    (`.btn-toolbar`, Bootstrap's button toolbar).
+
+    Usage:
+        <twig:Tabler:ButtonToolbar aria-label="Editor toolbar" class="gap-2">
+            <twig:Tabler:ButtonGroup aria-label="Formatting">
+                <twig:Tabler:Button variant="default">B</twig:Tabler:Button>
+                <twig:Tabler:Button variant="default">I</twig:Tabler:Button>
+            </twig:Tabler:ButtonGroup>
+            <twig:Tabler:ButtonGroup aria-label="History">
+                <twig:Tabler:Button variant="default">Undo</twig:Tabler:Button>
+            </twig:Tabler:ButtonGroup>
+        </twig:Tabler:ButtonToolbar>
+
+    Accessibility: the toolbar gets role="toolbar"; give it an `aria-label`.
+#}
+<div {{ attributes.defaults({class: 'btn-toolbar', role: 'toolbar'}) }}>
+    {%- block content %}{% endblock -%}
+</div>

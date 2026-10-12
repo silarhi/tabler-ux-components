@@ -1,0 +1,11 @@
+{#
+    Tag list — spaces several tags in a wrapping row (`.tag-list`, which
+    replaces the deprecated `.tags-list`).
+
+    Usage:
+        <twig:Tabler:Tag:List>
+            <twig:Tabler:Tag label="Alpha" />
+            <twig:Tabler:Tag label="Beta" />
+        </twig:Tabler:Tag:List>
+#}
+<div {{ attributes.defaults({class: 'tag-list'}) }}>{%- block content %}{% endblock -%}</div>

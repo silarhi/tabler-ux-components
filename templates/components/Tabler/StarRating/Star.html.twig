@@ -1,0 +1,51 @@
+{#
+    StarRating star — one star of a <twig:Tabler:StarRating> (`.star`).
+    Only active stars take the color; the others keep the muted default.
+
+    Usage:
+        <twig:Tabler:StarRating:Star active />
+        <twig:Tabler:StarRating:Star active variant="orange" icon="heart-filled" />
+
+    Props:
+      active   — colored (counted) star
+      variant  — color when active (default yellow), any color accepted by <twig:Tabler:StarRating>
+      icon     — Tabler icon name (default star-filled); mirrored by the `content` block
+#}
+{% props
+    active = false,
+    variant = 'yellow',
+    icon = 'star-filled',
+%}
+
+{% set star = html_cva(
+    base: 'star',
+    variants: {
+        variant: {
+            primary: 'text-primary',
+            secondary: 'text-secondary',
+            success: 'text-success',
+            danger: 'text-danger',
+            warning: 'text-warning',
+            info: 'text-info',
+            dark: 'text-dark',
+            light: 'text-light',
+            muted: 'text-muted',
+            blue: 'text-blue',
+            azure: 'text-azure',
+            indigo: 'text-indigo',
+            purple: 'text-purple',
+            pink: 'text-pink',
+            red: 'text-red',
+            orange: 'text-orange',
+            yellow: 'text-yellow',
+            lime: 'text-lime',
+            green: 'text-green',
+            teal: 'text-teal',
+            cyan: 'text-cyan',
+        },
+    },
+) %}
+
+<span class="{{ star.apply({variant: active ? (variant ?? '') : ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content -%}<twig:Tabler:Icon name="{{ icon }}" aria-hidden="true" />{%- endblock -%}
+</span>

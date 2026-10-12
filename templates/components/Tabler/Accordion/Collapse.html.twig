@@ -1,0 +1,30 @@
+{#
+    Accordion collapse — the panel an accordion button opens
+    (`.accordion-collapse.collapse`).
+
+    Usage:
+        <twig:Tabler:Accordion:Collapse id="faq-api" parent="faq" open>
+            <twig:Tabler:Accordion:Body>Generate tokens.</twig:Tabler:Accordion:Body>
+        </twig:Tabler:Accordion:Collapse>
+
+    Props:
+      id      — panel id, targeted by the button
+      parent  — id of the accordion; when set, opening this panel closes the others (data-bs-parent)
+      open    — shown on load (show)
+#}
+{% props
+    id = null,
+    parent = null,
+    open = false,
+%}
+
+{% set collapse = html_cva(
+    base: 'accordion-collapse collapse',
+    variants: {
+        open: {true: 'show', false: ''},
+    },
+) %}
+
+<div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ collapse.apply({open: open}, attributes.render('class')) }}"{% if parent is not null %} data-bs-parent="#{{ parent }}"{% endif %} {{ attributes.without('class', 'id') }}>
+    {%- block content %}{% endblock -%}
+</div>

@@ -1,0 +1,30 @@
+{#
+    Accordion toggle — the indicator at the end of an accordion button
+    (`.accordion-button-toggle`). It rotates when the section opens.
+
+    Usage:
+        <twig:Tabler:Accordion:Toggle />
+        <twig:Tabler:Accordion:Toggle plus />
+        <twig:Tabler:Accordion:Toggle><svg …></svg></twig:Tabler:Accordion:Toggle>
+
+    Props:
+      plus  — a plus that turns into a close icon when open (accordion-button-toggle-plus)
+      icon  — Tabler icon name (default chevron-down, or plus); mirrored by the `content` block
+#}
+{% props
+    plus = false,
+    icon = null,
+%}
+
+{% set toggle = html_cva(
+    base: 'accordion-button-toggle',
+    variants: {
+        plus: {true: 'accordion-button-toggle-plus', false: ''},
+    },
+) %}
+
+<span class="{{ toggle.apply({plus: plus}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- block content -%}
+        <twig:Tabler:Icon name="{{ icon ?? (plus ? 'plus' : 'chevron-down') }}" aria-hidden="true" />
+    {%- endblock -%}
+</span>

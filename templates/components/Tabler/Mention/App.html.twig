@@ -1,0 +1,15 @@
+{#
+    Mention app — the square logo of an app or a brand at the start of a
+    mention (`.mention-app`).
+
+    Usage:
+        <twig:Tabler:Mention:App image="/brands/github.svg" />
+
+    Props:
+      image  — background image URL
+#}
+{% props
+    image = null,
+%}
+
+<span class="{{ ('mention-app ' ~ attributes.render('class'))|trim }}"{% if image is not null %} style="background-image: url({{ image }})"{% endif %} {{ attributes.without('class', 'style') }}></span>
