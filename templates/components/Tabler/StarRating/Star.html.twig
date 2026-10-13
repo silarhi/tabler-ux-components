@@ -14,9 +14,13 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to color the star with `variant`; inactive stars stay gray.
     active = false,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan' The color when active.
     variant = 'yellow',
+    ## string The Tabler icon name.
     icon = 'star',
+    ## bool Whether to use a filled icon.
     filled = false,
 %}
 
@@ -49,7 +53,7 @@
     },
 ) %}
 
-<span class="{{ star.apply({variant: active ? (variant ?? '') : ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<span class="{{ star.apply({variant: active ? (variant ?? '') : ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The `icon`, hidden from assistive technology. #}
     {%- block content -%}<twig:Tabler:Icon name="{{ icon }}" filled="{{ filled }}" aria-hidden="true" />{%- endblock -%}
 </span>
 {% endapply ~%}

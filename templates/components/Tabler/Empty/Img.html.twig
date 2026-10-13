@@ -5,5 +5,5 @@
         <twig:Tabler:Empty:Img><img src="/illustrations/empty.svg" height="128" alt=""></twig:Tabler:Empty:Img>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'empty-img'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'empty-img'}) }}>{## The illustration. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

@@ -54,23 +54,41 @@
 #}
 {% apply trim %}
 {% props
+    ## 'sm'|'md'|'lg' The card padding.
     size = 'md',
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The color of the status bar, rendered with `Card:Status`.
     status = null,
+    ## 'top'|'bottom'|'start' The edge of the status bar.
     statusPosition = 'top',
+    ## bool|'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'disco'|'gold'|'love'|'mellow'|'ocean'|'psychedelic'|'rainbow'|'snow'|'sun'|null The gradient background (`card-gradient`): `true` for the default one, a color or a preset.
     gradient = null,
+    ## 'start'|'end'|'bottom'|null Where the gradient starts.
     gradientDirection = null,
+    ## bool Whether to slowly shift the gradient (`card-gradient-animated`).
     gradientAnimated = false,
+    ## bool Whether to dash the border, e.g. for an empty slot (`card-dashed`).
     dashed = false,
+    ## bool Whether to remove the border of the card, its header and its footer (`card-borderless`).
     borderless = false,
+    ## bool Whether to remove the background and the shadow, with a dashed border (`card-transparent`).
     transparent = false,
+    ## bool Whether to draw a second card behind this one (`card-stacked`).
     stacked = false,
+    ## bool Whether to mark the card as selected (`card-active`).
     active = false,
+    ## bool Whether to dim the card and disable pointer events (`card-inactive`).
     inactive = false,
+    ## 'start'|'end'|'left'|'right'|null The direction to tilt the card (`card-rotate-*`).
     rotate = null,
+    ## bool|'pop'|'rotate' The hover effect of a link card: `true` (`card-link`), `pop` or `rotate`.
     link = false,
+    ## string|null The title, rendered with `Card:Header` and `Card:Title`.
     title = null,
+    ## string|null The body text, rendered with `Card:Body`.
     text = null,
+    ## string|null The footer text, rendered with `Card:Footer`.
     footer = null,
+    ## string|null The link target; renders an `<a href>` instead of a `<div>` when set.
     href = null,
 %}
 
@@ -135,15 +153,19 @@
     {%- if status is not null -%}
         <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
     {%- endif -%}
+    {## The whole card content: `header`, `body` and `footer`; replace it to compose freely. -#}
     {% block content %}
+        {## The header: `Card:Header` with a `Card:Title` holding the `title` prop, when set. -#}
         {% block header %}
             {%- if title is not null -%}
                 <twig:Tabler:Card:Header><twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title></twig:Tabler:Card:Header>
             {%- endif -%}
         {% endblock %}
+        {## The body: `Card:Body` with the `text` prop, when set. -#}
         {% block body %}
             {%- if text is not null -%}<twig:Tabler:Card:Body>{{ text }}</twig:Tabler:Card:Body>{%- endif -%}
         {% endblock %}
+        {## The footer: `Card:Footer` with the `footer` prop, when set. -#}
         {% block footer %}
             {%- if footer is not null -%}<twig:Tabler:Card:Footer>{{ footer }}</twig:Tabler:Card:Footer>{%- endif -%}
         {% endblock %}

@@ -39,6 +39,7 @@ composer normalize --dry-run
 - `src/TablerUxComponentsBundle.php` (`AbstractBundle`) only prepends the bundle's `templates/` directory as a non-namespaced Twig path, so ux-twig-component's anonymous component finder resolves everything under `components/Tabler/` with the `Tabler:` prefix. There are no PHP components, services or configuration.
 - **shadcn composition pattern**: each component is a main template with every prop (`Alert.html.twig`) plus one sub-component per part (`Alert/Title.html.twig` → `<twig:Tabler:Alert:Title>`). Each prop of the main component has a matching block whose default renders the sub-component wrapping the prop value, so users can override a block, or the whole `content` block, to compose freely.
 - Every template starts with a `{# … #}` doc comment: what it renders, usage examples and the list of props. Keep it accurate; it is the reference the documentation pages are written from.
+- **Prop and block docs** (the Symfony UX Toolkit format, rendered as API tables): a `## <type> <description>` line above each prop in `{% props %}`, the type a PHPStan type without spaces (`string|null`, `'sm'|'lg'|null`, `list<array<string,mixed>>`), and a `{## <description> #}` comment as the token right before each `{% block %}`. Descriptions start with a capital letter and end with a period. A block on its own line gets the comment on the line above, closed with `-#}` so it trims the indentation in between and the output stays the same (never `{##-`); a block opened mid-line (`>{%- block content %}`) gets it inline, closed with `#}`.
 - **Variants** are declared with `html_cva()` (twig/html-extra) and applied with `attributes.render('class')` so users' classes are merged. Booleans become the string keys `true`/`false`. When two axes both emit a color class (Button `appearance` × `variant`, Badge `light` × `variant`), the classes live entirely in `compound_variants` so only one wins.
 - **Nullable props passed to `html_cva`** (`variant = null`, `size = null`, `animation = null`…) go through `?? ''` in `.apply({…})`: PHP 8.5 deprecates `null` as an array offset, which Cva uses for the lookup, and the suite fails on deprecations. `''` selects the same (absent) variant.
 - **Escaping**: props are text and always escaped; markup only comes in through blocks and sub-components. Never `|raw` nor `{% autoescape false %}` (`tests/TemplateConventionsTest.php` fails on both, outside comments). A captured `{% set x %}…{% endset %}` is already safe: print it as `{{ x }}`, never through `|raw` and never joined with `~` for output. Never forward a possibly-null value as an HTML attribute (older ux-twig-component releases render `null` as `"true"`): guard it with `{% if %}` or declare it as a prop. See "Template rules" in `CONTRIBUTING.md`.
@@ -54,10 +55,19 @@ composer normalize --dry-run
 
 ### Adding a component
 
-1. `templates/components/Tabler/<Name>.html.twig` with its doc comment, `{% props %}`, `html_cva` variants and one block per prop, plus `templates/components/Tabler/<Name>/<Part>.html.twig` sub-components.
+1. `templates/components/Tabler/<Name>.html.twig` with its doc comment, `{% props %}`, `html_cva` variants and one block per prop, each prop and block documented (see "Prop and block docs"), plus `templates/components/Tabler/<Name>/<Part>.html.twig` sub-components.
 2. A test in `tests/Component/<Name>Test.php` covering the all-in-one and composed usages, each variant and the attributes merge.
 3. A documentation page in `docs/src/content/docs/components/<group>/<name>.mdx` (all-in-one and composed usage, props, sub-components, blocks), its examples in `docs/examples/<name>/`, rendered with `php docs/scripts/render-examples.php <name>`, and a link in the README's "Documentation" list.
 4. `vendor/bin/twig-cs-fixer lint --fix` and the full test suite.
+
+## Symfony UX Toolkit kit
+
+The components also ship as a [Symfony UX Toolkit](https://ux.symfony.com/toolkit) kit: `ux:install alert --kit=github.com/silarhi/tabler-ux-kit` copies a component's templates into the app instead of depending on the bundle.
+
+- `kit/build.php` generates it in `var/kit/` (or the directory given as argument): one recipe per component (`ButtonGroup` → `button-group/`), with its templates, a `manifest.json` (recipe dependencies from the `<twig:Tabler:…>` it renders outside comments, `twig/html-extra` when it uses `html_cva`) and a `README.md` converted from its documentation page (`<Example>` → a `twig {"preview":true}` code block, site links made absolute). The kit-level files (`manifest.json`, `INSTALL.md`, `README.md`, `icon.svg`) live in `kit/`.
+- Every component needs exactly one documentation page named after it, or the build fails.
+- `.github/workflows/kit.yml` builds and lints it with `ux-toolkit-kit-lint` (the Toolkit is installed apart: it requires PHP 8.4 and Symfony 7.4). A `vX.Y.Z` tag also pushes it to [silarhi/tabler-ux-kit](https://github.com/silarhi/tabler-ux-kit), tagged `X.Y.Z` without the `v` (Toolkit releases before 3.6 cannot install from `v` tags, symfony/ux#4074), with the `KIT_DEPLOY_KEY` secret (a deploy key with write access on that repository). That repository is read-only: never edit it by hand.
+- The lint runs with `--fail-on-warning`: an undocumented prop or block fails CI.
 
 ## Code Standards
 
@@ -67,7 +77,7 @@ composer normalize --dry-run
 
 ## Dependency Constraints
 
-- Integration libraries keep wide ranges so the CI matrix tests from the lowest to the latest supported versions: Symfony `^6.4 || ^7.0 || ^8.0`, ux-twig-component `^2.21 || ^3.0`, Twig `^3.12 || ^4.0`. Never raise their floors to the installed version.
+- Integration libraries keep wide ranges so the CI matrix tests from the lowest to the latest supported versions: Symfony `^6.4 || ^7.0 || ^8.0`, ux-twig-component `^2.21 || ^3.0`, Twig `^3.15 || ^4.0` (`twig/extra-bundle` and `twig/html-extra` `^3.12 || ^4.0`). Never raise their floors to the installed version. Twig 3.15 is the floor because the `## <type> <description>` prop comments inside `{% props %}` are Twig inline comments.
 - QA tools are bumped to their latest releases. `composer.lock` is not committed.
 
 ## Changelog & Releases

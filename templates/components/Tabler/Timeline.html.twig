@@ -14,6 +14,7 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to use the compact, icon-less style (`timeline-simple`).
     simple = false,
 %}
 
@@ -25,6 +26,7 @@
 ) %}
 
 <ul class="{{ timeline.apply({simple: simple}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The events: `Timeline:Event` components. -#}
     {% block content %}{% endblock %}
 </ul>
 {% endapply ~%}

@@ -24,20 +24,28 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The title, rendered with `Empty:Title`.
     title = null,
+    ## string|null The subtitle, rendered with `Empty:Subtitle`.
     subtitle = null,
+    ## bool Whether to draw a border around the empty state (`empty-bordered`).
     bordered = false,
 %}
 
 <div {{ attributes.defaults({class: bordered ? 'empty empty-bordered' : 'empty'}) }}>
+    {## The whole empty state: `icon`, `title`, `subtitle` and `action`; replace it to compose freely. -#}
     {% block content %}
+        {## Empty by default: put an `Empty:Icon`, `Empty:Header` or `Empty:Img` in it. -#}
         {% block icon %}{% endblock %}
+        {## The title: `Empty:Title` with the `title` prop, when set. -#}
         {% block title %}
             {%- if title is not null -%}<twig:Tabler:Empty:Title>{{ title }}</twig:Tabler:Empty:Title>{%- endif -%}
         {% endblock %}
+        {## The subtitle: `Empty:Subtitle` with the `subtitle` prop, when set. -#}
         {% block subtitle %}
             {%- if subtitle is not null -%}<twig:Tabler:Empty:Subtitle>{{ subtitle }}</twig:Tabler:Empty:Subtitle>{%- endif -%}
         {% endblock %}
+        {## Empty by default: put an `Empty:Action` in it. -#}
         {% block action %}{% endblock %}
     {% endblock %}
 </div>

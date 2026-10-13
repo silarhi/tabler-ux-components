@@ -17,6 +17,6 @@
 #}
 {% apply trim %}
 <div {{ attributes.defaults({class: 'navbar-side'}) }}>
-    <ul class="navbar-nav">{%- block content %}{% endblock -%}</ul>
+    <ul class="navbar-nav">{## The trailing entries, usually `Navbar:Item`s. #}{%- block content %}{% endblock -%}</ul>
 </div>
 {% endapply ~%}

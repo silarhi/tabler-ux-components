@@ -5,5 +5,5 @@
         <twig:Tabler:Timeline:Event:Title>Database backup completed</twig:Tabler:Timeline:Event:Title>
 #}
 {% apply trim %}
-<h4 {{ attributes }}>{%- block content %}{% endblock -%}</h4>
+<h4 {{ attributes }}>{## The event heading. #}{%- block content %}{% endblock -%}</h4>
 {% endapply ~%}

@@ -11,5 +11,5 @@
         </twig:Tabler:Alert>
 #}
 {% apply trim %}
-<ul {{ attributes.defaults({class: 'alert-list'}) }}>{%- block content %}{% endblock -%}</ul>
+<ul {{ attributes.defaults({class: 'alert-list'}) }}>{## The list items. #}{%- block content %}{% endblock -%}</ul>
 {% endapply ~%}

@@ -9,6 +9,7 @@
 #}
 {% apply trim %}
 <div {{ attributes.defaults({class: 'prose'}) }}>
+    {## The freeform HTML content. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

@@ -13,8 +13,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; defaults to `#`.
     href = null,
 %}
 
-<a href="{{ href ?? '#' }}" {{ attributes.defaults({class: 'alert-action'}).without('href') }}>{%- block content %}{% endblock -%}</a>
+<a href="{{ href ?? '#' }}" {{ attributes.defaults({class: 'alert-action'}).without('href') }}>{## The link text. #}{%- block content %}{% endblock -%}</a>
 {% endapply ~%}

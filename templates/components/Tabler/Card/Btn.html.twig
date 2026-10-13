@@ -10,11 +10,12 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; renders an `<a href>` instead of a `<button type="button">` when set.
     href = null,
 %}
 
 {% set tag = href is not null ? 'a' : 'button' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} {{ attributes.defaults({class: 'card-btn'}).without('href', 'type') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} {{ attributes.defaults({class: 'card-btn'}).without('href', 'type') }}>{## The button label. #}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

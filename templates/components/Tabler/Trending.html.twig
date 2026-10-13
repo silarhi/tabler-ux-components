@@ -27,9 +27,13 @@
 #}
 {% apply trim %}
 {% props
+    ## int|float|string The change, a number or a signed string, rendered as written; its sign sets the direction.
     value = 0,
+    ## string The text after the value; `''` for none.
     unit = '%',
+    ## 'up'|'down'|'neutral'|null Overrides the direction read from `value`.
     direction = null,
+    ## string|null The visually hidden prefix; defaults to `Increased by`, `Decreased by` or `No change,`.
     label = null,
 %}
 
@@ -48,12 +52,15 @@
     },
 ) %}
 
-<span class="{{ trending.apply({trend: trend}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<span class="{{ trending.apply({trend: trend}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The whole indicator: `label`, `value` and `icon`; replace it to compose freely. -#}
     {%- block content -%}
+        {## The visually hidden prefix, from `label` or the direction. -#}
         {%- block label -%}
             <span class="visually-hidden">{{ label ?? {up: 'Increased by', neutral: 'No change,', down: 'Decreased by'}[trend] }} </span>
         {%- endblock -%}
+        {## The `value` followed by the `unit`. -#}
         {%- block value -%}{{ amount }}{{ unit }}{%- endblock -%}
+        {## The `arrow-up`, `minus` or `arrow-down` icon, hidden from assistive technology. -#}
         {%- block icon -%}
             <twig:Tabler:Icon name="{{ {up: 'arrow-up', neutral: 'minus', down: 'arrow-down'}[trend] }}" class="ms-0" aria-hidden="true" />
         {%- endblock -%}

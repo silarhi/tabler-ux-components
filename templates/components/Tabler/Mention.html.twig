@@ -33,30 +33,41 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The chip text.
     label = null,
+    ## string|null The link target; renders an `<a>` instead of a `<span>` when set.
     href = null,
+    ## string|null The sign before the label, such as `@` or `#`.
     prefix = null,
+    ## bool Whether to keep the prefix for assistive technology only (`visually-hidden`).
     prefixHidden = false,
+    ## string|null The round picture URL of a person, rendered with `Mention:Avatar`.
     avatar = null,
+    ## string|null The square logo URL of an app or a brand, rendered with `Mention:App`.
     logo = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The color dot, rendered with `Mention:Color`.
     swatch = null,
+    ## string|int|null The muted number at the end, rendered with `Mention:Count`.
     count = null,
 %}
 
 {% set tag = href is not null ? 'a' : 'span' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'mention'}).without('href') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.defaults({class: 'mention'}).without('href') }}>{## The whole mention content: `leading`, `label` and `count`; replace it to compose freely. #}
     {%- block content -%}
+        {## The avatar, logo and color dot, each when its prop is set. -#}
         {%- block leading -%}
             {%- if avatar is not null -%}<twig:Tabler:Mention:Avatar image="{{ avatar }}" />{%- endif -%}
             {%- if logo is not null -%}<twig:Tabler:Mention:App image="{{ logo }}" />{%- endif -%}
             {%- if swatch is not null -%}<twig:Tabler:Mention:Color variant="{{ swatch }}" />{%- endif -%}
         {%- endblock -%}
+        {## The `prefix` (visually hidden with `prefixHidden`), then the `label`. -#}
         {%- block label -%}
             {%- if prefix is not null -%}
                 {%- if prefixHidden -%}<span class="visually-hidden">{{ prefix }}</span>{%- else -%}{{ prefix }}{%- endif -%}
             {%- endif -%}
             {{- label -}}
         {%- endblock -%}
+        {## The count: `Mention:Count` with the `count` prop, when set. -#}
         {%- block count -%}
             {%- if count is not null -%}<twig:Tabler:Mention:Count>{{ count }}</twig:Tabler:Mention:Count>{%- endif -%}
         {%- endblock -%}

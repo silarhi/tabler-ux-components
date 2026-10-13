@@ -36,14 +36,23 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The color of the dot.
     variant = null,
+    ## 'md'|'lg' The size; `lg` puts the label on top and a big value below (`legend-lg`).
     size = 'md',
+    ## string|null The series name.
     label = null,
+    ## string|null The value, rendered with `Legend:Value`.
     value = null,
+    ## string|null The unit after the value, rendered with `Legend:Unit`.
     unit = null,
+    ## string|null The link target; renders an `<a href>` instead of a `<span>`.
     href = null,
+    ## bool Whether to render a `<button type="button">` instead of a `<span>` (ignored with `href`).
     button = false,
+    ## bool Whether to keep the hover background (`active`).
     active = false,
+    ## bool Whether to dim the item, for a hidden series (`legend-off`).
     off = false,
 %}
 
@@ -81,10 +90,13 @@
 
 {% set classes = legend.apply({size: size, variant: variant ?? '', active: active, off: off}, attributes.render('class')) %}
 {% set tag = href is not null ? 'a' : (button ? 'button' : 'span') %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% elseif button %} type="button"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href', 'type') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% elseif button %} type="button"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href', 'type') }}>{## The legend content: `dot`, `label` and `value`; replace it to compose freely. -#}
     {%- block content -%}
+        {## The colored marker: `Legend:Dot`. -#}
         {%- block dot -%}<twig:Tabler:Legend:Dot />{%- endblock %}
+        {## The series name: the `label` prop, when set. -#}
         {% block label -%}{%- if label is not null -%}{{ label }}{%- endif -%}{%- endblock %}
+        {## The value: `Legend:Value` with the `value` and `unit` props, when `value` is set. -#}
         {% block value -%}
             {%- if value is not null -%}<twig:Tabler:Legend:Value unit="{{ unit }}">{{ value }}</twig:Tabler:Legend:Value>{%- endif -%}
         {%- endblock -%}

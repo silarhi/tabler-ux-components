@@ -5,5 +5,5 @@
         <twig:Tabler:Timeline:Event:Icon><twig:Tabler:Icon name="check" /></twig:Tabler:Timeline:Event:Icon>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'timeline-event-icon'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'timeline-event-icon'}) }}>{## The icon: a Tabler Icon, an SVG or a ux-icon. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

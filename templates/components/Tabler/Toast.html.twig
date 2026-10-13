@@ -17,7 +17,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to render the toast in its visible state (`show`).
     show = false,
+    ## bool Whether to hide the toast after Bootstrap's delay.
     autohide = true,
 %}
 
@@ -29,6 +31,7 @@
 ) %}
 
 <div class="{{ toast.apply({show: show}, attributes.render('class')) }}" role="alert" aria-live="polite" aria-atomic="true"{% if not autohide %} data-bs-autohide="false"{% endif %} {{ attributes.without('class') }}>
+    {## The toast parts: `Toast:Header` and `Toast:Body`. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

@@ -24,7 +24,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to stack the buttons (`btn-group-vertical`).
     vertical = false,
+    ## 'sm'|'md'|'lg' The size of the buttons (`btn-group-sm`, `btn-group-lg`).
     size = 'md',
 %}
 
@@ -35,7 +37,7 @@
     },
 ) %}
 
-<div class="{{ group.apply({vertical: vertical, size: size}, attributes.render('class')) }}" {{ attributes.defaults({role: 'group'}).without('class') }}>
+<div class="{{ group.apply({vertical: vertical, size: size}, attributes.render('class')) }}" {{ attributes.defaults({role: 'group'}).without('class') }}>{## The buttons. #}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

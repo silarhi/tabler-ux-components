@@ -12,7 +12,8 @@ sidebar:
 | PHP                                                                                           | 8.2+            |
 | Symfony (`framework-bundle`, `twig-bundle`)                                                   | 6.4 / 7.x / 8.x |
 | [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) | 2.21+ / 3.x     |
-| Twig (`twig/twig`, `twig/extra-bundle`, `twig/html-extra`)                                    | 3.12+ / 4.x     |
+| Twig (`twig/twig`)                                                                            | 3.15+ / 4.x     |
+| Twig extensions (`twig/extra-bundle`, `twig/html-extra`)                                      | 3.12+ / 4.x     |
 
 ## Installation
 

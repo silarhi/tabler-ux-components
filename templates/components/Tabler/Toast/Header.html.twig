@@ -8,5 +8,5 @@
         </twig:Tabler:Toast:Header>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'toast-header'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'toast-header'}) }}>{## The header content, e.g. a title, a time and a `Toast:Close`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

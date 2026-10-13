@@ -17,10 +17,15 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to align the menu to the end (`dropdown-menu-end`).
     end = false,
+    ## bool Whether to add an arrow pointing at the toggle (`dropdown-menu-arrow`).
     arrow = false,
+    ## bool Whether to render a dark menu (`dropdown-menu-dark`).
     dark = false,
+    ## bool Whether to cap the height and scroll (`dropdown-menu-scrollable`).
     scrollable = false,
+    ## bool Whether to render a panel for rich content (`dropdown-menu-card`).
     card = false,
 %}
 
@@ -36,6 +41,7 @@
 ) %}
 
 <div class="{{ menu.apply({end: end, arrow: arrow, dark: dark, scrollable: scrollable, card: card}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The menu entries: `Dropdown:Item`, `Dropdown:Header`, `Dropdown:Divider` and the like. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

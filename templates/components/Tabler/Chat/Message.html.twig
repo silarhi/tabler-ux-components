@@ -22,21 +22,26 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The sender name, passed to the bubble.
     author = null,
+    ## string|null The time of the message, passed to the bubble.
     date = null,
+    ## string|null The message text, passed to the bubble.
     text = null,
+    ## string|null The sender avatar image URL.
     avatar = null,
+    ## bool Whether the message is sent by the current user: tinted bubble, row aligned to the end.
     me = false,
 %}
 
-{% set avatar_html %}{% block avatar %}
+{% set avatar_html %}{## The avatar: a `<span class="avatar">` with the `avatar` image, when set. #}{% block avatar %}
     {%- if avatar is not null -%}<span class="avatar" style="background-image: url({{ avatar }})"></span>{%- endif -%}
 {% endblock %}{% endset %}
 
 <div {{ attributes }}>
     <div class="row align-items-end{{ me ? ' justify-content-end' : '' }}">
         {%- if not me and avatar_html|trim is not empty -%}<div class="col-auto">{{ avatar_html }}</div>{%- endif -%}
-        <div class="col col-lg-6">
+        <div class="col col-lg-6">{## The bubble column: `Chat:Bubble` with `author`, `date`, `text` and `me`. -#}
             {%- block content -%}
                 <twig:Tabler:Chat:Bubble me="{{ me }}" author="{{ author }}" date="{{ date }}" text="{{ text }}" />
             {%- endblock -%}

@@ -11,13 +11,14 @@
 #}
 {% apply trim %}
 {% props
+    ## int The heading level, 1 to 6; any other value renders an `<h3>`.
     level = 3,
 %}
 
 {# any other level falls back to h3 rather than rendering an <h7> #}
 {% set heading = 'h' ~ (level in ['1', '2', '3', '4', '5', '6'] ? level : 3) %}
 
-<{{ heading }} {{ attributes.defaults({class: 'accordion-header'}) }}>
+<{{ heading }} {{ attributes.defaults({class: 'accordion-header'}) }}>{## The header content, e.g. `Accordion:Button`. #}
     {%- block content %}{% endblock -%}
 </{{ heading }}>
 {% endapply ~%}

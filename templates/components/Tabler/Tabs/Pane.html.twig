@@ -10,7 +10,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string The DOM id, matching the `target` of its `Tabs:Item`.
     id,
+    ## bool Whether the pane is shown first (`active show`).
     active = false,
 %}
 
@@ -21,5 +23,5 @@
     },
 ) %}
 
-<div class="{{ pane.apply({active: active}, attributes.render('class')) }}" id="{{ id }}" role="tabpanel" {{ attributes.without('class', 'id') }}>{%- block content %}{% endblock -%}</div>
+<div class="{{ pane.apply({active: active}, attributes.render('class')) }}" id="{{ id }}" role="tabpanel" {{ attributes.without('class', 'id') }}>{## The pane content. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

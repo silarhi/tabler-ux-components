@@ -30,10 +30,15 @@
 #}
 {% apply trim %}
 {% props
+    ## int The number of active stars.
     value = 0,
+    ## int The total number of stars; `0` renders none.
     max = 5,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan' The color of the active stars.
     variant = 'yellow',
+    ## string The Tabler icon name of each star.
     icon = 'star',
+    ## bool Whether to use filled icons.
     filled = false,
 %}
 
@@ -45,7 +50,7 @@
         {%- endfor -%}
     {%- endif -%}
 {%- endset -%}
-{%- set stars -%}{%- block content -%}{{ default_stars }}{%- endblock -%}{%- endset -%}
+{%- set stars -%}{## The stars: `max` times `StarRating:Star`, the first `value` ones active. #}{%- block content -%}{{ default_stars }}{%- endblock -%}{%- endset -%}
 {#- Composed stars ignore `value` and `max`: an "N out of M" label built from them would be wrong, so a composed
     rating only gets role="img" when it has its own aria-label -#}
 {% set composed = stars != default_stars %}

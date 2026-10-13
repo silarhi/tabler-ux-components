@@ -14,6 +14,7 @@
 #}
 {% apply trim %}
 {% props
+    ## 'top-start'|'top-center'|'top-end'|'middle-center'|'bottom-start'|'bottom-center'|'bottom-end'|null Pins the stack to that spot of the viewport; unset, it stays in the flow of its parent.
     placement = null,
 %}
 
@@ -32,7 +33,7 @@
     },
 ) %}
 
-<div class="{{ container.apply({placement: placement ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ container.apply({placement: placement ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The toasts: `Toast` components. -#}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

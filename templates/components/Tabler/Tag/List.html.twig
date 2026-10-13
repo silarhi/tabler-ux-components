@@ -9,5 +9,5 @@
         </twig:Tabler:Tag:List>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'tag-list'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'tag-list'}) }}>{## The tags. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

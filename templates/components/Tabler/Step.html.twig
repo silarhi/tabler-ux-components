@@ -14,7 +14,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to number the steps (`steps-counter`).
     counter = false,
+    ## bool Whether to lay the steps out vertically (`steps-vertical`).
     vertical = false,
 %}
 
@@ -27,6 +29,7 @@
 ) %}
 
 <div class="{{ steps.apply({counter: counter, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The steps: `Step:Item` components. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

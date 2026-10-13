@@ -5,5 +5,5 @@
       <twig:Tabler:Modal:Title>Modal title</twig:Tabler:Modal:Title>
 #}
 {% apply trim %}
-<h5 {{ attributes.defaults({class: 'modal-title'}) }}>{%- block content %}{% endblock -%}</h5>
+<h5 {{ attributes.defaults({class: 'modal-title'}) }}>{## The title. #}{%- block content %}{% endblock -%}</h5>
 {% endapply ~%}

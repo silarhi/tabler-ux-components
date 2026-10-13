@@ -13,9 +13,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The id of the carousel this button controls.
     target = null,
+    ## int The zero-based index of the slide it shows.
     slideTo = 0,
+    ## bool Whether this indicator marks the current slide.
     active = false,
+    ## string|null The thumbnail URL, for `thumb` indicators.
     image = null,
 %}
 

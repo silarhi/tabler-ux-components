@@ -41,18 +41,31 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to wrap the table in a `<div class="table-responsive">`.
     responsive = true,
+    ## bool Whether to center cells vertically (`table-vcenter`).
     vcenter = false,
+    ## bool Whether to center cells horizontally (`table-center`).
     center = false,
+    ## bool Whether to stripe the rows (`table-striped`).
     striped = false,
+    ## bool Whether to highlight the hovered row (`table-hover`).
     hover = false,
+    ## bool Whether to add borders on every cell (`table-bordered`).
     bordered = false,
+    ## bool Whether to remove all borders (`table-borderless`).
     borderless = false,
+    ## bool Whether to remove the background of the header cells (`table-transparent`).
     transparent = false,
+    ## bool Whether to keep the cell text from wrapping (`table-nowrap`).
     nowrap = false,
+    ## bool Whether to highlight the rows whose `Table:Check` is checked (`table-selectable`).
     selectable = false,
+    ## 'sm'|'md' The cell padding; `sm` tightens it (`table-sm`).
     size = 'md',
+    ## 'sm'|'md'|'lg'|'xl'|'xxl'|null The breakpoint below which rows stack into blocks, labelled by each cell's `data-label` (`table-mobile-*`).
     mobile = null,
+    ## bool Whether to run edge to edge inside a card, with no bottom margin (`card-table`).
     card = false,
 %}
 
@@ -95,6 +108,6 @@
     card: card,
 }, attributes.render('class')) %}
 {% if responsive %}<div class="table-responsive">{% endif %}
-<table class="{{ classes }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</table>
+<table class="{{ classes }}" {{ attributes.without('class') }}>{## The table rows: the `<thead>` and `<tbody>`. #}{%- block content %}{% endblock -%}</table>
 {% if responsive %}</div>{% endif %}
 {% endapply ~%}

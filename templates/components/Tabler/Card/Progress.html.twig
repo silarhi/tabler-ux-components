@@ -12,8 +12,11 @@
 #}
 {% apply trim %}
 {% props
+    ## int The percentage, from 0 to 100.
     value = 0,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The bar color.
     variant = 'primary',
+    ## string|null The `aria-label` of the bar; defaults to the percentage.
     label = null,
 %}
 

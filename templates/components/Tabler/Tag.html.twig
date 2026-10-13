@@ -35,28 +35,40 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The tag text.
     label = null,
+    ## string|null The leading Tabler icon name (`tag-icon`).
     icon = null,
+    ## string|null The leading avatar image URL, rendered with `Tag:Avatar`.
     avatar = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The color of the leading status dot, rendered with `Tag:Status`.
     status = null,
+    ## bool Whether to add a leading checkbox (`Tag:Check`), labelled with `label`.
     checkbox = false,
+    ## bool The initial state of that checkbox.
     checked = false,
+    ## string|null The counter at the end, rendered with `Tag:Badge`.
     badge = null,
+    ## bool Whether to add a remove button (`Tag:Close`), labelled "Remove" followed by the `label`.
     dismissible = false,
 %}
 
-<span {{ attributes.defaults({class: 'tag'}) }}>
+<span {{ attributes.defaults({class: 'tag'}) }}>{## The tag content: `leading`, `label`, `badge` and `close`; replace it to compose freely. -#}
     {%- block content -%}
+        {## The leading media: the checkbox, avatar, icon and status dot, each when its prop is set. -#}
         {%- block leading -%}
             {%- if checkbox -%}{%- if label is not null -%}<twig:Tabler:Tag:Check checked="{{ checked }}" aria-label="{{ label }}" />{%- else -%}<twig:Tabler:Tag:Check checked="{{ checked }}" />{%- endif -%}{%- endif -%}
             {%- if avatar is not null -%}<twig:Tabler:Tag:Avatar image="{{ avatar }}" />{%- endif -%}
             {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="tag-icon" aria-hidden="true" />{%- endif -%}
             {%- if status is not null -%}<twig:Tabler:Tag:Status variant="{{ status }}" />{%- endif -%}
         {%- endblock -%}
+        {## The tag text: the `label` prop. -#}
         {%- block label -%}{{ label }}{%- endblock -%}
+        {## The counter: `Tag:Badge` with the `badge` prop, when set. -#}
         {%- block badge -%}
             {%- if badge is not null -%}<twig:Tabler:Tag:Badge>{{ badge }}</twig:Tabler:Tag:Badge>{%- endif -%}
         {%- endblock -%}
+        {## The remove button: `Tag:Close`, when `dismissible`. -#}
         {%- block close -%}
             {%- if dismissible -%}<twig:Tabler:Tag:Close aria-label="{{ label is not null ? 'Remove ' ~ label : 'Remove' }}" />{%- endif -%}
         {%- endblock -%}

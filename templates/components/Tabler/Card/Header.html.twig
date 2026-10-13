@@ -7,5 +7,5 @@
       </twig:Tabler:Card:Header>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-header'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-header'}) }}>{## The header content, e.g. `Card:Title` and `Card:Actions`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

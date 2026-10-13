@@ -20,9 +20,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The id of the carousel, passed to the generated indicators.
     target = null,
+    ## int|null The number of `Carousel:Indicator` to generate, the first one active.
     count = null,
+    ## 'default'|'dots'|'thumb' The indicators appearance.
     appearance = 'default',
+    ## bool Whether to stack the indicators vertically (`carousel-indicators-vertical`).
     vertical = false,
 %}
 
@@ -38,7 +42,7 @@
     },
 ) %}
 
-<div class="{{ indicators.apply({appearance: appearance, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ indicators.apply({appearance: appearance, vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The indicators: `count` generated `Carousel:Indicator`, when set. #}
     {%- block content -%}
         {%- if count is not null -%}
             {% for i in 0..(count - 1) %}

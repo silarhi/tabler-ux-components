@@ -5,5 +5,5 @@
         <twig:Tabler:Card:Meta>Updated 3 days ago</twig:Tabler:Card:Meta>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-meta'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-meta'}) }}>{## The muted text. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

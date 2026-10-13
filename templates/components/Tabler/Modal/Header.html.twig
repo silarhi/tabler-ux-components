@@ -8,5 +8,5 @@
       </twig:Tabler:Modal:Header>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'modal-header'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'modal-header'}) }}>{## The header content, usually `Modal:Title` and `Modal:Close`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

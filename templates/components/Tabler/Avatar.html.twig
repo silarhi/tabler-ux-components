@@ -19,11 +19,17 @@
 #}
 {% apply trim %}
 {% props
+    ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl' The avatar size (`avatar-{size}`).
     size = 'md',
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The tinted background, for initials (`bg-{variant}-lt`).
     variant = null,
+    ## bool Whether to make the avatar a circle (`rounded-circle`).
     rounded = false,
+    ## bool Whether to use rounded corners instead of a circle (`avatar-square`).
     square = false,
+    ## bool Whether to pull the avatar over the element above it, with a ring (`avatar-cover`).
     cover = false,
+    ## string|null The image URL, set as an inline `background-image` style.
     image = null,
 %}
 
@@ -50,5 +56,5 @@
 {# the background image goes first so a user `style` can still override it #}
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 
-<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{%- block content %}{% endblock -%}</span>
+<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{## The avatar content: initials or an icon. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

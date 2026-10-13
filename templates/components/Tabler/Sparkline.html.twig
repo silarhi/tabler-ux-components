@@ -27,19 +27,33 @@
 #}
 {% apply trim %}
 {% props
+    ## list<int|float>|string The numbers to draw: a list or a comma-separated string.
     values,
+    ## 'line'|'bar'|'tristate'|'circle' The chart type.
     type = 'line',
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The text color the chart draws with (`text-{variant}`).
     variant = null,
+    ## 'sm'|'md'|'lg' The chart size (`sparkline-sm`, `sparkline-lg`).
     size = 'md',
+    ## bool Whether the width equals the height (`sparkline-square`); always on for `circle`.
     square = false,
+    ## bool Whether to tint the area under a line.
     fill = false,
+    ## 'last'|'min'|'max'|null The value of a line to mark.
     spot = null,
+    ## int|float|null The bottom of the value range; for `circle`, the 0% value.
     min = null,
+    ## int|float|null The top of the value range; for `circle`, the 100% value.
     max = null,
+    ## int|float|null The value of a dashed guide line; bars below it are drawn in red.
     threshold = null,
+    ## string|null The text centered over the chart; `auto` prints the percentage of a circle, the last value otherwise.
     label = null,
+    ## int|float|null The space between bars, in SVG units (`tabler.js` default: 2).
     barGap = null,
+    ## int|float|null The bar corner rounding, in SVG units (`tabler.js` default: 2).
     barRadius = null,
+    ## bool Whether to grey the chart out (`sparkline-disabled`).
     disabled = false,
 %}
 

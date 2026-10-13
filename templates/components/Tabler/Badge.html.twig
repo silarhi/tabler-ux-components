@@ -29,15 +29,25 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The badge color.
     variant = 'primary',
+    ## bool Whether to use a tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`.
     light = false,
+    ## bool Whether to use a transparent background and a colored border (`badge-outline`); takes precedence over `light`.
     outline = false,
+    ## bool Whether to fully round the corners (`badge-pill`).
     pill = false,
+    ## 'sm'|'md'|'lg' The badge size.
     size = 'md',
+    ## bool Whether to render a small dot with no text (`badge-dot`).
     dot = false,
+    ## bool Whether the badge holds only an icon (`badge-icononly`).
     iconOnly = false,
+    ## bool Whether to place the badge over the top end corner of its parent (`badge-notification`).
     notification = false,
+    ## bool Whether to pulse the badge (`badge-blink`).
     blink = false,
+    ## string|null The link target; renders an `<a>` instead of a `<span>` when set.
     href = null,
 %}
 
@@ -92,7 +102,7 @@
     variant: variant,
 }, attributes.render('class')) %}
 {% set tag = href is not null ? 'a' : 'span' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>{## The badge label. #}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

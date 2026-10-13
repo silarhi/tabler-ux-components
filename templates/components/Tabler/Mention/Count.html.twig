@@ -6,5 +6,5 @@
         <twig:Tabler:Mention:Count>16</twig:Tabler:Mention:Count>
 #}
 {% apply trim %}
-<span {{ attributes.defaults({class: 'mention-count'}) }}>{%- block content %}{% endblock -%}</span>
+<span {{ attributes.defaults({class: 'mention-count'}) }}>{## The count. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

@@ -34,13 +34,21 @@
 #}
 {% apply trim %}
 {% props
+    ## 'div'|'ul'|'ol'|'nav' The root element; generated items render as `<li>` in a `ul` or `ol`.
     tag = 'div',
+    ## list<array{label:string,href?:string,active?:bool,disabled?:bool,variant?:string}>|null The items, each rendered with `ListGroup:Item`.
     items = null,
+    ## bool Whether to drop the outer border and rounded corners (`list-group-flush`).
     flush = false,
+    ## bool Whether to highlight the item under the cursor and reveal its actions (`list-group-hoverable`).
     hoverable = false,
+    ## bool Whether to drop the background and borders of the items (`list-group-transparent`).
     transparent = false,
+    ## bool Whether to number the items, on an `ol` (`list-group-numbered`).
     numbered = false,
+    ## bool|'sm'|'md'|'lg'|'xl'|'xxl' Whether to lay the items out in a row: `true` for every width, or from a breakpoint (`list-group-horizontal-*`).
     horizontal = false,
+    ## bool Whether to use the card padding on the items (`card-list-group`).
     card = false,
 %}
 
@@ -73,7 +81,7 @@
     card: card,
 }, attributes.render('class')) %}
 
-<{{ tag }} class="{{ classes }}" {{ attributes.without('class') }}>
+<{{ tag }} class="{{ classes }}" {{ attributes.without('class') }}>{## A `ListGroup:Item` for each entry of `items`; replace it to compose freely. #}
     {%- block content -%}
         {%- for item in items ?? [] -%}
             <twig:Tabler:ListGroup:Item

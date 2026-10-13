@@ -5,5 +5,5 @@
         <twig:Tabler:PageHeader:Pretitle>Overview</twig:Tabler:PageHeader:Pretitle>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'page-pretitle'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'page-pretitle'}) }}>{## The pretitle. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

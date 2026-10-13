@@ -12,13 +12,16 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The column name shown when a `mobile` table stacks the row (`data-label`).
     label = null,
+    ## bool Whether to cut the content with an ellipsis (`td-truncate`), wrapping it in a `.text-truncate` `<div>`.
     truncate = false,
 %}
 
 {% set classes = ((truncate ? 'td-truncate ' : '') ~ attributes.render('class'))|trim %}
 <td{% if label is not null %} data-label="{{ label }}"{% endif %}{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>
     {%- if truncate -%}<div class="text-truncate">{%- endif -%}
+    {## The cell content. -#}
     {%- block content %}{% endblock -%}
     {%- if truncate -%}</div>{%- endif -%}
 </td>

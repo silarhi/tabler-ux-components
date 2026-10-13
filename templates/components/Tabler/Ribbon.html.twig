@@ -12,8 +12,11 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The background color (`bg-{variant}`).
     variant = null,
+    ## 'end'|'start'|'top'|'top-start'|'bottom'|'bottom-start' The corner or edge the ribbon sits on.
     position = 'end',
+    ## bool Whether to use the bookmark style (`ribbon-bookmark`).
     bookmark = false,
 %}
 
@@ -42,5 +45,5 @@
     },
 ) %}
 
-<div class="{{ ribbon.apply({variant: variant ?? '', position: position, bookmark: bookmark}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
+<div class="{{ ribbon.apply({variant: variant ?? '', position: position, bookmark: bookmark}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The ribbon content: a short label or an icon. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

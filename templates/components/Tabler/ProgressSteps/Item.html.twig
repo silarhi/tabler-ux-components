@@ -12,8 +12,11 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The fill color of a reached step (`bg-<color>`); none for an upcoming step.
     variant = null,
+    ## bool Whether this is the current step (`aria-current="step"`).
     current = false,
+    ## string|null The visually hidden step name.
     label = null,
 %}
 
@@ -46,7 +49,7 @@
     },
 ) %}
 
-<li class="{{ item.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if current %} aria-current="step"{% endif %} {{ attributes.without('class') }}>
+<li class="{{ item.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if current %} aria-current="step"{% endif %} {{ attributes.without('class') }}>{## The visually hidden `label`, when set. -#}
     {%- block content -%}
         {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
     {%- endblock -%}

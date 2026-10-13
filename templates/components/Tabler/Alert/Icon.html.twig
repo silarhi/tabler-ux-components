@@ -10,5 +10,5 @@
       </twig:Tabler:Alert:Icon>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'alert-icon'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'alert-icon'}) }}>{## The icon: a Tabler Icon, an SVG or a ux-icon. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

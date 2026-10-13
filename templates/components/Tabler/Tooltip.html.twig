@@ -14,9 +14,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string The tooltip text (`data-bs-title`).
     title,
+    ## 'top'|'bottom'|'left'|'right' Where the tooltip opens (`data-bs-placement`).
     placement = 'top',
 %}
 
-<span data-bs-toggle="tooltip" data-bs-placement="{{ placement }}" data-bs-title="{{ title }}" {{ attributes }}>{%- block content %}{% endblock -%}</span>
+<span data-bs-toggle="tooltip" data-bs-placement="{{ placement }}" data-bs-title="{{ title }}" {{ attributes }}>{## The element the tooltip is attached to. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

@@ -13,7 +13,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The sort key, rendered as `data-sort`.
     field = null,
+    ## 'asc'|'desc'|null The current sort direction.
     direction = null,
 %}
 
@@ -24,7 +26,7 @@
     },
 ) %}
 
-<button type="button" class="{{ sort.apply({direction: direction ?? ''}, attributes.render('class')) }}"{% if field is not null %} data-sort="{{ field }}"{% endif %} {{ attributes.without('class', 'type') }}>
+<button type="button" class="{{ sort.apply({direction: direction ?? ''}, attributes.render('class')) }}"{% if field is not null %} data-sort="{{ field }}"{% endif %} {{ attributes.without('class', 'type') }}>{## The header label. #}
     {%- block content %}{% endblock -%}
 </button>
 {% endapply ~%}

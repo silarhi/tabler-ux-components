@@ -11,8 +11,9 @@
 #}
 {% apply trim %}
 {% props
+    ## 'div'|'li' The element; `li` inside a `ul` or `ol` list group.
     tag = 'div',
 %}
 
-<{{ tag }} {{ attributes.defaults({class: 'list-group-header'}) }}>{%- block content %}{% endblock -%}</{{ tag }}>
+<{{ tag }} {{ attributes.defaults({class: 'list-group-header'}) }}>{## The header label. #}{%- block content %}{% endblock -%}</{{ tag }}>
 {% endapply ~%}

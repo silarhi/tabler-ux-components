@@ -14,9 +14,13 @@
 #}
 {% apply trim %}
 {% props
+    ## 'border'|'grow' The spinner style.
     type = 'border',
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The spinner color.
     variant = null,
+    ## 'sm'|'md' The spinner size.
     size = 'md',
+    ## string|null The visually hidden status text.
     label = null,
 %}
 
@@ -41,7 +45,7 @@
     ],
 ) %}
 
-<div class="{{ spinner.apply({type: type, variant: variant ?? '', size: size}, attributes.render('class')) }}" role="status" {{ attributes.without('class') }}>
+<div class="{{ spinner.apply({type: type, variant: variant ?? '', size: size}, attributes.render('class')) }}" role="status" {{ attributes.without('class') }}>{## The visually hidden `label`, when set. -#}
     {%- block content -%}
         {%- if label is not null -%}<span class="visually-hidden">{{ label }}</span>{%- endif -%}
     {%- endblock -%}

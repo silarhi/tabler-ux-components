@@ -39,16 +39,27 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The DOM id targeted by triggers (`data-bs-target="#id"`).
     id = null,
+    ## 'sm'|'md'|'lg'|'xl'|'full'|'fullscreen' The dialog size (`modal-sm`, `modal-lg`, `modal-xl`, `modal-full-width`, `modal-fullscreen`).
     size = 'md',
+    ## bool Whether to center the dialog vertically (`modal-dialog-centered`).
     centered = false,
+    ## bool Whether to scroll the body instead of the page (`modal-dialog-scrollable`).
     scrollable = false,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The color of the status bar, rendered with `Modal:Status`.
     status = null,
+    ## string|null The title, rendered with `Modal:Header` and `Modal:Title`.
     title = null,
+    ## string|null The body text, rendered with `Modal:Body`.
     text = null,
+    ## string|null The footer text, rendered with `Modal:Footer`.
     footer = null,
+    ## bool Whether to add a close button (`Modal:Close`) to the header rendered from `title`.
     dismissible = true,
+    ## bool Whether to keep the modal open on a backdrop click or the Escape key.
     staticBackdrop = false,
+    ## bool Whether to blur the page behind the backdrop (`modal-blur`).
     blur = false,
 %}
 
@@ -72,7 +83,9 @@
     <div class="{{ dialog.apply({size: size, centered: centered, scrollable: scrollable}) }}" role="document">
         <div class="modal-content">
             {%- if status is not null -%}<twig:Tabler:Modal:Status variant="{{ status }}" />{%- endif -%}
+            {## The modal content: `header`, `body` and `footer`; replace it to compose freely (the status bar stays outside it). -#}
             {% block content %}
+                {## The header: `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set. -#}
                 {% block header %}
                     {%- if title is not null -%}
                         <twig:Tabler:Modal:Header>
@@ -81,9 +94,11 @@
                         </twig:Tabler:Modal:Header>
                     {%- endif -%}
                 {% endblock %}
+                {## The body: `Modal:Body` with the `text` prop, when set. -#}
                 {% block body %}
                     {%- if text is not null -%}<twig:Tabler:Modal:Body>{{ text }}</twig:Tabler:Modal:Body>{%- endif -%}
                 {% endblock %}
+                {## The footer: `Modal:Footer` with the `footer` prop, when set. -#}
                 {% block footer %}
                     {%- if footer is not null -%}<twig:Tabler:Modal:Footer>{{ footer }}</twig:Tabler:Modal:Footer>{%- endif -%}
                 {% endblock %}

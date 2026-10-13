@@ -23,9 +23,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The sender name, rendered with `Chat:Bubble:Title`.
     author = null,
+    ## string|null The time of the message, rendered with `Chat:Bubble:Title`.
     date = null,
+    ## string|null The message text, in a `<p>` inside `Chat:Bubble:Body`.
     text = null,
+    ## bool Whether the message is sent by the current user (`chat-bubble-me`).
     me = false,
 %}
 
@@ -36,13 +40,15 @@
     },
 ) %}
 
-<div class="{{ bubble.apply({me: me}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ bubble.apply({me: me}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The bubble content: `title` and `body`; replace it to compose freely. -#}
     {%- block content -%}
+        {## The title line: `Chat:Bubble:Title` with `author` and `date`, when one of them is set. -#}
         {%- block title -%}
             {%- if author is not null or date is not null -%}
                 <twig:Tabler:Chat:Bubble:Title author="{{ author }}" date="{{ date }}" />
             {%- endif -%}
         {%- endblock -%}
+        {## The body: `Chat:Bubble:Body` with the `text` prop in a `<p>`, when set. -#}
         {%- block body -%}
             {%- if text is not null -%}<twig:Tabler:Chat:Bubble:Body><p>{{ text }}</p></twig:Tabler:Chat:Bubble:Body>{%- endif -%}
         {%- endblock -%}

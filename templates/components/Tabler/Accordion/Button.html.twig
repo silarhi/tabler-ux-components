@@ -25,10 +25,15 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The id of the panel this button opens (`data-bs-target`, `aria-controls`).
     target = null,
+    ## bool Whether the section is expanded (no `collapsed` class, `aria-expanded="true"`).
     open = false,
+    ## string|null The leading Tabler icon name, rendered with `Accordion:Icon`.
     icon = null,
+    ## bool Whether to use the plus indicator (`accordion-button-toggle-plus`).
     plus = false,
+    ## string|null The Tabler icon name of the indicator; defaults to `chevron-down`, or `plus`.
     toggleIcon = null,
 %}
 
@@ -39,11 +44,13 @@
     },
 ) %}
 
-<button class="{{ button.apply({open: open}, attributes.render('class')) }}" type="button" data-bs-toggle="collapse"{% if target is not null %} data-bs-target="#{{ target }}" aria-controls="{{ target }}"{% endif %} aria-expanded="{{ open ? 'true' : 'false' }}" {{ attributes.without('class', 'type') }}>
+<button class="{{ button.apply({open: open}, attributes.render('class')) }}" type="button" data-bs-toggle="collapse"{% if target is not null %} data-bs-target="#{{ target }}" aria-controls="{{ target }}"{% endif %} aria-expanded="{{ open ? 'true' : 'false' }}" {{ attributes.without('class', 'type') }}>{## The leading icon: `Accordion:Icon` with a `Tabler:Icon` named `icon`, when set. #}
     {%- block icon -%}
         {%- if icon is not null -%}<twig:Tabler:Accordion:Icon><twig:Tabler:Icon name="{{ icon }}" aria-hidden="true" /></twig:Tabler:Accordion:Icon>{%- endif -%}
     {%- endblock -%}
+    {## The button label. -#}
     {%- block content %}{% endblock -%}
+    {## The indicator: `Accordion:Toggle` with the `plus` and `toggleIcon` props. -#}
     {%- block toggle -%}
         <twig:Tabler:Accordion:Toggle plus="{{ plus }}" icon="{{ toggleIcon }}" />
     {%- endblock -%}

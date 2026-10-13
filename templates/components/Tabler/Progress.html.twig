@@ -24,13 +24,21 @@
 #}
 {% apply trim %}
 {% props
+    ## int|null The percentage of the single bar, from 0 to 100, rendered with `Progress:Bar`; no bar when null.
     value = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The color of the single bar.
     variant = 'primary',
+    ## 'sm'|'md'|'lg'|'xl' The track height (`progress-*`).
     size = 'md',
+    ## string|null The visually-hidden label of the single bar.
     label = null,
+    ## bool Whether to render a single indeterminate bar.
     indeterminate = false,
+    ## bool Whether to add diagonal stripes to the single bar (`progress-bar-striped`).
     striped = false,
+    ## bool Whether to animate the stripes of the single bar (`progress-bar-animated`).
     animated = false,
+    ## bool Whether to add a gap between stacked bars (`progress-separated`).
     separated = false,
 %}
 
@@ -43,7 +51,9 @@
 ) %}
 
 <div class="{{ progress.apply({size: size, separated: separated}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The whole track content, the `bar`; replace it with `Progress:Bar` children to stack bars. -#}
     {% block content %}
+        {## The single bar: a `Progress:Bar` from `value`, `variant`, `label`, `striped` and `animated`, or an indeterminate one. -#}
         {% block bar %}
             {%- if indeterminate -%}
                 <twig:Tabler:Progress:Bar variant="{{ variant }}" indeterminate />

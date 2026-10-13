@@ -28,14 +28,23 @@
 #}
 {% apply trim %}
 {% props
+    ## string The input `id`, referenced by the label's `for`.
     id,
+    ## string|null The input `name`, shared by the radios of one group.
     name = null,
+    ## string|null The input `value`.
     value = null,
+    ## 'radio'|'checkbox' The input type.
     type = 'radio',
+    ## bool Whether the input is selected (`checked` attribute).
     checked = false,
+    ## bool Whether the input is disabled (`disabled` attribute).
     disabled = false,
+    ## string|null The label text, rendered in the `content` block.
     label = null,
+    ## 'default'|'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The button color; `default` is neutral.
     variant = 'default',
+    ## 'filled'|'outline'|'ghost' The button style.
     appearance = 'filled',
 %}
 
@@ -73,7 +82,7 @@
 
 <input type="{{ type }}" class="btn-check" id="{{ id }}"{% if name is not null %} name="{{ name }}"{% endif %}{% if value is not null %} value="{{ value }}"{% endif %}{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %} {{ attributes.defaults({autocomplete: 'off'}).without('class', 'type', 'id') }}>
 {% set label_attributes = attributes.nested('label') %}
-<label class="{{ button.apply({appearance: appearance, variant: variant}, attributes.render('class'), label_attributes.render('class')) }}" for="{{ id }}" {{ label_attributes.without('class', 'for') }}>
+<label class="{{ button.apply({appearance: appearance, variant: variant}, attributes.render('class'), label_attributes.render('class')) }}" for="{{ id }}" {{ label_attributes.without('class', 'for') }}>{## The label text: the `label` prop. #}
     {%- block content %}{{ label }}{% endblock -%}
 </label>
 {% endapply ~%}

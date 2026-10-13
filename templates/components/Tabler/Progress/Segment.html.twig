@@ -14,10 +14,15 @@
 #}
 {% apply trim %}
 {% props
+    ## int The share of the whole, in percent: sets the width and `aria-valuenow`.
     value = 0,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The bar color (`bg-*`).
     variant = 'primary',
+    ## string|null The `aria-label` of the segment; defaults to "{value}% of total".
     label = null,
+    ## bool Whether to add diagonal stripes (`progress-bar-striped`).
     striped = false,
+    ## bool Whether to animate the stripes (`progress-bar-animated`).
     animated = false,
 %}
 

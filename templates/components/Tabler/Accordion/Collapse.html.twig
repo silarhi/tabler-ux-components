@@ -14,8 +14,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The panel id, targeted by the button.
     id = null,
+    ## string|null The id of the accordion; when set, opening this panel closes the others (`data-bs-parent`).
     parent = null,
+    ## bool Whether the panel is shown on load (`show`).
     open = false,
 %}
 
@@ -26,7 +29,7 @@
     },
 ) %}
 
-<div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ collapse.apply({open: open}, attributes.render('class')) }}"{% if parent is not null %} data-bs-parent="#{{ parent }}"{% endif %} {{ attributes.without('class', 'id') }}>
+<div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ collapse.apply({open: open}, attributes.render('class')) }}"{% if parent is not null %} data-bs-parent="#{{ parent }}"{% endif %} {{ attributes.without('class', 'id') }}>{## The panel content, e.g. `Accordion:Body`. #}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

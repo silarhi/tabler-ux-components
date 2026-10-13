@@ -10,5 +10,5 @@
         </twig:Tabler:ButtonActions>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'btn-actions'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'btn-actions'}) }}>{## The action buttons. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

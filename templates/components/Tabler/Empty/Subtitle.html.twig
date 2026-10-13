@@ -5,5 +5,5 @@
       <twig:Tabler:Empty:Subtitle>Try adjusting your search.</twig:Tabler:Empty:Subtitle>
 #}
 {% apply trim %}
-<p {{ attributes.defaults({class: 'empty-subtitle text-secondary'}) }}>{%- block content %}{% endblock -%}</p>
+<p {{ attributes.defaults({class: 'empty-subtitle text-secondary'}) }}>{## The subtitle text. #}{%- block content %}{% endblock -%}</p>
 {% endapply ~%}

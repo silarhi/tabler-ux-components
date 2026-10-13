@@ -5,5 +5,5 @@
         <twig:Tabler:Dropdown:Text>Signed in as jane@example.com</twig:Tabler:Dropdown:Text>
 #}
 {% apply trim %}
-<span {{ attributes.defaults({class: 'dropdown-item-text'}) }}>{%- block content %}{% endblock -%}</span>
+<span {{ attributes.defaults({class: 'dropdown-item-text'}) }}>{## The text. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

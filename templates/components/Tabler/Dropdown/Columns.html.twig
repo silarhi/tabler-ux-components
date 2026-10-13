@@ -14,5 +14,5 @@
         </twig:Tabler:Dropdown:Menu>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'dropdown-menu-columns'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'dropdown-menu-columns'}) }}>{## The columns: `Dropdown:Column` children. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

@@ -15,12 +15,14 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to wrap the list in a `.collapse.navbar-collapse` panel, for a `Navbar:Toggler`.
     collapse = false,
+    ## string|null The `id` of the collapse panel, targeted by the toggler; only rendered with `collapse`.
     id = null,
 %}
 
 {% if collapse %}<div class="collapse navbar-collapse"{% if id is not null %} id="{{ id }}"{% endif %}>{% endif %}
-<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{% block content %}{% endblock %}</ul>
+<ul {{ attributes.defaults({class: 'navbar-nav'}).without('id') }}>{## The nav entries: `Navbar:Item` and `Navbar:SectionTitle`. #}{% block content %}{% endblock %}</ul>{## Trailing entries after the list, inside the collapse panel: put a `Navbar:Side` in it. #}
 {%- block side %}{% endblock -%}
 {% if collapse %}</div>{% endif %}
 {% endapply ~%}

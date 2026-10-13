@@ -27,18 +27,31 @@
 #}
 {% apply trim %}
 {% props
+    ## 'default'|'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The button color; `default` is neutral.
     variant = 'primary',
+    ## 'filled'|'outline'|'ghost'|'link'|'action' The button style; `link` and `action` ignore `variant`.
     appearance = 'filled',
+    ## 'sm'|'md'|'lg'|'xl' The button size.
     size = 'md',
+    ## string|null The link target; renders an `<a>` instead of a `<button>` when set.
     href = null,
+    ## 'button'|'submit'|'reset' The `<button>` type, ignored for links.
     type = 'button',
+    ## bool Whether to fully round the corners (`btn-pill`).
     pill = false,
+    ## bool Whether to remove the border radius (`btn-square`).
     square = false,
+    ## bool Whether the button holds only an icon (`btn-icon`).
     iconOnly = false,
+    ## bool Whether to show a spinner instead of the label (`btn-loading`).
     loading = false,
+    ## bool Whether to take the full width (`w-100`).
     block = false,
+    ## bool Whether the button is disabled: the `disabled` attribute on a `<button>`, `aria-disabled` on a link.
     disabled = false,
+    ## bool Whether to pin the button to the bottom corner of the viewport (`btn-floating`).
     floating = false,
+    ## 'pulse'|'rotate'|'shake'|'tada'|'move-start'|null The icon animation on hover (`btn-animate-icon-*`).
     animateIcon = null,
 %}
 
@@ -97,7 +110,7 @@
 {% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: link and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
 {% set tag = link ? 'a' : 'button' %}
 <{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ (link ? attributes.defaults({role: 'button'}) : attributes).without('class', 'href', 'type') }}
-    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>
+    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>{## The button label. #}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

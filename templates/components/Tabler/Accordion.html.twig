@@ -35,14 +35,23 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The DOM id, the `data-bs-parent` of the generated items and the prefix of their ids; random when unset.
     id = null,
+    ## list<array{title:string,text:string,open?:bool,icon?:string,id?:string,level?:int,toggleIcon?:string}>|null The items, rendered with `Accordion:Item`.
     items = null,
+    ## bool Whether to remove the outer border and rounded corners (`accordion-flush`).
     flush = false,
+    ## bool Whether to move the toggle indicator to the start of the header (`accordion-inverted`).
     inverted = false,
+    ## bool Whether to space the items, each fully bordered (`accordion-tabs`).
     tabs = false,
+    ## bool Whether generated items stay open when another one opens (no `data-bs-parent`).
     alwaysOpen = false,
+    ## bool Whether generated items use the plus indicator (`accordion-button-toggle-plus`).
     plus = false,
+    ## int The heading level of the generated items, 1 to 6; an item's `level` wins.
     level = 3,
+    ## string|null The Tabler icon name of the generated items' indicator; an item's `toggleIcon` wins.
     toggleIcon = null,
 %}
 
@@ -57,7 +66,7 @@
     },
 ) %}
 
-<div class="{{ accordion.apply({flush: flush, inverted: inverted, tabs: tabs}, attributes.render('class')) }}" id="{{ id }}" {{ attributes.without('class', 'id') }}>
+<div class="{{ accordion.apply({flush: flush, inverted: inverted, tabs: tabs}, attributes.render('class')) }}" id="{{ id }}" {{ attributes.without('class', 'id') }}>{## The items: an `Accordion:Item` for each entry of `items`. #}
     {%- block content -%}
         {%- for item in items ?? [] -%}
             <twig:Tabler:Accordion:Item

@@ -16,7 +16,7 @@
     Accessibility: the toolbar gets role="toolbar"; give it an `aria-label`.
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'btn-toolbar', role: 'toolbar'}) }}>
+<div {{ attributes.defaults({class: 'btn-toolbar', role: 'toolbar'}) }}>{## The button groups. #}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

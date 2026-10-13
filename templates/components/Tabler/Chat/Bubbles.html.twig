@@ -8,5 +8,5 @@
         </twig:Tabler:Chat:Bubbles>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'chat-bubbles'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'chat-bubbles'}) }}>{## The message rows. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

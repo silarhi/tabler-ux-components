@@ -13,8 +13,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The Tabler icon name, rendered with `Tabler:Icon`.
     icon = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The circle color (`bg-*`).
     variant = null,
+    ## 'md'|'lg' The stamp size.
     size = 'md',
 %}
 
@@ -54,7 +57,7 @@
 ) %}
 
 <div class="{{ stamp.apply({size: size}, attributes.render('class')) }}" aria-hidden="true" {{ attributes.without('class') }}>
-    <div class="{{ circle.apply({variant: variant ?? ''}) }}">
+    <div class="{{ circle.apply({variant: variant ?? ''}) }}">{## The stamp content: a `Tabler:Icon` named `icon`, when set. #}
         {%- block content -%}
             {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" />{%- endif -%}
         {%- endblock -%}
