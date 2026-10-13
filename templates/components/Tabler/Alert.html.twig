@@ -36,12 +36,19 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info' The alert color.
     variant = 'info',
+    ## bool Whether to fill the background (`alert-important`).
     important = false,
+    ## bool Whether to keep a plain border, without a tinted background (`alert-minor`).
     minor = false,
+    ## string|null The Tabler icon name, rendered with `Tabler:Icon` inside `Alert:Icon`.
     icon = null,
+    ## string|null The title, rendered with `Alert:Title`.
     title = null,
+    ## string|null The description, rendered with `Alert:Description`.
     description = null,
+    ## bool Whether to add a close button (`Alert:Dismiss`).
     dismissible = false,
 %}
 
@@ -76,25 +83,29 @@
 
 {# Capture title/description blocks so we can decide whether to render the wrapping <div> based on actual output (not just props).
    A captured block is already escaped and marked safe: print it as is, never through |raw, and never joined with ~ (that escapes it twice). #}
-{% set title_html %}{% block title %}
+{% set title_html %}{## The title: `Alert:Title` with the `title` prop, when set. #}{% block title %}
     {%- if title is not null -%}<twig:Tabler:Alert:Title>{{ title }}</twig:Tabler:Alert:Title>{%- endif -%}
 {% endblock %}{% endset %}
 
-{% set description_html %}{% block description %}
+{% set description_html %}{## The description: `Alert:Description` with the `description` prop, when set. #}{% block description %}
     {%- if description is not null -%}<twig:Tabler:Alert:Description>{{ description }}</twig:Tabler:Alert:Description>{%- endif -%}
 {% endblock %}{% endset %}
 
 {% set wrapper_class = alert.apply({variant: variant, important: important, minor: minor, dismissible: dismissible}, attributes.render('class')) %}
 <div class="{{ wrapper_class }}" {{ attributes.defaults({role: 'alert'}).without('class') }}>
+    {## The whole alert content: `icon`, `body` and `dismiss`; replace it to compose freely. -#}
     {% block content %}
+        {## The icon: `Alert:Icon` with a `Tabler:Icon` named `icon`, when set. -#}
         {% block icon %}
             {%- if icon is not null -%}<twig:Tabler:Alert:Icon><twig:Tabler:Icon name="{{ icon }}" /></twig:Tabler:Alert:Icon>{%- endif -%}
         {% endblock %}
+        {## A `<div>` around `title` and `description`, when one of them renders. -#}
         {% block body %}
             {%- if (title_html ~ description_html)|trim -%}
                 <div>{{ title_html }}{{ description_html }}</div>
             {%- endif -%}
         {% endblock %}
+        {## The close button: `Alert:Dismiss`, when `dismissible`. -#}
         {% block dismiss %}
             {%- if dismissible -%}<twig:Tabler:Alert:Dismiss />{%- endif -%}
         {% endblock %}

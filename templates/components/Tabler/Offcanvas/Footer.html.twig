@@ -7,5 +7,5 @@
         </twig:Tabler:Offcanvas:Footer>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'offcanvas-footer'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'offcanvas-footer'}) }}>{## The footer content, usually the actions. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

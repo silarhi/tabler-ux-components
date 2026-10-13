@@ -9,5 +9,5 @@
         </twig:Tabler:Dropdown:Item>
 #}
 {% apply trim %}
-<span {{ attributes.defaults({class: 'dropdown-item-indicator'}) }}>{%- block content %}{% endblock -%}</span>
+<span {{ attributes.defaults({class: 'dropdown-item-indicator'}) }}>{## The marker: a checkbox, a radio, an avatar or a flag. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

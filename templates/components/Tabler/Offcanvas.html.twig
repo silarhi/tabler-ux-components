@@ -29,14 +29,23 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The DOM id targeted by triggers (`data-bs-target="#id"`).
     id = null,
+    ## 'start'|'end'|'top'|'bottom' The edge the panel slides from.
     placement = 'start',
+    ## string|null The title, rendered with `Offcanvas:Header` and `Offcanvas:Title`.
     title = null,
+    ## string|null The body text, rendered with `Offcanvas:Body`.
     text = null,
+    ## string|null The footer text, rendered with `Offcanvas:Footer`.
     footer = null,
+    ## bool Whether to add a close button (`Offcanvas:Close`) to the header rendered from `title`.
     dismissible = true,
+    ## bool Whether the page keeps scrolling while the panel is open (`data-bs-scroll`).
     scrollable = false,
+    ## bool Whether to make the panel 20rem wide (`offcanvas-narrow`).
     narrow = false,
+    ## bool Whether to leave a gap between the panel and the viewport edges (`offcanvas-floating`).
     floating = false,
 %}
 
@@ -55,7 +64,9 @@
 ) %}
 
 <div class="{{ offcanvas.apply({placement: placement, narrow: narrow, floating: floating}, attributes.render('class')) }}" tabindex="-1"{% if id is not null %} id="{{ id }}"{% endif %}{% if scrollable %} data-bs-scroll="true"{% endif %} {{ attributes.without('class', 'id') }}>
+    {## The panel content: `header`, `body` and `footer`; replace it to compose freely. -#}
     {% block content %}
+        {## The header: `Offcanvas:Header` with `Offcanvas:Title` and `Offcanvas:Close` (when `dismissible`), when `title` is set. -#}
         {% block header %}
             {%- if title is not null -%}
                 <twig:Tabler:Offcanvas:Header>
@@ -64,9 +75,11 @@
                 </twig:Tabler:Offcanvas:Header>
             {%- endif -%}
         {% endblock %}
+        {## The body: `Offcanvas:Body` with the `text` prop, when set. -#}
         {% block body %}
             {%- if text is not null -%}<twig:Tabler:Offcanvas:Body>{{ text }}</twig:Tabler:Offcanvas:Body>{%- endif -%}
         {% endblock %}
+        {## The footer: `Offcanvas:Footer` with the `footer` prop, when set. -#}
         {% block footer %}
             {%- if footer is not null -%}<twig:Tabler:Offcanvas:Footer>{{ footer }}</twig:Tabler:Offcanvas:Footer>{%- endif -%}
         {% endblock %}

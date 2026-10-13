@@ -34,12 +34,19 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The DOM id; required for the controls and indicators to work.
     id = null,
+    ## bool Whether to cross-fade instead of sliding (`carousel-fade`).
     fade = false,
+    ## bool Whether to start cycling on page load (`data-bs-ride="carousel"`).
     ride = true,
+    ## bool Whether to render the previous and next `Carousel:Control`.
     controls = false,
+    ## int|null The number of slides; renders that many indicators with `Carousel:Indicators`.
     indicators = null,
+    ## 'default'|'dots'|'thumb' The indicators appearance, passed to `Carousel:Indicators`.
     indicatorStyle = 'default',
+    ## bool Whether to stack the indicators vertically (`carousel-indicators-vertical`).
     vertical = false,
 %}
 
@@ -51,14 +58,17 @@
 ) %}
 
 <div{% if id is not null %} id="{{ id }}"{% endif %} class="{{ carousel.apply({fade: fade}, attributes.render('class')) }}"{% if ride %} data-bs-ride="carousel"{% endif %} {{ attributes.without('class', 'id') }}>
+    {## The indicators: `Carousel:Indicators` with `indicators` as `count`, when set. -#}
     {% block indicators %}
         {%- if indicators is not null -%}
             <twig:Tabler:Carousel:Indicators target="{{ id }}" count="{{ indicators }}" appearance="{{ indicatorStyle }}" vertical="{{ vertical }}" />
         {%- endif -%}
     {% endblock %}
     <div class="carousel-inner">
+        {## The slides: `Carousel:Item` components. -#}
         {% block content %}{% endblock %}
     </div>
+    {## The previous and next `Carousel:Control`, when `controls`. -#}
     {% block controls %}
         {%- if controls -%}
             <twig:Tabler:Carousel:Control target="{{ id }}" direction="prev" />

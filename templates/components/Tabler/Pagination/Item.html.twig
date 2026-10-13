@@ -20,11 +20,17 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; defaults to `#`.
     href = null,
+    ## bool Whether the item is the current page (`active`, `aria-current`).
     active = false,
+    ## bool Whether the item is non-interactive, rendered without `href` (`disabled`).
     disabled = false,
+    ## 'prev'|'next'|null Makes the item a pager step (`page-prev` / `page-next`, `rel`).
     direction = null,
+    ## string|null The page name, for a pager that names pages (`page-item-title`).
     title = null,
+    ## string|null A small uppercase label above the title (`page-item-subtitle`).
     subtitle = null,
 %}
 
@@ -44,6 +50,7 @@
         {%- if active %} aria-current="page"{% endif %}>
         {%- if subtitle is not null -%}<div class="page-item-subtitle">{{ subtitle }}</div>{%- endif -%}
         {%- if title is not null -%}<div class="page-item-title">{{ title }}</div>{%- endif -%}
+        {## The link content, after the subtitle and title. -#}
         {%- block content %}{% endblock -%}
     </a>
 </li>

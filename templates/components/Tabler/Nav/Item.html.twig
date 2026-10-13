@@ -12,8 +12,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; without it, renders an `<a>` with no `href`.
     href = null,
+    ## bool Whether the item is the current one (`active`, `aria-current`).
     active = false,
+    ## bool Whether the item is non-interactive (`disabled`).
     disabled = false,
 %}
 
@@ -26,6 +29,6 @@
 ) %}
 
 <li class="nav-item">
-    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
+    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{## The link text. #}{%- block content %}{% endblock -%}</a>
 </li>
 {% endapply ~%}

@@ -5,5 +5,5 @@
         <twig:Tabler:PageHeader:Title>Dashboard</twig:Tabler:PageHeader:Title>
 #}
 {% apply trim %}
-<h2 {{ attributes.defaults({class: 'page-title'}) }}>{%- block content %}{% endblock -%}</h2>
+<h2 {{ attributes.defaults({class: 'page-title'}) }}>{## The page title. #}{%- block content %}{% endblock -%}</h2>
 {% endapply ~%}

@@ -11,7 +11,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; without it, the crumb is plain text.
     href = null,
+    ## bool Whether the crumb is the current page, rendered without a link (`active`).
     active = false,
 %}
 
@@ -25,6 +27,7 @@
 <li class="{{ item.apply({active: active}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
     {%- set link = href is not null and not active -%}
     {%- if link %}<a href="{{ href }}">{% endif -%}
+    {## The crumb label, inside the link when there is one. -#}
     {%- block content %}{% endblock -%}
     {%- if link %}</a>{% endif -%}
 </li>

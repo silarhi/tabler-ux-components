@@ -11,7 +11,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; without it, renders a `<span>`.
     href = null,
+    ## bool Whether the step is the current one (`active`).
     active = false,
 %}
 
@@ -23,7 +25,7 @@
 ) %}
 
 {% set tag = href is not null ? 'a' : 'span' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{## The step label. -#}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

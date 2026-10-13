@@ -8,5 +8,5 @@
         </twig:Tabler:Offcanvas:Header>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'offcanvas-header'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'offcanvas-header'}) }}>{## The header content, usually `Offcanvas:Title` and `Offcanvas:Close`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

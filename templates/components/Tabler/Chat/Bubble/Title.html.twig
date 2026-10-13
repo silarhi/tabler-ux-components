@@ -17,12 +17,14 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The sender name, rendered with `Chat:Bubble:Author`.
     author = null,
+    ## string|null The time of the message, rendered with `Chat:Bubble:Date`.
     date = null,
 %}
 
 <div {{ attributes.defaults({class: 'chat-bubble-title'}) }}>
-    <div class="row">
+    <div class="row">{## The title row: `Chat:Bubble:Author` and `Chat:Bubble:Date`, each when its prop is set. -#}
         {%- block content -%}
             {%- if author is not null -%}<twig:Tabler:Chat:Bubble:Author>{{ author }}</twig:Tabler:Chat:Bubble:Author>{%- endif -%}
             {%- if date is not null -%}<twig:Tabler:Chat:Bubble:Date>{{ date }}</twig:Tabler:Chat:Bubble:Date>{%- endif -%}

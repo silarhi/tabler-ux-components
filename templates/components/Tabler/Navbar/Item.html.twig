@@ -11,8 +11,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; defaults to `#`.
     href = null,
+    ## bool Whether it marks the current page (`active`, `aria-current="page"`).
     active = false,
+    ## string|null The leading Tabler icon name, rendered with `Tabler:Icon`.
     icon = null,
 %}
 
@@ -26,7 +29,7 @@
 <li class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
     <a class="nav-link" href="{{ href ?? '#' }}"{% if active %} aria-current="page"{% endif %}>
         {%- if icon is not null -%}<span class="nav-link-icon"><twig:Tabler:Icon name="{{ icon }}" /></span>{%- endif -%}
-        <span class="nav-link-title">{%- block content %}{% endblock -%}</span>
+        <span class="nav-link-title">{## The item title. #}{%- block content %}{% endblock -%}</span>
     </a>
 </li>
 {% endapply ~%}

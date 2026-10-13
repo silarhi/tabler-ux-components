@@ -5,5 +5,5 @@
       <twig:Tabler:Card:Footer>Last updated 3 days ago</twig:Tabler:Card:Footer>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-footer'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-footer'}) }}>{## The footer content. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

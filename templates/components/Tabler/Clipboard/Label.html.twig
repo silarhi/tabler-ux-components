@@ -5,5 +5,5 @@
         <twig:Tabler:Clipboard:Label>Copy link</twig:Tabler:Clipboard:Label>
 #}
 {% apply trim %}
-<span {{ attributes.defaults({class: 'clipboard-label'}) }}>{%- block content %}{% endblock -%}</span>
+<span {{ attributes.defaults({class: 'clipboard-label'}) }}>{## The resting text or icon. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

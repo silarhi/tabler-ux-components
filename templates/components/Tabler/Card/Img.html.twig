@@ -15,8 +15,11 @@
 #}
 {% apply trim %}
 {% props
+    ## string The image URL.
     src,
+    ## string The alternative text; empty for a decorative image.
     alt = '',
+    ## 'top'|'bottom'|'start'|'end'|'full' The edge whose corners are rounded; `full` rounds every corner.
     position = 'top',
 %}
 

@@ -5,5 +5,5 @@
         <twig:Tabler:Timeline:Event:Body>Download the <a href="#">latest backup</a>.</twig:Tabler:Timeline:Event:Body>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'text-secondary'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'text-secondary'}) }}>{## The body text. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

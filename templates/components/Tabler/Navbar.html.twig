@@ -35,11 +35,17 @@
 #}
 {% apply trim %}
 {% props
+    ## 'sm'|'md'|'lg'|'xl'|'none' The breakpoint where the menu un-collapses (`navbar-expand-*`).
     expand = 'md',
+    ## bool Whether to use light text colors for a dark background (`navbar-dark`).
     dark = false,
+    ## string|null The suffix of the inner `container-*`; `xl`, or `fluid` when vertical, by default.
     container = null,
+    ## bool Whether to render a vertical sidebar (`navbar-vertical`) as an `<aside>`.
     vertical = false,
+    ## bool|'hover' Vertical only: `true` folds it into an icon rail (`navbar-folded`), `hover` also unfolds it on hover (`navbar-folded-hover`).
     folded = false,
+    ## bool Whether to add a gap between the navbar and the edges around it (`navbar-floating`).
     floating = false,
 %}
 
@@ -63,6 +69,7 @@
 {% set tag = vertical ? 'aside' : 'header' %}
 <{{ tag }} class="{{ navbar.apply({expand: expand, dark: dark, vertical: vertical, folded: folded, floating: floating}, attributes.render('class')) }}" {{ attributes.without('class') }}>
     <div class="container-{{ container ?? (vertical ? 'fluid' : 'xl') }}">
+        {## The navbar content, inside the container: `Navbar:Toggler`, `Navbar:Brand`, `Navbar:Nav` and the like. -#}
         {% block content %}{% endblock %}
     </div>
 </{{ tag }}>

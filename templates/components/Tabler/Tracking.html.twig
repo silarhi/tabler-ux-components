@@ -13,10 +13,12 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to render square blocks instead of thin bars (`tracking-squares`).
     squares = false,
 %}
 
 <div {{ attributes.defaults({class: squares ? 'tracking tracking-squares' : 'tracking'}) }}>
+    {## The `Tracking:Block` items. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

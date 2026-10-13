@@ -5,5 +5,5 @@
         <twig:Tabler:Accordion:Body>Generate tokens and control access scopes.</twig:Tabler:Accordion:Body>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'accordion-body'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'accordion-body'}) }}>{## The panel content. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

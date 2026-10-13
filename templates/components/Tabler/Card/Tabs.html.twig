@@ -17,5 +17,5 @@
         </twig:Tabler:Card:Tabs>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-tabs'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-tabs'}) }}>{## The tabs and their card panes. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

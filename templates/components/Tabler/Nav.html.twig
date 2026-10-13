@@ -19,9 +19,13 @@
 #}
 {% apply trim %}
 {% props
+    ## 'default'|'tabs'|'pills'|'underline' The nav style.
     variant = 'default',
+    ## bool Whether to stack the items in a column (`flex-column`).
     vertical = false,
+    ## bool Whether the items share the width proportionally (`nav-fill`).
     fill = false,
+    ## bool Whether the items share the width equally (`nav-justified`).
     justified = false,
 %}
 
@@ -41,6 +45,7 @@
 ) %}
 
 <ul class="{{ nav.apply({variant: variant, vertical: vertical, fill: fill, justified: justified}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The nav items: `Nav:Item` components. -#}
     {% block content %}{% endblock %}
 </ul>
 {% endapply ~%}

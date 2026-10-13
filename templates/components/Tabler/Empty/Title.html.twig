@@ -5,5 +5,5 @@
       <twig:Tabler:Empty:Title>No results found</twig:Tabler:Empty:Title>
 #}
 {% apply trim %}
-<p {{ attributes.defaults({class: 'empty-title'}) }}>{%- block content %}{% endblock -%}</p>
+<p {{ attributes.defaults({class: 'empty-title'}) }}>{## The title text. #}{%- block content %}{% endblock -%}</p>
 {% endapply ~%}

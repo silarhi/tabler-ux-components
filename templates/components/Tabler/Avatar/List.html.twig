@@ -14,7 +14,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to overlap the avatars (`avatar-list-stacked`).
     stacked = false,
+    ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl'|null The size of every avatar in the list (`avatar-list-{size}`).
     size = null,
 %}
 
@@ -34,7 +36,7 @@
     },
 ) %}
 
-<div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The avatars. -#}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

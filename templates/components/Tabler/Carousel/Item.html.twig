@@ -9,6 +9,7 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether this is the slide shown first; exactly one item must be active.
     active = false,
 %}
 
@@ -19,5 +20,5 @@
     },
 ) %}
 
-<div class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</div>
+<div class="{{ item.apply({active: active}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The slide content, e.g. an image and a `Carousel:Caption`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

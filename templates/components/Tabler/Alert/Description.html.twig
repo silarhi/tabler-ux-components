@@ -7,5 +7,5 @@
       </twig:Tabler:Alert:Description>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'alert-description'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'alert-description'}) }}>{## The description. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

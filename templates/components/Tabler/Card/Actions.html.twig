@@ -7,5 +7,5 @@
       </twig:Tabler:Card:Actions>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-actions'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-actions'}) }}>{## The actions: buttons or links. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

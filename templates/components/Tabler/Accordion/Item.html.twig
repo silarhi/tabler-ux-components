@@ -36,24 +36,34 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The id of the collapsible panel, targeted by the button.
     id = null,
+    ## string|null The id of the accordion; when set, opening this item closes the others (`data-bs-parent`).
     parent = null,
+    ## string|null The button label.
     title = null,
+    ## string|null The panel text, rendered with `Accordion:Body`.
     text = null,
+    ## bool Whether the item is expanded on load.
     open = false,
+    ## string|null The leading Tabler icon name, rendered with `Accordion:Icon`.
     icon = null,
+    ## bool Whether to use the plus indicator that turns into a close icon (`accordion-button-toggle-plus`).
     plus = false,
+    ## string|null The Tabler icon name of the indicator; defaults to `chevron-down`, or `plus`.
     toggleIcon = null,
+    ## int The heading level of the header, 1 to 6.
     level = 3,
 %}
 
-{% set title_html %}{% block title %}{{ title }}{% endblock %}{% endset %}
-{% set body_html %}{% block body %}
+{% set title_html %}{## The button label: the `title` prop. #}{% block title %}{{ title }}{% endblock %}{% endset %}
+{% set body_html %}{## The panel content: `Accordion:Body` with the `text` prop, when set. #}{% block body %}
     {%- if text is not null -%}<twig:Tabler:Accordion:Body>{{ text }}</twig:Tabler:Accordion:Body>{%- endif -%}
 {% endblock %}{% endset %}
 
-<div {{ attributes.defaults({class: 'accordion-item'}) }}>
+<div {{ attributes.defaults({class: 'accordion-item'}) }}>{## The whole item: `header`, then `Accordion:Collapse` holding `body`; replace it to compose freely. #}
     {%- block content -%}
+        {## The header: `Accordion:Header` with an `Accordion:Button` holding `title`. -#}
         {% block header %}
             <twig:Tabler:Accordion:Header level="{{ level }}">
                 <twig:Tabler:Accordion:Button target="{{ id }}" open="{{ open }}" icon="{{ icon }}" plus="{{ plus }}" toggleIcon="{{ toggleIcon }}">{{ title_html }}</twig:Tabler:Accordion:Button>

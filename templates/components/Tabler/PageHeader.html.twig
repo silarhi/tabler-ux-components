@@ -22,21 +22,27 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The small overline above the title, rendered with `PageHeader:Pretitle`.
     pretitle = null,
+    ## string|null The page title, rendered with `PageHeader:Title`.
     title = null,
 %}
 
 <div {{ attributes.defaults({class: 'page-header d-print-none'}) }}>
+    {## The whole header row; replacing it drops the `pretitle` and `title` props. -#}
     {% block content %}
         <div class="row align-items-center">
             <div class="col">
+                {## The pretitle: `PageHeader:Pretitle` with the `pretitle` prop, when set. -#}
                 {% block pretitle %}
                     {%- if pretitle is not null -%}<twig:Tabler:PageHeader:Pretitle>{{ pretitle }}</twig:Tabler:PageHeader:Pretitle>{%- endif -%}
                 {% endblock %}
+                {## The title: `PageHeader:Title` with the `title` prop, when set. -#}
                 {% block title %}
                     {%- if title is not null -%}<twig:Tabler:PageHeader:Title>{{ title }}</twig:Tabler:PageHeader:Title>{%- endif -%}
                 {% endblock %}
             </div>
+            {## The right-aligned actions, e.g. a `PageHeader:Actions`; empty by default. -#}
             {% block actions %}{% endblock %}
         </div>
     {% endblock %}

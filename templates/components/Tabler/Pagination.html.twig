@@ -16,8 +16,11 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to use the outline style (`pagination-outline`).
     outline = false,
+    ## bool Whether to make the page links circular (`pagination-circle`).
     circle = false,
+    ## 'sm'|'md'|'lg' The pagination size.
     size = 'md',
 %}
 
@@ -31,6 +34,7 @@
 ) %}
 
 <ul class="{{ pagination.apply({outline: outline, circle: circle, size: size}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The page links: `Pagination:Item` components. -#}
     {% block content %}{% endblock %}
 </ul>
 {% endapply ~%}

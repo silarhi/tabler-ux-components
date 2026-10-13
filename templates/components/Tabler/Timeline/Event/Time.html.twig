@@ -5,5 +5,5 @@
         <twig:Tabler:Timeline:Event:Time>1 day ago</twig:Tabler:Timeline:Event:Time>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'text-secondary float-end'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'text-secondary float-end'}) }}>{## The timestamp. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

@@ -13,7 +13,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to show a plus that turns into a close icon when open (`accordion-button-toggle-plus`).
     plus = false,
+    ## string|null The Tabler icon name; defaults to `chevron-down`, or `plus`.
     icon = null,
 %}
 
@@ -24,7 +26,7 @@
     },
 ) %}
 
-<span class="{{ toggle.apply({plus: plus}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<span class="{{ toggle.apply({plus: plus}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The indicator: a `Tabler:Icon` named `icon`. #}
     {%- block content -%}
         <twig:Tabler:Icon name="{{ icon ?? (plus ? 'plus' : 'chevron-down') }}" aria-hidden="true" />
     {%- endblock -%}

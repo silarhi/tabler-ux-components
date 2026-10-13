@@ -20,10 +20,15 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to render pills (`nav-pills`) instead of tabs (`nav-tabs`).
     pills = false,
+    ## bool Whether to underline the links (`nav-underline`) instead of tabs; ignored with `pills`.
     underline = false,
+    ## bool Whether to draw a border under the whole bar, the active tab underlined (`nav-bordered`).
     bordered = false,
+    ## bool Whether the tabs share the full width (`nav-fill`).
     fill = false,
+    ## bool Whether the bar sits in a card header (`card-header-tabs`).
     card = false,
 %}
 
@@ -38,6 +43,7 @@
 ) %}
 
 <ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
+    {## The tabs: `Tabs:Item` children. -#}
     {% block content %}{% endblock %}
 </ul>
 {% endapply ~%}

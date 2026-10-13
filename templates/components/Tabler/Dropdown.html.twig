@@ -18,6 +18,7 @@
 #}
 {% apply trim %}
 {% props
+    ## 'down'|'up'|'end'|'start' Where the menu opens (`dropup`, `dropend`, `dropstart`).
     direction = 'down',
 %}
 
@@ -29,6 +30,7 @@
 ) %}
 
 <div class="{{ dropdown.apply({direction: direction}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The toggle and the menu: `Dropdown:Toggle` and `Dropdown:Menu`. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

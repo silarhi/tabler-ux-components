@@ -15,12 +15,15 @@
 #}
 {% apply trim %}
 {% props
+    ## 'start'|'center'|'end' The label alignment (`hr-text-*`).
     position = 'center',
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The label color (`text-*`).
     variant = null,
+    ## bool Whether to remove the vertical margin around a labelled divider (`hr-text-spaceless`).
     spaceless = false,
 %}
 
-{%- set label -%}{%- block content %}{% endblock -%}{%- endset -%}
+{%- set label -%}{## The label; a plain `<hr>` when empty or blank. #}{%- block content %}{% endblock -%}{%- endset -%}
 
 {% set divider = html_cva(
     base: 'hr-text',

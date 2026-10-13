@@ -8,5 +8,5 @@
         </twig:Tabler:Badge:List>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'badge-list'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'badge-list'}) }}>{## The badges. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

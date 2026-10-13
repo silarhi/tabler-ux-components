@@ -14,8 +14,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to add a gradient that keeps light text readable (`card-img-overlay-dark`).
     dark = false,
 %}
 
-<div {{ attributes.defaults({class: dark ? 'card-img-overlay card-img-overlay-dark' : 'card-img-overlay'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: dark ? 'card-img-overlay card-img-overlay-dark' : 'card-img-overlay'}) }}>{## The content laid over the image. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

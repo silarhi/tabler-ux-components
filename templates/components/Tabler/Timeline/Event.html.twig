@@ -22,22 +22,30 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The event heading, rendered with `Timeline:Event:Title`.
     title = null,
+    ## string|null The timestamp shown on the right, rendered with `Timeline:Event:Time`.
     time = null,
+    ## string|null The body text, rendered with `Timeline:Event:Body`.
     text = null,
 %}
 
 <li {{ attributes.defaults({class: 'timeline-event'}) }}>
+    {## The whole event: `icon` and the card holding `time`, `title` and `body`; replace it to compose freely. -#}
     {% block content %}
+        {## The icon: an empty `Timeline:Event:Icon` by default. -#}
         {% block icon %}<twig:Tabler:Timeline:Event:Icon></twig:Tabler:Timeline:Event:Icon>{% endblock %}
         <div class="card timeline-event-card">
             <div class="card-body">
+                {## The timestamp: `Timeline:Event:Time` with the `time` prop, when set. -#}
                 {% block time %}
                     {%- if time is not null -%}<twig:Tabler:Timeline:Event:Time>{{ time }}</twig:Tabler:Timeline:Event:Time>{%- endif -%}
                 {% endblock %}
+                {## The heading: `Timeline:Event:Title` with the `title` prop, when set. -#}
                 {% block title %}
                     {%- if title is not null -%}<twig:Tabler:Timeline:Event:Title>{{ title }}</twig:Tabler:Timeline:Event:Title>{%- endif -%}
                 {% endblock %}
+                {## The body: `Timeline:Event:Body` with the `text` prop, when set. -#}
                 {% block body %}
                     {%- if text is not null -%}<twig:Tabler:Timeline:Event:Body>{{ text }}</twig:Tabler:Timeline:Event:Body>{%- endif -%}
                 {% endblock %}

@@ -8,6 +8,7 @@
 #}
 {% apply trim %}
 <div {{ attributes.defaults({class: 'tab-content'}) }}>
+    {## The panes: `Tabs:Pane` children. -#}
     {% block content %}{% endblock %}
 </div>
 {% endapply ~%}

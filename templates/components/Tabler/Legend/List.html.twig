@@ -13,7 +13,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to stack the items in a column (`legend-list-vertical`).
     vertical = false,
+    ## bool Whether to draw a line between the items (`legend-list-divided`).
     divided = false,
 %}
 
@@ -25,7 +27,7 @@
     },
 ) %}
 
-<div class="{{ list.apply({vertical: vertical, divided: divided}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ list.apply({vertical: vertical, divided: divided}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The legend items. -#}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

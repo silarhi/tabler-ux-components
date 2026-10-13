@@ -16,7 +16,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; defaults to `#`.
     href = null,
+    ## bool Whether to keep it visible, not only on hover (`show`).
     show = false,
 %}
 
@@ -27,7 +29,7 @@
     },
 ) %}
 
-<a href="{{ href ?? '#' }}" class="{{ actions.apply({show: show}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>
+<a href="{{ href ?? '#' }}" class="{{ actions.apply({show: show}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{## The link content, usually a `Tabler:Icon`. #}
     {%- block content %}{% endblock -%}
 </a>
 {% endapply ~%}

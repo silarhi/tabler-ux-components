@@ -21,10 +21,15 @@
 #}
 {% apply trim %}
 {% props
+    ## string The Tabler icon name, without the `ti-` prefix.
     name,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The icon color (`text-{variant}`).
     variant = null,
+    ## 'pulse'|'tada'|'rotate'|null The animation (`icon-{animation}`).
     animation = null,
+    ## 'sm'|'md'|'lg'|'inline'|null The size (`icon icon-{size}`); unset, the icon follows the font size.
     size = null,
+    ## bool Whether to use the filled variant of the icon (`ti-filled ti-filled-{name}`).
     filled = false,
 %}
 

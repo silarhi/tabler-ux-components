@@ -5,5 +5,5 @@
       <twig:Tabler:Alert:Title>Saved!</twig:Tabler:Alert:Title>
 #}
 {% apply trim %}
-<h4 {{ attributes.defaults({class: 'alert-heading'}) }}>{%- block content %}{% endblock -%}</h4>
+<h4 {{ attributes.defaults({class: 'alert-heading'}) }}>{## The title. #}{%- block content %}{% endblock -%}</h4>
 {% endapply ~%}

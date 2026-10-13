@@ -15,7 +15,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The photo URL, set as an inline `background-image` style.
     image = null,
+    ## bool Whether to blur the photo behind the overlay (`card-cover-blurred`).
     blurred = false,
 %}
 
@@ -23,6 +25,6 @@
 
 {# the overlay is an absolutely positioned ::before: the content needs its own stacking to stay above it #}
 <div {{ attributes.defaults({class: blurred ? 'card-cover card-cover-blurred' : 'card-cover'}).without('style') }}{% if style %} style="{{ style }}"{% endif %}>
-    <div class="position-relative">{%- block content %}{% endblock -%}</div>
+    <div class="position-relative">{## The cover content, kept above the overlay. #}{%- block content %}{% endblock -%}</div>
 </div>
 {% endapply ~%}

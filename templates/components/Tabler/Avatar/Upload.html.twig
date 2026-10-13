@@ -12,9 +12,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The link target; renders an `<a href>` instead of a `<button type="button">`.
     href = null,
+    ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl' The avatar size (`avatar-{size}`).
     size = 'md',
+    ## string|null The Tabler icon name, rendered with `Tabler:Icon`.
     icon = null,
+    ## string|null The label under the icon (`avatar-upload-text`).
     text = null,
 %}
 
@@ -26,7 +30,7 @@
 ) %}
 
 {% set tag = href is not null ? 'a' : 'button' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} class="{{ upload.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class', 'href', 'type') }}>
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% else %} type="button"{% endif %} class="{{ upload.apply({size: size}, attributes.render('class')) }}" {{ attributes.without('class', 'href', 'type') }}>{## The slot content: the `icon` and the `text`, each when set. -#}
     {%- block content -%}
         {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" />{%- endif -%}
         {%- if text is not null -%}<span class="avatar-upload-text">{{ text }}</span>{%- endif -%}

@@ -20,10 +20,15 @@
 #}
 {% apply trim %}
 {% props
+    ## string The element, `a` by default (`button`, `label`…); only an `<a>` gets the `href`.
     tag = 'a',
+    ## string|null The link target; defaults to `#`.
     href = null,
+    ## bool Whether to highlight the item (`active`).
     active = false,
+    ## bool Whether the item is non-interactive (`disabled`).
     disabled = false,
+    ## string|null The leading Tabler icon name, rendered with `Tabler:Icon` (`dropdown-item-icon`).
     icon = null,
 %}
 
@@ -38,6 +43,7 @@
 <{{ tag }}{% if tag == 'a' %} href="{{ href ?? '#' }}"{% elseif tag == 'button' %} type="{{ attributes.render('type') ?? 'button' }}"{% endif %} class="{{ item.apply({active: active, disabled: disabled}, attributes.render('class')) }}"
     {%- if disabled %}{% if tag == 'button' %} disabled{% else %} aria-disabled="true"{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
     {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="dropdown-item-icon" />{%- endif -%}
+    {## The item label, after the `icon`. -#}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

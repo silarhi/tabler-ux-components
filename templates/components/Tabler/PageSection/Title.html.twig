@@ -5,5 +5,5 @@
         <twig:Tabler:PageSection:Title>Line charts</twig:Tabler:PageSection:Title>
 #}
 {% apply trim %}
-<h2 {{ attributes.defaults({class: 'page-section-title'}) }}>{%- block content %}{% endblock -%}</h2>
+<h2 {{ attributes.defaults({class: 'page-section-title'}) }}>{## The section title. #}{%- block content %}{% endblock -%}</h2>
 {% endapply ~%}

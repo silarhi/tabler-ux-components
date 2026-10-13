@@ -10,7 +10,9 @@
 #}
 {% apply trim %}
 {% props
+    ## string The `id` of the pane it shows, without `#`.
     target,
+    ## bool Whether the tab is selected first.
     active = false,
 %}
 
@@ -22,6 +24,6 @@
 ) %}
 
 <li class="nav-item" role="presentation">
-    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{%- block content %}{% endblock -%}</a>
+    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{## The tab label. #}{%- block content %}{% endblock -%}</a>
 </li>
 {% endapply ~%}

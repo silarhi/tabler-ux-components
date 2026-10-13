@@ -11,12 +11,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string The text before the dots.
     label = 'Typing',
 %}
 
 <div {{ attributes.defaults({class: 'chat-bubble align-self-start'}) }}>
     <div class="chat-bubble-body">
-        <p class="text-secondary fst-italic mb-0">{%- block content %}{{ label }}{% endblock %} <span class="animated-dots"></span></p>
+        <p class="text-secondary fst-italic mb-0">{## The text before the dots: the `label` prop. #}{%- block content %}{{ label }}{% endblock %} <span class="animated-dots"></span></p>
     </div>
 </div>
 {% endapply ~%}

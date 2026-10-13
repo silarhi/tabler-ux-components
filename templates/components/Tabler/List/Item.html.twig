@@ -11,11 +11,12 @@
 #}
 {% apply trim %}
 {% props
+    ## bool|null Whether the item is inline (`list-inline-item`); defaults to the `inline` of the enclosing `List`.
     inline = null,
 %}
 
 {# without its own `inline`, an item follows its <twig:Tabler:List> #}
 {% set inline = inline ?? _tabler_list_inline ?? false %}
 {% set classes = ((inline ? 'list-inline-item ' : '') ~ attributes.render('class'))|trim %}
-<li{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{%- block content %}{% endblock -%}</li>
+<li{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{## The item content. #}{%- block content %}{% endblock -%}</li>
 {% endapply ~%}

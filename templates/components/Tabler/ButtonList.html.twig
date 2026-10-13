@@ -20,6 +20,7 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to center the row (`btn-list-center`).
     center = false,
 %}
 
@@ -30,7 +31,7 @@
     },
 ) %}
 
-<div class="{{ list.apply({center: center}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<div class="{{ list.apply({center: center}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The buttons. #}
     {%- block content %}{% endblock -%}
 </div>
 {% endapply ~%}

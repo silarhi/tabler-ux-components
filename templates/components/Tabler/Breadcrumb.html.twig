@@ -14,7 +14,9 @@
 #}
 {% apply trim %}
 {% props
+    ## 'default'|'dots'|'arrows'|'bullets' The separator between the crumbs.
     separator = 'default',
+    ## bool Whether to use the muted style (`breadcrumb-muted`).
     muted = false,
 %}
 
@@ -28,6 +30,7 @@
 
 <nav aria-label="breadcrumbs">
     <ol class="{{ breadcrumb.apply({separator: separator, muted: muted}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+        {## The crumbs: `Breadcrumb:Item` components. -#}
         {% block content %}{% endblock %}
     </ol>
 </nav>

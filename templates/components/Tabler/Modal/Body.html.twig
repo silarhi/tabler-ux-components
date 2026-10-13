@@ -5,5 +5,5 @@
       <twig:Tabler:Modal:Body>Some content.</twig:Tabler:Modal:Body>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'modal-body'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'modal-body'}) }}>{## The body content. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

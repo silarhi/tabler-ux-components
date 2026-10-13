@@ -15,10 +15,13 @@
 #}
 {% apply trim %}
 {% props
+    ## string The popover body text (`data-bs-content`).
     content,
+    ## string|null The popover heading (`data-bs-title`).
     title = null,
+    ## 'top'|'bottom'|'left'|'right' Where the popover opens (`data-bs-placement`).
     placement = 'top',
 %}
 
-<span data-bs-toggle="popover" data-bs-placement="{{ placement }}"{% if title is not null %} data-bs-title="{{ title }}"{% endif %} data-bs-content="{{ content }}" {{ attributes }}>{%- block content %}{% endblock -%}</span>
+<span data-bs-toggle="popover" data-bs-placement="{{ placement }}"{% if title is not null %} data-bs-title="{{ title }}"{% endif %} data-bs-content="{{ content }}" {{ attributes }}>{## The element the popover is attached to. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

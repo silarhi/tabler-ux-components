@@ -5,5 +5,5 @@
         <twig:Tabler:Offcanvas:Body>…</twig:Tabler:Offcanvas:Body>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'offcanvas-body'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'offcanvas-body'}) }}>{## The body content. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

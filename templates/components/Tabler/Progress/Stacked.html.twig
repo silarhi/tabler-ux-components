@@ -13,8 +13,9 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to add a gap between the segments (`progress-separated`).
     separated = false,
 %}
 
-<div {{ attributes.defaults({class: separated ? 'progress-stacked progress-separated' : 'progress-stacked'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: separated ? 'progress-stacked progress-separated' : 'progress-stacked'}) }}>{## The segments: `Progress:Segment` children. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

@@ -21,19 +21,26 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The selector of the element to copy (`data-bs-target`): a field gives its value, anything else its text.
     target = null,
+    ## string|null A literal string to copy, which wins over `target` (`data-bs-text`).
     text = null,
+    ## int|null How long the copied state lasts, in ms (`data-bs-delay`); Tabler defaults to 2000, `0` keeps it.
     delay = null,
+    ## string The resting text, rendered with `Clipboard:Label`.
     label = 'Copy',
+    ## string The text shown after a copy, rendered with `Clipboard:Feedback`.
     feedback = 'Copied',
 %}
 
 <button type="button" {{ attributes.defaults({class: 'btn'}).without('type') }} data-bs-toggle="clipboard"
     {%- if target is not null %} data-bs-target="{{ target }}"{% endif %}
     {%- if text is not null %} data-bs-text="{{ text }}"{% endif %}
-    {%- if delay is not null %} data-bs-delay="{{ delay }}"{% endif %}>
+    {%- if delay is not null %} data-bs-delay="{{ delay }}"{% endif %}>{## The button content: `label` and `feedback`; replace it to compose freely. -#}
     {%- block content -%}
+        {## The resting state: `Clipboard:Label` with the `label` prop. -#}
         {%- block label -%}<twig:Tabler:Clipboard:Label>{{ label }}</twig:Tabler:Clipboard:Label>{%- endblock -%}
+        {## The copied state: `Clipboard:Feedback` with the `feedback` prop. -#}
         {%- block feedback -%}<twig:Tabler:Clipboard:Feedback>{{ feedback }}</twig:Tabler:Clipboard:Feedback>{%- endblock -%}
     {%- endblock -%}
 </button>

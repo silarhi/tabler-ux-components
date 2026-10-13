@@ -22,10 +22,15 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to stack the items with a gap between them (`list-separated`).
     separated = false,
+    ## bool Whether to lay the items out in a row (`list-inline`); its `List:Item` children follow it.
     inline = false,
+    ## bool With `inline`, whether to put a dot between the items (`list-inline-dots`).
     dots = false,
+    ## bool Whether to drop the bullets and the indent (`list-unstyled`).
     unstyled = false,
+    ## bool Whether to render an `<ol>` instead of a `<ul>`.
     ordered = false,
 %}
 
@@ -41,7 +46,7 @@
 {% set tag = ordered ? 'ol' : 'ul' %}
 {# the List:Item children inherit `inline` through the context of the content block #}
 {% set _tabler_list_inline = inline %}
-<{{ tag }} class="{{ list.apply({separated: separated, inline: inline, dots: inline and dots, unstyled: unstyled}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+<{{ tag }} class="{{ list.apply({separated: separated, inline: inline, dots: inline and dots, unstyled: unstyled}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The list items: `List:Item` components. -#}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

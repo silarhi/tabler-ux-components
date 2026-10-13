@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - Unreleased
+
+### Added
+
+- Every prop and block is documented in its template, with a `## <type> <description>` comment in `{% props %}` and a `{## … #}` comment above each block, the format the Symfony UX Toolkit renders as API tables.
+
+### Changed
+
+- Requires `twig/twig` 3.15+ (was 3.12+): the prop comments are Twig inline comments.
+
 ## [0.6.0] - 2026-10-12
 
 ### Changed
@@ -43,19 +53,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Components: `ButtonGroup` (+ `Toggle`), `ButtonList`, `ButtonToolbar`, `Accordion` (with an `items` all-in-one mode), `Tag`, `Trending`, read-only `StarRating`, `ListGroup`, `Chat` (with a `messages` all-in-one mode and a typing indicator) and `Mention`.
 - Tabler 1.6 modifiers on navigation, feedback and layout components:
-  - `Tabs` `underline`, `bordered`, `fill`; `SegmentedControl` `vertical` and `size`.
-  - `Progress` `striped`, `animated`, `separated`; `Progress:Bar` `striped` and `animated`.
-  - `Pagination` `size`; `Pagination:Item` `direction` (prev/next with `rel`), `title` and `subtitle` for a named pager.
-  - `Dropdown` `direction`; `Dropdown:Menu` `arrow`, `dark`, `scrollable`, `card`; `Dropdown:Item` `icon`; `Dropdown:Toggle` `split`; new `Dropdown:Text`, `Dropdown:Columns` and `Dropdown:Column`.
-  - `Modal` `blur` and `size="fullscreen"`; `Button` `appearance="link"`, `floating`, `animateIcon`; `Icon` `size` and `filled`.
-  - `Card` `borderless`, `transparent`, `stacked`, `active`, `inactive`, `rotate`, `link`; `Card:Body` `scrollable`; new `Card:Img`, `Card:Stamp`, `Card:Progress`, `Card:Meta` and `Card:Btn`.
-  - New `Avatar:List`, `Avatar:Brand` and `Avatar:Upload`; `Breadcrumb` `bullets`, `Divider` `spaceless`, `Tracking` `squares`, `Empty` `bordered` with `Empty:Header` / `Empty:Img`, and `Toast:Container`.
+    - `Tabs` `underline`, `bordered`, `fill`; `SegmentedControl` `vertical` and `size`.
+    - `Progress` `striped`, `animated`, `separated`; `Progress:Bar` `striped` and `animated`.
+    - `Pagination` `size`; `Pagination:Item` `direction` (prev/next with `rel`), `title` and `subtitle` for a named pager.
+    - `Dropdown` `direction`; `Dropdown:Menu` `arrow`, `dark`, `scrollable`, `card`; `Dropdown:Item` `icon`; `Dropdown:Toggle` `split`; new `Dropdown:Text`, `Dropdown:Columns` and `Dropdown:Column`.
+    - `Modal` `blur` and `size="fullscreen"`; `Button` `appearance="link"`, `floating`, `animateIcon`; `Icon` `size` and `filled`.
+    - `Card` `borderless`, `transparent`, `stacked`, `active`, `inactive`, `rotate`, `link`; `Card:Body` `scrollable`; new `Card:Img`, `Card:Stamp`, `Card:Progress`, `Card:Meta` and `Card:Btn`.
+    - New `Avatar:List`, `Avatar:Brand` and `Avatar:Upload`; `Breadcrumb` `bullets`, `Divider` `spaceless`, `Tracking` `squares`, `Empty` `bordered` with `Empty:Header` / `Empty:Img`, and `Toast:Container`.
 - The last Tabler 1.6 classes:
-  - `Button` `appearance="action"` (`btn-action`) and a `ButtonActions` wrapper.
-  - `Card:ImgOverlay` (`dark`), `Card:Cover` (`image`, `blurred`), `Card:Code`, `Card:Tabs`, and `Card:Img` `position="full"`.
-  - `Table` `card` (`card-table`) and `Table:Cell` (`label` for stacked rows, `truncate`).
-  - `Progress:Stacked` (`separated`) and `Progress:Segment`, Bootstrap 5.3's `progress-stacked` markup.
-  - `Dropdown:Indicator`, `Avatar` `cover`, and a plain `List` + `List:Item` (`separated`, `inline` with `dots`, `unstyled`, `ordered`).
+    - `Button` `appearance="action"` (`btn-action`) and a `ButtonActions` wrapper.
+    - `Card:ImgOverlay` (`dark`), `Card:Cover` (`image`, `blurred`), `Card:Code`, `Card:Tabs`, and `Card:Img` `position="full"`.
+    - `Table` `card` (`card-table`) and `Table:Cell` (`label` for stacked rows, `truncate`).
+    - `Progress:Stacked` (`separated`) and `Progress:Segment`, Bootstrap 5.3's `progress-stacked` markup.
+    - `Dropdown:Indicator`, `Avatar` `cover`, and a plain `List` + `List:Item` (`separated`, `inline` with `dots`, `unstyled`, `ordered`).
 - `Dropdown:Item` `tag`: `button` or `label` for an item that is not a link, such as one holding a checkbox or a radio in a `Dropdown:Indicator`.
 
 ### Changed
@@ -86,11 +96,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Alert:Link`, `Alert:Action` and `Alert:List`; `Badge` `outline`, `dot`, `iconOnly`, `notification`, `blink` and `Badge:List`; `Status` `lite`, `muted`, the palette colors and `Status:Indicator`.
 - `Table` `mobile`, `center`, `borderless`, `transparent`, `nowrap`, `selectable`, `size="sm"`, with `Table:Sort` and `Table:Check`.
 - Tabler 1.5 and 1.6 modifiers on existing components:
-  - `Button` `default` variant and `xl` size; `Alert` `minor`; `Avatar` `square` and the `xxs` / `2xl` sizes; `Progress` `lg` and `xl`.
-  - `Card` `gradient` (bare, theme color or preset), `gradientDirection`, `gradientAnimated` and `dashed`.
-  - `SwitchIcon` `loading`, `active` and every `slide-*` animation.
-  - `Offcanvas` `narrow`, `floating`, and a `footer` prop and block with `Offcanvas:Footer`.
-  - `Navbar` `vertical` (sidebar), `folded` and `floating`, with `Navbar:SectionTitle`, `Navbar:Side`, `Navbar:Footer` and a `side` block on `Navbar:Nav`.
+    - `Button` `default` variant and `xl` size; `Alert` `minor`; `Avatar` `square` and the `xxs` / `2xl` sizes; `Progress` `lg` and `xl`.
+    - `Card` `gradient` (bare, theme color or preset), `gradientDirection`, `gradientAnimated` and `dashed`.
+    - `SwitchIcon` `loading`, `active` and every `slide-*` animation.
+    - `Offcanvas` `narrow`, `floating`, and a `footer` prop and block with `Offcanvas:Footer`.
+    - `Navbar` `vertical` (sidebar), `folded` and `floating`, with `Navbar:SectionTitle`, `Navbar:Side`, `Navbar:Footer` and a `side` block on `Navbar:Nav`.
 
 ### Changed
 
@@ -110,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.7.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.6.0...HEAD
 [0.6.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.3.0...v0.4.0

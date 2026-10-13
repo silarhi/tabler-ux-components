@@ -6,5 +6,5 @@
         <twig:Tabler:Accordion:Icon><twig:Tabler:Icon name="user" /></twig:Tabler:Accordion:Icon>
 #}
 {% apply trim %}
-<span {{ attributes.defaults({class: 'accordion-button-icon'}) }}>{%- block content %}{% endblock -%}</span>
+<span {{ attributes.defaults({class: 'accordion-button-icon'}) }}>{## The icon, e.g. a `Tabler:Icon`. #}{%- block content %}{% endblock -%}</span>
 {% endapply ~%}

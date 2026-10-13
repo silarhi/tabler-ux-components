@@ -17,15 +17,20 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The section title, rendered with `PageSection:Title`.
     title = null,
+    ## string|null The description, rendered with `PageSection:Description`.
     description = null,
 %}
 
 <div {{ attributes }}>
+    {## The whole section heading: `title` and `description`; replace it to compose freely. -#}
     {% block content %}
+        {## The title: `PageSection:Title` with the `title` prop, when set. -#}
         {% block title %}
             {%- if title is not null -%}<twig:Tabler:PageSection:Title>{{ title }}</twig:Tabler:PageSection:Title>{%- endif -%}
         {% endblock %}
+        {## The description: `PageSection:Description` with the `description` prop, when set. -#}
         {% block description %}
             {%- if description is not null -%}<twig:Tabler:PageSection:Description>{{ description }}</twig:Tabler:PageSection:Description>{%- endif -%}
         {% endblock %}

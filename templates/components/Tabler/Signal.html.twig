@@ -26,8 +26,11 @@
 #}
 {% apply trim %}
 {% props
+    ## int The number of lit bars.
     value = 0,
+    ## int The total number of bars, 2 to 5.
     max = 3,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The color of the lit bars.
     variant = null,
 %}
 
@@ -61,7 +64,7 @@
 ) %}
 
 {% set labelled = 'aria-label' in attributes.all|keys %}
-<span class="{{ signal.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if labelled %} role="img"{% else %} aria-hidden="true"{% endif %} {{ attributes.without('class') }}>
+<span class="{{ signal.apply({variant: variant ?? ''}, attributes.render('class')) }}"{% if labelled %} role="img"{% else %} aria-hidden="true"{% endif %} {{ attributes.without('class') }}>{## The bars: `max` times `Signal:Bar`, the first `value` ones active. #}
     {%- block content -%}
         {%- for i in 1..max -%}
             {%- if i <= value -%}<twig:Tabler:Signal:Bar active />{%- else -%}<twig:Tabler:Signal:Bar />{%- endif -%}

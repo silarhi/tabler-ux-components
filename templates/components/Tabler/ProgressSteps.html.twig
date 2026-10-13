@@ -22,14 +22,18 @@
 #}
 {% apply trim %}
 {% props
+    ## int The number of steps; ignored when `labels` is set.
     count = 0,
+    ## list<string>|null The step names, announced to assistive technology (default `Step n`).
     labels = null,
+    ## int The 1-based index of the current step; `0` fills none.
     active = 1,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'muted'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan' The color of the reached steps.
     variant = 'primary',
 %}
 
 {% set steps = labels ?? (count > 0 ? range(1, count)|map(i => null) : []) %}
-<ol {{ attributes.defaults({class: 'progress-steps'}) }}>
+<ol {{ attributes.defaults({class: 'progress-steps'}) }}>{## The steps: one `ProgressSteps:Item` per step, from `count` or `labels`. -#}
     {%- block content -%}
         {%- for step in steps -%}
             {%- set index = loop.index -%}

@@ -5,5 +5,5 @@
         <twig:Tabler:Card:Code><pre><code>composer require silarhi/tabler-ux-components</code></pre></twig:Tabler:Card:Code>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-code'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'card-code'}) }}>{## The code block, e.g. a `<pre>`. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

@@ -27,13 +27,21 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The item text.
     label = null,
+    ## string|null The link target; renders an `<a href>` when set.
     href = null,
+    ## bool Whether to render a `<button type="button">` (ignored with `href`).
     button = false,
+    ## 'div'|'li' The element of an item that is not a link nor a button.
     tag = 'div',
+    ## bool|null Whether to add the hover and focus style (`list-group-item-action`); defaults to `true` for links and buttons.
     action = null,
+    ## bool Whether it is the current item (`active`, `aria-current="true"`).
     active = false,
+    ## bool Whether the user cannot pick the item (`disabled`).
     disabled = false,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The item tint (`list-group-item-*`).
     variant = null,
 %}
 
@@ -68,7 +76,7 @@
     {%- if href is not null and not disabled %} href="{{ href }}"{% endif %}
     {%- if element == 'button' %} type="button"{% endif %} class="{{ classes }}"
     {%- if active %} aria-current="true"{% endif %}
-    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>
+    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>{## The item content: the `label` prop by default. #}
     {%- block content %}{{ label }}{% endblock -%}
 </{{ element }}>
 {% endapply ~%}

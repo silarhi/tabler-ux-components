@@ -13,8 +13,11 @@
 #}
 {% apply trim %}
 {% props
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The button color (`btn-*`); a plain `.btn` when null.
     variant = null,
+    ## bool Whether to hide the caret (no `dropdown-toggle` class).
     noCaret = false,
+    ## bool Whether it is the caret-only half of a split button (`dropdown-toggle-split`).
     split = false,
 %}
 
@@ -36,5 +39,5 @@
     },
 ) %}
 
-<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{%- block content %}{% endblock -%}</button>
+<button type="{{ attributes.render('type') ?? 'button' }}" class="{{ toggle.apply({variant: variant ?? '', noCaret: noCaret, split: split}, attributes.render('class')) }}" data-bs-toggle="dropdown" aria-expanded="false" {{ attributes.without('class', 'type') }}>{## The toggle label. #}{%- block content %}{% endblock -%}</button>
 {% endapply ~%}

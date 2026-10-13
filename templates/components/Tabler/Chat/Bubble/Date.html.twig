@@ -5,5 +5,5 @@
         <twig:Tabler:Chat:Bubble:Date>10:24</twig:Tabler:Chat:Bubble:Date>
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'col-auto chat-bubble-date'}) }}>{%- block content %}{% endblock -%}</div>
+<div {{ attributes.defaults({class: 'col-auto chat-bubble-date'}) }}>{## The time of the message. #}{%- block content %}{% endblock -%}</div>
 {% endapply ~%}

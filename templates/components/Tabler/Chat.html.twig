@@ -32,10 +32,11 @@
 #}
 {% apply trim %}
 {% props
+    ## list<array{author?:string|null,date?:string|null,text?:string|null,avatar?:string|null,me?:bool}>|null The messages, rendered as `Chat:Message` rows.
     messages = null,
 %}
 
-<div {{ attributes.defaults({class: 'chat'}) }}>
+<div {{ attributes.defaults({class: 'chat'}) }}>{## The conversation: `Chat:Bubbles` with a `Chat:Message` per message, when `messages` is set. -#}
     {%- block content -%}
         {%- if messages is not null -%}
             <twig:Tabler:Chat:Bubbles>

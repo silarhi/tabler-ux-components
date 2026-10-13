@@ -15,8 +15,11 @@
 #}
 {% apply trim %}
 {% props
+    ## bool Whether to stretch to the container width (`w-100`).
     fullWidth = false,
+    ## bool Whether to stack the segments in a column (`nav-segmented-vertical`).
     vertical = false,
+    ## 'sm'|'md'|'lg' The control size.
     size = 'md',
 %}
 
@@ -30,6 +33,7 @@
 ) %}
 
 <nav class="{{ segmented.apply({fullWidth: fullWidth, vertical: vertical, size: size}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
+    {## The segments: `SegmentedControl:Item` components. -#}
     {% block content %}{% endblock %}
 </nav>
 {% endapply ~%}
