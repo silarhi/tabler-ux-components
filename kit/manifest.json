@@ -6,7 +6,7 @@
     "color": "#066fd1",
     "icon": "icon.svg",
     "dependencies": {
-        "npm": ["@tabler/core@^1.6.0", "@tabler/icons-webfont@^3.0.0"],
+        "npm": ["@tabler/core@^1.6.0", "@tabler/icons-webfont@^3.36.1"],
         "importmap": [
             "@tabler/core",
             "@tabler/core/dist/css/tabler.min.css",

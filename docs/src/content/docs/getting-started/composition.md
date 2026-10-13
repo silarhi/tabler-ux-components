@@ -123,6 +123,7 @@ Classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functi
     variants: {
         variant: { success: 'alert-success', danger: 'alert-danger', ... },
         important: { true: 'alert-important', false: '' },
+        minor: { true: 'alert-minor', false: '' },
         dismissible: { true: 'alert-dismissible', false: '' },
     },
     compound_variants: [
@@ -131,7 +132,7 @@ Classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functi
 ) %}
 
 {# html_cva converts boolean recipe values to the string keys 'true'/'false' #}
-<div class="{{ alert.apply({variant, important, dismissible}, attributes.render('class')) }}">
+<div class="{{ alert.apply({variant, important, minor, dismissible}, attributes.render('class')) }}">
 ```
 
 When two axes both emit a color-dependent class (Button's `appearance` × `variant`, Badge's `light` × `variant`), the
@@ -154,6 +155,9 @@ templates/components/Tabler/
         Icon.html.twig           # <twig:Tabler:Alert:Icon>
         Title.html.twig          # <twig:Tabler:Alert:Title>
         Description.html.twig    # <twig:Tabler:Alert:Description>
+        List.html.twig           # <twig:Tabler:Alert:List>
+        Link.html.twig           # <twig:Tabler:Alert:Link>
+        Action.html.twig         # <twig:Tabler:Alert:Action>
         Dismiss.html.twig        # <twig:Tabler:Alert:Dismiss>
 ```
 

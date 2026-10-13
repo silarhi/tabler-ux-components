@@ -12,7 +12,9 @@ yarn install # Git hooks: lint-staged formats the staged files on commit
 
 ## Quality checks
 
-The CI runs them all, on every supported PHP and Symfony version:
+The CI runs the tests on every supported PHP version (8.2 to 8.5), with both the lowest and the latest dependencies
+(Symfony, Twig, ux-twig-component), and the static analysis and code style checks once. Rector is not run in CI: run it
+locally before opening a pull request.
 
 ```bash
 # Tests
@@ -27,8 +29,12 @@ vendor/bin/php-cs-fixer fix --dry-run --diff
 # Twig code style (add --fix to fix)
 vendor/bin/twig-cs-fixer lint
 
-# Code modernization (drop --dry-run to apply)
+# Code modernization (drop --dry-run to apply), not run in CI
 vendor/bin/rector process --dry-run
+
+# composer.json validation and normalization
+composer validate --strict
+composer normalize --dry-run
 ```
 
 ## Adding a component
@@ -44,22 +50,7 @@ Templates never bypass Twig's autoescaping: `tests/TemplateConventionsTest.php` 
 `{% autoescape false %}`.
 
 - **Props are text, slots are markup.** Prop values are always escaped; HTML only comes in through blocks and
-  sub-components (e.g. `Alert`'s `icon` prop is a Tabler icon name, custom SVG goes in the `icon` block).
-- **Pick the element, don't duplicate the content.** When a component renders `<a>`, `<button>` or `<span>` depending
-  on its props, the tag name is dynamic (`<{{ tag }}>…</{{ tag }}>`) and the `content` block is defined once. An
-  optional wrapper is opened and closed under the same `{% if %}`.
-- **Capture only to test for emptiness.** A captured `{% set x %}…{% endset %}` block is already escaped and marked
-  safe: print it as `{{ x }}`, never through `|raw`, and never joined with `~` for output (that escapes it twice).
-- **Never forward a possibly-null value as an HTML attribute.** Older ux-twig-component releases render a `null`
-  attribute as `"true"`; guard it with `{% if %}`, or make it a declared prop.
-
-### Escaping rules
-
-Templates never bypass Twig's autoescaping: `tests/TemplateConventionsTest.php` fails on any `|raw` or
-`{% autoescape false %}`.
-
-- **Props are text, slots are markup.** Prop values are always escaped; HTML only comes in through blocks and
-  sub-components (e.g. Alert's `icon` prop is a Tabler icon name, custom SVG goes in the `icon` block).
+  sub-components (e.g. `Alert`'s `icon` prop is an icon name, custom SVG goes in the `icon` block).
 - **Pick the element, don't duplicate the content.** When a component renders `<a>`, `<button>` or `<span>` depending
   on its props, the tag name is dynamic (`<{{ tag }}>…</{{ tag }}>`) and the `content` block is defined once. An
   optional wrapper is opened and closed under the same `{% if %}`.

@@ -42,8 +42,8 @@ AssetMapper):
 
 ## Icons from symfony/ux-icons
 
-With [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) installed, a `name` with an icon set
-prefix renders that icon as an inline `<svg>` instead of the webfont: any of the 200,000+ icons of
+With [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) (2.17+ / 3.x) installed, a `name` with
+an icon set prefix renders that icon as an inline `<svg>` instead of the webfont: any of the 200,000+ icons of
 [Iconify](https://icon-sets.iconify.design/) (`lucide:circle-check`, `mdi:account`, `tabler:check`…), or your own SVG
 files in `assets/icons/`. Names without a prefix keep using the webfont, so both can be mixed.
 
@@ -83,10 +83,10 @@ meaning on its own:
 
 ## Props
 
-| Prop        | Type    | Default    | Description                                                                                          |
-| ----------- | ------- | ---------- | ---------------------------------------------------------------------------------------------------- |
-| `name`      | string  | (required) | Icon name, without the `ti-` prefix; or a ux-icons name, see [UX Icons](#icons-from-symfonyux-icons) |
-| `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`                             |
-| `animation` | string? | `null`     | `pulse` `tada` `rotate`                                                                              |
-| `size`      | string? | `null`     | `sm` `md` `lg` `inline` (`icon icon-{size}`); unset, follows the font size                           |
-| `filled`    | bool    | `false`    | Filled variant: `ti-filled ti-filled-{name}`, see [Filled](#filled)                                  |
+| Prop        | Type    | Default    | Description                                                                                                                         |
+| ----------- | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `name`      | string  | (required) | Icon name, without the `ti-` prefix; or a ux-icons name, see [UX Icons](#icons-from-symfonyux-icons)                                |
+| `variant`   | string? | `null`     | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`                                                            |
+| `animation` | string? | `null`     | `pulse` `tada` `rotate`                                                                                                             |
+| `size`      | string? | `null`     | `sm` `md` `lg` `inline` (`icon icon-{size}`); unset, follows the font size                                                          |
+| `filled`    | bool    | `false`    | Filled variant: `ti-filled ti-filled-{name}`, see [Filled](#filled); with UX Icons, `tabler:{name}-filled` in the `tabler` set only |
