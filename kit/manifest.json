@@ -1,0 +1,16 @@
+{
+    "name": "Tabler",
+    "description": "Components based on Tabler 1.6, the open-source dashboard UI kit built on Bootstrap 5.",
+    "license": "MIT",
+    "homepage": "https://tabler-ux-components.silarhi.dev",
+    "color": "#066fd1",
+    "icon": "icon.svg",
+    "dependencies": {
+        "npm": ["@tabler/core@^1.6.0", "@tabler/icons-webfont@^3.0.0"],
+        "importmap": [
+            "@tabler/core",
+            "@tabler/core/dist/css/tabler.min.css",
+            "@tabler/icons-webfont/dist/tabler-icons.min.css"
+        ]
+    }
+}

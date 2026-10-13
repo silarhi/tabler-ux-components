@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Every prop and block is documented in its template, with a `## <type> <description>` comment in `{% props %}` and a `{## … #}` comment above each block, the format the Symfony UX Toolkit renders as API tables.
+- A [Symfony UX Toolkit](https://ux.symfony.com/toolkit) kit, published to [silarhi/tabler-ux-kit](https://github.com/silarhi/tabler-ux-kit) on each release: `php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit` copies a component's templates into your application, without depending on this bundle.
 
 ### Changed
 

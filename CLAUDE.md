@@ -60,6 +60,15 @@ composer normalize --dry-run
 3. A documentation page in `docs/src/content/docs/components/<group>/<name>.mdx` (all-in-one and composed usage, props, sub-components, blocks), its examples in `docs/examples/<name>/`, rendered with `php docs/scripts/render-examples.php <name>`, and a link in the README's "Documentation" list.
 4. `vendor/bin/twig-cs-fixer lint --fix` and the full test suite.
 
+## Symfony UX Toolkit kit
+
+The components also ship as a [Symfony UX Toolkit](https://ux.symfony.com/toolkit) kit: `ux:install alert --kit=github.com/silarhi/tabler-ux-kit` copies a component's templates into the app instead of depending on the bundle.
+
+- `kit/build.php` generates it in `var/kit/` (or the directory given as argument): one recipe per component (`ButtonGroup` → `button-group/`), with its templates, a `manifest.json` (recipe dependencies from the `<twig:Tabler:…>` it renders outside comments, `twig/html-extra` when it uses `html_cva`) and a `README.md` converted from its documentation page (`<Example>` → a `twig {"preview":true}` code block, site links made absolute). The kit-level files (`manifest.json`, `INSTALL.md`, `README.md`, `icon.svg`) live in `kit/`.
+- Every component needs exactly one documentation page named after it, or the build fails.
+- `.github/workflows/kit.yml` builds and lints it with `ux-toolkit-kit-lint` (the Toolkit is installed apart: it requires PHP 8.4 and Symfony 7.4). A `vX.Y.Z` tag also pushes it to [silarhi/tabler-ux-kit](https://github.com/silarhi/tabler-ux-kit), tagged `X.Y.Z` without the `v` (Toolkit releases before 3.6 cannot install from `v` tags, symfony/ux#4074), with the `KIT_DEPLOY_KEY` secret (a deploy key with write access on that repository). That repository is read-only: never edit it by hand.
+- The lint runs with `--fail-on-warning`: an undocumented prop or block fails CI.
+
 ## Code Standards
 
 - PHP 8.2+, `declare(strict_types=1)` and the SILARHI header comment in PHP files

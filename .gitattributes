@@ -10,6 +10,7 @@
 /CLAUDE.md export-ignore
 /CONTRIBUTING.md export-ignore
 /docs export-ignore
+/kit export-ignore
 /package.json export-ignore
 /phpstan.neon export-ignore
 /phpunit.xml.dist export-ignore
