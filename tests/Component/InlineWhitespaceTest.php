@@ -44,9 +44,10 @@ final class InlineWhitespaceTest extends ComponentTestCase
     #[DataProvider('inlineProvider')]
     public function testLineBreakBetweenConsecutiveComponents(string $component, string $html): void
     {
-        self::assertMatchesRegularExpression(
-            '/^' . preg_quote($html, '/') . '\n+' . preg_quote($html, '/') . '\n+$/',
-            $this->renderComponent("{$component}\n{$component}\n"),
-        );
+        // Twig drops the line break after the {% endcomponent %} a closing tag compiles to, not after the
+        // {{ component() }} a self-closing tag compiles to, so only the latter adds it to the component's own
+        $separator = str_ends_with($component, '/>') ? "\n\n" : "\n";
+
+        self::assertSame("{$html}{$separator}{$html}{$separator}", $this->renderComponent("{$component}\n{$component}\n"));
     }
 }

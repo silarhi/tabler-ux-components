@@ -82,7 +82,7 @@ final class TemplateConventionsTest extends TestCase
         // The blank lines between the {% props %} and {% set %} tags would otherwise be output. The file's final
         // newline is: Twig drops the one after "%}" but not after "~%}". It stands in for the newline Twig drops
         // after the {% endcomponent %} a </twig:Tabler:…> closing tag compiles to, so components on consecutive
-        // lines stay apart; drop the "~" once ux-twig-component keeps that newline itself.
+        // lines stay apart. ux-twig-component keeps Twig's rule on purpose (symfony/ux#4075), so this is here to stay.
         $code = (string) preg_replace('/^\{#.*?#\}\n/s', '', (string) file_get_contents($path));
         $message = 'Wrap the template, after its header comment, in {% apply trim %}…{% endapply ~%} and end the file with a newline.';
 

@@ -68,9 +68,21 @@ A bare attribute is `true`: `<twig:Tabler:Alert dismissible />`. To pass `false`
 ## Whitespace
 
 Each component ends its output with a line break, like an element on its own line in HTML: components written on
-consecutive lines are separated by a space. In running text, that line break shows as a space after the component:
-`Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads "Click New ." until ux-twig-component keeps the line
-break after a closing tag itself.
+consecutive lines are separated by a space, with the self-closing and the closing-tag syntax alike. In running text,
+that line break shows as a space after the component: `Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads
+"Click New .".
+
+The self-closing and the closing-tag syntax don't output exactly the same whitespace, though. A closing tag compiles
+to `{% endcomponent %}`, and Twig drops the line break right after a `%}` tag, so only the component's own line break
+remains. A self-closing tag compiles to `{{ component() }}`, which keeps the line break written after it:
+
+| Two components on consecutive lines                                                      | Output between them |
+| ---------------------------------------------------------------------------------------- | ------------------- |
+| `<twig:Tabler:Icon name="…" />` or `{{ component() }}`                                   | two line breaks     |
+| `<twig:Tabler:Icon name="…"></twig:Tabler:Icon>` or `{% component %}…{% endcomponent %}` | one line break      |
+
+Browsers collapse both into a single space, so the page looks the same. The difference only shows inside
+`white-space: pre` / `pre-wrap` / `pre-line` content, or in tests that compare the raw HTML.
 
 For a row of components, a list component (`Badge:List`, `Avatar:List`, `ButtonList`…) or a flex container with a
 gap gives a consistent spacing:
