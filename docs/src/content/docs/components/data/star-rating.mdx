@@ -58,7 +58,7 @@ composed rating gets no default label, since it cannot count the stars: pass an 
 | `value`   | int    | `0`        | Number of active stars                                                   |
 | `max`     | int    | `5`        | Total number of stars; `0` renders none                                  |
 | `variant` | string | `'yellow'` | Color of the active stars, see [Colors](/components/data/legend/#colors) |
-| `icon`    | string | `'star'`   | Tabler icon name of each star                                            |
+| `icon`    | string | `'star'`   | Tabler icon or UX Icons name of each star                                |
 | `filled`  | bool   | `false`    | Filled icons, see [Icon](/components/content/icon/#filled)               |
 
 Other attributes go to the root `<div class="stars">`. It gets `role="img"` and an `aria-label` of "`value` out of
@@ -70,7 +70,7 @@ Other attributes go to the root `<div class="stars">`. It gets `role="img"` and 
 | --------- | ------ | ---------- | ---------------------------------------------------------------- |
 | `active`  | bool   | `false`    | Colors the star with `variant`. Inactive stars stay gray         |
 | `variant` | string | `'yellow'` | Color when active, see [Colors](/components/data/legend/#colors) |
-| `icon`    | string | `'star'`   | Tabler icon name                                                 |
+| `icon`    | string | `'star'`   | Tabler icon or UX Icons name                                     |
 | `filled`  | bool   | `false`    | Filled icon, see [Icon](/components/content/icon/#filled)        |
 
 Other attributes go to the star `<span>`.

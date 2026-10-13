@@ -54,8 +54,11 @@
 
 - PHP 8.2+
 - Symfony 6.4, 7.x or 8.x, with [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) 2.21+ / 3.x
+- Twig 3.15+ / 4.x, with `twig/extra-bundle` and `twig/html-extra` 3.12+ / 4.x
 - [Tabler](https://tabler.io/) 1.6+ on the front-end: its CSS, `tabler.js` for the interactive components, and
-  [`@tabler/icons-webfont`](https://tabler.io/icons) for the icons
+  [`@tabler/icons-webfont`](https://tabler.io/icons) for the icons (3.36.1+ for the filled icons)
+- Optional: [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) 2.17+ / 3.x, for icon names with
+  an icon set prefix (`lucide:circle-check`)
 
 ## Installation
 

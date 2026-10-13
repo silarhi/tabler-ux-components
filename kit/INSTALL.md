@@ -29,7 +29,7 @@ import '@tabler/core'
 With npm, pnpm, or Yarn, install Tabler instead with your package manager:
 
 ```bash
-npm install @tabler/core@^1.6.0 @tabler/icons-webfont@^3.0.0
+npm install @tabler/core@^1.6.0 @tabler/icons-webfont@^3.36.1
 ```
 
 The imports in `assets/app.js` remain the same. Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript: do not

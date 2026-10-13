@@ -14,6 +14,7 @@ sidebar:
 | [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) | 2.21+ / 3.x     |
 | Twig (`twig/twig`)                                                                            | 3.15+ / 4.x     |
 | Twig extensions (`twig/extra-bundle`, `twig/html-extra`)                                      | 3.12+ / 4.x     |
+| [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html), optional         | 2.17+ / 3.x     |
 
 ## Installation
 
@@ -56,7 +57,8 @@ php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit
 `ux:install` copies the templates of the component, and of the components it renders (`Alert` brings `Icon`), to
 `templates/components/Tabler/`, and lists the Composer packages they need. They are used the same way, as
 `<twig:Tabler:Alert>`, and they are yours to edit: run `ux:install` again to compare them with a newer release. Pin a
-release with `--kit=github.com/silarhi/tabler-ux-kit:0.7.1`.
+release with `--kit=github.com/silarhi/tabler-ux-kit:<version>`, one of the kit's
+[tags](https://github.com/silarhi/tabler-ux-kit/tags) (the bundle's version without the `v`).
 
 The Toolkit downloads the kit from GitHub with `symfony/http-client` and PHP's `zip` extension, and requires PHP 8.4+
 and Symfony 7.4+; it is only needed to install the components, not to render them. Install either the kit or the
@@ -82,9 +84,14 @@ import '@tabler/core'
 Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript: do not load `bootstrap.js` next to it.
 :::
 
-[`Icon`](/components/content/icon/) and the `icon` props expect the [`@tabler/icons-webfont`](https://tabler.io/icons)
-font. Filled icons (`<twig:Tabler:Icon filled>`) need its filled font as well, compiled under its own prefix: see
-[Filled](/components/content/icon/#filled).
+[`Icon`](/components/content/icon/) and the `icon` props render a Tabler icon name (`home`) with the
+[`@tabler/icons-webfont`](https://tabler.io/icons) font. Filled icons (`<twig:Tabler:Icon filled>`) need its filled
+font as well (3.36.1+), compiled under its own prefix: see [Filled](/components/content/icon/#filled).
+
+A name with an icon set prefix (`tabler:home`, `lucide:circle-check`) is rendered as an inline SVG by
+[Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) instead, an optional dependency:
+`composer require symfony/ux-icons`. See
+[Icons from symfony/ux-icons](/components/content/icon/#icons-from-symfonyux-icons).
 
 ## First component
 

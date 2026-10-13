@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `Icon` renders a name with an icon set prefix (`lucide:circle-check`, `mdi:account`, `tabler:check`…) as an inline `<svg>` with [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html), with the same `variant`, `size` and `animation` classes and Tabler's `icon` class. Every `icon` prop takes these names too. `filled` picks `tabler:{name}-filled` in the `tabler` set. Names without a prefix still use the webfont. Requires `symfony/ux-icons`, now suggested.
 
+### Fixed
+
+- The Symfony UX Toolkit kit requires `@tabler/icons-webfont` 3.36.1+ (was 3.0+), the first release with the filled icons that `<twig:Tabler:Icon filled>` uses.
+
 ## [0.7.1] - 2026-10-13
 
 ### Fixed
