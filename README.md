@@ -64,6 +64,10 @@ composer require silarhi/tabler-ux-components
 
 On ux-twig-component v3, `twig_component` needs some configuration: see [Installation](https://tabler-ux-components.silarhi.dev/getting-started/installation/).
 
+Prefer to own the templates? Copy the components into your app with the
+[Symfony UX Toolkit](https://tabler-ux-components.silarhi.dev/getting-started/installation/#with-the-symfony-ux-toolkit)
+instead: `php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit`.
+
 ## Quick start
 
 ```twig

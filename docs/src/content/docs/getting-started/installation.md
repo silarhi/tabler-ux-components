@@ -42,6 +42,26 @@ twig_component:
         App\Twig\Components\: 'components/'
 ```
 
+## With the Symfony UX Toolkit
+
+Rather than depending on the bundle, copy the components you need into your app with the
+[Symfony UX Toolkit](https://ux.symfony.com/toolkit). Each component is a recipe of the
+[`silarhi/tabler-ux-kit`](https://github.com/silarhi/tabler-ux-kit) kit, published on each release:
+
+```bash
+composer require --dev symfony/ux-toolkit symfony/http-client
+php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit
+```
+
+`ux:install` copies the templates of the component, and of the components it renders (`Alert` brings `Icon`), to
+`templates/components/Tabler/`, and lists the Composer packages they need. They are used the same way, as
+`<twig:Tabler:Alert>`, and they are yours to edit: run `ux:install` again to compare them with a newer release. Pin a
+release with `--kit=github.com/silarhi/tabler-ux-kit:0.7.1`.
+
+The Toolkit downloads the kit from GitHub with `symfony/http-client` and PHP's `zip` extension, and requires PHP 8.4+
+and Symfony 7.4+; it is only needed to install the components, not to render them. Install either the kit or the
+bundle, not both: they provide the same components. The front-end setup below is the same.
+
 ## Front-end
 
 Your app must load [Tabler](https://tabler.io/) **1.6+** (`@tabler/core`): its CSS, and `tabler.js` for the
