@@ -46,6 +46,7 @@
 - **Block-mirrored props**: on composite components, each prop has a matching Twig block; override one without rewriting the rest
 - **`html_cva()` variants**: classes are declared with [`html_cva()`](https://twig.symfony.com/doc/3.x/functions/html_cva.html), Twig's take on shadcn's CVA
 - **Plain Tabler markup**: Tabler / Bootstrap 5 classes; the interactive components use the `data-bs-*` JavaScript of `tabler.js`
+- **Any icon**: [Tabler Icons](https://tabler.io/icons) from the webfont, or any icon of [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) with a prefixed name (`icon="lucide:circle-check"`)
 - **Attribute forwarding**: extra attributes (`class`, `id`, `data-*`…) are merged onto the root element
 - **Template-only**: anonymous Twig components, no PHP classes to register or configure
 

@@ -23,6 +23,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Symfony\UX\Icons\UXIconsBundle;
 use Symfony\UX\TwigComponent\TwigComponentBundle;
 use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 
@@ -44,6 +45,7 @@ final class TestKernel extends Kernel
             new TwigBundle(),
             new TwigExtraBundle(),
             new TwigComponentBundle(),
+            new UXIconsBundle(),
             new TablerUxComponentsBundle(),
         ];
     }
@@ -77,6 +79,11 @@ final class TestKernel extends Kernel
         $container->extension('twig_component', [
             'anonymous_template_directory' => 'components',
             'defaults' => [],
+        ]);
+
+        // Local SVGs only (tests/Fixtures/icons/<set>/<name>.svg is "<set>:<name>"): the tests never call Iconify.
+        $container->extension('ux_icons', [
+            'icon_dir' => '%kernel.project_dir%/tests/Fixtures/icons',
         ]);
     }
 

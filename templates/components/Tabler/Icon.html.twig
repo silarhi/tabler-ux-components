@@ -1,27 +1,35 @@
 {#
-    Tabler Icon — renders a Tabler icon via the icon webfont (@tabler/icons-webfont).
+    Tabler Icon — renders a Tabler icon via the icon webfont (@tabler/icons-webfont), or any icon
+    of symfony/ux-icons as an inline <svg> when the name has an icon set prefix (`lucide:check`).
 
     All-in-one:
         <twig:Tabler:Icon name="check" />
         <twig:Tabler:Icon name="heart" variant="danger" />
         <twig:Tabler:Icon name="refresh" animation="rotate" />
         <twig:Tabler:Icon name="star" filled variant="warning" />
+        <twig:Tabler:Icon name="lucide:circle-check" variant="success" />   (symfony/ux-icons)
 
     Props:
-      name       — Tabler icon name (without the `ti-` prefix)
+      name       — Tabler icon name (without the `ti-` prefix), or a ux-icons name with its icon set prefix
+                   (`tabler:check`, `lucide:circle-check`, a local `assets/icons/<set>/<name>.svg`…)
       variant      — primary | secondary | success | danger | warning | info | dark | light
       animation  — pulse | tada | rotate
       size       — sm (1rem) | md (2.5rem) | lg (3.5rem) | inline (1rem, aligned with text);
                    unset, the icon follows the surrounding font size
-      filled     — use the filled variant of the icon (ti-filled ti-filled-{name})
+      filled     — use the filled variant of the icon (ti-filled ti-filled-{name}); with ux-icons, only for
+                   the `tabler:` set, whose filled icons are named `tabler:{name}-filled`
 
     Requires the @tabler/icons-webfont stylesheet to be loaded. The filled icons are a
     separate font (@tabler/icons-webfont 3.36.1+): compile its tabler-icons-filled.scss with
     `$ti-prefix: 'ti-filled'`, so its classes do not replace the outline ones.
+
+    A prefixed name needs symfony/ux-icons (`composer require symfony/ux-icons`), not the webfont: the
+    <svg> gets Tabler's `icon` class, which sizes SVG icons, and the same color, size and animation
+    classes. ux-icons hides it from assistive technology unless it has an `aria-label` or a `title`.
 #}
 {% apply trim %}
 {% props
-    ## string The Tabler icon name, without the `ti-` prefix.
+    ## string The Tabler icon name, without the `ti-` prefix, or a ux-icons name with its icon set prefix (`lucide:circle-check`).
     name,
     ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The icon color (`text-{variant}`).
     variant = null,
@@ -29,7 +37,7 @@
     animation = null,
     ## 'sm'|'md'|'lg'|'inline'|null The size (`icon icon-{size}`); unset, the icon follows the font size.
     size = null,
-    ## bool Whether to use the filled variant of the icon (`ti-filled ti-filled-{name}`).
+    ## bool Whether to use the filled variant of the icon (`ti-filled ti-filled-{name}`, or `tabler:{name}-filled` with ux-icons).
     filled = false,
 %}
 
@@ -61,5 +69,14 @@
     },
 ) %}
 
-<i class="{{ icon.apply({filled: filled, variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, (filled ? 'ti-filled-' : 'ti-') ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+{% if ':' in name %}
+    {# A ux-icons name: an inline <svg>, with Tabler's `icon` class (made for SVG icons) leading the class list #}
+    <twig:ux:icon
+        name="{{ filled and name starts with 'tabler:' ? name ~ '-filled' : name }}"
+        class="{{ html_cva(base: 'icon').apply({}, icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, attributes.render('class'))) }}"
+        {{ ...attributes.without('class').all }}
+    />
+{% else %}
+    <i class="{{ icon.apply({filled: filled, variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, (filled ? 'ti-filled-' : 'ti-') ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+{% endif %}
 {% endapply ~%}
