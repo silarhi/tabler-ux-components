@@ -72,6 +72,18 @@ consecutive lines are separated by a space, with the self-closing and the closin
 that line break shows as a space after the component: `Click <twig:Tabler:Badge>New</twig:Tabler:Badge>.` reads
 "Click New .".
 
+The self-closing and the closing-tag syntax don't output exactly the same whitespace, though. A closing tag compiles
+to `{% endcomponent %}`, and Twig drops the line break right after a `%}` tag, so only the component's own line break
+remains. A self-closing tag compiles to `{{ component() }}`, which keeps the line break written after it:
+
+| Two components on consecutive lines                                                      | Output between them |
+| ---------------------------------------------------------------------------------------- | ------------------- |
+| `<twig:Tabler:Icon name="…" />` or `{{ component() }}`                                   | two line breaks     |
+| `<twig:Tabler:Icon name="…"></twig:Tabler:Icon>` or `{% component %}…{% endcomponent %}` | one line break      |
+
+Browsers collapse both into a single space, so the page looks the same. The difference only shows inside
+`white-space: pre` / `pre-wrap` / `pre-line` content, or in tests that compare the raw HTML.
+
 For a row of components, a list component (`Badge:List`, `Avatar:List`, `ButtonList`…) or a flex container with a
 gap gives a consistent spacing:
 
