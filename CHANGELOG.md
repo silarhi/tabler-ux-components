@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - Unreleased
+
+### Added
+
+- `Icon` renders a name with an icon set prefix (`lucide:circle-check`, `mdi:account`, `tabler:check`…) as an inline `<svg>` with [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html), with the same `variant`, `size` and `animation` classes and Tabler's `icon` class. Every `icon` prop takes these names too. `filled` picks `tabler:{name}-filled` in the `tabler` set. Names without a prefix still use the webfont. Requires `symfony/ux-icons`, now suggested.
+
 ## [0.7.1] - 2026-10-13
 
 ### Fixed
@@ -127,6 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.8.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.1...HEAD
 [0.7.1]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.5.0...v0.6.0

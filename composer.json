@@ -37,7 +37,11 @@
         "phpstan/phpstan-symfony": "^2.1.0",
         "phpunit/phpunit": "^11.5.57 || ^12.5.38 || ^13.4.1",
         "rector/rector": "^2.7.0",
+        "symfony/ux-icons": "^2.17 || ^3.0",
         "vincentlanglet/twig-cs-fixer": "^4.1.1"
+    },
+    "suggest": {
+        "symfony/ux-icons": "To render any icon of Iconify or your own SVG files with the Icon component and the icon props (names with an icon set prefix, e.g. \"lucide:check\")"
     },
     "autoload": {
         "psr-4": {

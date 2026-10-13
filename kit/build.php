@@ -137,6 +137,10 @@ foreach ($names as $component) {
     if (str_contains($sources, 'html_cva(')) {
         $dependencies['composer'] = ['twig/extra-bundle', 'twig/html-extra:^3.12.0'];
     }
+    // Icon renders the names with an icon set prefix with symfony/ux-icons
+    if (str_contains((string) preg_replace('/\{#.*?#\}/s', '', $sources), '<twig:ux:icon')) {
+        $dependencies['composer'] = [...$dependencies['composer'] ?? [], 'symfony/ux-icons'];
+    }
 
     write("{$output}/{$recipe}/manifest.json", json(array_filter([
         'type' => 'component',
