@@ -7,7 +7,7 @@ Contributions are welcome! Bug reports and feature requests go to the
 
 ```bash
 composer install
-yarn install # Git hooks: lint-staged formats the staged files on commit
+pnpm install # Git hooks: lint-staged formats the staged files on commit
 ```
 
 ## Quality checks
@@ -72,8 +72,8 @@ php docs/scripts/render-examples.php          # every example
 php docs/scripts/render-examples.php card     # the examples of docs/examples/card/ only
 
 cd docs
-yarn install
-yarn dev # http://localhost:4321
+pnpm install
+pnpm dev # http://localhost:4321
 ```
 
 Pull requests touching `docs/` build the site; it is published once merged into `main`.

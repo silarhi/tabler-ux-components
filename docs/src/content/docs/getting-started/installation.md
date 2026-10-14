@@ -70,7 +70,7 @@ Your app must load [Tabler](https://tabler.io/) **1.6+** (`@tabler/core`): its C
 interactive components (Modal, Dropdown, Carousel, Tabs, Offcanvas, Tooltip, Popover, Clipboard, Sparkline…).
 
 ```bash
-yarn add @tabler/core @tabler/icons-webfont
+pnpm add @tabler/core @tabler/icons-webfont
 ```
 
 ```js
