@@ -34,6 +34,8 @@ composer validate --strict
 composer normalize --dry-run
 ```
 
+The JS tooling (husky + lint-staged at the root, the Starlight site in `docs/`) uses pnpm: its version is pinned by `packageManager` in each `package.json`, and `docs/pnpm-workspace.yaml` `allowBuilds` lists the dependencies allowed to run install scripts (pnpm fails the install on a new unlisted one).
+
 ## Architecture
 
 - `src/TablerUxComponentsBundle.php` (`AbstractBundle`) only prepends the bundle's `templates/` directory as a non-namespaced Twig path, so ux-twig-component's anonymous component finder resolves everything under `components/Tabler/` with the `Tabler:` prefix. There are no PHP components, services or configuration.
