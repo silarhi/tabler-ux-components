@@ -2,3 +2,8 @@
 allowBuilds:
     # Ships prebuilt binaries; its install script is only a build-from-source fallback
     '@parcel/watcher': false
+
+# Our own theme, released by us (github.com/silarhi/docs-kit): installed as soon as it is published, without
+# waiting out pnpm's minimum release age
+minimumReleaseAgeExclude:
+  - '@silarhi/docs-kit'
