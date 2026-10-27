@@ -19,6 +19,12 @@
             "email": "guillaume@silarhi.fr"
         }
     ],
+    "homepage": "https://tabler-ux-components.silarhi.dev",
+    "support": {
+        "issues": "https://github.com/silarhi/tabler-ux-components/issues",
+        "source": "https://github.com/silarhi/tabler-ux-components",
+        "docs": "https://tabler-ux-components.silarhi.dev"
+    },
     "require": {
         "php": ">=8.2",
         "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
