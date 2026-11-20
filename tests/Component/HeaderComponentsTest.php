@@ -183,4 +183,59 @@ final class HeaderComponentsTest extends ComponentTestCase
         self::assertHtmlSame('<strong class="me-auto fw-bold">Notice</strong>', $this->renderComponent('<twig:Tabler:Toast:Title class="fw-bold">Notice</twig:Tabler:Toast:Title>'));
         self::assertHtmlSame('<small class="text-secondary ms-1">now</small>', $this->renderComponent('<twig:Tabler:Toast:Time class="ms-1">now</twig:Tabler:Toast:Time>'));
     }
+
+    public function testCardSubtitleProp(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card title="Invoice" subtitle="Acme Corp" text="$4,320.00" />');
+
+        self::assertHtmlSame(
+            '<div class="card"><div class="card-header"><div>'
+            . '<h3 class="card-title">Invoice</h3><div class="card-subtitle">Acme Corp</div>'
+            . '</div></div><div class="card-body">$4,320.00</div></div>',
+            $html,
+        );
+    }
+
+    public function testCardSubtitleWithoutTitle(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card subtitle="Last 30 days" />');
+
+        self::assertHtmlSame('<div class="card"><div class="card-header"><div><div class="card-subtitle">Last 30 days</div></div></div></div>', $html);
+    }
+
+    public function testToastAllInOne(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Toast show title="Backup" time="just now" text="The nightly backup finished." />');
+
+        self::assertHtmlSame(
+            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true">'
+            . '<div class="toast-header"><strong class="me-auto">Backup</strong><small class="text-secondary">just now</small>'
+            . '<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>'
+            . '<div class="toast-body">The nightly backup finished.</div>'
+            . '</div>',
+            $html,
+        );
+    }
+
+    public function testToastNotDismissibleAndBodyOnly(): void
+    {
+        $notDismissible = $this->renderComponent('<twig:Tabler:Toast title="Notice" dismissible="{{ false }}" />');
+        self::assertStringNotContainsString('btn-close', $notDismissible);
+
+        $bodyOnly = $this->renderComponent('<twig:Tabler:Toast text="Saved." />');
+        self::assertHtmlSame('<div class="toast" role="alert" aria-live="polite" aria-atomic="true"><div class="toast-body">Saved.</div></div>', $bodyOnly);
+    }
+
+    public function testToastBodyBlockKeepsHeader(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Toast title="Deploy" text="Ignored">
+                <twig:block name="body"><twig:Tabler:Toast:Body>Live on <a href="#">production</a>.</twig:Tabler:Toast:Body></twig:block>
+            </twig:Tabler:Toast>
+            TWIG);
+
+        self::assertStringContainsString('me-auto">Deploy</strong>', $html);
+        self::assertStringContainsString('Live on <a href="#">production</a>.', $html);
+        self::assertStringNotContainsString('Ignored', $html);
+    }
 }

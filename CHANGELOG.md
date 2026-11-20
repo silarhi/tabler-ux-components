@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `Modal:Header` and `Offcanvas:Header` take `title` and `dismissible` (`true` by default), with `title` and `close` blocks.
     - `Toast:Header` takes `title`, `time` and `dismissible` (`true` by default), with `title`, `time` and `close` blocks.
 - `Toast:Title` (`<strong class="me-auto">`) and `Toast:Time` (`<small class="text-secondary">`).
+- `Card` takes a `subtitle`, rendered under the title.
+- `Toast` takes `title`, `time`, `text` and `dismissible`, with `header` and `body` blocks, so `<twig:Tabler:Toast title="Backup" text="Done." />` renders a whole toast. Children still replace the `content` block.
 
 ### Changed
 

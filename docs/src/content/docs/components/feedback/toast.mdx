@@ -9,9 +9,10 @@ A lightweight notification: a background job that finished, a message from a tea
 
 <Example name="toast/basic" />
 
-Toast has no content props: compose it with `Toast:Header`, `Toast:Body` and `Toast:Close`. `Toast:Header` takes a
-`title` and a `time`, and renders the close button unless `dismissible` is `false`, as in the examples below. Pass it
-children, or override its `title` block, to put an avatar before the title.
+`title`, `time` and `text` render the header and the body, with a close button unless `dismissible` is `false`, as in
+the [placement](#placement) examples. For anything richer, such as an avatar before the title, compose it with
+`Toast:Header`, `Toast:Body` and `Toast:Close`, as above. `Toast:Header` takes the same `title`, `time` and
+`dismissible`.
 
 ## Body only
 
@@ -39,10 +40,14 @@ A shown toast hides itself after Bootstrap's delay (5 seconds, set `data-bs-dela
 
 ## Props
 
-| Prop       | Type | Default | Description                                                                 |
-| ---------- | ---- | ------- | --------------------------------------------------------------------------- |
-| `show`     | bool | `false` | Renders the toast visible (`show`)                                          |
-| `autohide` | bool | `true`  | `false` adds `data-bs-autohide="false"`: the toast stays until it is closed |
+| Prop          | Type    | Default | Description                                                                 |
+| ------------- | ------- | ------- | --------------------------------------------------------------------------- |
+| `show`        | bool    | `false` | Renders the toast visible (`show`)                                          |
+| `autohide`    | bool    | `true`  | `false` adds `data-bs-autohide="false"`: the toast stays until it is closed |
+| `title`       | string? | `null`  | Rendered with `Toast:Header` and `Toast:Title`                              |
+| `time`        | string? | `null`  | Timestamp next to the title, rendered with `Toast:Time`                     |
+| `text`        | string? | `null`  | Rendered with `Toast:Body`                                                  |
+| `dismissible` | bool    | `true`  | Close button in the header rendered from `title` (`Toast:Close`)            |
 
 Other attributes go to the root `<div role="alert">`, such as the `id` a trigger targets.
 
@@ -75,6 +80,12 @@ With a `placement`, the container gets `position-fixed p-3` and the position uti
 `top-0 end-0`). Other attributes go to the container `<div>`.
 
 ## Blocks
+
+| Block     | Default                                                                              |
+| --------- | ------------------------------------------------------------------------------------ |
+| `header`  | `Toast:Header` with the `title`, `time` and `dismissible` props, when `title` is set |
+| `body`    | `Toast:Body` with the `text` prop, when set                                          |
+| `content` | `header` and `body`: replace it to compose freely                                    |
 
 `Toast:Header`:
 
