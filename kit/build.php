@@ -146,7 +146,7 @@ foreach ($names as $component) {
         'type' => 'component',
         'name' => $doc['title'],
         'description' => $doc['description'],
-        'copy-files' => ['templates/' => 'templates/'],
+        'copy-files' => ['templates/components/' => '%COMPONENTS_DIR%/'],
         'dependencies' => $dependencies,
     ], static fn (mixed $value): bool => '' !== $value && [] !== $value)));
     write("{$output}/{$recipe}/README.md", $doc['readme']);

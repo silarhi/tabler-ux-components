@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `Card`, `Modal` and `Offcanvas` render their header from `title` through the props of `Card:Header`, `Modal:Header` and `Offcanvas:Header`; the markup is unchanged.
+- The Symfony UX Toolkit kit installs the components into the `%COMPONENTS_DIR%` placeholder, so the `ux_toolkit.components` options of the Toolkit apply to it. It requires Toolkit 3.7 or later.
 - A `Modal:Header`, `Offcanvas:Header` or `Toast:Header` used without children now renders a close button, unless `dismissible` is `false`. With children, the output is unchanged.
 
 ## [0.8.0] - 2026-10-13

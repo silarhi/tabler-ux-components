@@ -35,6 +35,7 @@ pnpm add @tabler/core@^1.6.0 @tabler/icons-webfont@^3.36.1
 The imports in `assets/app.js` remain the same. Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript: do not
 load `bootstrap.js` next to it.
 
-The components are installed under `templates/components/Tabler/` and used with the `Tabler:` prefix, as
+The components are installed under `templates/components/Tabler/` (the `ux_toolkit.components` options of the Toolkit
+move them) and used with the `Tabler:` prefix, as
 `<twig:Tabler:Alert>`. Install either this kit or the `silarhi/tabler-ux-components` bundle, not both: they provide
 the same components.

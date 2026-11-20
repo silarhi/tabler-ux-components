@@ -4,11 +4,11 @@
 component and its templates are copied into your application, yours to edit.
 
 ```bash
-composer require --dev symfony/ux-toolkit symfony/http-client
+composer require --dev 'symfony/ux-toolkit:^3.7' symfony/http-client
 php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit
 ```
 
-The Toolkit downloads this kit from GitHub: it needs `symfony/http-client` and PHP's `zip` extension. Pin a release by
+The kit needs Toolkit 3.7 or later. The Toolkit downloads this kit from GitHub: it needs `symfony/http-client` and PHP's `zip` extension. Pin a release by
 adding one of its [tags](https://github.com/silarhi/tabler-ux-kit/tags):
 `--kit=github.com/silarhi/tabler-ux-kit:<version>`. Read [INSTALL.md](INSTALL.md) to load Tabler on the front-end, and
 the [documentation](https://tabler-ux-components.silarhi.dev) for every component.
