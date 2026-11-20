@@ -1,12 +1,46 @@
 {#
-    Offcanvas header — the top bar of an offcanvas panel.
+    Offcanvas header — the top bar of an offcanvas panel, with its title and close button.
 
-    Usage:
+    All-in-one:
+        <twig:Tabler:Offcanvas:Header title="Filters" />
+        <twig:Tabler:Offcanvas:Header title="Filters" dismissible="{{ false }}" />
+
+    Override the `title` block (the heading) or the `close` block (the close button)
+    while keeping the other one:
+        <twig:Tabler:Offcanvas:Header title="Filters">
+            <twig:block name="title">
+                <twig:Tabler:Offcanvas:Title>Filters <span class="badge">3</span></twig:Tabler:Offcanvas:Title>
+            </twig:block>
+        </twig:Tabler:Offcanvas:Header>
+
+    Composed (children replace the `content` block):
         <twig:Tabler:Offcanvas:Header>
             <twig:Tabler:Offcanvas:Title>Filters</twig:Tabler:Offcanvas:Title>
             <twig:Tabler:Offcanvas:Close />
         </twig:Tabler:Offcanvas:Header>
+
+    Props:
+      title        — optional title; mirrored by the `title` block
+      dismissible  — add a close button (Offcanvas:Close); mirrored by the `close` block (default true)
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'offcanvas-header'}) }}>{## The header content, usually `Offcanvas:Title` and `Offcanvas:Close`. #}{%- block content %}{% endblock -%}</div>
+{% props
+    ## string|null The title, rendered with `Offcanvas:Title`.
+    title = null,
+    ## bool Whether to add a close button, rendered with `Offcanvas:Close`.
+    dismissible = true,
+%}
+
+<div {{ attributes.defaults({class: 'offcanvas-header'}) }}>{## The header content: `title` and `close`; replace it to compose freely. #}
+    {%- block content -%}
+        {## The title: `Offcanvas:Title` with the `title` prop, when set. -#}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:Offcanvas:Title>{{ title }}</twig:Tabler:Offcanvas:Title>{%- endif -%}
+        {% endblock %}
+        {## The close button: `Offcanvas:Close`, when `dismissible`. -#}
+        {% block close %}
+            {%- if dismissible -%}<twig:Tabler:Offcanvas:Close />{%- endif -%}
+        {% endblock %}
+    {%- endblock -%}
+</div>
 {% endapply ~%}

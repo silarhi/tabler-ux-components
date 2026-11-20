@@ -9,7 +9,9 @@ A lightweight notification: a background job that finished, a message from a tea
 
 <Example name="toast/basic" />
 
-Toast has no content props: compose it with `Toast:Header`, `Toast:Body` and `Toast:Close`.
+Toast has no content props: compose it with `Toast:Header`, `Toast:Body` and `Toast:Close`. `Toast:Header` takes a
+`title` and a `time`, and renders the close button unless `dismissible` is `false`, as in the examples below. Pass it
+children, or override its `title` block, to put an avatar before the title.
 
 ## Body only
 
@@ -46,12 +48,22 @@ Other attributes go to the root `<div role="alert">`, such as the `id` a trigger
 
 ## Sub-components
 
-| Component         | Renders                                                                                |
-| ----------------- | -------------------------------------------------------------------------------------- |
-| `Toast:Header`    | `<div class="toast-header">`                                                           |
-| `Toast:Body`      | `<div class="toast-body">`                                                             |
-| `Toast:Close`     | The close button, `<button class="ms-2 btn-close" data-bs-dismiss="toast">` (needs JS) |
-| `Toast:Container` | `<div class="toast-container">`: stacks toasts, see its props below                    |
+| Component         | Renders                                                                                   |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `Toast:Header`    | `<div class="toast-header">`: the title, a time and the close button, see its props below |
+| `Toast:Title`     | `<strong class="me-auto">`: the title, pushing the time and the close button to the end   |
+| `Toast:Time`      | `<small class="text-secondary">`: a timestamp, such as `2 min ago`                        |
+| `Toast:Body`      | `<div class="toast-body">`                                                                |
+| `Toast:Close`     | The close button, `<button class="ms-2 btn-close" data-bs-dismiss="toast">` (needs JS)    |
+| `Toast:Container` | `<div class="toast-container">`: stacks toasts, see its props below                       |
+
+### `Toast:Header` props
+
+| Prop          | Type    | Default | Description                         |
+| ------------- | ------- | ------- | ----------------------------------- |
+| `title`       | string? | `null`  | Rendered with `Toast:Title`         |
+| `time`        | string? | `null`  | Rendered with `Toast:Time`          |
+| `dismissible` | bool    | `true`  | Adds a close button (`Toast:Close`) |
 
 ### `Toast:Container` props
 
@@ -61,3 +73,14 @@ Other attributes go to the root `<div role="alert">`, such as the `id` a trigger
 
 With a `placement`, the container gets `position-fixed p-3` and the position utilities of that place (for instance
 `top-0 end-0`). Other attributes go to the container `<div>`.
+
+## Blocks
+
+`Toast:Header`:
+
+| Block     | Default                                              |
+| --------- | ---------------------------------------------------- |
+| `title`   | `Toast:Title` with the `title` prop, when set        |
+| `time`    | `Toast:Time` with the `time` prop, when set          |
+| `close`   | `Toast:Close`, when `dismissible`                    |
+| `content` | `title`, `time` and `close`: its children replace it |

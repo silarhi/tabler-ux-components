@@ -11,8 +11,8 @@ The main building block of an admin page: a box that groups a title, content and
 
 ## Composed
 
-Use the sub-components for anything richer than a string. `Card:Actions` sits at the end of the header; wrap the title
-and the subtitle in a `<div>` so they stack:
+Use the sub-components for anything richer than a string. `Card:Header` takes a `title` and a `subtitle`, stacked in a
+`<div>`, and an `actions` block for a `Card:Actions` at the end of the header:
 
 <Example name="card/composed" />
 
@@ -195,6 +195,15 @@ Other attributes go to the root `<div class="card">` (or `<a>`).
 | `Card:Meta`       | `<div class="card-meta">`: a muted secondary line                                  |
 | `Card:Btn`        | `<a class="card-btn">` (or `<button>`): a full-width action on the bottom edge     |
 
+`Card:Header`:
+
+| Prop       | Type    | Default | Description                                                                             |
+| ---------- | ------- | ------- | --------------------------------------------------------------------------------------- |
+| `title`    | string? | `null`  | Rendered with `Card:Title`                                                              |
+| `subtitle` | string? | `null`  | Rendered with `Card:Subtitle`; the title and the subtitle are then wrapped in a `<div>` |
+
+Its children replace its `content` block, as before: `<twig:Tabler:Card:Header><twig:Tabler:Card:Title>…` still works.
+
 `Card:Status` takes `variant` (default `'primary'`) and `position` (default `'top'`), with the same values as the
 `status` and `statusPosition` props of the card.
 
@@ -251,13 +260,22 @@ Other attributes go to the `<div class="card-cover">`. A `style` attribute is me
 
 ## Blocks
 
-| Block     | Default                                                              |
-| --------- | -------------------------------------------------------------------- |
-| `header`  | `Card:Header` with a `Card:Title` holding the `title` prop, when set |
-| `body`    | `Card:Body` with the `text` prop, when set                           |
-| `footer`  | `Card:Footer` with the `footer` prop, when set                       |
-| `content` | `header`, `body` and `footer`: replace it to compose freely          |
+| Block     | Default                                                     |
+| --------- | ----------------------------------------------------------- |
+| `header`  | `Card:Header` with the `title` prop, when set               |
+| `body`    | `Card:Body` with the `text` prop, when set                  |
+| `footer`  | `Card:Footer` with the `footer` prop, when set              |
+| `content` | `header`, `body` and `footer`: replace it to compose freely |
 
 The status border (when `status` is set) is rendered before the `content` block, so replacing `content` keeps it.
+`Card:Header`:
+
+| Block      | Default                                                                        |
+| ---------- | ------------------------------------------------------------------------------ |
+| `title`    | `Card:Title` with the `title` prop, when set                                   |
+| `subtitle` | `Card:Subtitle` with the `subtitle` prop, when set                             |
+| `actions`  | Empty: put a `Card:Actions` in it                                              |
+| `content`  | `title` and `subtitle` (in a `<div>` when there is a subtitle), then `actions` |
+
 `Card:Stamp` has a `content` block holding the icon. The other sub-components, except `Card:Status`, `Card:Img` and
 `Card:Progress`, have an empty `content` block for their children.

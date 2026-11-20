@@ -1,11 +1,49 @@
 {#
     Card header — the top section of a card, separated by a horizontal line.
 
-    Usage:
-      <twig:Tabler:Card:Header>
-          <twig:Tabler:Card:Title>Title</twig:Tabler:Card:Title>
-      </twig:Tabler:Card:Header>
+    All-in-one:
+        <twig:Tabler:Card:Header title="Invoices" />
+        <twig:Tabler:Card:Header title="Invoice #2026-0142" subtitle="Acme Corp, due October 31" />
+
+    Fill the `actions` block (empty by default) while keeping the generated title:
+        <twig:Tabler:Card:Header title="Danger zone">
+            <twig:block name="actions">
+                <twig:Tabler:Card:Actions>
+                    <twig:Tabler:Button variant="danger" size="sm">Delete</twig:Tabler:Button>
+                </twig:Tabler:Card:Actions>
+            </twig:block>
+        </twig:Tabler:Card:Header>
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:Card:Header>
+            <twig:Tabler:Card:Title>Title</twig:Tabler:Card:Title>
+        </twig:Tabler:Card:Header>
+
+    Props:
+      title     — optional title; mirrored by the `title` block
+      subtitle  — optional subtitle; mirrored by the `subtitle` block. With a subtitle, the title
+                  and the subtitle are wrapped in a <div>, so they stack before the actions.
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'card-header'}) }}>{## The header content, e.g. `Card:Title` and `Card:Actions`. #}{%- block content %}{% endblock -%}</div>
+{% props
+    ## string|null The title, rendered with `Card:Title`.
+    title = null,
+    ## string|null The subtitle, rendered with `Card:Subtitle` under the title.
+    subtitle = null,
+%}
+
+{% set title_html %}{## The title: `Card:Title` with the `title` prop, when set. #}{% block title %}{%- if title is not null -%}<twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title>{%- endif -%}{% endblock %}{% endset %}
+{% set subtitle_html %}{## The subtitle: `Card:Subtitle` with the `subtitle` prop, when set; the title and the subtitle are then wrapped in a `<div>`. #}{% block subtitle %}{%- if subtitle is not null -%}<twig:Tabler:Card:Subtitle>{{ subtitle }}</twig:Tabler:Card:Subtitle>{%- endif -%}{% endblock %}{% endset %}
+
+<div {{ attributes.defaults({class: 'card-header'}) }}>{## The header content: `title` and `subtitle`, then `actions`; replace it to compose freely. #}
+    {%- block content -%}
+        {%- if subtitle_html is not empty -%}
+            <div>{{ title_html }}{{ subtitle_html }}</div>
+        {%- else -%}
+            {{ title_html }}
+        {%- endif -%}
+        {## Empty by default: put a `Card:Actions` in it. -#}
+        {% block actions %}{% endblock %}
+    {%- endblock -%}
+</div>
 {% endapply ~%}

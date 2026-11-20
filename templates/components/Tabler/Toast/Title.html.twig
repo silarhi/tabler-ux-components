@@ -1,0 +1,9 @@
+{#
+    Toast title — the heading of a toast header, pushing what follows to the end (`me-auto`).
+
+    Usage:
+        <twig:Tabler:Toast:Title>Notice</twig:Tabler:Toast:Title>
+#}
+{% apply trim %}
+<strong {{ attributes.defaults({class: 'me-auto'}) }}>{## The title. #}{%- block content %}{% endblock -%}</strong>
+{% endapply ~%}

@@ -1,12 +1,10 @@
 <twig:Tabler:Card>
-    <twig:Tabler:Card:Header>
-        <div>
-            <twig:Tabler:Card:Title>Invoice #2026-0142</twig:Tabler:Card:Title>
-            <twig:Tabler:Card:Subtitle>Acme Corp, due October 31</twig:Tabler:Card:Subtitle>
-        </div>
-        <twig:Tabler:Card:Actions>
-            <twig:Tabler:Button variant="primary" size="sm">Send</twig:Tabler:Button>
-        </twig:Tabler:Card:Actions>
+    <twig:Tabler:Card:Header title="Invoice #2026-0142" subtitle="Acme Corp, due October 31">
+        <twig:block name="actions">
+            <twig:Tabler:Card:Actions>
+                <twig:Tabler:Button variant="primary" size="sm">Send</twig:Tabler:Button>
+            </twig:Tabler:Card:Actions>
+        </twig:block>
     </twig:Tabler:Card:Header>
     <twig:Tabler:Card:Body>
         Total: <strong>$4,320.00</strong>, 3 line items.

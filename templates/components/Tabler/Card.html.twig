@@ -155,10 +155,10 @@
     {%- endif -%}
     {## The whole card content: `header`, `body` and `footer`; replace it to compose freely. -#}
     {% block content %}
-        {## The header: `Card:Header` with a `Card:Title` holding the `title` prop, when set. -#}
+        {## The header: `Card:Header` with the `title` prop, when set. -#}
         {% block header %}
             {%- if title is not null -%}
-                <twig:Tabler:Card:Header><twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title></twig:Tabler:Card:Header>
+                <twig:Tabler:Card:Header title="{{ title }}" />
             {%- endif -%}
         {% endblock %}
         {## The body: `Card:Body` with the `text` prop, when set. -#}
