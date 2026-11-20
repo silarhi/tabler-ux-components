@@ -1,12 +1,46 @@
 {#
-    Modal header — the top bar of a modal, usually holding the title and close button.
+    Modal header — the top bar of a modal, with its title and close button.
 
-    Usage:
-      <twig:Tabler:Modal:Header>
-          <twig:Tabler:Modal:Title>Title</twig:Tabler:Modal:Title>
-          <twig:Tabler:Modal:Close />
-      </twig:Tabler:Modal:Header>
+    All-in-one:
+        <twig:Tabler:Modal:Header title="Delete project" />
+        <twig:Tabler:Modal:Header title="Delete project" dismissible="{{ false }}" />
+
+    Override the `title` block (the heading) or the `close` block (the close button)
+    while keeping the other one:
+        <twig:Tabler:Modal:Header title="Delete project">
+            <twig:block name="title">
+                <twig:Tabler:Modal:Title>Delete project <span class="badge">3</span></twig:Tabler:Modal:Title>
+            </twig:block>
+        </twig:Tabler:Modal:Header>
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:Modal:Header>
+            <twig:Tabler:Modal:Title>Delete project</twig:Tabler:Modal:Title>
+            <twig:Tabler:Modal:Close />
+        </twig:Tabler:Modal:Header>
+
+    Props:
+      title        — optional title; mirrored by the `title` block
+      dismissible  — add a close button (Modal:Close); mirrored by the `close` block (default true)
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'modal-header'}) }}>{## The header content, usually `Modal:Title` and `Modal:Close`. #}{%- block content %}{% endblock -%}</div>
+{% props
+    ## string|null The title, rendered with `Modal:Title`.
+    title = null,
+    ## bool Whether to add a close button, rendered with `Modal:Close`.
+    dismissible = true,
+%}
+
+<div {{ attributes.defaults({class: 'modal-header'}) }}>{## The header content: `title` and `close`; replace it to compose freely. #}
+    {%- block content -%}
+        {## The title: `Modal:Title` with the `title` prop, when set. -#}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:Modal:Title>{{ title }}</twig:Tabler:Modal:Title>{%- endif -%}
+        {% endblock %}
+        {## The close button: `Modal:Close`, when `dismissible`. -#}
+        {% block close %}
+            {%- if dismissible -%}<twig:Tabler:Modal:Close />{%- endif -%}
+        {% endblock %}
+    {%- endblock -%}
+</div>
 {% endapply ~%}

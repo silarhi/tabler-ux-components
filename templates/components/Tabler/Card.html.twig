@@ -9,6 +9,7 @@
 
     All-in-one:
         <twig:Tabler:Card title="Stats" text="42 active users" footer="Updated today" />
+        <twig:Tabler:Card title="Invoice #2026-0142" subtitle="Acme Corp" text="$4,320.00" />
         <twig:Tabler:Card title="Revenue" status="success" size="sm" text="$12,400" />
         <twig:Tabler:Card title="Welcome back" gradient="ocean" gradientDirection="bottom" gradientAnimated />
 
@@ -48,6 +49,7 @@
       rotate          — start | end | left | right: tilts the card (card-rotate-*)
       link            — hover effect for a card that is a link: bare, `pop` or `rotate` (card-link*)
       title           — optional title; mirrored by the `header` block
+      subtitle        — optional subtitle under the title; mirrored by the `header` block
       text            — optional body text; mirrored by the `body` block
       footer          — optional footer text; mirrored by the `footer` block
       href            — when set, renders <a href> instead of <div>
@@ -84,6 +86,8 @@
     link = false,
     ## string|null The title, rendered with `Card:Header` and `Card:Title`.
     title = null,
+    ## string|null The subtitle under the title, rendered with `Card:Header` and `Card:Subtitle`.
+    subtitle = null,
     ## string|null The body text, rendered with `Card:Body`.
     text = null,
     ## string|null The footer text, rendered with `Card:Footer`.
@@ -155,10 +159,10 @@
     {%- endif -%}
     {## The whole card content: `header`, `body` and `footer`; replace it to compose freely. -#}
     {% block content %}
-        {## The header: `Card:Header` with a `Card:Title` holding the `title` prop, when set. -#}
+        {## The header: `Card:Header` with the `title` and `subtitle` props, when one is set. -#}
         {% block header %}
-            {%- if title is not null -%}
-                <twig:Tabler:Card:Header><twig:Tabler:Card:Title>{{ title }}</twig:Tabler:Card:Title></twig:Tabler:Card:Header>
+            {%- if title is not null or subtitle is not null -%}
+                <twig:Tabler:Card:Header title="{{ title }}" subtitle="{{ subtitle }}" />
             {%- endif -%}
         {% endblock %}
         {## The body: `Card:Body` with the `text` prop, when set. -#}

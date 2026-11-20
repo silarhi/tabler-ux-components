@@ -85,13 +85,10 @@
             {%- if status is not null -%}<twig:Tabler:Modal:Status variant="{{ status }}" />{%- endif -%}
             {## The modal content: `header`, `body` and `footer`; replace it to compose freely (the status bar stays outside it). -#}
             {% block content %}
-                {## The header: `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set. -#}
+                {## The header: `Modal:Header` with the `title` and `dismissible` props, when `title` is set. -#}
                 {% block header %}
                     {%- if title is not null -%}
-                        <twig:Tabler:Modal:Header>
-                            <twig:Tabler:Modal:Title>{{ title }}</twig:Tabler:Modal:Title>
-                            {%- if dismissible -%}<twig:Tabler:Modal:Close />{%- endif -%}
-                        </twig:Tabler:Modal:Header>
+                        <twig:Tabler:Modal:Header title="{{ title }}" dismissible="{{ dismissible }}" />
                     {%- endif -%}
                 {% endblock %}
                 {## The body: `Modal:Body` with the `text` prop, when set. -#}

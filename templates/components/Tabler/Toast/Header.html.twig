@@ -1,12 +1,55 @@
 {#
-    Toast header — the top bar of a toast.
+    Toast header — the top bar of a toast, with its title, a time and a close button.
 
-    Usage:
+    All-in-one:
+        <twig:Tabler:Toast:Header title="Backup" time="just now" />
+        <twig:Tabler:Toast:Header title="Notice" dismissible="{{ false }}" />
+
+    Override the `title`, `time` or `close` block while keeping the others, e.g. to put
+    an avatar before the title:
+        <twig:Tabler:Toast:Header title="Jane Doe" time="2 min ago">
+            <twig:block name="title">
+                <twig:Tabler:Avatar image="/avatar.jpg" size="xs" class="me-2" />
+                <twig:Tabler:Toast:Title>Jane Doe</twig:Tabler:Toast:Title>
+            </twig:block>
+        </twig:Tabler:Toast:Header>
+
+    Composed (children replace the `content` block):
         <twig:Tabler:Toast:Header>
-            <strong class="me-auto">Notice</strong>
+            <twig:Tabler:Toast:Title>Notice</twig:Tabler:Toast:Title>
+            <twig:Tabler:Toast:Time>2 min ago</twig:Tabler:Toast:Time>
             <twig:Tabler:Toast:Close />
         </twig:Tabler:Toast:Header>
+
+    Props:
+      title        — optional title (Toast:Title); mirrored by the `title` block
+      time         — optional timestamp (Toast:Time); mirrored by the `time` block
+      dismissible  — add a close button (Toast:Close); mirrored by the `close` block (default true)
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'toast-header'}) }}>{## The header content, e.g. a title, a time and a `Toast:Close`. #}{%- block content %}{% endblock -%}</div>
+{% props
+    ## string|null The title, rendered with `Toast:Title`.
+    title = null,
+    ## string|null The timestamp, e.g. `2 min ago`, rendered with `Toast:Time`.
+    time = null,
+    ## bool Whether to add a close button, rendered with `Toast:Close`.
+    dismissible = true,
+%}
+
+<div {{ attributes.defaults({class: 'toast-header'}) }}>{## The header content: `title`, `time` and `close`; replace it to compose freely. #}
+    {%- block content -%}
+        {## The title: `Toast:Title` with the `title` prop, when set. -#}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:Toast:Title>{{ title }}</twig:Tabler:Toast:Title>{%- endif -%}
+        {% endblock %}
+        {## The timestamp: `Toast:Time` with the `time` prop, when set. -#}
+        {% block time %}
+            {%- if time is not null -%}<twig:Tabler:Toast:Time>{{ time }}</twig:Tabler:Toast:Time>{%- endif -%}
+        {% endblock %}
+        {## The close button: `Toast:Close`, when `dismissible`. -#}
+        {% block close %}
+            {%- if dismissible -%}<twig:Tabler:Toast:Close />{%- endif -%}
+        {% endblock %}
+    {%- endblock -%}
+</div>
 {% endapply ~%}

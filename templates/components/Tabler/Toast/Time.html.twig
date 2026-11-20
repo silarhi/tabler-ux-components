@@ -1,0 +1,9 @@
+{#
+    Toast time — a muted timestamp in a toast header, e.g. "2 min ago".
+
+    Usage:
+        <twig:Tabler:Toast:Time>2 min ago</twig:Tabler:Toast:Time>
+#}
+{% apply trim %}
+<small {{ attributes.defaults({class: 'text-secondary'}) }}>{## The timestamp. #}{%- block content %}{% endblock -%}</small>
+{% endapply ~%}

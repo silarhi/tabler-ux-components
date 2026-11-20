@@ -1,19 +1,26 @@
 {#
     Tabler Toast — a lightweight notification (Bootstrap toast).
 
-    Composed:
+    All-in-one:
+        <twig:Tabler:Toast show title="Notice" time="1 min ago" text="Saved successfully." />
+
+    Composed (children replace the `content` block):
         <twig:Tabler:Toast show>
             <twig:Tabler:Toast:Header>
-                <strong class="me-auto">Notice</strong>
-                <small>1 min ago</small>
+                <twig:Tabler:Toast:Title>Notice</twig:Tabler:Toast:Title>
+                <twig:Tabler:Toast:Time>1 min ago</twig:Tabler:Toast:Time>
                 <twig:Tabler:Toast:Close />
             </twig:Tabler:Toast:Header>
             <twig:Tabler:Toast:Body>Saved successfully.</twig:Tabler:Toast:Body>
         </twig:Tabler:Toast>
 
     Props:
-      show      — render in the visible state (toast .show)
-      autohide  — auto-dismiss after the Bootstrap delay (default true)
+      show         — render in the visible state (toast .show)
+      autohide     — auto-dismiss after the Bootstrap delay (default true)
+      title        — optional title; mirrored by the `header` block
+      time         — optional timestamp next to the title; mirrored by the `header` block
+      text         — optional message; mirrored by the `body` block
+      dismissible  — close button in the header rendered from `title` (default true)
 #}
 {% apply trim %}
 {% props
@@ -21,6 +28,14 @@
     show = false,
     ## bool Whether to hide the toast after Bootstrap's delay.
     autohide = true,
+    ## string|null The title, rendered with `Toast:Header` and `Toast:Title`.
+    title = null,
+    ## string|null The timestamp next to the title, e.g. `2 min ago`, rendered with `Toast:Time`.
+    time = null,
+    ## string|null The message, rendered with `Toast:Body`.
+    text = null,
+    ## bool Whether to add a close button (`Toast:Close`) to the header rendered from `title`.
+    dismissible = true,
 %}
 
 {% set toast = html_cva(
@@ -31,7 +46,18 @@
 ) %}
 
 <div class="{{ toast.apply({show: show}, attributes.render('class')) }}" role="alert" aria-live="polite" aria-atomic="true"{% if not autohide %} data-bs-autohide="false"{% endif %} {{ attributes.without('class') }}>
-    {## The toast parts: `Toast:Header` and `Toast:Body`. -#}
-    {% block content %}{% endblock %}
+    {## The toast parts: `header` and `body`; replace it to compose freely. -#}
+    {% block content %}
+        {## The header: `Toast:Header` with the `title`, `time` and `dismissible` props, when `title` is set. -#}
+        {% block header %}
+            {%- if title is not null -%}
+                <twig:Tabler:Toast:Header title="{{ title }}" time="{{ time }}" dismissible="{{ dismissible }}" />
+            {%- endif -%}
+        {% endblock %}
+        {## The body: `Toast:Body` with the `text` prop, when set. -#}
+        {% block body %}
+            {%- if text is not null -%}<twig:Tabler:Toast:Body>{{ text }}</twig:Tabler:Toast:Body>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
 </div>
 {% endapply ~%}

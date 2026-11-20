@@ -12,7 +12,8 @@ Bootstrap 5 modal markup, opened by a trigger with `data-bs-toggle="modal"` and 
 
 ## Composed
 
-The sub-components take over for a form or custom actions. `blur` blurs the page behind the modal (`modal-blur`).
+The sub-components take over for a form or custom actions. `Modal:Header` takes a `title` and renders the close button
+unless `dismissible` is `false`, like the modal itself. `blur` blurs the page behind the modal (`modal-blur`).
 Attributes go to the root `<div class="modal">`: add `fade` for the open animation.
 
 <Example name="modal/composed" minHeight="20rem" />
@@ -78,11 +79,26 @@ Other attributes go to the root `<div class="modal" tabindex="-1">`.
 
 `Modal:Status` takes `variant`: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`.
 
+`Modal:Header`:
+
+| Prop          | Type    | Default | Description                         |
+| ------------- | ------- | ------- | ----------------------------------- |
+| `title`       | string? | `null`  | Rendered with `Modal:Title`         |
+| `dismissible` | bool    | `true`  | Adds a close button (`Modal:Close`) |
+
 ## Blocks
 
-| Block     | Default                                                                                       |
-| --------- | --------------------------------------------------------------------------------------------- |
-| `header`  | `Modal:Header` with `Modal:Title` and `Modal:Close` (when `dismissible`), when `title` is set |
-| `body`    | `Modal:Body` with the `text` prop, when set                                                   |
-| `footer`  | `Modal:Footer` with the `footer` prop, when set                                               |
-| `content` | `header`, `body` and `footer`: replace it to compose freely; the status bar stays outside it  |
+| Block     | Default                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------- |
+| `header`  | `Modal:Header` with the `title` and `dismissible` props, when `title` is set                 |
+| `body`    | `Modal:Body` with the `text` prop, when set                                                  |
+| `footer`  | `Modal:Footer` with the `footer` prop, when set                                              |
+| `content` | `header`, `body` and `footer`: replace it to compose freely; the status bar stays outside it |
+
+`Modal:Header`:
+
+| Block     | Default                                       |
+| --------- | --------------------------------------------- |
+| `title`   | `Modal:Title` with the `title` prop, when set |
+| `close`   | `Modal:Close`, when `dismissible`             |
+| `content` | `title` and `close`: its children replace it  |

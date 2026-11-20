@@ -5,6 +5,24 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-11-20
+
+### Added
+
+- The header sub-components take their parts as props, with one block per part, so a composed card, modal, offcanvas or toast no longer needs to spell out its header:
+    - `Card:Header` takes `title` and `subtitle` (the two then stack in a `<div>`), with `title`, `subtitle` and an empty `actions` block for a `Card:Actions`.
+    - `Modal:Header` and `Offcanvas:Header` take `title` and `dismissible` (`true` by default), with `title` and `close` blocks.
+    - `Toast:Header` takes `title`, `time` and `dismissible` (`true` by default), with `title`, `time` and `close` blocks.
+- `Toast:Title` (`<strong class="me-auto">`) and `Toast:Time` (`<small class="text-secondary">`).
+- `Card` takes a `subtitle`, rendered under the title.
+- `Toast` takes `title`, `time`, `text` and `dismissible`, with `header` and `body` blocks, so `<twig:Tabler:Toast title="Backup" text="Done." />` renders a whole toast. Children still replace the `content` block.
+
+### Changed
+
+- `Card`, `Modal` and `Offcanvas` render their header from `title` through the props of `Card:Header`, `Modal:Header` and `Offcanvas:Header`; the markup is unchanged.
+- The Symfony UX Toolkit kit installs the components into the `%COMPONENTS_DIR%` placeholder, so the `ux_toolkit.components` options of the Toolkit apply to it. It requires Toolkit 3.7 or later.
+- A `Modal:Header`, `Offcanvas:Header` or `Toast:Header` used without children now renders a close button, unless `dismissible` is `false`. With children, the output is unchanged.
+
 ## [0.8.0] - 2026-10-13
 
 ### Added
@@ -137,6 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.9.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.1...v0.8.0
 [0.7.1]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.6.0...v0.7.0
