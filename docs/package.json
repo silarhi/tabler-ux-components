@@ -15,5 +15,5 @@
         "prettier": "^3.9.10",
         "sass": "^1.108.1"
     },
-    "packageManager": "pnpm@12.21.0"
+    "packageManager": "pnpm@12.22.0"
 }
