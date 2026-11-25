@@ -55,7 +55,7 @@ final class IconTest extends ComponentTestCase
     {
         $html = $this->renderComponent('<twig:Tabler:Icon name="tabler:check" />');
 
-        self::assertSame(['class' => 'icon', 'aria-hidden' => 'true'], self::svgAttributes($html, 'class', 'aria-hidden', 'aria-label'));
+        self::assertSame(['class' => 'icon', 'aria-hidden' => 'true'], $this->svgAttributes($html, 'class', 'aria-hidden', 'aria-label'));
         self::assertStringContainsString('d="m5 12l5 5L20 7"', $html);
     }
 
@@ -66,7 +66,7 @@ final class IconTest extends ComponentTestCase
         // An aria-label replaces the aria-hidden that UX Icons adds to decorative icons
         self::assertSame(
             ['class' => 'icon text-danger icon-rotate icon-sm me-1', 'id' => 'saved', 'aria-label' => 'Saved'],
-            self::svgAttributes($html, 'class', 'id', 'aria-label', 'aria-hidden'),
+            $this->svgAttributes($html, 'class', 'id', 'aria-label', 'aria-hidden'),
         );
     }
 
@@ -97,7 +97,7 @@ final class IconTest extends ComponentTestCase
      *
      * @return array<string, string>
      */
-    private static function svgAttributes(string $html, string ...$names): array
+    private function svgAttributes(string $html, string ...$names): array
     {
         $document = new DOMDocument();
         self::assertTrue(@$document->loadHTML($html));

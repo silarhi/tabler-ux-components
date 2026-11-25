@@ -21,14 +21,12 @@ return RectorConfig::configure()
         'tests',
     ])
     ->withPhpSets(php82: true)
-    ->withComposerBased(
-        twig: true,
-        symfony: true,
-    )
+    ->withComposerBased()
     ->withSkip([
         // Symfony 8.1 moves the bundle classes to DependencyInjection\Kernel: the bundle still supports 6.4 and 7.x
         RenameClassRector::class,
     ])
+    ->reportUnusedSkips()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
