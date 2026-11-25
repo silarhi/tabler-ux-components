@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents\Tests;
 
-use function dirname;
-
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
@@ -48,7 +46,7 @@ final class TemplateConventionsTest extends TestCase
      */
     public static function templateProvider(): iterable
     {
-        $root = dirname(__DIR__) . '/templates/components';
+        $root = __DIR__ . '/../templates/components';
         $templates = [];
 
         /** @var SplFileInfo $file */
