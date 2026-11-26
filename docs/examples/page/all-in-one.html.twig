@@ -1,0 +1,19 @@
+<twig:Tabler:Page pretitle="Overview" title="Dashboard">
+    <twig:block name="navbar">
+        <twig:Tabler:Navbar expand="sm">
+            <twig:Tabler:Navbar:Toggler target="navbar-menu" />
+            <twig:Tabler:Navbar:Brand href="/">Acme Admin</twig:Tabler:Navbar:Brand>
+            <twig:Tabler:Navbar:Nav id="navbar-menu" collapse>
+                <twig:Tabler:Navbar:Item href="/" icon="home" active>Dashboard</twig:Tabler:Navbar:Item>
+                <twig:Tabler:Navbar:Item href="/invoices" icon="file-invoice">Invoices</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Nav>
+        </twig:Tabler:Navbar>
+    </twig:block>
+    <div class="row row-cards">
+        <div class="col-sm-6"><twig:Tabler:Card title="Revenue" text="$4,300 this month." /></div>
+        <div class="col-sm-6"><twig:Tabler:Card title="New customers" text="38 this month." /></div>
+    </div>
+    <twig:block name="footer">
+        <twig:Tabler:Footer transparent copyright="Copyright © 2026 Acme" endLinks="{{ [{label: 'Documentation', href: '/docs'}] }}" />
+    </twig:block>
+</twig:Tabler:Page>

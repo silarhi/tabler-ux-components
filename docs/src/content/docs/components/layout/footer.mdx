@@ -1,0 +1,66 @@
+---
+title: Footer
+description: The page footer, with a copyright line and links on the start side and more links on the end side.
+---
+
+import Example from '../../../../components/Example.astro'
+
+The footer at the bottom of a page: a copyright line and links on the start side, more links on the end side. Put it
+in the `footer` block of a [`Page`](../page/), or at the end of a `Page:Wrapper`: Tabler pushes it to the bottom of the
+page. It is hidden when the page is printed (`d-print-none`).
+
+<Example name="footer/all-in-one" background="body" />
+
+`links` and `endLinks` are arrays of `{label, href}`: an item with an `href` is a muted `link-secondary` link, one
+without is plain text. Both sides stack and center below the `lg` breakpoint, the end side first.
+
+## Transparent
+
+`transparent` drops the background and the top border of the footer (`footer-transparent`), so it blends with the
+page behind it, as on Tabler's own layouts.
+
+<Example name="footer/transparent" background="body" />
+
+## Composed
+
+Replace the `copyright` block for a copyright line with markup, here a link, and the `start` or `end` block for a side
+of your own, built with `Footer:Links` and `Footer:Item`. Here the end side is a labeled navigation landmark. Direct
+children fill the `content` block, which holds the whole row inside the container: they replace both sides.
+
+<Example name="footer/composed" background="body" />
+
+## Props
+
+| Prop          | Type    | Default | Description                                                                |
+| ------------- | ------- | ------- | -------------------------------------------------------------------------- |
+| `copyright`   | string? | `null`  | Copyright line, the first item of the start side                           |
+| `links`       | array   | `[]`    | Items `{label, href?}` after the copyright, on the start side              |
+| `endLinks`    | array   | `[]`    | Items `{label, href?}` of the end side                                     |
+| `transparent` | bool    | `false` | No background nor top border (`footer-transparent`)                        |
+| `container`   | string  | `'xl'`  | Suffix of the inner `container-*`; match the one of the page, e.g. `fluid` |
+
+Other attributes go to the root `<footer>`.
+
+## Sub-components
+
+| Component      | Renders                                                                                |
+| -------------- | -------------------------------------------------------------------------------------- |
+| `Footer:Links` | `<ul class="list-inline list-inline-dots mb-0">`: items separated by dots              |
+| `Footer:Item`  | `<li class="list-inline-item">`, around an `<a class="link-secondary">` with an `href` |
+
+### `Footer:Item` props
+
+| Prop   | Type    | Default | Description                                     |
+| ------ | ------- | ------- | ----------------------------------------------- |
+| `href` | string? | `null`  | Link target; without it, the item is plain text |
+
+Other attributes go to the `<li>`, not to the link.
+
+## Blocks
+
+| Block       | Default                                                                                          |
+| ----------- | ------------------------------------------------------------------------------------------------ |
+| `copyright` | A `Footer:Item` with the `copyright` prop, when set                                              |
+| `start`     | A `Footer:Links` with `copyright` and an item per entry of `links`, when there is one            |
+| `end`       | A `Footer:Links` with an item per entry of `endLinks`, when there is one                         |
+| `content`   | The `.row` with the `end` then the `start` column (`flex-row-reverse`), each only when not empty |
