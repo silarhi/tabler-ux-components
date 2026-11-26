@@ -4,6 +4,13 @@
     For static navigation between sections/filters. For JS tab-switching with
     panes use <twig:Tabler:Tabs>; for the app header use <twig:Tabler:Navbar>.
 
+    All-in-one (`items` is an array of {label, href?, icon?, active?, disabled?, badge?, keep?}):
+        <twig:Tabler:Nav variant="tabs" items="{{ [
+            {label: 'Profile', href: '/settings', icon: 'user', active: true},
+            {label: 'Notifications', href: '/settings/notifications', badge: 4},
+            {label: 'Archived', disabled: true},
+        ] }}" />
+
     Composed:
         <twig:Tabler:Nav variant="pills">
             <twig:Tabler:Nav:Item href="/" active>Active</twig:Tabler:Nav:Item>
@@ -11,14 +18,26 @@
             <twig:Tabler:Nav:Item disabled>Disabled</twig:Tabler:Nav:Item>
         </twig:Tabler:Nav>
 
+    Overflow (Tabler 1.7+): the items that do not fit move into a More dropdown; a `keep` item never does:
+        <twig:Tabler:Nav variant="tabs" overflow>
+            <twig:Tabler:Nav:Item href="/" active keep>Overview</twig:Tabler:Nav:Item>
+            …
+        </twig:Tabler:Nav>
+
     Props:
+      items      — optional array of items, rendered with Nav:Item (with a Badge after the label when
+                   `badge` is set); mirrored by the `content` block
       variant    — default | tabs | pills | underline
       vertical   — stack items in a column (flex-column)
       fill       — items share the width proportionally (nav-fill)
       justified  — items share the width equally (nav-justified)
+      overflow   — wrap the nav in a `.nav-overflow` (data-bs-toggle="nav-overflow", tabler.js 1.7+), which
+                   moves the items that do not fit into a More dropdown; ignored by a vertical nav
 #}
 {% apply trim %}
 {% props
+    ## list<array{label:string,href?:string,icon?:string,active?:bool,disabled?:bool,badge?:string|int,keep?:bool}>|null The items, rendered with `Nav:Item`.
+    items = null,
     ## 'default'|'tabs'|'pills'|'underline' The nav style.
     variant = 'default',
     ## bool Whether to stack the items in a column (`flex-column`).
@@ -27,6 +46,8 @@
     fill = false,
     ## bool Whether the items share the width equally (`nav-justified`).
     justified = false,
+    ## bool Whether to move the items that do not fit into a More dropdown (`nav-overflow` wrapper, Tabler 1.7+).
+    overflow = false,
 %}
 
 {% set nav = html_cva(
@@ -44,8 +65,23 @@
     },
 ) %}
 
+{% if overflow %}<div class="nav-overflow" data-bs-toggle="nav-overflow">{% endif %}
 <ul class="{{ nav.apply({variant: variant, vertical: vertical, fill: fill, justified: justified}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {## The nav items: `Nav:Item` components. -#}
-    {% block content %}{% endblock %}
+    {## The nav items: a `Nav:Item` for each entry of `items`. -#}
+    {% block content %}
+        {%- for entry in items ?? [] -%}
+            <twig:Tabler:Nav:Item
+                href="{{ entry.href ?? null }}"
+                icon="{{ entry.icon ?? null }}"
+                active="{{ entry.active ?? false }}"
+                disabled="{{ entry.disabled ?? false }}"
+                keep="{{ entry.keep ?? false }}"
+            >
+                {{- entry.label ?? '' -}}
+                {%- if (entry.badge ?? null) is not null %} <twig:Tabler:Badge class="ms-2">{{ entry.badge }}</twig:Tabler:Badge>{% endif -%}
+            </twig:Tabler:Nav:Item>
+        {%- endfor -%}
+    {% endblock %}
 </ul>
+{% if overflow %}</div>{% endif %}
 {% endapply ~%}

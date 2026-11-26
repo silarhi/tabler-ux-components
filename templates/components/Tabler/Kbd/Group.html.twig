@@ -1,0 +1,12 @@
+{#
+    Kbd group — the keys of a shortcut, side by side with an even gap (`<kbd class="kbd-group">`).
+
+    Usage:
+        <twig:Tabler:Kbd:Group>
+            <twig:Tabler:Kbd:Key>⌘</twig:Tabler:Kbd:Key>
+            <twig:Tabler:Kbd:Key>K</twig:Tabler:Kbd:Key>
+        </twig:Tabler:Kbd:Group>
+#}
+{% apply trim %}
+<kbd {{ attributes.defaults({class: 'kbd-group'}) }}>{## The keys: `Kbd:Key` components. #}{%- block content %}{% endblock -%}</kbd>
+{% endapply ~%}

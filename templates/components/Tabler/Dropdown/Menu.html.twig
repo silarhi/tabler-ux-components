@@ -1,13 +1,24 @@
 {#
     Dropdown menu — the panel of items.
 
-    Usage:
+    All-in-one (`items` is an array of {label, href?, icon?, active?, disabled?, badge?} links,
+    {divider: true} separators and {header: '…'} labels):
+        <twig:Tabler:Dropdown:Menu items="{{ [
+            {header: 'Invoice #1042'},
+            {label: 'Edit', href: '/edit', icon: 'pencil'},
+            {divider: true},
+            {label: 'Delete', href: '/delete', disabled: true},
+        ] }}" />
+
+    Composed:
         <twig:Tabler:Dropdown:Menu>
             <twig:Tabler:Dropdown:Item href="/edit">Edit</twig:Tabler:Dropdown:Item>
         </twig:Tabler:Dropdown:Menu>
 
     Props:
-      end  — align the menu to the end (dropdown-menu-end)
+      items       — optional array of entries, rendered with Dropdown:Item (with a Badge after the label when
+                    `badge` is set), Dropdown:Divider and Dropdown:Header; mirrored by the `content` block
+      end         — align the menu to the end (dropdown-menu-end)
       arrow       — small arrow pointing at the toggle (dropdown-menu-arrow)
       dark        — dark menu on a light page (dropdown-menu-dark)
       scrollable  — caps the height and scrolls (dropdown-menu-scrollable)
@@ -17,6 +28,8 @@
 #}
 {% apply trim %}
 {% props
+    ## list<array{label?:string,href?:string,icon?:string,active?:bool,disabled?:bool,badge?:string|int,divider?:bool,header?:string}>|null The entries: links (`Dropdown:Item`), `{divider: true}` separators and `{header: '…'}` labels.
+    items = null,
     ## bool Whether to align the menu to the end (`dropdown-menu-end`).
     end = false,
     ## bool Whether to add an arrow pointing at the toggle (`dropdown-menu-arrow`).
@@ -41,7 +54,25 @@
 ) %}
 
 <div class="{{ menu.apply({end: end, arrow: arrow, dark: dark, scrollable: scrollable, card: card}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {## The menu entries: `Dropdown:Item`, `Dropdown:Header`, `Dropdown:Divider` and the like. -#}
-    {% block content %}{% endblock %}
+    {## The menu entries: a `Dropdown:Item`, `Dropdown:Divider` or `Dropdown:Header` for each entry of `items`. -#}
+    {% block content %}
+        {%- for entry in items ?? [] -%}
+            {%- if entry.divider ?? false -%}
+                <twig:Tabler:Dropdown:Divider />
+            {%- elseif entry.header is defined -%}
+                <twig:Tabler:Dropdown:Header>{{ entry.header }}</twig:Tabler:Dropdown:Header>
+            {%- else -%}
+                <twig:Tabler:Dropdown:Item
+                    href="{{ entry.href ?? null }}"
+                    icon="{{ entry.icon ?? null }}"
+                    active="{{ entry.active ?? false }}"
+                    disabled="{{ entry.disabled ?? false }}"
+                >
+                    {{- entry.label ?? '' -}}
+                    {%- if (entry.badge ?? null) is not null %} <twig:Tabler:Badge class="ms-auto">{{ entry.badge }}</twig:Tabler:Badge>{% endif -%}
+                </twig:Tabler:Dropdown:Item>
+            {%- endif -%}
+        {%- endfor -%}
+    {% endblock %}
 </div>
 {% endapply ~%}

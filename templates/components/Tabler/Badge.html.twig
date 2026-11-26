@@ -13,7 +13,11 @@
         <twig:Tabler:Badge variant="success" dot aria-label="Online" />
         <twig:Tabler:Button>Inbox <twig:Tabler:Badge variant="danger" notification blink>4</twig:Tabler:Badge></twig:Tabler:Button>
 
-    Several badges side by side: wrap them in <twig:Tabler:Badge:List>.
+    With an icon:
+        <twig:Tabler:Badge variant="success" icon="check">Verified</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="warning" icon="star" iconOnly aria-label="Starred" />
+
+    Several badges side by side: wrap them in <twig:Tabler:Badge:List>, or pass it `items`.
 
     Props:
       variant       — primary | secondary | success | danger | warning | info | dark | light
@@ -26,6 +30,8 @@
       notification  — positions the badge over the corner of its parent (badge-notification)
       blink         — pulsing animation, for a live counter (badge-blink)
       href          — when set, renders <a href> instead of <span>
+      icon          — leading icon name (Tabler, or ux-icons with a prefix: `lucide:check`), rendered with
+                      <twig:Tabler:Icon> and the `icon` class; mirrored by the `icon` block
 #}
 {% apply trim %}
 {% props
@@ -49,6 +55,8 @@
     blink = false,
     ## string|null The link target; renders an `<a>` instead of a `<span>` when set.
     href = null,
+    ## string|null The leading icon name, rendered with `Tabler:Icon` (`icon`).
+    icon = null,
 %}
 
 {% set badge = html_cva(
@@ -102,7 +110,9 @@
     variant: variant,
 }, attributes.render('class')) %}
 {% set tag = href is not null ? 'a' : 'span' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>{## The badge label. #}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
+    {%- block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" class="icon" aria-hidden="true" />{% endif %}{% endblock -%}
+    {## The badge label. -#}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

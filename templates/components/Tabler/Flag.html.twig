@@ -1,0 +1,48 @@
+{#
+    Tabler Flag — a country, territory or organisation flag (`.flag .flag-country-{code}`),
+    drawn at a 5:4 ratio. Needs Tabler's flags plugin: load `tabler-flags.css` (or
+    `tabler-flags.min.css`) next to `tabler.css`.
+
+    Usage:
+        <twig:Tabler:Flag code="fr" label="France" />
+        <twig:Tabler:Flag code="US" size="sm" />
+        <twig:Tabler:Flag code="european-union" size="lg" label="European Union" />
+
+    A flag is a picture: with `label`, it is an image named by it (role="img",
+    aria-label); without, it is decoration hidden from assistive technology
+    (aria-hidden="true"), for a flag next to the name in text.
+
+    Props:
+      code   — ISO 3166 code (`fr`, `us`, `gb-sct`…) or slug of a flag without one (`european-union`,
+               `nato`); lowercased
+      size   — xxs | xs | sm | md | lg | xl | 2xl (flag-{size}): the avatar sizes; unset, an avatar's
+      label  — accessible name, e.g. the country name; unset, the flag is hidden from assistive technology
+#}
+{% apply trim %}
+{% props
+    ## string The ISO 3166 code, e.g. `fr` or `gb-sct`, or the slug of a flag without one, e.g. `european-union`; lowercased.
+    code,
+    ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl'|null The size, one of the avatar sizes (`flag-{size}`); unset, the size of an avatar.
+    size = null,
+    ## string|null The accessible name, e.g. the country name (`role="img"`, `aria-label`); unset, the flag is hidden from assistive technology.
+    label = null,
+%}
+
+{% set flag = html_cva(
+    base: 'flag',
+    variants: {
+        size: {
+            xxs: 'flag-xxs',
+            xs: 'flag-xs',
+            sm: 'flag-sm',
+            md: 'flag-md',
+            lg: 'flag-lg',
+            xl: 'flag-xl',
+            '2xl': 'flag-2xl',
+        },
+    },
+) %}
+
+<span class="{{ flag.apply({size: size ?? ''}, 'flag-country-' ~ code|lower, attributes.render('class')) }}"
+    {%- if label is not null %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %} {{ attributes.without('class') }}></span>
+{% endapply ~%}

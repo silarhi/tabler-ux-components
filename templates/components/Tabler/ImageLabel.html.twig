@@ -1,0 +1,73 @@
+{#
+    Tabler ImageLabel — an image with a short text or an icon pinned to one of its
+    corners, such as "New", "AI" or a video length (`.img-labeled` + `.img-label`,
+    Tabler 1.7+).
+
+    All-in-one:
+        <twig:Tabler:ImageLabel src="/photos/book.jpg" alt="A book on the grass" width="240" label="AI" />
+        <twig:Tabler:ImageLabel src="/videos/intro.jpg" alt="Intro video" icon="player-play" label="1:24" position="top-start" />
+        <twig:Tabler:ImageLabel src="/photos/shop.jpg" alt="The bookstore" label="-20%" variant="danger" />
+
+    Composed (children replace the `content` block), e.g. several labels:
+        <twig:Tabler:ImageLabel>
+            <twig:Tabler:ImageLabel:Image src="/photos/live.jpg" alt="Designers at a brainstorming session" class="rounded" width="320" />
+            <twig:Tabler:ImageLabel:Label position="top-start" variant="danger">Live</twig:Tabler:ImageLabel:Label>
+            <twig:Tabler:ImageLabel:Label icon="crown" label="Premium" iconOnly position="top-end" />
+            <twig:Tabler:ImageLabel:Label>4K</twig:Tabler:ImageLabel:Label>
+        </twig:Tabler:ImageLabel>
+
+    The label is real text, read after the image: spell out a short form such as
+    "AI" in a `visually-hidden` element. It does not take clicks, so a click on it
+    reaches a link around the image.
+
+    Props:
+      src       — image URL; mirrored by the `image` block
+      alt       — alternative text of the image
+      width     — width of the image (width attribute)
+      label     — label text; mirrored by the `label` block
+      icon      — icon before the label text, rendered with <twig:Tabler:Icon>
+      position  — top-start | top-end | bottom-start | bottom-end: the corner of the label;
+                  unset, bottom end. Corners follow the text direction
+      variant   — label color: primary | secondary | success | danger | warning | info | dark | light
+                  (bg-{variant} text-{variant}-fg); unset, a dark see-through background
+#}
+{% apply trim %}
+{% props
+    ## string|null The image URL, rendered with `ImageLabel:Image`.
+    src = null,
+    ## string The alternative text of the image.
+    alt = '',
+    ## int|string|null The width of the image (`width` attribute).
+    width = null,
+    ## string|null The label text, rendered with `ImageLabel:Label`.
+    label = null,
+    ## string|null The icon before the label text, rendered with `Icon`.
+    icon = null,
+    ## 'top-start'|'top-end'|'bottom-start'|'bottom-end'|null The corner of the label (`img-label-{position}`); unset, bottom end.
+    position = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The label color (`bg-{variant} text-{variant}-fg`); unset, a dark see-through background.
+    variant = null,
+%}
+
+<div {{ attributes.defaults({class: 'img-labeled'}) }}>
+    {## The image and its label: `image` and `label`; replace it to compose freely. -#}
+    {% block content %}
+        {## The image: `ImageLabel:Image` with the `src`, `alt` and `width` props, when `src` is set. -#}
+        {% block image %}
+            {%- if src is not null -%}
+                {%- if width is not null -%}
+                    <twig:Tabler:ImageLabel:Image src="{{ src }}" alt="{{ alt }}" width="{{ width }}" />
+                {%- else -%}
+                    <twig:Tabler:ImageLabel:Image src="{{ src }}" alt="{{ alt }}" />
+                {%- endif -%}
+            {%- endif -%}
+        {% endblock %}
+        {## The label: `ImageLabel:Label` with the `label`, `icon`, `position` and `variant` props, when `label` or `icon` is set. -#}
+        {% block label %}
+            {%- if label is not null or icon is not null -%}
+                <twig:Tabler:ImageLabel:Label label="{{ label }}" icon="{{ icon }}" position="{{ position }}" variant="{{ variant }}" />
+            {%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</div>
+{% endapply ~%}

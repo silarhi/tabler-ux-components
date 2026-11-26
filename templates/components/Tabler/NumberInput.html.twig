@@ -1,0 +1,86 @@
+{#
+    Tabler NumberInput — a number field between a decrease and an increase button (`.number-input`,
+    Tabler 1.7+). tabler.js (`data-bs-toggle="number-input"`) wires the buttons, the arrow keys, Home / End,
+    hold-to-repeat, and keeps the value within `min` / `max`, rounded to the precision of `step`.
+
+    The box and its two buttons are rendered server-side, so the page does not shift when tabler.js starts.
+
+    All-in-one:
+        <twig:Tabler:NumberInput name="quantity" value="1" min="1" max="99" label="Quantity" />
+        <twig:Tabler:NumberInput name="hours" value="1.5" min="0" max="10" step="0.25" size="sm" label="Hours" />
+
+    Composed (custom buttons, or any attribute on the input):
+        <twig:Tabler:NumberInput>
+            <twig:Tabler:NumberInput:Button action="decrement" label="Fewer"><twig:Tabler:Icon name="chevron-down" /></twig:Tabler:NumberInput:Button>
+            <twig:Tabler:NumberInput:Input name="quantity" value="1" min="1" label="Quantity" required />
+            <twig:Tabler:NumberInput:Button action="increment" label="More"><twig:Tabler:Icon name="chevron-up" /></twig:Tabler:NumberInput:Button>
+        </twig:Tabler:NumberInput>
+
+    Props:
+      name, id, value     — the input's name, id and initial value
+      min, max, step      — the bounds and the step, read by tabler.js from the input
+      type                — text (default: no native spin buttons, role="spinbutton") | number (native validation)
+      label               — the accessible name of the input (aria-label)
+      size                — sm | lg (number-input-sm / number-input-lg)
+      disabled, readonly  — lock the field; both buttons follow
+      repeat              — keep stepping while a button is held down (default true; data-bs-repeat="false")
+      decrementLabel      — aria-label of the decrease button (default "Decrease")
+      incrementLabel      — aria-label of the increase button (default "Increase")
+#}
+{% apply trim %}
+{% props
+    ## string|null The `name` of the input.
+    name = null,
+    ## string|null The `id` of the input, for a `<label for>`.
+    id = null,
+    ## int|float|string|null The initial value.
+    value = null,
+    ## int|float|string|null The lower bound (`min`).
+    min = null,
+    ## int|float|string|null The upper bound (`max`).
+    max = null,
+    ## int|float|string|null The amount per step (`step`); a fractional step sets the precision.
+    step = null,
+    ## 'text'|'number' The input type: `text` keeps the native spin buttons away, `number` keeps the browser's validation.
+    type = 'text',
+    ## string|null The accessible name of the input (`aria-label`).
+    label = null,
+    ## 'sm'|'md'|'lg' The size (`number-input-{size}`).
+    size = 'md',
+    ## bool Whether the input is disabled; both buttons follow.
+    disabled = false,
+    ## bool Whether the input is read-only; both buttons follow.
+    readonly = false,
+    ## bool Whether to keep stepping while a button is held down (`data-bs-repeat="false"` when not).
+    repeat = true,
+    ## string The `aria-label` of the decrease button.
+    decrementLabel = 'Decrease',
+    ## string The `aria-label` of the increase button.
+    incrementLabel = 'Increase',
+%}
+
+{% set number_input = html_cva(
+    base: 'number-input',
+    variants: {
+        size: {sm: 'number-input-sm', md: '', lg: 'number-input-lg'},
+    },
+) %}
+
+<div class="{{ number_input.apply({size: size}, attributes.render('class')) }}" data-bs-toggle="number-input"{% if not repeat %} data-bs-repeat="false"{% endif %} {{ attributes.without('class') }}>
+    {## The buttons and the input: `decrement`, `input` and `increment`; replace it to compose freely. -#}
+    {% block content %}
+        {## The decrease button: `NumberInput:Button` with `decrementLabel`. -#}
+        {% block decrement %}
+            <twig:Tabler:NumberInput:Button action="decrement" label="{{ decrementLabel }}" disabled="{{ disabled }}" />
+        {% endblock %}
+        {## The field: `NumberInput:Input` with the input props. -#}
+        {% block input %}
+            <twig:Tabler:NumberInput:Input type="{{ type }}" name="{{ name }}" id="{{ id }}" value="{{ value }}" min="{{ min }}" max="{{ max }}" step="{{ step }}" label="{{ label }}" disabled="{{ disabled }}" readonly="{{ readonly }}" />
+        {% endblock %}
+        {## The increase button: `NumberInput:Button` with `incrementLabel`. -#}
+        {% block increment %}
+            <twig:Tabler:NumberInput:Button action="increment" label="{{ incrementLabel }}" disabled="{{ disabled }}" />
+        {% endblock %}
+    {% endblock %}
+</div>
+{% endapply ~%}

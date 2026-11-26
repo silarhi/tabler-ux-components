@@ -1,0 +1,10 @@
+{#
+    MockupBrowser controls — the three window dots of a mockup browser toolbar, drawn
+    by one empty element (`.mockup-browser-controls`), so screen readers skip them.
+
+    Usage:
+        <twig:Tabler:MockupBrowser:Controls />
+#}
+{% apply trim %}
+<span {{ attributes.defaults({class: 'mockup-browser-controls'}) }}></span>
+{% endapply ~%}

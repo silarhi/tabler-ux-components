@@ -1,0 +1,6 @@
+{% for size in ['sm', null, 'lg'] %}
+    <twig:Tabler:ListGroup size="{{ size }}" class="mb-3" items="{{ [
+        {label: (size ?? 'Default') ~ ' item'},
+        {label: (size ?? 'Default') ~ ' item'},
+    ] }}" />
+{% endfor %}

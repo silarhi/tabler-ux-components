@@ -8,6 +8,9 @@
             <twig:Tabler:SegmentedControl:Item>Month</twig:Tabler:SegmentedControl:Item>
         </twig:Tabler:SegmentedControl>
 
+    For a control that picks a value in a form, use `SegmentedControl:Option` radios and pass
+    `role="radiogroup"` with an `aria-label` (the default role is `tablist`).
+
     Props:
       fullWidth — stretch to the container width (w-100)
       vertical   — stack the segments in a column (nav-segmented-vertical)
@@ -32,7 +35,7 @@
     },
 ) %}
 
-<nav class="{{ segmented.apply({fullWidth: fullWidth, vertical: vertical, size: size}, attributes.render('class')) }}" role="tablist" {{ attributes.without('class') }}>
+<nav class="{{ segmented.apply({fullWidth: fullWidth, vertical: vertical, size: size}, attributes.render('class')) }}" role="{{ attributes.render('role') ?? 'tablist' }}" {{ attributes.without('class', 'role') }}>
     {## The segments: `SegmentedControl:Item` components. -#}
     {% block content %}{% endblock %}
 </nav>

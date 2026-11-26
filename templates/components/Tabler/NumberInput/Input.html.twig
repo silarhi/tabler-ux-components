@@ -1,0 +1,50 @@
+{#
+    Number input field — the `<input class="form-control">` between the buttons of a
+    <twig:Tabler:NumberInput>. tabler.js reads its `min`, `max` and `step`; other attributes
+    (`required`, `form`, `data-*`, `style="--tblr-number-input-input-width: 6rem"`…) are forwarded to it.
+
+    Usage:
+        <twig:Tabler:NumberInput:Input name="quantity" value="1" min="1" max="99" label="Quantity" />
+
+    Props:
+      type                — text (default) | number
+      name, id, value     — the input's name, id and initial value
+      min, max, step      — the bounds and the step
+      label               — the accessible name (aria-label)
+      disabled, readonly  — lock the field
+#}
+{% apply trim %}
+{% props
+    ## 'text'|'number' The input type: `text` keeps the native spin buttons away, `number` keeps the browser's validation.
+    type = 'text',
+    ## string|null The `name` of the input.
+    name = null,
+    ## string|null The `id` of the input.
+    id = null,
+    ## int|float|string|null The initial value.
+    value = null,
+    ## int|float|string|null The lower bound (`min`).
+    min = null,
+    ## int|float|string|null The upper bound (`max`).
+    max = null,
+    ## int|float|string|null The amount per step (`step`).
+    step = null,
+    ## string|null The accessible name (`aria-label`).
+    label = null,
+    ## bool Whether the input is disabled.
+    disabled = false,
+    ## bool Whether the input is read-only.
+    readonly = false,
+%}
+
+<input type="{{ type }}" class="{{ html_cva(base: 'form-control').apply({}, attributes.render('class')) }}"
+    {%- if name is not null %} name="{{ name }}"{% endif %}
+    {%- if id is not null %} id="{{ id }}"{% endif %}
+    {%- if value is not null %} value="{{ value }}"{% endif %}
+    {%- if min is not null %} min="{{ min }}"{% endif %}
+    {%- if max is not null %} max="{{ max }}"{% endif %}
+    {%- if step is not null %} step="{{ step }}"{% endif %}
+    {%- if label is not null %} aria-label="{{ label }}"{% endif %}
+    {%- if disabled %} disabled{% endif %}
+    {%- if readonly %} readonly{% endif %} {{ attributes.without('class', 'type') }}>
+{% endapply ~%}

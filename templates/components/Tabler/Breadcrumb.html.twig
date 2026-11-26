@@ -1,6 +1,14 @@
 {#
     Tabler Breadcrumb — a navigation trail.
 
+    All-in-one (`items` is an array of {label, href?, active?, icon?}; the last item is the current
+    page, unless an entry sets `active`):
+        <twig:Tabler:Breadcrumb items="{{ [
+            {label: 'Home', href: '/', icon: 'home'},
+            {label: 'Library', href: '/library'},
+            {label: 'Data'},
+        ] }}" />
+
     Composed:
         <twig:Tabler:Breadcrumb>
             <twig:Tabler:Breadcrumb:Item href="/">Home</twig:Tabler:Breadcrumb:Item>
@@ -9,11 +17,16 @@
         </twig:Tabler:Breadcrumb>
 
     Props:
+      items      — optional array of crumbs, rendered with Breadcrumb:Item; mirrored by the `content` block.
+                   The last one is the current page (no link, aria-current="page"); once an entry sets
+                   `active`, only the entries with `active: true` are
       separator  — default | dots | arrows | bullets
       muted      — muted style (breadcrumb-muted)
 #}
 {% apply trim %}
 {% props
+    ## list<array{label:string,href?:string,active?:bool,icon?:string}>|null The crumbs, rendered with `Breadcrumb:Item`; the last one is active unless an entry sets `active`.
+    items = null,
     ## 'default'|'dots'|'arrows'|'bullets' The separator between the crumbs.
     separator = 'default',
     ## bool Whether to use the muted style (`breadcrumb-muted`).
@@ -28,10 +41,20 @@
     },
 ) %}
 
+{# Until an entry sets `active`, the last crumb is the current page #}
+{% set explicit_active = (items ?? [])|filter(crumb => crumb.active is defined)|length > 0 %}
 <nav aria-label="breadcrumbs">
     <ol class="{{ breadcrumb.apply({separator: separator, muted: muted}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-        {## The crumbs: `Breadcrumb:Item` components. -#}
-        {% block content %}{% endblock %}
+        {## The crumbs: a `Breadcrumb:Item` for each entry of `items`. -#}
+        {% block content %}
+            {%- for crumb in items ?? [] -%}
+                <twig:Tabler:Breadcrumb:Item
+                    href="{{ crumb.href ?? null }}"
+                    icon="{{ crumb.icon ?? null }}"
+                    active="{{ explicit_active ? (crumb.active ?? false) : loop.last }}"
+                >{{ crumb.label ?? '' }}</twig:Tabler:Breadcrumb:Item>
+            {%- endfor -%}
+        {% endblock %}
     </ol>
 </nav>
 {% endapply ~%}

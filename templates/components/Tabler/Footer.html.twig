@@ -1,0 +1,94 @@
+{#
+    Tabler Footer — the page footer: a copyright line and links on the start side, more links on
+    the end side. Put it after the body, in the `footer` block of a <twig:Tabler:Page> or at the end
+    of a <twig:Tabler:Page:Wrapper>.
+
+    All-in-one (`links` and `endLinks` are arrays of {label, href?}; without `href`, plain text):
+        <twig:Tabler:Footer
+            transparent
+            copyright="Copyright © 2026 Acme. All rights reserved."
+            links="{{ [{label: 'v1.2.0', href: '/changelog'}] }}"
+            endLinks="{{ [{label: 'Documentation', href: '/docs'}, {label: 'License', href: '/license'}] }}"
+        />
+
+    Composed:
+        <twig:Tabler:Footer transparent>
+            <twig:block name="start">
+                <twig:Tabler:Footer:Links>
+                    <twig:Tabler:Footer:Item>Copyright © 2026 <a href="/" class="link-secondary">Acme</a></twig:Tabler:Footer:Item>
+                </twig:Tabler:Footer:Links>
+            </twig:block>
+            <twig:block name="end">
+                <twig:Tabler:Footer:Links>
+                    <twig:Tabler:Footer:Item href="/docs">Documentation</twig:Tabler:Footer:Item>
+                </twig:Tabler:Footer:Links>
+            </twig:block>
+        </twig:Tabler:Footer>
+
+    Direct children fill the `content` block, which holds the whole row inside the container:
+    they replace both sides.
+
+    Props:
+      copyright    — first item of the start side; mirrored by the `copyright` block
+      links        — items after the copyright, on the start side; mirrored by the `start` block
+      endLinks     — items of the end side; mirrored by the `end` block
+      transparent  — no background nor top border (footer-transparent), to blend with the page
+      container    — suffix of the inner container: xl (default) | sm | md | lg | xxl | fluid | …
+#}
+{% apply trim %}
+{% props
+    ## string|null The copyright line, the first item of the start side.
+    copyright = null,
+    ## list<array{label:string,href?:string|null}> The items after the copyright, on the start side, rendered with `Footer:Item`.
+    links = [],
+    ## list<array{label:string,href?:string|null}> The items of the end side, rendered with `Footer:Item`.
+    endLinks = [],
+    ## bool Whether to drop the background and the top border (`footer-transparent`).
+    transparent = false,
+    ## 'sm'|'md'|'lg'|'xl'|'xxl'|'fluid'|'narrow'|'tight'|'slim' The suffix of the inner `container-*`.
+    container = 'xl',
+%}
+
+{% set footer = html_cva(
+    base: 'footer d-print-none',
+    variants: {
+        transparent: {true: 'footer-transparent', false: ''},
+    },
+) %}
+
+{% set start_html %}{## The start side: a `Footer:Links` with `copyright` and an item per entry of `links`, when there is one. #}{% block start %}
+    {%- set copyright_html %}{## The copyright line: a `Footer:Item` with the `copyright` prop, when set. #}{% block copyright %}
+        {%- if copyright is not null -%}<twig:Tabler:Footer:Item>{{ copyright }}</twig:Tabler:Footer:Item>{%- endif -%}
+    {% endblock %}{% endset -%}
+    {%- if copyright_html|trim is not empty or links is not empty -%}
+        <twig:Tabler:Footer:Links>
+            {{ copyright_html }}
+            {%- for link in links -%}
+                <twig:Tabler:Footer:Item href="{{ link.href ?? null }}">{{ link.label }}</twig:Tabler:Footer:Item>
+            {%- endfor -%}
+        </twig:Tabler:Footer:Links>
+    {%- endif -%}
+{% endblock %}{% endset %}
+
+{% set end_html %}{## The end side: a `Footer:Links` with an item per entry of `endLinks`, when there is one. #}{% block end %}
+    {%- if endLinks is not empty -%}
+        <twig:Tabler:Footer:Links>
+            {%- for link in endLinks -%}
+                <twig:Tabler:Footer:Item href="{{ link.href ?? null }}">{{ link.label }}</twig:Tabler:Footer:Item>
+            {%- endfor -%}
+        </twig:Tabler:Footer:Links>
+    {%- endif -%}
+{% endblock %}{% endset %}
+
+<footer class="{{ footer.apply({transparent: transparent}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    <div class="container-{{ container }}">
+        {## The footer row: the `end` side then the `start` side (`flex-row-reverse`); replace it to compose freely. -#}
+        {% block content %}
+            <div class="row text-center align-items-center flex-row-reverse">
+                {%- if end_html|trim is not empty -%}<div class="col-lg-auto ms-lg-auto">{{ end_html }}</div>{%- endif -%}
+                {%- if start_html|trim is not empty -%}<div class="col-12 col-lg-auto mt-3 mt-lg-0">{{ start_html }}</div>{%- endif -%}
+            </div>
+        {% endblock %}
+    </div>
+</footer>
+{% endapply ~%}

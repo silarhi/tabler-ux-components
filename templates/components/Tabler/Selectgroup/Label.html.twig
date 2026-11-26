@@ -1,0 +1,34 @@
+{#
+    Selectgroup label — the visible part of a <twig:Tabler:Selectgroup:Item>, right after its hidden input
+    (`.form-selectgroup-label`). With `check`, it lays out a check mark (Selectgroup:Check) and the content
+    side by side, as Tabler's boxes do.
+
+    Usage:
+        <twig:Tabler:Selectgroup:Label>HTML</twig:Tabler:Selectgroup:Label>
+        <twig:Tabler:Selectgroup:Label check><strong>Pro</strong> — $29 per month</twig:Tabler:Selectgroup:Label>
+
+    Props:
+      check  — put a check mark before the content (d-flex align-items-center p-3)
+#}
+{% apply trim %}
+{% props
+    ## bool Whether to put a check mark (`Selectgroup:Check`) before the content.
+    check = false,
+%}
+
+{% set label = html_cva(
+    base: 'form-selectgroup-label',
+    variants: {
+        check: {true: 'd-flex align-items-center p-3', false: ''},
+    },
+) %}
+
+<span class="{{ label.apply({check: check}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- if check -%}
+        <span class="me-3"><twig:Tabler:Selectgroup:Check /></span>
+        <span>{## The option content. #}{%- block content %}{% endblock -%}</span>
+    {%- else -%}
+        {{ block('content') }}
+    {%- endif -%}
+</span>
+{% endapply ~%}

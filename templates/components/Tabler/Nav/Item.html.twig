@@ -2,13 +2,16 @@
     Nav item — one link in a <twig:Tabler:Nav>.
 
     Usage:
-        <twig:Tabler:Nav:Item href="/" active>Active</twig:Tabler:Nav:Item>
+        <twig:Tabler:Nav:Item href="/" icon="home" active>Active</twig:Tabler:Nav:Item>
         <twig:Tabler:Nav:Item disabled>Disabled</twig:Tabler:Nav:Item>
 
     Props:
       href      — link target; when omitted renders a non-link <a>
       active    — marks the current item
       disabled  — non-interactive item
+      icon      — optional leading Tabler icon name (or ux-icons name, `lucide:house`), rendered with
+                  <twig:Tabler:Icon> in a `.nav-link-icon`
+      keep      — never moved into the More menu of an overflowing nav (nav-overflow-keep on the <li>, Tabler 1.7+)
 #}
 {% apply trim %}
 {% props
@@ -18,6 +21,10 @@
     active = false,
     ## bool Whether the item is non-interactive (`disabled`).
     disabled = false,
+    ## string|null The leading Tabler icon name, rendered with `Tabler:Icon` (`nav-link-icon`).
+    icon = null,
+    ## bool Whether the item stays in the bar of an overflowing nav, never moved into its More menu (`nav-overflow-keep`).
+    keep = false,
 %}
 
 {% set link = html_cva(
@@ -28,7 +35,11 @@
     },
 ) %}
 
-<li class="nav-item">
-    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>{## The link text. #}{%- block content %}{% endblock -%}</a>
+<li class="nav-item{% if keep %} nav-overflow-keep{% endif %}">
+    <a class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}"{% if href is not null %} href="{{ href }}"{% endif %}{% if active %} aria-current="page"{% endif %}{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>
+        {%- if icon is not null -%}<span class="nav-link-icon"><twig:Tabler:Icon name="{{ icon }}" /></span>{%- endif -%}
+        {## The link text, after the `icon`. -#}
+        {%- block content %}{% endblock -%}
+    </a>
 </li>
 {% endapply ~%}

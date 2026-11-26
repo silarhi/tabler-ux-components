@@ -1,0 +1,13 @@
+{#
+    Tabler form theme — Symfony's Bootstrap 5 form theme with Tabler's hints (`form-hint`) and the
+    widgets of the bundle's form type extensions: `icon` (InputIcon), `stepper` (NumberInput),
+    `choice_style` (SegmentedControl, Selectgroup) and `switch`.
+
+        # config/packages/twig.yaml
+        twig:
+            form_themes: ['@TablerUxComponents/form/tabler_layout.html.twig']
+
+    For labels beside their fields, use `tabler_horizontal_layout.html.twig` instead.
+#}
+{% use 'bootstrap_5_layout.html.twig' with form_widget_simple as bootstrap_form_widget_simple, choice_widget_expanded as bootstrap_choice_widget_expanded, number_widget as bootstrap_number_widget, integer_widget as bootstrap_integer_widget %}
+{% use '@TablerUxComponents/form/tabler_widgets.html.twig' %}

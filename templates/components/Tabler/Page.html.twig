@@ -1,0 +1,104 @@
+{#
+    Tabler Page — the shell of an app page: the navigation, then a `.page-wrapper` with the page
+    header, the page body and the footer.
+
+    All-in-one (direct children go into the body container):
+        <twig:Tabler:Page pretitle="Overview" title="Dashboard">
+            <twig:block name="navbar">
+                <twig:Tabler:Navbar>…</twig:Tabler:Navbar>
+            </twig:block>
+            <twig:block name="actions">
+                <twig:Tabler:PageHeader:Actions>
+                    <twig:Tabler:Button variant="primary">New report</twig:Tabler:Button>
+                </twig:Tabler:PageHeader:Actions>
+            </twig:block>
+            <div class="row row-cards">…</div>
+            <twig:block name="footer">
+                <twig:Tabler:Footer transparent copyright="Copyright © 2026 Acme" />
+            </twig:block>
+        </twig:Tabler:Page>
+
+    Composed (direct children fill `content`, inside the body: replace the `wrapper` block instead):
+        <twig:Tabler:Page>
+            <twig:block name="navbar">
+                <twig:Tabler:Navbar vertical expand="lg">…</twig:Tabler:Navbar>
+            </twig:block>
+            <twig:block name="wrapper">
+                <twig:Tabler:Page:Wrapper>
+                    <div class="container-xl"><twig:Tabler:PageHeader title="Dashboard" /></div>
+                    <twig:Tabler:Page:Body container="fluid">…</twig:Tabler:Page:Body>
+                    <twig:Tabler:Footer transparent copyright="Copyright © 2026 Acme" />
+                </twig:Tabler:Page:Wrapper>
+            </twig:block>
+        </twig:Tabler:Page>
+
+    A vertical `Navbar` goes first, before a horizontal one: Tabler offsets the elements that follow
+    it. Some layout options live on <body> or <html>, which a component cannot set: `layout-boxed`
+    (or `data-bs-layout="boxed"`), `data-bs-navbar-position` (`vertical`, `combined`),
+    `data-bs-navbar`, `data-bs-navbar-style`, `data-bs-navbar-theme`, `data-bs-sidebar` and
+    `dir="rtl"`; set them in the base template.
+
+    Props:
+      title      — page title, rendered with `PageHeader`
+      pretitle   — small overline above the title, rendered with `PageHeader`
+      container  — container of the header and the body: xl (default) | sm | md | lg | xxl | fluid |
+                   narrow | tight | slim
+      fluid      — full-width containers in the whole page (layout-fluid)
+      center     — center the children of the page vertically (page-center), e.g. for a sign-in
+                   page: the wrapper fills the page, so replace the `wrapper` block with the content
+#}
+{% apply trim %}
+{% props
+    ## string|null The page title, rendered with `PageHeader`.
+    title = null,
+    ## string|null The small overline above the title, rendered with `PageHeader`.
+    pretitle = null,
+    ## 'sm'|'md'|'lg'|'xl'|'xxl'|'fluid'|'narrow'|'tight'|'slim' The suffix of the `container-*` around the header and the body.
+    container = 'xl',
+    ## bool Whether every container of the page spans the full width (`layout-fluid`).
+    fluid = false,
+    ## bool Whether to center the children of the page vertically (`page-center`), e.g. a sign-in card replacing the `wrapper` block.
+    center = false,
+%}
+
+{% set page = html_cva(
+    base: 'page',
+    variants: {
+        fluid: {true: 'layout-fluid', false: ''},
+        center: {true: 'page-center', false: ''},
+    },
+) %}
+
+{% set actions_html %}{## The page header actions, e.g. a `PageHeader:Actions`; empty by default. #}{% block actions %}{% endblock %}{% endset %}
+
+<div class="{{ page.apply({fluid: fluid, center: center}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The navigation: a `Navbar`, or a vertical `Navbar` then a horizontal one; empty by default. -#}
+    {% block navbar %}{% endblock %}
+    {## The page wrapper with `header`, `body` and `footer`; replace it to compose freely. -#}
+    {% block wrapper %}
+        <div class="page-wrapper">
+            {## The page header: a `PageHeader` with `pretitle`, `title` and `actions` in a container, when one of them is set. -#}
+            {% block header %}
+                {%- if title is not null or pretitle is not null or actions_html|trim is not empty -%}
+                    <div class="container-{{ container }}">
+                        <twig:Tabler:PageHeader pretitle="{{ pretitle }}" title="{{ title }}">
+                            <twig:block name="actions">{{ actions_html }}</twig:block>
+                        </twig:Tabler:PageHeader>
+                    </div>
+                {%- endif -%}
+            {% endblock %}
+            {## The page body: a `<main class="page-body">` and its container around `content`. -#}
+            {% block body %}
+                <main class="page-body">
+                    <div class="container-{{ container }}">
+                        {## The page content, inside the body container. -#}
+                        {% block content %}{% endblock %}
+                    </div>
+                </main>
+            {% endblock %}
+            {## The page footer, e.g. a `Footer`; empty by default. -#}
+            {% block footer %}{% endblock %}
+        </div>
+    {% endblock %}
+</div>
+{% endapply ~%}

@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-end">
+    <twig:Tabler:Dropdown label="Export">
+        <twig:block name="menu">
+            <twig:Tabler:Dropdown:Menu end arrow items="{{ [
+                {label: 'CSV', href: '/export.csv', icon: 'file-spreadsheet'},
+                {label: 'PDF', href: '/export.pdf', icon: 'file-type-pdf'},
+            ] }}" />
+        </twig:block>
+    </twig:Tabler:Dropdown>
+</div>

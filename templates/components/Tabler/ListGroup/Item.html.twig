@@ -3,7 +3,13 @@
 
     Renders an <a> when `href` is set, a <button type="button"> when `button`
     is set (both are actionable: list-group-item-action), else a <div> — or an
-    <li> with tag="li" inside a ul/ol list group.
+    <li> with tag="li" inside a ul/ol list group, or a <label> with tag="label"
+    around a checkbox, a radio or a switch, so a click on the row changes it.
+
+    With `title`, `description`, `icon` or `meta`, the item is a row of slots
+    (Tabler 1.7+): ListGroup:Media, ListGroup:Content (title + description),
+    ListGroup:Meta, then the `actions` block. The slots are <span>s, valid in a
+    link, a button or a label too.
 
     Usage:
         <twig:Tabler:ListGroup:Item label="First item" />
@@ -11,15 +17,28 @@
         <twig:Tabler:ListGroup:Item href="/billing" disabled>Billing</twig:Tabler:ListGroup:Item>
         <twig:Tabler:ListGroup:Item button data-action="list#pick">Pick me</twig:Tabler:ListGroup:Item>
         <twig:Tabler:ListGroup:Item tag="li" variant="success">Success item</twig:Tabler:ListGroup:Item>
+        <twig:Tabler:ListGroup:Item icon="user" title="Paweł Kuna" description="UI Designer" meta="2 h" />
+
+    Composed slots (children replace the `content` block):
+        <twig:Tabler:ListGroup:Item>
+            <twig:Tabler:ListGroup:Media><twig:Tabler:Avatar image="/avatars/pawel.jpg" /></twig:Tabler:ListGroup:Media>
+            <twig:Tabler:ListGroup:Content title="Paweł Kuna" description="UI Designer" />
+            <twig:Tabler:ListGroup:Meta>2 h</twig:Tabler:ListGroup:Meta>
+            <twig:Tabler:ListGroup:Actions tag="div"><twig:Tabler:Button size="sm">Follow</twig:Tabler:Button></twig:Tabler:ListGroup:Actions>
+        </twig:Tabler:ListGroup:Item>
 
     Accessibility: `active` adds aria-current="true"; a disabled link loses its
     href and gets aria-disabled="true" and tabindex="-1".
 
     Props:
-      label     — item text; mirrored by the `content` block
+      label        — item text; mirrored by the `content` block
+      title        — first line of the content slot (Tabler 1.7+); mirrored by the `body` block
+      description  — second line of the content slot (Tabler 1.7+); mirrored by the `body` block
+      icon         — icon in the media slot (Tabler 1.7+); mirrored by the `media` block
+      meta         — text of the meta slot, e.g. a time (Tabler 1.7+); mirrored by the `meta` block
       href      — renders an <a href>
       button    — renders a <button type="button">
-      tag       — div (default) | li, for a non-actionable item
+      tag       — div (default) | li | label, for a non-actionable item
       action    — hover/focus affordance (list-group-item-action); defaults to true for links and buttons
       active    — current item (active, aria-current="true")
       disabled  — item the user cannot pick (disabled)
@@ -33,7 +52,7 @@
     href = null,
     ## bool Whether to render a `<button type="button">` (ignored with `href`).
     button = false,
-    ## 'div'|'li' The element of an item that is not a link nor a button.
+    ## 'div'|'li'|'label' The element of an item that is not a link nor a button: `label` around a checkbox, a radio or a switch.
     tag = 'div',
     ## bool|null Whether to add the hover and focus style (`list-group-item-action`); defaults to `true` for links and buttons.
     action = null,
@@ -43,6 +62,14 @@
     disabled = false,
     ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The item tint (`list-group-item-*`).
     variant = null,
+    ## string|null The first line of the content slot, rendered with `ListGroup:Content` (Tabler 1.7+).
+    title = null,
+    ## string|null The second line of the content slot, rendered with `ListGroup:Content` (Tabler 1.7+).
+    description = null,
+    ## string|null The icon of the media slot, rendered with `ListGroup:Media` and `Icon` (Tabler 1.7+).
+    icon = null,
+    ## string|null The text of the meta slot after the content, e.g. a time, rendered with `ListGroup:Meta` (Tabler 1.7+).
+    meta = null,
 %}
 
 {% set item = html_cva(
@@ -76,7 +103,20 @@
     {%- if href is not null and not disabled %} href="{{ href }}"{% endif %}
     {%- if element == 'button' %} type="button"{% endif %} class="{{ classes }}"
     {%- if active %} aria-current="true"{% endif %}
-    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>{## The item content: the `label` prop by default. #}
-    {%- block content %}{{ label }}{% endblock -%}
+    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if href is not null %} tabindex="-1"{% endif %}{% endif %}{% endif %} {{ attributes.without('class', 'href', 'type') }}>{## The item content: the slots when `title`, `description`, `icon` or `meta` is set, else the `label` prop. #}
+    {%- block content -%}
+        {%- if title is not null or description is not null or icon is not null or meta is not null -%}
+            {## The media slot: `ListGroup:Media` with an `Icon` of the `icon` prop, when set. #}
+            {%- block media %}{% if icon is not null %}<twig:Tabler:ListGroup:Media><twig:Tabler:Icon name="{{ icon }}" /></twig:Tabler:ListGroup:Media>{% endif %}{% endblock -%}
+            {## The content slot: `ListGroup:Content` with the `title` and `description` props. #}
+            {%- block body %}<twig:Tabler:ListGroup:Content title="{{ title }}" description="{{ description }}" />{% endblock -%}
+            {## The meta slot: `ListGroup:Meta` with the `meta` prop, when set. #}
+            {%- block meta %}{% if meta is not null %}<twig:Tabler:ListGroup:Meta>{{ meta }}</twig:Tabler:ListGroup:Meta>{% endif %}{% endblock -%}
+            {## The actions slot, empty: e.g. a `ListGroup:Actions`. #}
+            {%- block actions %}{% endblock -%}
+        {%- else -%}
+            {{- label -}}
+        {%- endif -%}
+    {%- endblock -%}
 </{{ element }}>
 {% endapply ~%}

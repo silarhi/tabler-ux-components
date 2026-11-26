@@ -21,6 +21,9 @@
       time         — optional timestamp next to the title; mirrored by the `header` block
       text         — optional message; mirrored by the `body` block
       dismissible  — close button in the header rendered from `title` (default true)
+      urgent       — announce it at once, interrupting the screen reader (role="alert", aria-live="assertive"),
+                     for an error; by default a toast is a polite status message (role="status",
+                     aria-live="polite"), as in Tabler 1.7.1+
 #}
 {% apply trim %}
 {% props
@@ -36,6 +39,8 @@
     text = null,
     ## bool Whether to add a close button (`Toast:Close`) to the header rendered from `title`.
     dismissible = true,
+    ## bool Whether to interrupt the screen reader (`role="alert"`, `aria-live="assertive"`), for an error; by default a polite status message (`role="status"`, `aria-live="polite"`).
+    urgent = false,
 %}
 
 {% set toast = html_cva(
@@ -45,7 +50,7 @@
     },
 ) %}
 
-<div class="{{ toast.apply({show: show}, attributes.render('class')) }}" role="alert" aria-live="polite" aria-atomic="true"{% if not autohide %} data-bs-autohide="false"{% endif %} {{ attributes.without('class') }}>
+<div class="{{ toast.apply({show: show}, attributes.render('class')) }}" role="{{ urgent ? 'alert' : 'status' }}" aria-live="{{ urgent ? 'assertive' : 'polite' }}" aria-atomic="true"{% if not autohide %} data-bs-autohide="false"{% endif %} {{ attributes.without('class') }}>
     {## The toast parts: `header` and `body`; replace it to compose freely. -#}
     {% block content %}
         {## The header: `Toast:Header` with the `title`, `time` and `dismissible` props, when `title` is set. -#}

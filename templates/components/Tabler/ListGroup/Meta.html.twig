@@ -1,0 +1,18 @@
+{#
+    ListGroup meta — a slot after the content of a list group item, for a time, a
+    count or a badge, in the secondary color (`.list-group-item-meta`, Tabler 1.7+).
+
+    Usage:
+        <twig:Tabler:ListGroup:Meta>2 h</twig:Tabler:ListGroup:Meta>
+
+    Props:
+      tag  — span (default, valid in a link, a button or a label item too) | div
+#}
+{% apply trim %}
+{% props
+    ## 'span'|'div' The element: a `span`, valid in a link, a button or a label item too.
+    tag = 'span',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'list-group-item-meta'}) }}>{## The meta: a time, a count or a badge. #}{%- block content %}{% endblock -%}</{{ tag }}>
+{% endapply ~%}

@@ -53,6 +53,71 @@ final class InteractiveComponentsTest extends ComponentTestCase
         );
     }
 
+    public function testTabsAllInOneItems(): void
+    {
+        $html = $this->renderComponent(
+            '<twig:Tabler:Tabs id="profile" pills class="mb-3" items="{{ items }}" />',
+            ['items' => [
+                ['label' => 'Overview', 'text' => 'Jane <Cooper>'],
+                ['label' => 'Activity', 'icon' => 'activity', 'id' => 'activity', 'text' => 'Signed in.'],
+                ['label' => 'Billing', 'disabled' => true],
+            ]],
+        );
+
+        // The first tab is active, pane ids default to "<id>-<n>"; attributes go to the tab bar
+        self::assertHtmlSame(
+            '<ul class="nav nav-pills mb-3" id="profile" data-bs-toggle="tabs" role="tablist">'
+            . '<li class="nav-item" role="presentation"><a href="#profile-1" class="nav-link active" data-bs-toggle="tab">Overview</a></li>'
+            . '<li class="nav-item" role="presentation"><a href="#activity" class="nav-link" data-bs-toggle="tab"><span class="nav-link-icon"><i class="ti ti-activity"></i></span>Activity</a></li>'
+            . '<li class="nav-item" role="presentation"><a href="#profile-3" class="nav-link disabled" data-bs-toggle="tab" aria-disabled="true">Billing</a></li>'
+            . '</ul>'
+            . '<div class="tab-content">'
+            . '<div class="tab-pane active show" id="profile-1" role="tabpanel">Jane &lt;Cooper&gt;</div>'
+            . '<div class="tab-pane" id="activity" role="tabpanel">Signed in.</div>'
+            . '<div class="tab-pane" id="profile-3" role="tabpanel"></div>'
+            . '</div>',
+            $html,
+        );
+    }
+
+    public function testTabsItemsExplicitActiveAndRandomId(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Tabs items="{{ [{label: \'A\', text: \'a\'}, {label: \'B\', text: \'b\', active: true}] }}" />');
+
+        // Without an id, the bar gets none and the panes a random prefix
+        self::assertSame(1, preg_match('/href="#(tabs-\d{6})-1" class="nav-link"/', $html, $match));
+        $prefix = $match[1] ?? '';
+        self::assertStringContainsString('<a href="#' . $prefix . '-2" class="nav-link active"', $html);
+        self::assertStringContainsString('<div class="tab-pane" id="' . $prefix . '-1"', $html);
+        self::assertStringContainsString('<div class="tab-pane active show" id="' . $prefix . '-2"', $html);
+        self::assertStringStartsWith('<ul class="nav nav-tabs" data-bs-toggle="tabs"', $html);
+    }
+
+    public function testTabsPanesBlockOverride(): void
+    {
+        $html = $this->renderComponent(<<<TWIG
+            <twig:Tabler:Tabs id="t" items="{{ [{label: 'A'}] }}">
+                <twig:block name="panes"><twig:Tabler:Tabs:Content class="pt-3"><twig:Tabler:Tabs:Pane id="t-1" active>Own <strong>pane</strong></twig:Tabler:Tabs:Pane></twig:Tabler:Tabs:Content></twig:block>
+            </twig:Tabler:Tabs>
+            TWIG);
+
+        self::assertHtmlSame(
+            '<ul class="nav nav-tabs" id="t" data-bs-toggle="tabs" role="tablist">'
+            . '<li class="nav-item" role="presentation"><a href="#t-1" class="nav-link active" data-bs-toggle="tab">A</a></li>'
+            . '</ul>'
+            . '<div class="tab-content pt-3"><div class="tab-pane active show" id="t-1" role="tabpanel">Own <strong>pane</strong></div></div>',
+            $html,
+        );
+    }
+
+    public function testTabsItemIconAndDisabled(): void
+    {
+        self::assertHtmlSame(
+            '<li class="nav-item" role="presentation"><a href="#home" class="nav-link disabled" data-bs-toggle="tab" aria-disabled="true"><span class="nav-link-icon"><i class="ti ti-home"></i></span>Home</a></li>',
+            $this->renderComponent('<twig:Tabler:Tabs:Item target="home" icon="home" disabled>Home</twig:Tabler:Tabs:Item>'),
+        );
+    }
+
     public function testToast(): void
     {
         $html = $this->renderComponent(<<<TWIG
@@ -63,7 +128,7 @@ final class InteractiveComponentsTest extends ComponentTestCase
             TWIG);
 
         self::assertHtmlSame(
-            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true">'
+            '<div class="toast show" role="status" aria-live="polite" aria-atomic="true">'
             . '<div class="toast-header"><strong class="me-auto">Notice</strong>'
             . '<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>'
             . '<div class="toast-body">Saved.</div>'
@@ -147,7 +212,7 @@ final class InteractiveComponentsTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Toast autohide="{{ false }}"><twig:Tabler:Toast:Body>Saved.</twig:Tabler:Toast:Body></twig:Tabler:Toast>');
 
         self::assertHtmlSame(
-            '<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-bs-autohide="false"><div class="toast-body">Saved.</div></div>',
+            '<div class="toast" role="status" aria-live="polite" aria-atomic="true" data-bs-autohide="false"><div class="toast-body">Saved.</div></div>',
             $html,
         );
     }

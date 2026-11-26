@@ -1,0 +1,23 @@
+{#
+    ListGroup title — the first line of the content of a list group item, cut with
+    an ellipsis (`.list-group-item-title`, Tabler 1.7+).
+
+    Usage:
+        <twig:Tabler:ListGroup:Title>Paweł Kuna</twig:Tabler:ListGroup:Title>
+        <twig:Tabler:ListGroup:Title href="/builds/42">Build failed</twig:Tabler:ListGroup:Title>
+
+    Props:
+      href  — renders an <a href>, in an item that is not a link itself
+      tag   — span (default, valid in a link, a button or a label item too) | div, without `href`
+#}
+{% apply trim %}
+{% props
+    ## string|null The link target; renders an `<a href>`, in an item that is not a link itself.
+    href = null,
+    ## 'span'|'div' The element without `href`: a `span`, valid in a link, a button or a label item too.
+    tag = 'span',
+%}
+
+{% set tag = href is not null ? 'a' : tag %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('href').defaults({class: 'list-group-item-title'}) }}>{## The title. #}{%- block content %}{% endblock -%}</{{ tag }}>
+{% endapply ~%}

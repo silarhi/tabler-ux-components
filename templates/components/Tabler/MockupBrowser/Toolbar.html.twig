@@ -1,0 +1,37 @@
+{#
+    MockupBrowser toolbar — the top bar of a <twig:Tabler:MockupBrowser>: the window
+    dots at the start and the address centered (`.mockup-browser-toolbar`).
+
+    All-in-one:
+        <twig:Tabler:MockupBrowser:Toolbar url="preview.tabler.io" icon="lock" />
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:MockupBrowser:Toolbar>
+            <twig:Tabler:MockupBrowser:Controls />
+            <twig:Tabler:MockupBrowser:Url>preview.tabler.io</twig:Tabler:MockupBrowser:Url>
+        </twig:Tabler:MockupBrowser:Toolbar>
+
+    Props:
+      url   — address, rendered with MockupBrowser:Url; unset, only the dots
+      icon  — icon before the address
+#}
+{% apply trim %}
+{% props
+    ## string|null The address, rendered with `MockupBrowser:Url`; unset, only the window dots.
+    url = null,
+    ## string|null The icon before the address, e.g. `lock`.
+    icon = null,
+%}
+
+<div {{ attributes.defaults({class: 'mockup-browser-toolbar'}) }}>
+    {## The window dots and the address: `controls` and `url`; replace it to compose freely. -#}
+    {% block content %}
+        {## The window dots: `MockupBrowser:Controls`. -#}
+        {% block controls %}<twig:Tabler:MockupBrowser:Controls />{% endblock %}
+        {## The address: `MockupBrowser:Url` with the `url` and `icon` props, when `url` is set. -#}
+        {% block url %}
+            {%- if url is not null -%}<twig:Tabler:MockupBrowser:Url icon="{{ icon }}">{{ url }}</twig:Tabler:MockupBrowser:Url>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</div>
+{% endapply ~%}

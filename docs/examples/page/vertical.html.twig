@@ -1,0 +1,24 @@
+<twig:Tabler:Page pretitle="Overview" title="Dashboard">
+    <twig:block name="navbar">
+        <twig:Tabler:Navbar vertical expand="sm">
+            <twig:Tabler:Navbar:Toggler target="sidebar-menu" />
+            <twig:Tabler:Navbar:Brand href="/">Acme Admin</twig:Tabler:Navbar:Brand>
+            <twig:Tabler:Navbar:Nav id="sidebar-menu" collapse>
+                <twig:Tabler:Navbar:SectionTitle>Overview</twig:Tabler:Navbar:SectionTitle>
+                <twig:Tabler:Navbar:Item href="/" icon="home" active>Dashboard</twig:Tabler:Navbar:Item>
+                <twig:Tabler:Navbar:Item href="/invoices" icon="file-invoice">Invoices</twig:Tabler:Navbar:Item>
+                <twig:Tabler:Navbar:Item href="/customers" icon="users">Customers</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Nav>
+            <twig:Tabler:Navbar:Footer>
+                <twig:Tabler:Navbar:Item href="/me" icon="user">Jane Doe</twig:Tabler:Navbar:Item>
+            </twig:Tabler:Navbar:Footer>
+        </twig:Tabler:Navbar>
+    </twig:block>
+    <div class="row row-cards">
+        <div class="col-md-6"><twig:Tabler:Card title="Revenue" text="$4,300 this month." /></div>
+        <div class="col-md-6"><twig:Tabler:Card title="New customers" text="38 this month." /></div>
+    </div>
+    <twig:block name="footer">
+        <twig:Tabler:Footer transparent copyright="Copyright © 2026 Acme" endLinks="{{ [{label: 'Documentation', href: '/docs'}] }}" />
+    </twig:block>
+</twig:Tabler:Page>

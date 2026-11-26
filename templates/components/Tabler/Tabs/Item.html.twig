@@ -2,11 +2,15 @@
     Tabs item — one tab in a <twig:Tabler:Tabs>.
 
     Usage:
-        <twig:Tabler:Tabs:Item target="home" active>Home</twig:Tabler:Tabs:Item>
+        <twig:Tabler:Tabs:Item target="home" icon="home" active>Home</twig:Tabler:Tabs:Item>
+        <twig:Tabler:Tabs:Item target="billing" disabled>Billing</twig:Tabler:Tabs:Item>
 
     Props:
-      target  — id of the pane this tab activates (without #)
-      active  — the initially-selected tab
+      target    — id of the pane this tab activates (without #)
+      active    — the initially-selected tab
+      disabled  — non-interactive tab (disabled, aria-disabled="true")
+      icon      — optional leading Tabler icon name (or ux-icons name, `lucide:house`), rendered with
+                  <twig:Tabler:Icon> in a `.nav-link-icon`
 #}
 {% apply trim %}
 {% props
@@ -14,16 +18,25 @@
     target,
     ## bool Whether the tab is selected first.
     active = false,
+    ## bool Whether the tab is non-interactive (`disabled`, `aria-disabled`).
+    disabled = false,
+    ## string|null The leading Tabler icon name, rendered with `Tabler:Icon` (`nav-link-icon`).
+    icon = null,
 %}
 
 {% set link = html_cva(
     base: 'nav-link',
     variants: {
         active: {true: 'active', false: ''},
+        disabled: {true: 'disabled', false: ''},
     },
 ) %}
 
 <li class="nav-item" role="presentation">
-    <a href="#{{ target }}" class="{{ link.apply({active: active}, attributes.render('class')) }}" data-bs-toggle="tab" {{ attributes.without('class', 'href') }}>{## The tab label. #}{%- block content %}{% endblock -%}</a>
+    <a href="#{{ target }}" class="{{ link.apply({active: active, disabled: disabled}, attributes.render('class')) }}" data-bs-toggle="tab"{% if disabled %} aria-disabled="true"{% endif %} {{ attributes.without('class', 'href') }}>
+        {%- if icon is not null -%}<span class="nav-link-icon"><twig:Tabler:Icon name="{{ icon }}" /></span>{%- endif -%}
+        {## The tab label, after the `icon`. -#}
+        {%- block content %}{% endblock -%}
+    </a>
 </li>
 {% endapply ~%}

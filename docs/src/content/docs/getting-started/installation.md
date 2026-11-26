@@ -67,7 +67,9 @@ bundle, not both: they provide the same components. The front-end setup below is
 ## Front-end
 
 Your app must load [Tabler](https://tabler.io/) **1.6+** (`@tabler/core`): its CSS, and `tabler.js` for the
-interactive components (Modal, Dropdown, Carousel, Tabs, Offcanvas, Tooltip, Popover, Clipboard, Sparkline…).
+interactive components (Modal, Dropdown, Carousel, Tabs, Offcanvas, Tooltip, Popover, Clipboard, Sparkline…). The
+components added for Tabler 1.7 (Kbd, NumberInput, HoverGallery, Nav `overflow`…) say "Requires Tabler 1.7+" on their
+page. Flag also needs Tabler's `tabler-flags.css`.
 
 ```bash
 pnpm add @tabler/core @tabler/icons-webfont

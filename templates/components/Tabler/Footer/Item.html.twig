@@ -1,0 +1,23 @@
+{#
+    Footer item — one entry of a <twig:Tabler:Footer:Links>: a muted link, or plain text without `href`.
+
+    Usage:
+        <twig:Tabler:Footer:Item href="/docs">Documentation</twig:Tabler:Footer:Item>
+        <twig:Tabler:Footer:Item>Copyright © 2026 Acme</twig:Tabler:Footer:Item>
+
+    Props:
+      href  — link target; when omitted the item is plain text
+#}
+{% apply trim %}
+{% props
+    ## string|null The link target, rendered as a `link-secondary` link; without it, the item is plain text.
+    href = null,
+%}
+
+<li {{ attributes.defaults({class: 'list-inline-item'}) }}>
+    {%- if href is not null %}<a href="{{ href }}" class="link-secondary">{% endif -%}
+    {## The item label, inside the link when there is one. -#}
+    {%- block content %}{% endblock -%}
+    {%- if href is not null %}</a>{% endif -%}
+</li>
+{% endapply ~%}

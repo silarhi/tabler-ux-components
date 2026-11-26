@@ -43,10 +43,12 @@
         "phpstan/phpstan-symfony": "^2.1.1",
         "phpunit/phpunit": "^11.5.58 || ^12.5.38 || ^13.4.1",
         "rector/rector": "^2.9.2",
+        "symfony/form": "^6.4 || ^7.0 || ^8.0",
         "symfony/ux-icons": "^2.36.1 || ^3.0",
         "vincentlanglet/twig-cs-fixer": "^4.1.2"
     },
     "suggest": {
+        "symfony/form": "To use the Tabler form themes and their options (icon, stepper, choice_style, switch)",
         "symfony/ux-icons": "To render any icon of Iconify or your own SVG files with the Icon component and the icon props (names with an icon set prefix, e.g. \"lucide:check\")"
     },
     "autoload": {

@@ -1,0 +1,78 @@
+{#
+    Tabler InputIcon — an icon, or a spinner, inside a text field (`.input-icon`).
+
+    All-in-one (renders the <input class="form-control"> from the input props):
+        <twig:Tabler:InputIcon icon="search" name="q" placeholder="Search…" label="Search" />
+        <twig:Tabler:InputIcon icon="user" position="start" name="username" placeholder="Username" />
+        <twig:Tabler:InputIcon loader placeholder="Loading…" />
+
+    The content is the input, so the icon stays when you bring your own field (a Symfony form widget…):
+        <twig:Tabler:InputIcon icon="search" position="start">
+            {{ form_widget(form.query) }}
+        </twig:Tabler:InputIcon>
+
+    Composed (InputIcon:Addon before or after the field, in document order):
+        <twig:Tabler:InputIcon>
+            <twig:Tabler:InputIcon:Addon icon="mail" />
+            <input type="email" class="form-control" name="email" placeholder="Email">
+        </twig:Tabler:InputIcon>
+
+    Props:
+      icon         — Tabler icon name (or ux-icons name), rendered with <twig:Tabler:Icon> in InputIcon:Addon
+      loader       — a small spinner in the addon instead of the icon
+      position     — end (default) | start: where the addon goes
+      type, name, value, placeholder, id
+                   — the default input's attributes
+      label        — the accessible name of the default input (aria-label)
+      size         — sm | lg (form-control-sm / form-control-lg; the addon follows from Tabler 1.7)
+#}
+{% apply trim %}
+{% props
+    ## string|null The Tabler icon name, rendered with `Tabler:Icon` inside `InputIcon:Addon`.
+    icon = null,
+    ## bool Whether to show a small spinner in the addon instead of the icon.
+    loader = false,
+    ## 'start'|'end' Where the addon goes: before or after the input.
+    position = 'end',
+    ## string The `type` of the default input.
+    type = 'text',
+    ## string|null The `name` of the default input.
+    name = null,
+    ## string|null The initial value of the default input.
+    value = null,
+    ## string|null The placeholder of the default input.
+    placeholder = null,
+    ## string|null The `id` of the default input, for a `<label for>`.
+    id = null,
+    ## string|null The accessible name of the default input (`aria-label`).
+    label = null,
+    ## 'sm'|'md'|'lg' The size of the default input (`form-control-{size}`).
+    size = 'md',
+%}
+
+{% set input = html_cva(
+    base: 'form-control',
+    variants: {
+        size: {sm: 'form-control-sm', md: '', lg: 'form-control-lg'},
+    },
+) %}
+
+{# Captured so the addon can go before or after the input. A captured block is already escaped and marked safe: print it as is. #}
+{% set addon_html %}{## The addon: `InputIcon:Addon` with the `icon` or the `loader`, when one is set. #}{% block addon %}
+    {%- if icon is not null or loader -%}<twig:Tabler:InputIcon:Addon icon="{{ icon }}" loader="{{ loader }}" />{%- endif -%}
+{% endblock %}{% endset %}
+
+<div class="{{ html_cva(base: 'input-icon').apply({}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {%- if position == 'start' %}{{ addon_html }}{% endif %}
+    {## The input: a `<input class="form-control">` from the input props. -#}
+    {% block content %}
+        <input type="{{ type }}" class="{{ input.apply({size: size}) }}"
+            {%- if name is not null %} name="{{ name }}"{% endif %}
+            {%- if id is not null %} id="{{ id }}"{% endif %}
+            {%- if value is not null %} value="{{ value }}"{% endif %}
+            {%- if placeholder is not null %} placeholder="{{ placeholder }}"{% endif %}
+            {%- if label is not null %} aria-label="{{ label }}"{% endif %}>
+    {% endblock %}
+    {%- if position != 'start' %}{{ addon_html }}{% endif -%}
+</div>
+{% endapply ~%}

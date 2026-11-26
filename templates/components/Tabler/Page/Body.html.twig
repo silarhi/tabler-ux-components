@@ -1,0 +1,29 @@
+{#
+    Page body — the main content area of a page, with its container (`.page-body`).
+
+    Usage:
+        <twig:Tabler:Page:Body>
+            <div class="row row-cards">…</div>
+        </twig:Tabler:Page:Body>
+        <twig:Tabler:Page:Body container="fluid" tag="div">…</twig:Tabler:Page:Body>
+
+    Props:
+      container  — suffix of the inner container: xl (default) | sm | md | lg | xxl | fluid | narrow |
+                   tight | slim
+      tag        — main (default, the main landmark of the page) | div
+#}
+{% apply trim %}
+{% props
+    ## 'sm'|'md'|'lg'|'xl'|'xxl'|'fluid'|'narrow'|'tight'|'slim' The suffix of the inner `container-*`.
+    container = 'xl',
+    ## 'main'|'div' The element: `main`, the main landmark of the page, or `div` when the page already has one.
+    tag = 'main',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'page-body'}) }}>
+    <div class="container-{{ container }}">
+        {## The page content, inside the container. -#}
+        {% block content %}{% endblock %}
+    </div>
+</{{ tag }}>
+{% endapply ~%}

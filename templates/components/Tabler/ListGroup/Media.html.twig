@@ -1,0 +1,22 @@
+{#
+    ListGroup media — the leading slot of a list group item: an icon, an avatar or
+    an input before the content (`.list-group-item-media`, Tabler 1.7+).
+
+    Usage:
+        <twig:Tabler:ListGroup:Media>
+            <twig:Tabler:Avatar image="/avatars/jane.jpg" />
+        </twig:Tabler:ListGroup:Media>
+
+    The slots are <span>s, valid in an item that is a link, a button or a label too.
+
+    Props:
+      tag  — span (default) | div
+#}
+{% apply trim %}
+{% props
+    ## 'span'|'div' The element: a `span`, valid in a link, a button or a label item too.
+    tag = 'span',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'list-group-item-media'}) }}>{## The media: an icon, an avatar or an input. #}{%- block content %}{% endblock -%}</{{ tag }}>
+{% endapply ~%}

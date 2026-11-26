@@ -12,6 +12,27 @@ Shows who a user is: their photo, their initials on a tinted background, or an i
 `image` sets the picture as a background image. Without it, the children (initials, an icon) are centered in the
 avatar.
 
+## From a name
+
+`name` renders the initials of a person without an `image` or children: the first letter of the first two words,
+uppercased ("Jane Doe" gives "JD", "élodie" gives "É"). It also labels the avatar, whose picture is a background
+image and initials are not a name: `role="img"`, and the name as `title` (a tooltip on hover) and `aria-label`.
+Pass `title` or `aria-label` yourself to replace them.
+
+<Example name="avatar/name" />
+
+## Colors
+
+`color` gives the avatar one of Tabler's colors (`bg-{color}-lt`): `blue` `azure` `indigo` `purple` `pink` `red`
+`orange` `yellow` `lime` `green` `teal` `cyan`. It takes precedence over `variant`. `auto` picks one from the `name`,
+so a person keeps the same color on every page:
+
+<Example name="avatar/auto-color" />
+
+Twig has no hash function, so `auto` sums the positions of the characters of the lowercased, URL-encoded name in a
+fixed alphabet, modulo the 12 colors. It is stable, but not a real hash: different names can share a color. Without
+a `name`, `auto` sets no color.
+
 ## Sizes
 
 `size` goes from `xxs` to `2xl`; `md` is the default.
@@ -45,6 +66,12 @@ Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-s
 
 <Example name="avatar/list" />
 
+Its `items` renders an avatar for each entry, an array of Avatar props: `image`, `name`, `variant`, `color`, `size`,
+`rounded` and `square`, all optional. `text` replaces the initials, e.g. for a counter of the remaining people; it is
+escaped:
+
+<Example name="avatar/list-items" />
+
 ## Brand mark
 
 `Avatar:Brand` adds a small mark in the bottom corner of an avatar (`avatar-brand`), e.g. the service an account comes
@@ -69,16 +96,19 @@ from. Put it in the avatar, with an `image` or with markup such as an icon:
 | `square`  | bool    | `false` | Rounded corners instead of a circle (`avatar-square`)                                       |
 | `cover`   | bool    | `false` | Pulled over the element above, with a ring (`avatar-cover`)                                 |
 | `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
+| `name`    | string? | `null`  | Name of the person: initials without `image`, `role="img"`, `title` and `aria-label`        |
+| `color`   | string? | `null`  | Tabler color of the background (`bg-{color}-lt`), or `auto` to pick it from the `name`      |
 
 Other attributes go to the root `<span class="avatar">`. A `style` attribute is merged after the `background-image`,
 so it can still override it.
 
 `Avatar:List`:
 
-| Prop      | Type    | Default | Description                                                                     |
-| --------- | ------- | ------- | ------------------------------------------------------------------------------- |
-| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                    |
-| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`) |
+| Prop      | Type    | Default | Description                                                                             |
+| --------- | ------- | ------- | --------------------------------------------------------------------------------------- |
+| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                            |
+| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`)         |
+| `items`   | array?  | `null`  | Avatars to render: `{image?, name?, text?, variant?, color?, size?, rounded?, square?}` |
 
 `Avatar:Brand`:
 
@@ -108,9 +138,10 @@ so it can still override it.
 
 ## Blocks
 
-| Block     | Default                                         |
-| --------- | ----------------------------------------------- |
-| `content` | Empty: the children (initials, an icon) go here |
+| Block     | Default                                                                                  |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `content` | The initials of `name` without an `image`; the children (initials, an icon) replace them |
 
-`Avatar:List` and `Avatar:Brand` have an empty `content` block for their children. The `content` block of
+The `content` block of `Avatar:List` renders an `Avatar` for each entry of `items`; the children replace it.
+`Avatar:Brand` has an empty `content` block for its children. The `content` block of
 `Avatar:Upload` renders the `icon` and the `text`.

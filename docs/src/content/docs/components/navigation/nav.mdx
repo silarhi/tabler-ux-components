@@ -8,6 +8,16 @@ import Example from '../../../../components/Example.astro'
 A list of links between pages, sections or filters. Each item is a real link: the server renders the page with the
 right item `active`.
 
+<Example name="nav/all-in-one" />
+
+`items` is an array of `{label, href?, icon?, active?, disabled?, badge?, keep?}`, each rendered with `Nav:Item`.
+`icon` puts a [Tabler icon](https://tabler.io/icons), or a UX Icons name (`lucide:house`), before the label, in a
+`.nav-link-icon`; `badge` adds a [Badge](/components/content/badge/) after it.
+
+## Composed
+
+Pass `Nav:Item`s as children instead: they replace the `content` block.
+
 <Example name="nav/basic" />
 
 ## Nav, Tabs or Navbar
@@ -38,26 +48,43 @@ A Nav with `variant="tabs"` looks like Tabs, but its items are links, not pane s
 
 <Example name="nav/fill" />
 
+## Overflow
+
+`overflow` wraps the nav in a `.nav-overflow` with `data-bs-toggle="nav-overflow"`: `tabler.js` (1.7 or later) then
+moves the items that do not fit into a More dropdown at the end of the bar, and back when there is room again. An item
+marked `keep` (`nav-overflow-keep`) always stays in the bar, for the current section for example. A vertical nav never
+overflows.
+
+<Example name="nav/overflow" />
+
+The wrapper takes the width of its container, so put the nav in a box that sets it. Tabler reads its options from
+the wrapper (`data-bs-more-text="…"` for the label of the More toggle, `data-bs-collapse-below`…): to set them, write
+the `<div class="nav-overflow" data-bs-toggle="nav-overflow">` yourself around a `Nav` without `overflow`.
+
 ## Props
 
 `Nav`:
 
-| Prop        | Type   | Default     | Description                                                                       |
-| ----------- | ------ | ----------- | --------------------------------------------------------------------------------- |
-| `variant`   | string | `'default'` | `default` `tabs` (`nav-tabs`) `pills` (`nav-pills`) `underline` (`nav-underline`) |
-| `vertical`  | bool   | `false`     | Stacks the items in a column (`flex-column`)                                      |
-| `fill`      | bool   | `false`     | Items share the full width, in proportion to their content (`nav-fill`)           |
-| `justified` | bool   | `false`     | Items share the full width equally (`nav-justified`)                              |
+| Prop        | Type   | Default     | Description                                                                                  |
+| ----------- | ------ | ----------- | -------------------------------------------------------------------------------------------- |
+| `variant`   | string | `'default'` | `default` `tabs` (`nav-tabs`) `pills` (`nav-pills`) `underline` (`nav-underline`)            |
+| `vertical`  | bool   | `false`     | Stacks the items in a column (`flex-column`)                                                 |
+| `fill`      | bool   | `false`     | Items share the full width, in proportion to their content (`nav-fill`)                      |
+| `justified` | bool   | `false`     | Items share the full width equally (`nav-justified`)                                         |
+| `items`     | array? | `null`      | `{label, href?, icon?, active?, disabled?, badge?, keep?}` entries, rendered with `Nav:Item` |
+| `overflow`  | bool   | `false`     | Moves the items that do not fit into a More dropdown (`.nav-overflow` wrapper, Tabler 1.7+)  |
 
 Other attributes go to the root `<ul class="nav">`.
 
 `Nav:Item`:
 
-| Prop       | Type    | Default | Description                                             |
-| ---------- | ------- | ------- | ------------------------------------------------------- |
-| `href`     | string? | `null`  | Link target; without it, the `<a>` has no `href`        |
-| `active`   | bool    | `false` | The current item (`active`, with `aria-current="page"`) |
-| `disabled` | bool    | `false` | Not clickable (`disabled`, with `aria-disabled="true"`) |
+| Prop       | Type    | Default | Description                                                                                 |
+| ---------- | ------- | ------- | ------------------------------------------------------------------------------------------- |
+| `href`     | string? | `null`  | Link target; without it, the `<a>` has no `href`                                            |
+| `active`   | bool    | `false` | The current item (`active`, with `aria-current="page"`)                                     |
+| `disabled` | bool    | `false` | Not clickable (`disabled`, with `aria-disabled="true"`)                                     |
+| `icon`     | string? | `null`  | Leading Tabler icon or UX Icons name (`nav-link-icon`)                                      |
+| `keep`     | bool    | `false` | Never moved into the More dropdown of an `overflow` nav (`nav-overflow-keep` on the `<li>`) |
 
 Other attributes go to the `<a class="nav-link">`, not to the `<li>`.
 
@@ -66,3 +93,11 @@ Other attributes go to the `<a class="nav-link">`, not to the `<li>`.
 | Component  | Renders                                                  |
 | ---------- | -------------------------------------------------------- |
 | `Nav:Item` | `<li class="nav-item">` around an `<a class="nav-link">` |
+
+## Blocks
+
+| Block     | Default                                         |
+| --------- | ----------------------------------------------- |
+| `content` | A `Nav:Item` for each entry of the `items` prop |
+
+The content of `Nav:Item` is its label, after the `icon`.

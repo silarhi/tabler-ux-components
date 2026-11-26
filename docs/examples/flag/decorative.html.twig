@@ -1,0 +1,13 @@
+<twig:Tabler:ListGroup>
+    {% for office in [
+        {code: 'fr', city: 'Toulouse', country: 'France'},
+        {code: 'ca', city: 'Montréal', country: 'Canada'},
+        {code: 'jp', city: 'Osaka', country: 'Japan'},
+    ] %}
+        <twig:Tabler:ListGroup:Item title="{{ office.city }}" description="{{ office.country }}">
+            <twig:block name="media">
+                <twig:Tabler:ListGroup:Media><twig:Tabler:Flag code="{{ office.code }}" size="sm" /></twig:Tabler:ListGroup:Media>
+            </twig:block>
+        </twig:Tabler:ListGroup:Item>
+    {% endfor %}
+</twig:Tabler:ListGroup>

@@ -10,6 +10,7 @@ export default defineSilarhiDocs({
         { label: 'Getting started', items: [{ autogenerate: { directory: 'getting-started' } }] },
         group('Feedback', 'components/feedback'),
         group('Actions', 'components/actions'),
+        group('Forms', 'components/forms'),
         group('Content', 'components/content'),
         group('Overlays', 'components/overlays'),
         group('Navigation', 'components/navigation'),

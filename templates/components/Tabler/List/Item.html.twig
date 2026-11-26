@@ -4,19 +4,28 @@
     Usage:
         <twig:Tabler:List:Item>Egan Poetz</twig:Tabler:List:Item>
         <twig:Tabler:List:Item inline>License</twig:Tabler:List:Item>
+        <twig:Tabler:List:Item icon="check" variant="success">Priority support</twig:Tabler:List:Item>
 
     Props:
-      inline  — item of an inline list (list-inline-item); defaults to the `inline`
-                of the enclosing <twig:Tabler:List>, pass false to opt out
+      inline   — item of an inline list (list-inline-item); defaults to the `inline`
+                 of the enclosing <twig:Tabler:List>, pass false to opt out
+      icon     — icon rendered before the content with <twig:Tabler:Icon>: the marker of
+                 an icon list (<twig:Tabler:List icon>, Tabler 1.7+); mirrored by the `icon` block
+      variant  — color of that icon (text-{variant}), overriding the color of the list
 #}
 {% apply trim %}
 {% props
     ## bool|null Whether the item is inline (`list-inline-item`); defaults to the `inline` of the enclosing `List`.
     inline = null,
+    ## string|null The icon before the content, rendered with `Icon`: the marker of an icon list (Tabler 1.7+).
+    icon = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The color of the icon (`text-{variant}`), overriding the color of the list.
+    variant = null,
 %}
 
 {# without its own `inline`, an item follows its <twig:Tabler:List> #}
 {% set inline = inline ?? _tabler_list_inline ?? false %}
 {% set classes = ((inline ? 'list-inline-item ' : '') ~ attributes.render('class'))|trim %}
-<li{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{## The item content. #}{%- block content %}{% endblock -%}</li>
+{# the icon goes first: an icon list takes the first icon of an item as its marker #}
+<li{% if classes %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{## The marker: an `Icon` with the `icon` and `variant` props, when `icon` is set. #}{%- block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" variant="{{ variant }}" />{% endif %}{% endblock -%}{## The item content. #}{%- block content %}{% endblock -%}</li>
 {% endapply ~%}

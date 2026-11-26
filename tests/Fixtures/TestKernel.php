@@ -15,11 +15,13 @@ namespace Silarhi\TablerUxComponents\Tests\Fixtures;
 
 use function dirname;
 
+use ReflectionClass;
 use Silarhi\TablerUxComponents\TablerUxComponentsBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -69,6 +71,14 @@ final class TestKernel extends Kernel
                 'type' => 'service',
             ],
         ]);
+
+        // The form type extensions and the form themes are tested with real forms (tests/Form/)
+        if (interface_exists(FormFactoryInterface::class)) {
+            $container->extension('framework', ['form' => ['enabled' => true, 'csrf_protection' => false]]);
+            $container->services()->alias('test.form.factory', 'form.factory')->public();
+            // TwigBundle only loads its form services when symfony/form is a non-dev dependency, as in an app
+            $container->import(dirname((string) (new ReflectionClass(TwigBundle::class))->getFileName()) . '/Resources/config/form.php');
+        }
 
         $container->extension('twig', [
             'default_path' => '%kernel.project_dir%/tests/Fixtures/templates',

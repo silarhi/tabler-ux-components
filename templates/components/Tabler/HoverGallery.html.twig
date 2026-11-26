@@ -1,0 +1,48 @@
+{#
+    Tabler HoverGallery — several images in the space of one (`.hover-gallery`,
+    Tabler 1.7+): the first one shows, and the image changes as the pointer moves
+    across the gallery. No JavaScript; on touch screens it becomes a strip to swipe.
+
+    All-in-one (`images` is an array of {src, alt}):
+        <twig:Tabler:HoverGallery indicators class="rounded" images="{{ [
+            {src: '/products/backpack-1.jpg', alt: 'Black backpack, front view'},
+            {src: '/products/backpack-2.jpg', alt: 'Black backpack, side view'},
+        ] }}" />
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:HoverGallery indicators class="card-img-top">
+            <twig:Tabler:HoverGallery:Item src="/products/watch-1.jpg" alt="Steel watch, front view" />
+            <twig:Tabler:HoverGallery:Item src="/products/watch-2.jpg" alt="Steel watch, back view" />
+        </twig:Tabler:HoverGallery>
+
+    The gallery is a square; set `--tblr-hover-gallery-aspect-ratio` (e.g. `16 / 9`)
+    in a `style` attribute to change the shape. Keyboard users only see the first
+    image: keep the information of the others elsewhere on the page.
+
+    Props:
+      images      — optional array of {src, alt}, rendered with HoverGallery:Item; mirrored by the `content` block
+      indicators  — a bar per image at the bottom edge, lit for the image on display (hover-gallery-indicators)
+#}
+{% apply trim %}
+{% props
+    ## list<array{src:string,alt?:string}>|null The images, each rendered with `HoverGallery:Item`.
+    images = null,
+    ## bool Whether to show a bar per image at the bottom edge, lit for the image on display (`hover-gallery-indicators`).
+    indicators = false,
+%}
+
+{% set gallery = html_cva(
+    base: 'hover-gallery',
+    variants: {
+        indicators: {true: 'hover-gallery-indicators', false: ''},
+    },
+) %}
+
+<div class="{{ gallery.apply({indicators: indicators}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## A `HoverGallery:Item` for each entry of `images`; replace it to compose freely. #}
+    {%- block content -%}
+        {%- for image in images ?? [] -%}
+            <twig:Tabler:HoverGallery:Item src="{{ image.src }}" alt="{{ image.alt ?? '' }}" />
+        {%- endfor -%}
+    {%- endblock -%}
+</div>
+{% endapply ~%}
