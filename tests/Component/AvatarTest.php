@@ -72,6 +72,103 @@ final class AvatarTest extends ComponentTestCase
         self::assertHtmlSame('<span class="avatar" style="background-image: url(/a.jpg); background-position: top"></span>', $html);
     }
 
+    public function testNameRendersInitialsAndLabel(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Jane Doe" aria-label="Jane Doe">JD</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Jean Paul Gaultier" aria-label="Jean Paul Gaultier">JP</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="  Jean  Paul Gaultier " />'),
+        );
+    }
+
+    public function testInitialsAreMultibyteSafe(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="élodie" aria-label="élodie">É</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="élodie" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Øyvind Åsen" aria-label="Øyvind Åsen">ØÅ</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Øyvind Åsen" />'),
+        );
+    }
+
+    public function testNameWithImageOrChildrenKeepsTheirContent(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar" style="background-image: url(/a.jpg)" role="img" title="Jane Doe" aria-label="Jane Doe"></span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" image="/a.jpg" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Jane Doe" aria-label="Jane Doe"><i class="ti ti-user"></i></span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe"><i class="ti ti-user"></i></twig:Tabler:Avatar>'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverName(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" title="Jane (admin)" aria-label="Jane Doe, administrator" class="me-2" data-id="7" />');
+
+        self::assertHtmlSame('<span class="avatar me-2" role="img" title="Jane (admin)" aria-label="Jane Doe, administrator" data-id="7">JD</span>', $html);
+    }
+
+    public function testColor(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar bg-purple-lt">JL</span>',
+            $this->renderComponent('<twig:Tabler:Avatar color="purple">JL</twig:Tabler:Avatar>'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar bg-teal-lt">JL</span>',
+            $this->renderComponent('<twig:Tabler:Avatar color="teal" variant="primary">JL</twig:Tabler:Avatar>'),
+        );
+    }
+
+    public function testAutoColorIsStable(): void
+    {
+        $jane = $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" color="auto" />');
+
+        self::assertHtmlSame('<span class="avatar bg-cyan-lt" role="img" title="Jane Doe" aria-label="Jane Doe">JD</span>', $jane);
+        self::assertSame($jane, $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" color="auto" />'));
+        self::assertHtmlSame(
+            '<span class="avatar bg-pink-lt" role="img" title="élodie" aria-label="élodie">É</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="élodie" color="auto" />'),
+        );
+    }
+
+    public function testAutoColorWithoutNameRendersNoColor(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar bg-primary-lt">JL</span>',
+            $this->renderComponent('<twig:Tabler:Avatar color="auto" variant="primary">JL</twig:Tabler:Avatar>'),
+        );
+    }
+
+    public function testAvatarListItems(): void
+    {
+        $html = $this->renderComponent(<<<'TWIG'
+            <twig:Tabler:Avatar:List stacked size="sm" class="mb-3" items="{{ [
+                {image: '/a.jpg'},
+                {name: 'Jane Doe', variant: 'primary', rounded: true},
+                {name: 'Paweł Kuna', color: 'green', square: true, size: 'lg'},
+                {text: '+8'},
+            ] }}" />
+            TWIG);
+
+        self::assertHtmlSame(
+            '<div class="avatar-list avatar-list-stacked avatar-list-sm mb-3">'
+            . '<span class="avatar" style="background-image: url(/a.jpg)"></span>'
+            . '<span class="avatar bg-primary-lt rounded-circle" role="img" title="Jane Doe" aria-label="Jane Doe">JD</span>'
+            . '<span class="avatar avatar-lg bg-green-lt avatar-square" role="img" title="Paweł Kuna" aria-label="Paweł Kuna">PK</span>'
+            . '<span class="avatar">+8</span>'
+            . '</div>',
+            $html,
+        );
+    }
+
     public function testBrandConsumerStyleIsKept(): void
     {
         self::assertHtmlSame(

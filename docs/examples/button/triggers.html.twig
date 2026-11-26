@@ -1,0 +1,11 @@
+<div class="btn-list mb-3">
+    <twig:Tabler:Button variant="danger" icon="trash" modal="button-delete-user">Delete user</twig:Tabler:Button>
+    <twig:Tabler:Button variant="default" icon="menu-2" offcanvas="button-menu">Menu</twig:Tabler:Button>
+    <twig:Tabler:Button variant="default" appearance="outline" icon="filter" collapse="button-filters">Filters</twig:Tabler:Button>
+</div>
+<div class="collapse" id="button-filters">
+    <div class="card card-body">Status, owner and creation date filters.</div>
+</div>
+
+<twig:Tabler:Modal id="button-delete-user" title="Delete Jane Doe?" text="She loses access to the workspace immediately." />
+<twig:Tabler:Offcanvas id="button-menu" title="Menu" text="Dashboard, projects and settings." />

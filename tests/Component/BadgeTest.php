@@ -95,4 +95,50 @@ final class BadgeTest extends ComponentTestCase
 
         self::assertHtmlSame('<a href="/tags/php" class="badge bg-info-lt">PHP</a>', $html);
     }
+
+    public function testIcon(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge text-bg-success"><i class="ti ti-check icon" aria-hidden="true"></i>Verified</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="success" icon="check">Verified</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge badge-icononly bg-warning-lt" aria-label="Starred"><i class="ti ti-star icon" aria-hidden="true"></i></span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="warning" light icon="star" iconOnly aria-label="Starred" />'),
+        );
+    }
+
+    public function testIconBlockCanBeOverridden(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge icon="star"><twig:block name="icon"><span class="status-dot"></span></twig:block>Live</twig:Tabler:Badge>');
+
+        self::assertHtmlSame('<span class="badge text-bg-primary"><span class="status-dot"></span>Live</span>', $html);
+    }
+
+    public function testBadgeListItems(): void
+    {
+        $html = $this->renderComponent(<<<'TWIG'
+            <twig:Tabler:Badge:List class="mb-2" items="{{ [
+                {text: 'PHP'},
+                {text: 'Symfony', variant: 'success', light: true, icon: 'check'},
+                {text: 'Twig', variant: 'info', outline: true, pill: true, size: 'sm', href: '/tags/twig'},
+            ] }}" />
+            TWIG);
+
+        self::assertHtmlSame(
+            '<div class="badge-list mb-2">'
+            . '<span class="badge text-bg-primary">PHP</span>'
+            . '<span class="badge bg-success-lt"><i class="ti ti-check icon" aria-hidden="true"></i>Symfony</span>'
+            . '<a href="/tags/twig" class="badge badge-sm badge-pill badge-outline text-info">Twig</a>'
+            . '</div>',
+            $html,
+        );
+    }
+
+    public function testBadgeListItemsAreEscaped(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Badge:List items="{{ [{text: \'<b>x</b>\'}] }}" />');
+
+        self::assertHtmlSame('<div class="badge-list"><span class="badge text-bg-primary">&lt;b&gt;x&lt;/b&gt;</span></div>', $html);
+    }
 }

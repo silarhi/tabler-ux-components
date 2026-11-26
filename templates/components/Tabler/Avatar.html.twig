@@ -6,16 +6,28 @@
         <twig:Tabler:Avatar variant="primary" size="lg">JL</twig:Tabler:Avatar>
         <twig:Tabler:Avatar rounded><i class="ti ti-user"></i></twig:Tabler:Avatar>
 
-    Group avatars with <twig:Tabler:Avatar:List stacked>; add a corner mark with
+    From a name (initials "JD", `role="img"`, the name as `title` and `aria-label`):
+        <twig:Tabler:Avatar name="Jane Doe" />
+        <twig:Tabler:Avatar name="Jane Doe" color="auto" />
+        <twig:Tabler:Avatar name="Jane Doe" image="/avatars/jane.jpg" />
+
+    Group avatars with <twig:Tabler:Avatar:List stacked> (or its `items`); add a corner mark with
     <twig:Tabler:Avatar:Brand>; an empty slot is <twig:Tabler:Avatar:Upload>.
 
     Props:
       size     — xxs | xs | sm | md (default) | lg | xl | 2xl
-      variant    — tinted background for initials (bg-{variant}-lt)
+      variant  — tinted background for initials (bg-{variant}-lt)
       rounded  — circular avatar (rounded-circle)
       square   — rounded corners instead of a circle (avatar-square, Tabler 1.5+)
       cover    — pull the avatar over the element above it, with a ring, e.g. over a Card:Cover (avatar-cover)
       image    — background image URL
+      name     — the person's name: its initials (first letter of the first two words, uppercased) are the
+                 default content without an `image`, and it labels the avatar (role="img", title, aria-label)
+      color    — Tabler color of the tinted background (bg-{color}-lt): blue | azure | indigo | purple | pink |
+                 red | orange | yellow | lime | green | teal | cyan, or `auto` to pick one from the `name`
+                 (the sum of the positions of its URL-encoded characters in a fixed alphabet, modulo 12: stable
+                 across requests, not a real hash, so different names can share a color); takes precedence
+                 over `variant`
 #}
 {% apply trim %}
 {% props
@@ -31,7 +43,13 @@
     cover = false,
     ## string|null The image URL, set as an inline `background-image` style.
     image = null,
+    ## string|null The person's name: its initials without an `image`, and the avatar's `title` and `aria-label` (`role="img"`).
+    name = null,
+    ## 'auto'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The tinted background (`bg-{color}-lt`), `auto` to pick it from the `name`; takes precedence over `variant`.
+    color = null,
 %}
+
+{% set palette = ['blue', 'azure', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'lime', 'green', 'teal', 'cyan'] %}
 
 {% set avatar = html_cva(
     base: 'avatar',
@@ -47,14 +65,43 @@
             dark: 'bg-dark-lt',
             light: 'bg-light-lt',
         },
+        color: {
+            blue: 'bg-blue-lt',
+            azure: 'bg-azure-lt',
+            indigo: 'bg-indigo-lt',
+            purple: 'bg-purple-lt',
+            pink: 'bg-pink-lt',
+            red: 'bg-red-lt',
+            orange: 'bg-orange-lt',
+            yellow: 'bg-yellow-lt',
+            lime: 'bg-lime-lt',
+            green: 'bg-green-lt',
+            teal: 'bg-teal-lt',
+            cyan: 'bg-cyan-lt',
+        },
         rounded: {true: 'rounded-circle', false: ''},
         square: {true: 'avatar-square', false: ''},
         cover: {true: 'avatar-cover', false: ''},
     },
 ) %}
 
+{# Twig has no ord(): the URL-encoded, lowercased name only holds the characters of `alphabet`, and the length of
+   what precedes a character in it is its position #}
+{% if color == 'auto' %}
+    {% set alphabet = '0123456789abcdefghijklmnopqrstuvwxyz%-_.~' %}
+    {% set sum = (name ?? '')|trim|url_encode|lower|split('')|reduce((carry, char) => carry + (alphabet|split(char)|first)|length, 0) %}
+    {% set color = name is not empty ? palette[sum % palette|length] : null %}
+{% endif %}
+
 {# the background image goes first so a user `style` can still override it #}
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
+{% set label = name is not null ? name|trim : '' %}
 
-<span class="{{ avatar.apply({size: size, variant: variant ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{## The avatar content: initials or an icon. #}{%- block content %}{% endblock -%}</span>
+<span class="{{ avatar.apply({size: size, variant: color is null ? variant ?? '' : '', color: color ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ (label is not empty ? attributes.defaults({role: 'img', title: label, 'aria-label': label}) : attributes).without('class', 'style') }}>{## The avatar content: the initials of `name` without an `image`, or the children (initials or an icon). #}
+    {%- block content -%}
+        {%- if label is not empty and image is null -%}
+            {{- label|split(' ')|filter(word => word is not empty)|slice(0, 2)|map(word => word|first|upper)|join -}}
+        {%- endif -%}
+    {%- endblock -%}
+</span>
 {% endapply ~%}

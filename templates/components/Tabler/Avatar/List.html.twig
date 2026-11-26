@@ -8,9 +8,18 @@
             <twig:Tabler:Avatar>+8</twig:Tabler:Avatar>
         </twig:Tabler:Avatar:List>
 
+    All-in-one (`items` is an array of Avatar props: {image?, name?, text?, variant?, color?, size?, rounded?,
+    square?}; `text` replaces the initials, e.g. for a "+8" counter):
+        <twig:Tabler:Avatar:List stacked items="{{ [
+            {name: 'Jane Doe', image: '/avatars/1.jpg'},
+            {name: 'Paweł Kuna', color: 'auto'},
+            {text: '+8'},
+        ] }}" />
+
     Props:
       stacked  — overlap the avatars (avatar-list-stacked)
       size     — xxs | xs | sm | md | lg | xl | 2xl: sizes every avatar in the list (avatar-list-{size})
+      items    — optional array of avatars; mirrored by the `content` block
 #}
 {% apply trim %}
 {% props
@@ -18,6 +27,8 @@
     stacked = false,
     ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl'|null The size of every avatar in the list (`avatar-list-{size}`).
     size = null,
+    ## list<array{image?:string,name?:string,text?:string,variant?:string,color?:string,size?:string,rounded?:bool,square?:bool}>|null The avatars, rendered with `Tabler:Avatar`.
+    items = null,
 %}
 
 {% set list = html_cva(
@@ -36,7 +47,31 @@
     },
 ) %}
 
-<div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The avatars. -#}
-    {%- block content %}{% endblock -%}
+<div class="{{ list.apply({stacked: stacked, size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The avatars: a `Tabler:Avatar` for each entry of `items`. -#}
+    {%- block content -%}
+        {%- for item in items ?? [] -%}
+            {%- if item.text is defined and item.text is not null -%}
+                <twig:Tabler:Avatar
+                    image="{{ item.image ?? null }}"
+                    name="{{ item.name ?? null }}"
+                    variant="{{ item.variant ?? null }}"
+                    color="{{ item.color ?? null }}"
+                    size="{{ item.size ?? 'md' }}"
+                    rounded="{{ item.rounded ?? false }}"
+                    square="{{ item.square ?? false }}"
+                >{{ item.text }}</twig:Tabler:Avatar>
+            {%- else -%}
+                <twig:Tabler:Avatar
+                    image="{{ item.image ?? null }}"
+                    name="{{ item.name ?? null }}"
+                    variant="{{ item.variant ?? null }}"
+                    color="{{ item.color ?? null }}"
+                    size="{{ item.size ?? 'md' }}"
+                    rounded="{{ item.rounded ?? false }}"
+                    square="{{ item.square ?? false }}"
+                />
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endblock -%}
 </div>
 {% endapply ~%}
