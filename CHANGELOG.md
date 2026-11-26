@@ -5,6 +5,46 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - Unreleased
+
+### Added
+
+- `items` prop on `Breadcrumb`: `{label, href?, active?, icon?}` entries, the last one the current page unless an entry sets `active`, and an `icon` prop on `Breadcrumb:Item`.
+- All-in-one `Dropdown`: `label`, `icon` and `variant` props for the toggle and an `items` prop for the menu, with `toggle` and `menu` blocks.
+- `items` prop on `Dropdown:Menu`: `{label, href?, icon?, active?, disabled?, badge?}` links, `{divider: true}` separators and `{header: '…'}` labels.
+- `items` prop on `Nav`: `{label, href?, icon?, active?, disabled?, badge?, keep?}` entries, and an `icon` prop on `Nav:Item` (`nav-link-icon`).
+- `overflow` prop on `Nav`, which moves the items that do not fit into a More dropdown (`nav-overflow`, Tabler 1.7+), and a `keep` prop on `Nav:Item` (`nav-overflow-keep`).
+- `items` and `id` props on `Tabs`: `{label, id?, icon?, active?, text?, disabled?}` entries rendered as the tab bar and its panes (`panes` block), pane ids defaulting to `<id>-<n>`.
+- `icon` and `disabled` props on `Tabs:Item`.
+- `Button` `icon` and `iconEnd` props, rendered with `Icon` (`icon`, `icon icon-end`), with matching blocks: an `iconOnly` button with an `icon` needs no children.
+- `Button` `modal`, `offcanvas` and `collapse` props, taking the id of the element the button opens (`data-bs-toggle`, `data-bs-target`, `aria-controls`, and `aria-expanded` for `collapse`), and a `tooltip` prop (`title` and `data-bs-toggle="tooltip"`, the `aria-label` of an icon-only button); a trigger takes precedence over `tooltip`, and explicit attributes win over the generated ones.
+- `Badge` `icon` prop, rendered with `Icon`, with a matching block.
+- `Avatar` `name` prop: the initials of the name without an `image` or children, and `role="img"`, `title` and `aria-label`.
+- `Avatar` `color` prop: one of Tabler's colors (`bg-{color}-lt`), or `auto` to pick a stable one from the `name`.
+- `Avatar:List` and `Badge:List` `items` props, rendering an `Avatar` or a `Badge` for each entry.
+- `Kbd` renders a keyboard key (`<kbd>`), or with `keys` (`'ctrl+k'` or a list) a shortcut: a `Kbd:Group` (`.kbd-group`) of `Kbd:Key`. Requires Tabler 1.7+.
+- `NumberInput` renders Tabler's number field (`.number-input`, `data-bs-toggle="number-input"`) with its decrease and increase buttons server-side: `name`, `value`, `min`, `max`, `step`, `size`, `disabled`, `readonly`, `repeat`, with `NumberInput:Button` and `NumberInput:Input` to compose. Requires Tabler 1.7+.
+- `InputIcon` puts an icon, or a spinner with `loader`, at the start or the end of a text field (`.input-icon`), with `InputIcon:Addon`; its content replaces only the input, so a Symfony form widget keeps the icon.
+- `Selectgroup` renders radios or checkboxes styled as buttons (`.form-selectgroup`) from `items`, in the default, `pills` or `boxes` style, with `Selectgroup:Item`, `Selectgroup:Label` and `Selectgroup:Check`.
+- `TextShimmer` renders a label with a sweeping highlight (`.text-shimmer`), with an optional `loader` (`TextShimmer:Loader`) and `live` for screen readers. Requires Tabler 1.7+.
+- `Page` component, the shell of an app page: a `navbar` block, then a `.page-wrapper` with a `PageHeader` (`title`, `pretitle` props, `actions` block), the children in a `<main class="page-body">` container and a `footer` block; `container`, `fluid` (`layout-fluid`) and `center` (`page-center`) props, and the `Page:Wrapper` and `Page:Body` sub-components.
+- `Footer` component: a `copyright` line and `links` on the start side, `endLinks` on the end side, a `transparent` modifier (`footer-transparent`) and a `container` prop, with the `Footer:Links` and `Footer:Item` sub-components.
+- `HoverGallery`, several images in the space of one, switched as the pointer moves across them, from `images` (`{src, alt}`) or `HoverGallery:Item`s; `indicators` adds a bar per image. Requires Tabler 1.7+.
+- `ImageLabel`, a short text or an icon pinned to a corner of an image, from `src`, `alt`, `width`, `label`, `icon`, `position` and `variant`, with `ImageLabel:Image` and `ImageLabel:Label` (`iconOnly` for a square icon label named for assistive technology). Requires Tabler 1.7+.
+- `MockupBrowser`, a browser window frame around a screenshot, from `url`, `icon`, `src`, `alt` and `size="sm"`, with `MockupBrowser:Toolbar`, `MockupBrowser:Controls`, `MockupBrowser:Url` and `MockupBrowser:Body`. Requires Tabler 1.7+.
+- `Flag`, a country, territory or organisation flag from its `code` (lowercased), with the avatar sizes and a `label` for its accessible name; without one, it gets `aria-hidden="true"`. Requires Tabler's flags plugin (`tabler-flags.css`).
+- `List` takes `icon`, for icons instead of bullets (`list-icon`, `list-icon-inline` with `inline`), and `variant` for the color of the markers; `List:Item` takes an `icon` and its `variant`, with an `icon` block. Requires Tabler 1.7+.
+- `ListGroup:Item` renders a row of slots from `title`, `description`, `icon` and `meta`, with `media`, `body`, `meta` and `actions` blocks, and takes `tag="label"`; `items` accepts the same keys. The slots are `ListGroup:Media`, `ListGroup:Content`, `ListGroup:Title` (an `<a>` with `href`), `ListGroup:Description` and `ListGroup:Meta`. Requires Tabler 1.7+.
+- `ListGroup` takes `size` (`sm`, `lg`) and `selectable`, with `ListGroup:Check`, a checkbox or radio that marks its item active, and `ListGroup:Nested` (`collapse`, `show`) for indented items under a parent. `ListGroup:Actions` takes `tag` (`div`, `span`) for the actions slot. Requires Tabler 1.7+.
+- `Datagrid` takes `horizontal` (`datagrid-horizontal`) and `cols`, a fixed number of columns from 1 to 4 (`datagrid-cols-{n}`). Requires Tabler 1.7+.
+- `Toast` takes `urgent`, for `role="alert"` and `aria-live="assertive"`.
+
+### Changed
+
+- **BC break:** `Toast` renders `role="status"` instead of `role="alert"` (still `aria-live="polite"`), as Tabler does since 1.7.1, so screen readers announce it without interrupting. Pass `urgent` for an error that must interrupt (`role="alert"`, `aria-live="assertive"`), and update tests that query the toast by the `alert` role.
+- **BC break:** `title` is now a prop of `ListGroup:Item`, the first line of its content slot. A `title="…"` HTML attribute passed to an item now renders the slot layout instead of a tooltip.
+- The Symfony UX Toolkit kit requires `@tabler/core` 1.7+ (was 1.6+), for the components added in this release.
+
 ## [0.9.0] - 2026-11-20
 
 ### Added
@@ -155,6 +195,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.10.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.9.0...HEAD
 [0.9.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.1...v0.8.0
 [0.7.1]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.0...v0.7.1

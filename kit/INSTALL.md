@@ -1,6 +1,6 @@
 # Getting started
 
-This kit provides ready-to-use Twig components based on [Tabler](https://tabler.io/) 1.6. It is built from
+This kit provides ready-to-use Twig components based on [Tabler](https://tabler.io/) 1.7. It is built from
 [silarhi/tabler-ux-components](https://github.com/silarhi/tabler-ux-components), whose documentation describes every
 component: [tabler-ux-components.silarhi.dev](https://tabler-ux-components.silarhi.dev).
 
@@ -29,7 +29,7 @@ import '@tabler/core'
 With a JavaScript package manager (pnpm, npm, Yarn…), install Tabler instead:
 
 ```bash
-pnpm add @tabler/core@^1.6.0 @tabler/icons-webfont@^3.36.1
+pnpm add @tabler/core@^1.7.0 @tabler/icons-webfont@^3.36.1
 ```
 
 The imports in `assets/app.js` remain the same. Since Tabler 1.5, `tabler.js` bundles Bootstrap's JavaScript: do not
