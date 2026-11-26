@@ -1,0 +1,10 @@
+{#
+    Kbd key — one key of a shortcut (`<kbd>`), inside a <twig:Tabler:Kbd:Group>.
+
+    Usage:
+        <twig:Tabler:Kbd:Key>⌘</twig:Tabler:Kbd:Key>
+        <twig:Tabler:Kbd:Key><twig:Tabler:Icon name="arrow-up" /></twig:Tabler:Kbd:Key>
+#}
+{% apply trim %}
+<kbd {{ attributes }}>{## The key label, or an icon. #}{%- block content %}{% endblock -%}</kbd>
+{% endapply ~%}

@@ -1,0 +1,99 @@
+---
+title: Selectgroup
+description: Radios or checkboxes styled as buttons, for a filter bar or a set of options.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A set of radios or checkboxes styled as buttons (`.form-selectgroup`), for a filter bar or a set of options outside a
+Symfony form. The real inputs stay in the markup, hidden with CSS: the arrow keys, the space bar and form submission
+work as usual.
+
+<Example name="selectgroup/all-in-one" />
+
+Each entry of `items` is a `Selectgroup:Item`: a `value`, and an optional `label`, `icon`, `iconOnly`, `checked` and
+`disabled`. Give the group an accessible name: `role="group"` and an `aria-label`, or a `<fieldset>` with a `<legend>`
+around it.
+
+## Several choices
+
+`type="checkbox"` lets the user pick several options; end the `name` with `[]` so the server gets them all:
+
+<Example name="selectgroup/checkbox" />
+
+## Icons
+
+`icon` puts an icon before the label. With `iconOnly`, only the icon shows, and the label becomes the `aria-label` of
+the input:
+
+<Example name="selectgroup/icons" />
+
+## Pills
+
+<Example name="selectgroup/pills" />
+
+## Boxes
+
+`variant="boxes"` turns each option into a box with a check mark, round for radios and square for checkboxes.
+`vertical` stacks the items in a column:
+
+<Example name="selectgroup/boxes" />
+
+## Composed
+
+The tag content replaces the items: place `Selectgroup:Item` yourself, each with its `name`. The content of an item
+replaces its icon and label; `check` adds the check mark of a box:
+
+<Example name="selectgroup/composed" />
+
+## Props
+
+| Prop       | Type    | Default   | Description                                                                                   |
+| ---------- | ------- | --------- | --------------------------------------------------------------------------------------------- |
+| `name`     | string? | `null`    | The `name` of every input; end it with `[]` for checkboxes                                    |
+| `type`     | string  | `'radio'` | `radio` (one choice) or `checkbox` (several)                                                  |
+| `items`    | list    | `[]`      | `{value, label?, icon?, iconOnly?, checked?, disabled?}` entries, one `Selectgroup:Item` each |
+| `variant`  | string? | `null`    | `pills` (`form-selectgroup-pills`) or `boxes` (`form-selectgroup-boxes`, with a check)        |
+| `vertical` | bool    | `false`   | Stacks the items in a column (`form-selectgroup-vertical`)                                    |
+
+Other attributes go to the root `<div class="form-selectgroup">`.
+
+### Selectgroup:Item
+
+| Prop       | Type    | Default   | Description                                                   |
+| ---------- | ------- | --------- | ------------------------------------------------------------- |
+| `type`     | string  | `'radio'` | `radio` or `checkbox`                                         |
+| `name`     | string? | `null`    | The `name` of the input                                       |
+| `value`    | string? | `null`    | The `value` of the input                                      |
+| `label`    | string? | `null`    | The option text                                               |
+| `icon`     | string? | `null`    | Tabler icon name (or ux-icons name) before the text           |
+| `iconOnly` | bool    | `false`   | Shows only the icon; `label` becomes the input's `aria-label` |
+| `checked`  | bool    | `false`   | Initially selected                                            |
+| `disabled` | bool    | `false`   | Cannot be selected                                            |
+| `check`    | bool    | `false`   | Adds a check mark before the content (`Selectgroup:Check`)    |
+
+Other attributes go to its root `<label>`.
+
+### Selectgroup:Label
+
+| Prop    | Type | Default | Description                                                      |
+| ------- | ---- | ------- | ---------------------------------------------------------------- |
+| `check` | bool | `false` | Puts a `Selectgroup:Check` before the content, laid out as a box |
+
+## Sub-components
+
+| Component           | Renders                                                                           |
+| ------------------- | --------------------------------------------------------------------------------- |
+| `Selectgroup:Item`  | `<label class="form-selectgroup-item">`, with the hidden `form-selectgroup-input` |
+| `Selectgroup:Label` | `<span class="form-selectgroup-label">`, the visible part of an item              |
+| `Selectgroup:Check` | `<span class="form-selectgroup-check">`, the check mark of a box                  |
+
+## Blocks
+
+| Block     | Default                                   |
+| --------- | ----------------------------------------- |
+| `items`   | A `Selectgroup:Item` per entry of `items` |
+| `content` | `items`: replace it to compose freely     |
+
+`Selectgroup:Item` has an `icon` block (a `Tabler:Icon` named `icon`) and a `content` block (`icon` and the `label`),
+which its tag content replaces.

@@ -1,0 +1,65 @@
+---
+title: TextShimmer
+description: A highlight sweeping across a short label while something is in progress.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A short label, such as "Thinking…", with a band of full color sweeping across it while a task runs. The animation is
+CSS only (`.text-shimmer`). Requires Tabler 1.7+.
+
+<Example name="text-shimmer/all-in-one" />
+
+The label itself has to say what is going on: when the user prefers reduced motion, the sweep stops and the text shows
+in its full color.
+
+## Loader
+
+`loader` puts a small spinner before the label (`TextShimmer:Loader`). It sits inside the shimmer, so it takes the
+color of the text and dims with it. The tag content replaces only the label, so the loader stays. `live` adds
+`role="status"` and `aria-live="polite"`, so screen readers announce the label and its changes:
+
+<Example name="text-shimmer/loader" />
+
+## Colors
+
+The shimmer is a mask, so the text keeps its own color: combine it with any text color class.
+
+<Example name="text-shimmer/colors" />
+
+## Speed and contrast
+
+`--tblr-text-shimmer-duration` sets how long one sweep takes, `--tblr-text-shimmer-opacity` how much the text is
+dimmed between sweeps:
+
+<Example name="text-shimmer/speed" />
+
+## Composed
+
+Place `TextShimmer:Loader` yourself, without the `loader` prop. `tag="div"` renders a block:
+
+<Example name="text-shimmer/composed" />
+
+## Props
+
+| Prop     | Type    | Default  | Description                                                                 |
+| -------- | ------- | -------- | --------------------------------------------------------------------------- |
+| `tag`    | string  | `'span'` | The element: `span` for inline text, `div` for a block                      |
+| `label`  | string? | `null`   | The label                                                                   |
+| `loader` | bool    | `false`  | Puts a small spinner before the label (`TextShimmer:Loader`)                |
+| `live`   | bool    | `false`  | Announces the label and its changes (`role="status"`, `aria-live="polite"`) |
+
+Other attributes go to the root element.
+
+## Sub-components
+
+| Component            | Renders                                                 |
+| -------------------- | ------------------------------------------------------- |
+| `TextShimmer:Loader` | `<span class="text-shimmer-loader" aria-hidden="true">` |
+
+## Blocks
+
+| Block     | Default                                       |
+| --------- | --------------------------------------------- |
+| `loader`  | `TextShimmer:Loader`, when `loader` is set    |
+| `content` | The `label` prop; the tag content replaces it |

@@ -1,0 +1,70 @@
+{#
+    Tabler Selectgroup — radios or checkboxes styled as buttons (`.form-selectgroup`), for a filter bar or
+    a set of options outside a Symfony form.
+
+    All-in-one:
+        <twig:Tabler:Selectgroup name="status" items="{{ [
+            {value: 'all', label: 'All', checked: true},
+            {value: 'open', label: 'Open', icon: 'circle-dot'},
+            {value: 'closed', label: 'Closed', disabled: true},
+        ] }}" />
+        <twig:Tabler:Selectgroup name="tags[]" type="checkbox" variant="pills" items="{{ tags }}" />
+
+    Composed:
+        <twig:Tabler:Selectgroup variant="boxes" vertical>
+            <twig:Tabler:Selectgroup:Item name="plan" value="pro" check checked>
+                <strong>Pro</strong> — $29 per month
+            </twig:Tabler:Selectgroup:Item>
+        </twig:Tabler:Selectgroup>
+
+    Props:
+      name      — the `name` of every input (end it with `[]` for checkboxes)
+      type      — radio (default) | checkbox
+      items     — list of {value, label?, icon?, iconOnly?, checked?, disabled?}, one Selectgroup:Item each
+      variant   — pills (form-selectgroup-pills) | boxes (form-selectgroup-boxes, items with a check mark)
+      vertical  — stack the items in a column (form-selectgroup-vertical)
+#}
+{% apply trim %}
+{% props
+    ## string|null The `name` of every input; end it with `[]` for checkboxes.
+    name = null,
+    ## 'radio'|'checkbox' The input type: one choice, or several.
+    type = 'radio',
+    ## list<array<string,mixed>> The items, one `Selectgroup:Item` each: `value`, and optional `label`, `icon`, `iconOnly`, `checked` and `disabled`.
+    items = [],
+    ## 'pills'|'boxes'|null The style: pill-shaped items (`form-selectgroup-pills`), or boxes with a check mark (`form-selectgroup-boxes`).
+    variant = null,
+    ## bool Whether to stack the items in a column (`form-selectgroup-vertical`).
+    vertical = false,
+%}
+
+{% set selectgroup = html_cva(
+    base: 'form-selectgroup',
+    variants: {
+        variant: {pills: 'form-selectgroup-pills', boxes: 'form-selectgroup-boxes'},
+        vertical: {true: 'form-selectgroup-vertical', false: ''},
+    },
+) %}
+
+<div class="{{ selectgroup.apply({variant: variant ?? '', vertical: vertical}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The items: a `Selectgroup:Item` per entry of `items`; replace it to compose freely. -#}
+    {% block content %}
+        {## The `items`, each rendered with `Selectgroup:Item`. -#}
+        {% block items %}
+            {%- for item in items -%}
+                <twig:Tabler:Selectgroup:Item
+                    type="{{ type }}"
+                    name="{{ name }}"
+                    value="{{ item.value }}"
+                    label="{{ item.label ?? null }}"
+                    icon="{{ item.icon ?? null }}"
+                    iconOnly="{{ item.iconOnly ?? false }}"
+                    checked="{{ item.checked ?? false }}"
+                    disabled="{{ item.disabled ?? false }}"
+                    check="{{ variant == 'boxes' }}"
+                />
+            {%- endfor -%}
+        {% endblock %}
+    {% endblock %}
+</div>
+{% endapply ~%}

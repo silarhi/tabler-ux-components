@@ -1,0 +1,5 @@
+<div class="d-flex flex-column align-items-start gap-2">
+    {% for size in ['sm', 'md', 'lg'] %}
+        <twig:Tabler:NumberInput size="{{ size }}" value="1" min="0" label="Quantity" />
+    {% endfor %}
+</div>

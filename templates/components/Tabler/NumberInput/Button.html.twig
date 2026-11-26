@@ -1,0 +1,26 @@
+{#
+    Number input button — the decrease or increase button of a <twig:Tabler:NumberInput>
+    (`data-bs-number-input-action`). Empty, it shows Tabler's minus / plus icon (drawn by CSS);
+    any content replaces it.
+
+    Usage:
+        <twig:Tabler:NumberInput:Button action="decrement" />
+        <twig:Tabler:NumberInput:Button action="increment" label="More"><twig:Tabler:Icon name="chevron-up" /></twig:Tabler:NumberInput:Button>
+
+    Props:
+      action    — decrement | increment
+      label     — the accessible name (aria-label); defaults to "Decrease" / "Increase"
+      disabled  — render the button disabled (tabler.js then updates it with the field and the bounds)
+#}
+{% apply trim %}
+{% props
+    ## 'decrement'|'increment' What the button does.
+    action,
+    ## string|null The accessible name (`aria-label`); defaults to `Decrease` or `Increase`.
+    label = null,
+    ## bool Whether the button is disabled.
+    disabled = false,
+%}
+
+<button type="button" class="{{ html_cva(base: 'btn btn-icon').apply({}, attributes.render('class')) }}" data-bs-number-input-action="{{ action }}" aria-label="{{ label ?? (action == 'increment' ? 'Increase' : 'Decrease') }}"{% if disabled %} disabled{% endif %} {{ attributes.without('class', 'type') }}>{## The icon; empty, Tabler's CSS draws a minus or a plus. #}{%- block content %}{% endblock -%}</button>
+{% endapply ~%}

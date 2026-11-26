@@ -1,0 +1,11 @@
+{#
+    Selectgroup check — the round (radio) or square (checkbox) check mark of a selectgroup box
+    (`.form-selectgroup-check`); it fills when the input is checked.
+
+    Usage:
+        <twig:Tabler:Selectgroup:Check />
+        <twig:Tabler:Selectgroup:Check class="form-selectgroup-check-floated" />
+#}
+{% apply trim %}
+<span {{ attributes.defaults({class: 'form-selectgroup-check'}) }}></span>
+{% endapply ~%}
