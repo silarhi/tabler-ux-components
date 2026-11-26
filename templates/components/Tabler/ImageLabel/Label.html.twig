@@ -1,0 +1,63 @@
+{#
+    ImageLabel label — a short text or an icon pinned to a corner of the image of a
+    <twig:Tabler:ImageLabel> (`.img-label`), on a dark see-through background by default.
+
+    Usage:
+        <twig:Tabler:ImageLabel:Label label="New" variant="primary" />
+        <twig:Tabler:ImageLabel:Label icon="player-play" label="1:24" position="top-start" />
+        <twig:Tabler:ImageLabel:Label icon="crown" label="Premium" iconOnly />
+        <twig:Tabler:ImageLabel:Label>AI<span class="visually-hidden"> generated</span></twig:Tabler:ImageLabel:Label>
+
+    Props:
+      label     — label text; mirrored by the `content` block
+      icon      — icon before the text, rendered with <twig:Tabler:Icon>; mirrored by the `icon` block
+      iconOnly  — a square label showing only the icon (img-label-icon); `label` then names it for
+                  assistive technology only (visually-hidden)
+      position  — top-start | top-end | bottom-start | bottom-end; unset, bottom end
+      variant   — primary | secondary | success | danger | warning | info | dark | light
+                  (bg-{variant} text-{variant}-fg)
+#}
+{% apply trim %}
+{% props
+    ## string|null The label text.
+    label = null,
+    ## string|null The icon before the text, rendered with `Icon`.
+    icon = null,
+    ## bool Whether to show only the icon in a square label (`img-label-icon`); `label` then names it for assistive technology only (`visually-hidden`).
+    iconOnly = false,
+    ## 'top-start'|'top-end'|'bottom-start'|'bottom-end'|null The corner (`img-label-{position}`); unset, bottom end.
+    position = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The color (`bg-{variant} text-{variant}-fg`); unset, a dark see-through background.
+    variant = null,
+%}
+
+{% set imgLabel = html_cva(
+    base: 'img-label',
+    variants: {
+        iconOnly: {true: 'img-label-icon', false: ''},
+        position: {
+            'top-start': 'img-label-top-start',
+            'top-end': 'img-label-top-end',
+            'bottom-start': 'img-label-bottom-start',
+            'bottom-end': '',
+        },
+        variant: {
+            primary: 'bg-primary text-primary-fg',
+            secondary: 'bg-secondary text-secondary-fg',
+            success: 'bg-success text-success-fg',
+            danger: 'bg-danger text-danger-fg',
+            warning: 'bg-warning text-warning-fg',
+            info: 'bg-info text-info-fg',
+            dark: 'bg-dark text-dark-fg',
+            light: 'bg-light text-light-fg',
+        },
+    },
+) %}
+
+<span class="{{ imgLabel.apply({iconOnly: iconOnly, position: position ?? '', variant: variant ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The icon: an `Icon` with the `icon` prop, when set. -#}
+    {% block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" />{% endif %}{% endblock %}
+    {## The text: the `label` prop, hidden but for assistive technology with `iconOnly`. -#}
+    {% block content %}{% if label is not null %}{% if iconOnly %}<span class="visually-hidden">{{ label }}</span>{% else %}{{ label }}{% endif %}{% endif %}{% endblock -%}
+</span>
+{% endapply ~%}

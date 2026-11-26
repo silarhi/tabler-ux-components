@@ -1,0 +1,70 @@
+{#
+    Tabler MockupBrowser — a frame that looks like a browser window, with the window
+    dots and an optional address bar, around a page preview or a screenshot
+    (`.mockup-browser`, Tabler 1.7+).
+
+    All-in-one:
+        <twig:Tabler:MockupBrowser url="preview.tabler.io" src="/screenshots/dashboard.png" alt="Tabler dashboard" />
+        <twig:Tabler:MockupBrowser size="sm" icon="lock" url="https://preview.tabler.io" src="/screenshots/dashboard.png" alt="Tabler dashboard" />
+
+    Any content in the body, keeping the toolbar of the props:
+        <twig:Tabler:MockupBrowser url="example.com/signup">
+            <twig:block name="body">
+                <twig:Tabler:MockupBrowser:Body class="p-4">…</twig:Tabler:MockupBrowser:Body>
+            </twig:block>
+        </twig:Tabler:MockupBrowser>
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:MockupBrowser>
+            <twig:Tabler:MockupBrowser:Toolbar>
+                <twig:Tabler:MockupBrowser:Controls />
+                <twig:Tabler:MockupBrowser:Url icon="lock">preview.tabler.io</twig:Tabler:MockupBrowser:Url>
+            </twig:Tabler:MockupBrowser:Toolbar>
+            <twig:Tabler:MockupBrowser:Body src="/screenshots/dashboard.png" alt="Tabler dashboard" />
+        </twig:Tabler:MockupBrowser>
+
+    The window dots are decoration, the address is plain text (not a link nor a
+    field): give a screenshot an `alt` saying what page it shows.
+
+    Props:
+      url   — address shown in the toolbar; unset, a plain frame with only the dots; mirrored by the `toolbar` block
+      icon  — icon before the address, e.g. `lock` for a secure page
+      src   — screenshot URL, filling the width of the frame; mirrored by the `body` block
+      alt   — alternative text of the screenshot
+      size  — sm: a 24px toolbar with smaller dots and text, for thumbnails and cards (mockup-browser-sm)
+#}
+{% apply trim %}
+{% props
+    ## string|null The address in the toolbar, rendered with `MockupBrowser:Toolbar`; unset, only the window dots.
+    url = null,
+    ## string|null The icon before the address, e.g. `lock` for a secure page.
+    icon = null,
+    ## string|null The screenshot URL, rendered with `MockupBrowser:Body`.
+    src = null,
+    ## string The alternative text of the screenshot: what page it shows.
+    alt = '',
+    ## 'sm'|null The size: `sm` for a 24px toolbar, for thumbnails and cards (`mockup-browser-sm`).
+    size = null,
+%}
+
+{% set browser = html_cva(
+    base: 'mockup-browser',
+    variants: {
+        size: {sm: 'mockup-browser-sm'},
+    },
+) %}
+
+<div class="{{ browser.apply({size: size ?? ''}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    {## The frame parts: `toolbar` and `body`; replace it to compose freely. -#}
+    {% block content %}
+        {## The toolbar: `MockupBrowser:Toolbar` with the `url` and `icon` props. -#}
+        {% block toolbar %}
+            <twig:Tabler:MockupBrowser:Toolbar url="{{ url }}" icon="{{ icon }}" />
+        {% endblock %}
+        {## The page: `MockupBrowser:Body` with the `src` and `alt` props, when `src` is set. -#}
+        {% block body %}
+            {%- if src is not null -%}<twig:Tabler:MockupBrowser:Body src="{{ src }}" alt="{{ alt }}" />{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</div>
+{% endapply ~%}

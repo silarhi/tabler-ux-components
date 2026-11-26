@@ -1,0 +1,44 @@
+{#
+    ListGroup content — the main slot of a list group item, with a title and a
+    description (`.list-group-item-content`, Tabler 1.7+). Its presence turns the
+    item into a row of slots: ListGroup:Media, ListGroup:Content, ListGroup:Meta
+    and ListGroup:Actions.
+
+    All-in-one:
+        <twig:Tabler:ListGroup:Content title="Paweł Kuna" description="UI Designer" />
+
+    Composed (children replace the `content` block):
+        <twig:Tabler:ListGroup:Content>
+            <twig:Tabler:ListGroup:Title href="/builds/42">Build failed</twig:Tabler:ListGroup:Title>
+            <twig:Tabler:ListGroup:Description>The last deploy did not finish</twig:Tabler:ListGroup:Description>
+        </twig:Tabler:ListGroup:Content>
+
+    Props:
+      title        — first line; mirrored by the `title` block
+      description  — second line; mirrored by the `description` block
+      tag          — span (default, valid in a link, a button or a label item too) | div
+#}
+{% apply trim %}
+{% props
+    ## string|null The first line, rendered with `ListGroup:Title`.
+    title = null,
+    ## string|null The second line, rendered with `ListGroup:Description`.
+    description = null,
+    ## 'span'|'div' The element: a `span`, valid in a link, a button or a label item too.
+    tag = 'span',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'list-group-item-content'}) }}>
+    {## The content: `title` and `description`; replace it to compose freely. -#}
+    {% block content %}
+        {## The title: `ListGroup:Title` with the `title` prop, when set. -#}
+        {% block title %}
+            {%- if title is not null -%}<twig:Tabler:ListGroup:Title>{{ title }}</twig:Tabler:ListGroup:Title>{%- endif -%}
+        {% endblock %}
+        {## The description: `ListGroup:Description` with the `description` prop, when set. -#}
+        {% block description %}
+            {%- if description is not null -%}<twig:Tabler:ListGroup:Description>{{ description }}</twig:Tabler:ListGroup:Description>{%- endif -%}
+        {% endblock %}
+    {% endblock %}
+</{{ tag }}>
+{% endapply ~%}

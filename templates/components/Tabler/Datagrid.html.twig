@@ -6,9 +6,37 @@
             <twig:Tabler:Datagrid:Item title="Registrar">Third Party</twig:Tabler:Datagrid:Item>
             <twig:Tabler:Datagrid:Item title="Port">3306</twig:Tabler:Datagrid:Item>
         </twig:Tabler:Datagrid>
+
+        <twig:Tabler:Datagrid horizontal>…</twig:Tabler:Datagrid>
+        <twig:Tabler:Datagrid cols="2">…</twig:Tabler:Datagrid>
+
+    Props (Tabler 1.7+):
+      horizontal  — the title beside the value, one pair per row (datagrid-horizontal)
+      cols        — 1 | 2 | 3 | 4: a fixed number of columns (datagrid-cols-{n}); unset, the grid fits
+                    as many columns as the width allows
 #}
 {% apply trim %}
-<div {{ attributes.defaults({class: 'datagrid'}) }}>
+{% props
+    ## bool Whether to put the title beside the value, one pair per row (`datagrid-horizontal`, Tabler 1.7+).
+    horizontal = false,
+    ## int|null A fixed number of columns, from 1 to 4 (`datagrid-cols-{n}`, Tabler 1.7+); unset, the grid fits as many as the width allows.
+    cols = null,
+%}
+
+{% set datagrid = html_cva(
+    base: 'datagrid',
+    variants: {
+        horizontal: {true: 'datagrid-horizontal', false: ''},
+        cols: {
+            1: 'datagrid-cols-1',
+            2: 'datagrid-cols-2',
+            3: 'datagrid-cols-3',
+            4: 'datagrid-cols-4',
+        },
+    },
+) %}
+
+<div {{ attributes.defaults({class: datagrid.apply({horizontal: horizontal, cols: cols ?? ''})}) }}>
     {## The title/value pairs: `Datagrid:Item` components. -#}
     {% block content %}{% endblock %}
 </div>

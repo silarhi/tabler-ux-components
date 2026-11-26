@@ -2,7 +2,8 @@
     Tabler ListGroup — a series of related items in one bordered block
     (`.list-group`).
 
-    All-in-one (`items` is an array of {label, href?, active?, disabled?, variant?}):
+    All-in-one (`items` is an array of {label?, href?, active?, disabled?, variant?, title?,
+    description?, icon?, meta?}):
         <twig:Tabler:ListGroup items="{{ [
             {label: 'Profile', href: '/profile', active: true},
             {label: 'Billing', href: '/billing'},
@@ -14,6 +15,10 @@
             <twig:Tabler:ListGroup:Item href="/reports/1" active>Report generated</twig:Tabler:ListGroup:Item>
             <twig:Tabler:ListGroup:Item variant="danger">Build failed</twig:Tabler:ListGroup:Item>
         </twig:Tabler:ListGroup>
+
+        <twig:Tabler:ListGroup size="sm" items="{{ [
+            {icon: 'user', title: 'Paweł Kuna', description: 'UI Designer', meta: '2 h'},
+        ] }}" />
 
         <twig:Tabler:ListGroup tag="ol" numbered>
             <twig:Tabler:ListGroup:Item tag="li">Create an account</twig:Tabler:ListGroup:Item>
@@ -31,12 +36,15 @@
       numbered     — number the items, on an <ol> (list-group-numbered)
       horizontal   — lay the items out in a row: bare for always, or from a breakpoint sm | md | lg | xl | xxl
       card         — use the card padding inside a card (card-list-group)
+      size         — sm | lg: compact or roomy items (list-group-sm|lg, Tabler 1.7+)
+      selectable   — a checked ListGroup:Check gives its item the active look, no JavaScript
+                     (list-group-selectable, Tabler 1.7+)
 #}
 {% apply trim %}
 {% props
     ## 'div'|'ul'|'ol'|'nav' The root element; generated items render as `<li>` in a `ul` or `ol`.
     tag = 'div',
-    ## list<array{label:string,href?:string,active?:bool,disabled?:bool,variant?:string}>|null The items, each rendered with `ListGroup:Item`.
+    ## list<array{label?:string,href?:string,active?:bool,disabled?:bool,variant?:string,title?:string,description?:string,icon?:string,meta?:string}>|null The items, each rendered with `ListGroup:Item`.
     items = null,
     ## bool Whether to drop the outer border and rounded corners (`list-group-flush`).
     flush = false,
@@ -50,6 +58,10 @@
     horizontal = false,
     ## bool Whether to use the card padding on the items (`card-list-group`).
     card = false,
+    ## 'sm'|'lg'|null The density of the items (`list-group-sm`, `list-group-lg`, Tabler 1.7+).
+    size = null,
+    ## bool Whether a checked `ListGroup:Check` gives its item the active look (`list-group-selectable`, Tabler 1.7+).
+    selectable = false,
 %}
 
 {% set list = html_cva(
@@ -69,6 +81,11 @@
             xxl: 'list-group-horizontal-xxl',
         },
         card: {true: 'card-list-group', false: ''},
+        size: {
+            sm: 'list-group-sm',
+            lg: 'list-group-lg',
+        },
+        selectable: {true: 'list-group-selectable', false: ''},
     },
 ) %}
 
@@ -79,6 +96,8 @@
     numbered: numbered,
     horizontal: horizontal ?? false,
     card: card,
+    size: size ?? '',
+    selectable: selectable,
 }, attributes.render('class')) %}
 
 <{{ tag }} class="{{ classes }}" {{ attributes.without('class') }}>{## A `ListGroup:Item` for each entry of `items`; replace it to compose freely. #}
@@ -91,6 +110,10 @@
                 disabled="{{ item.disabled ?? false }}"
                 variant="{{ item.variant ?? null }}"
                 label="{{ item.label ?? null }}"
+                title="{{ item.title ?? null }}"
+                description="{{ item.description ?? null }}"
+                icon="{{ item.icon ?? null }}"
+                meta="{{ item.meta ?? null }}"
             />
         {%- endfor -%}
     {%- endblock -%}

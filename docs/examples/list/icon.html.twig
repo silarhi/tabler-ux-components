@@ -1,0 +1,6 @@
+<twig:Tabler:List icon variant="success" class="mb-0">
+    {% for feature in ['Unlimited projects', 'Priority support', 'Custom domains'] %}
+        <twig:Tabler:List:Item icon="check">{{ feature }}</twig:Tabler:List:Item>
+    {% endfor %}
+    <twig:Tabler:List:Item icon="x" variant="danger">No single sign-on</twig:Tabler:List:Item>
+</twig:Tabler:List>

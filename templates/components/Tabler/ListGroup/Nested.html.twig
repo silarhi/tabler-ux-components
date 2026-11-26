@@ -1,0 +1,43 @@
+{#
+    ListGroup nested — a block of indented items right after their parent item
+    (`.list-group-nested`, Tabler 1.7+), usually a collapse toggled by that parent.
+    Add `list-group-item-toggle` to the chevron of the parent: it turns over while
+    the block is open.
+
+    Usage:
+        <twig:Tabler:ListGroup>
+            <twig:Tabler:ListGroup:Item button title="Projects" icon="folder"
+                data-bs-toggle="collapse" data-bs-target="#projects" aria-expanded="true" aria-controls="projects">
+                <twig:block name="meta">
+                    <twig:Tabler:ListGroup:Meta><twig:Tabler:Icon name="chevron-down" class="list-group-item-toggle" /></twig:Tabler:ListGroup:Meta>
+                </twig:block>
+            </twig:Tabler:ListGroup:Item>
+            <twig:Tabler:ListGroup:Nested id="projects" collapse show>
+                <twig:Tabler:ListGroup:Item href="/projects/website" label="Website redesign" />
+            </twig:Tabler:ListGroup:Nested>
+        </twig:Tabler:ListGroup>
+
+    Props:
+      collapse  — make it a Bootstrap collapse (collapse), toggled by its parent item
+      show      — with `collapse`: open (show)
+#}
+{% apply trim %}
+{% props
+    ## bool Whether to make it a Bootstrap collapse (`collapse`), toggled by its parent item.
+    collapse = false,
+    ## bool With `collapse`, whether it is open (`show`).
+    show = false,
+%}
+
+{% set nested = html_cva(
+    base: 'list-group-nested',
+    variants: {
+        collapse: {true: 'collapse', false: ''},
+        show: {true: 'show', false: ''},
+    },
+) %}
+
+<div class="{{ nested.apply({collapse: collapse, show: collapse and show}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The nested items: `ListGroup:Item` components. -#}
+    {%- block content %}{% endblock -%}
+</div>
+{% endapply ~%}

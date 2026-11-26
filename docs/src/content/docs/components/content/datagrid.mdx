@@ -22,9 +22,25 @@ forms mix freely in the same grid:
 
 <Example name="datagrid/block" />
 
+## Layout
+
+The grid fits as many columns as the width allows. `horizontal` puts each title beside its value, one pair per row
+(`datagrid-horizontal`), for a narrow detail panel. Requires Tabler 1.7+:
+
+<Example name="datagrid/horizontal" />
+
+`cols` sets a fixed number of columns, from 1 to 4 (`datagrid-cols-{n}`, Tabler 1.7+):
+
+<Example name="datagrid/cols" />
+
 ## Props
 
-`Datagrid` has no props: attributes go to the root `<div class="datagrid">`.
+| Prop         | Type | Default | Description                                                                  |
+| ------------ | ---- | ------- | ---------------------------------------------------------------------------- |
+| `horizontal` | bool | `false` | Title beside the value, one pair per row (`datagrid-horizontal`)             |
+| `cols`       | int? | `null`  | Fixed number of columns, 1 to 4 (`datagrid-cols-{n}`); unset, as many as fit |
+
+Other attributes go to the root `<div class="datagrid">`.
 
 `Datagrid:Item`:
 

@@ -1,0 +1,5 @@
+<div class="d-flex flex-wrap gap-3">
+    {% for variant in ['primary', 'success', 'warning', 'danger'] %}
+        <twig:Tabler:ImageLabel src="/examples/photo-3.jpg" alt="Lounge with sofas by the windows" label="{{ variant }}" variant="{{ variant }}" width="200" />
+    {% endfor %}
+</div>

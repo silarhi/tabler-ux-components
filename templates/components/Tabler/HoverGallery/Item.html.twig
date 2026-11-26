@@ -1,0 +1,27 @@
+{#
+    HoverGallery item — one image of a <twig:Tabler:HoverGallery>, and the invisible
+    column that shows it on hover (`.hover-gallery-item`).
+
+    Usage:
+        <twig:Tabler:HoverGallery:Item src="/products/watch-1.jpg" alt="Steel watch, front view" />
+
+        <twig:Tabler:HoverGallery:Item>
+            <img src="/products/watch-1.jpg" srcset="/products/watch-1@2x.jpg 2x" alt="Steel watch, front view">
+        </twig:Tabler:HoverGallery:Item>
+
+    Props:
+      src  — image URL; mirrored by the `content` block
+      alt  — what this photo shows, not only the product name
+#}
+{% apply trim %}
+{% props
+    ## string|null The image URL, rendered as an `<img>`.
+    src = null,
+    ## string The alternative text: what this photo shows, not only the product name.
+    alt = '',
+%}
+
+<div {{ attributes.defaults({class: 'hover-gallery-item'}) }}>{## The image: an `<img>` with the `src` and `alt` props, when `src` is set. #}
+    {%- block content %}{% if src is not null %}<img src="{{ src }}" alt="{{ alt }}">{% endif %}{% endblock -%}
+</div>
+{% endapply ~%}

@@ -1,7 +1,8 @@
 {#
     Tabler List — a plain list without the list-group borders: `separated` stacks
     blocks with a gap (`.list-separated`), `inline` lays items out in a row
-    (`.list-inline`), `unstyled` just drops the bullets.
+    (`.list-inline`), `unstyled` just drops the bullets, `icon` turns the bullets
+    into icons (`.list-icon`, Tabler 1.7+).
 
     Usage:
         <twig:Tabler:List separated>
@@ -13,18 +14,28 @@
             <twig:Tabler:List:Item>License</twig:Tabler:List:Item>
         </twig:Tabler:List>
 
+        <twig:Tabler:List icon variant="success">
+            <twig:Tabler:List:Item icon="check">Unlimited projects</twig:Tabler:List:Item>
+            <twig:Tabler:List:Item icon="x" variant="danger">No custom domain</twig:Tabler:List:Item>
+        </twig:Tabler:List>
+
     Props:
       separated  — vertical stack with a gap between items (list-separated)
-      inline     — items in a row (list-inline); its List:Item children follow it
+      inline     — items in a row (list-inline); its List:Item children follow it. With `icon`, a
+                   wrapping row of icon entries instead (list-icon-inline)
       dots       — with `inline`: a dot between the items (list-inline-dots)
       unstyled   — no bullets, no indent (list-unstyled)
       ordered    — render an <ol> instead of a <ul>
+      icon       — icons instead of bullets (list-icon, Tabler 1.7+): the first icon of each item,
+                   e.g. the `icon` of a List:Item, is its marker, centered on the first line
+      variant    — with `icon`: the color of every marker (--tblr-list-icon-color); primary | secondary |
+                   success | danger | warning | info | dark | light
 #}
 {% apply trim %}
 {% props
     ## bool Whether to stack the items with a gap between them (`list-separated`).
     separated = false,
-    ## bool Whether to lay the items out in a row (`list-inline`); its `List:Item` children follow it.
+    ## bool Whether to lay the items out in a row (`list-inline`), its `List:Item` children following it; with `icon`, a wrapping row of icon entries (`list-icon-inline`).
     inline = false,
     ## bool With `inline`, whether to put a dot between the items (`list-inline-dots`).
     dots = false,
@@ -32,6 +43,10 @@
     unstyled = false,
     ## bool Whether to render an `<ol>` instead of a `<ul>`.
     ordered = false,
+    ## bool Whether to use icons instead of bullets, the first icon of each item being its marker (`list-icon`, Tabler 1.7+).
+    icon = false,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null With `icon`, the color of every marker (`--tblr-list-icon-color`).
+    variant = null,
 %}
 
 {% set list = html_cva(
@@ -40,13 +55,21 @@
         inline: {true: 'list-inline', false: ''},
         dots: {true: 'list-inline-dots', false: ''},
         unstyled: {true: 'list-unstyled', false: ''},
+        icon: {true: 'list-icon', false: ''},
+        iconInline: {true: 'list-icon-inline', false: ''},
     },
 ) %}
 
 {% set tag = ordered ? 'ol' : 'ul' %}
+{# an icon list lays its entries out itself: no list-inline nor list-inline-item #}
+{% set textInline = inline and not icon %}
+{% set style = attributes.render('style') %}
+{% if icon and variant is not null %}
+    {% set style = '--tblr-list-icon-color: var(--tblr-' ~ variant ~ ')' ~ (style ? '; ' ~ style : '') %}
+{% endif %}
 {# the List:Item children inherit `inline` through the context of the content block #}
-{% set _tabler_list_inline = inline %}
-<{{ tag }} class="{{ list.apply({separated: separated, inline: inline, dots: inline and dots, unstyled: unstyled}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The list items: `List:Item` components. -#}
+{% set _tabler_list_inline = textInline %}
+<{{ tag }} class="{{ list.apply({separated: separated, inline: textInline, dots: textInline and dots, unstyled: unstyled, icon: icon, iconInline: icon and inline}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.without('class', 'style') }}>{## The list items: `List:Item` components. -#}
     {%- block content %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

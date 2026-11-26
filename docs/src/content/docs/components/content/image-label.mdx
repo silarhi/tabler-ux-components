@@ -1,0 +1,83 @@
+---
+title: Image label
+description: A short text or an icon pinned to a corner of an image, such as "New", "AI" or a video length.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A short text or an icon pinned to a corner of an image: "New", "AI", a discount, a video length. Requires Tabler 1.7+.
+
+<Example name="image-label/all-in-one" />
+
+`src`, `alt` and `width` render the image, `label` and `icon` the label, on a dark see-through background that stays
+readable on any photo. `variant` colors it: `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`
+(`bg-{variant}` with its matching `text-{variant}-fg`):
+
+<Example name="image-label/variants" />
+
+## Position
+
+The label sits in the bottom end corner. `position` moves it to `top-start`, `top-end` or `bottom-start`. The corners
+follow the text direction, so start and end swap in right-to-left layouts:
+
+<Example name="image-label/positions" />
+
+## Composed
+
+Children replace the image and the label: an `ImageLabel:Image`, which takes any `<img>` attribute (a class, a
+`srcset`…), and as many `ImageLabel:Label`s as corners. `iconOnly` makes a square label with only the icon, its
+`label` kept for assistive technology:
+
+<Example name="image-label/composed" />
+
+## Accessibility
+
+The label is real text, read after the image. Spell out a short form such as "AI" in a `visually-hidden` element, as in
+the last label above, and name an icon-only label with `label` and `iconOnly`. The label does not take clicks: on a
+linked image, a click on it follows the link.
+
+## Props
+
+| Prop       | Type         | Default | Description                                                                 |
+| ---------- | ------------ | ------- | --------------------------------------------------------------------------- |
+| `src`      | string?      | `null`  | Image URL, rendered with `ImageLabel:Image`                                 |
+| `alt`      | string       | `''`    | Alternative text of the image                                               |
+| `width`    | int\|string? | `null`  | Width of the image (`width` attribute)                                      |
+| `label`    | string?      | `null`  | Label text, rendered with `ImageLabel:Label`                                |
+| `icon`     | string?      | `null`  | Icon before the label text                                                  |
+| `position` | string?      | `null`  | `top-start` `top-end` `bottom-start` `bottom-end` (`img-label-{position}`)  |
+| `variant`  | string?      | `null`  | Label color (`bg-{variant} text-{variant}-fg`); unset, dark and see-through |
+
+Other attributes go to the root `<div class="img-labeled">`.
+
+`ImageLabel:Label`:
+
+| Prop       | Type    | Default | Description                                                                    |
+| ---------- | ------- | ------- | ------------------------------------------------------------------------------ |
+| `label`    | string? | `null`  | Label text                                                                     |
+| `icon`     | string? | `null`  | Icon before the text                                                           |
+| `iconOnly` | bool    | `false` | Square label with the icon only (`img-label-icon`); `label` is visually hidden |
+| `position` | string? | `null`  | `top-start` `top-end` `bottom-start` `bottom-end`                              |
+| `variant`  | string? | `null`  | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`       |
+
+Other attributes go to the `<span class="img-label">`: a `style` setting the `--tblr-img-label-*` variables changes its
+offset, size or background.
+
+`ImageLabel:Image` takes `src` and `alt`; other attributes go to the `<img>`.
+
+## Sub-components
+
+| Component          | Renders                                           |
+| ------------------ | ------------------------------------------------- |
+| `ImageLabel:Image` | `<img>`: the image the labels are pinned to       |
+| `ImageLabel:Label` | `<span class="img-label">`: one label in a corner |
+
+## Blocks
+
+| Block     | Default                                                                       |
+| --------- | ----------------------------------------------------------------------------- |
+| `image`   | `ImageLabel:Image` with the `src`, `alt` and `width` props, when `src` is set |
+| `label`   | `ImageLabel:Label` with the label props, when `label` or `icon` is set        |
+| `content` | `image` and `label`: replace it to compose freely                             |
+
+Blocks of `ImageLabel:Label`: `icon` (an `Icon` of the `icon` prop) and `content` (the `label` prop).
