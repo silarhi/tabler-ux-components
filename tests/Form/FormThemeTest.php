@@ -75,7 +75,8 @@ final class FormThemeTest extends FormThemeTestCase
         $html = $this->renderForm($form, 'form_row');
 
         self::assertMatches(1, $html, '//div[@class="input-icon"]/input[' . self::hasClass('is-invalid') . ']');
-        self::assertMatches(1, $html, '//div[@id="field_error1" and text()="Too short."]');
+        // Symfony 6.4 gives the message no id: match its text
+        self::assertMatches(1, $html, '//div[text()="Too short."]');
     }
 
     public function testHiddenFieldIgnoresTheIcon(): void
