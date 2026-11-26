@@ -1,0 +1,46 @@
+{#
+    Tabler TextShimmer — a highlight sweeping across a short label while something is in progress
+    (`.text-shimmer`, Tabler 1.7+).
+
+    All-in-one:
+        <twig:Tabler:TextShimmer label="Thinking…" />
+        <twig:Tabler:TextShimmer label="Generating a reply…" loader live class="text-primary" />
+
+    The content is the label, so the loader stays when the label is passed as content:
+        <twig:Tabler:TextShimmer loader>Reading <strong>report.pdf</strong>…</twig:Tabler:TextShimmer>
+
+    Composed (place TextShimmer:Loader yourself, without the `loader` prop):
+        <twig:Tabler:TextShimmer>
+            <twig:Tabler:TextShimmer:Loader />
+            Thinking…
+        </twig:Tabler:TextShimmer>
+
+    Props:
+      tag     — the element: span (default) for inline text, div for a block
+      label   — the label; mirrored by the `content` block
+      loader  — a small spinner before the label (TextShimmer:Loader); mirrored by the `loader` block
+      live    — announce the label and its changes to assistive technology (role="status", aria-live="polite")
+#}
+{% apply trim %}
+{% props
+    ## string The element to render: `span` for inline text, `div` for a block.
+    tag = 'span',
+    ## string|null The label.
+    label = null,
+    ## bool Whether to put a small spinner before the label (`TextShimmer:Loader`).
+    loader = false,
+    ## bool Whether to announce the label and its changes to assistive technology (`role="status"`, `aria-live="polite"`).
+    live = false,
+%}
+
+<{{ tag }} class="{{ html_cva(base: 'text-shimmer').apply({}, attributes.render('class')) }}"{% if live %} role="status" aria-live="polite"{% endif %} {{ attributes.without('class') }}>
+    {## The spinner: `TextShimmer:Loader`, when `loader` is set. -#}
+    {%- block loader -%}
+        {%- if loader -%}<twig:Tabler:TextShimmer:Loader />{%- endif -%}
+    {%- endblock -%}
+    {## The label: the `label` prop, when set. -#}
+    {%- block content -%}
+        {%- if label is not null -%}{{ label }}{%- endif -%}
+    {%- endblock -%}
+</{{ tag }}>
+{% endapply ~%}

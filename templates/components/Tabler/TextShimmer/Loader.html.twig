@@ -1,0 +1,10 @@
+{#
+    Text shimmer loader — a small spinner before the label of a <twig:Tabler:TextShimmer>
+    (`.text-shimmer-loader`). It takes the color of the text and dims with it.
+
+    Usage:
+        <twig:Tabler:TextShimmer:Loader />
+#}
+{% apply trim %}
+<span {{ attributes.defaults({class: 'text-shimmer-loader', 'aria-hidden': 'true'}) }}></span>
+{% endapply ~%}

@@ -1,0 +1,13 @@
+<div class="d-flex flex-column gap-3">
+    <twig:Tabler:Selectgroup name="weather[]" type="checkbox" items="{{ [
+        {value: 'sun', label: 'Sunny', icon: 'sun', iconOnly: true, checked: true},
+        {value: 'moon', label: 'Clear night', icon: 'moon', iconOnly: true},
+        {value: 'rain', label: 'Rain', icon: 'cloud-rain', iconOnly: true},
+        {value: 'other', label: 'Other'},
+    ] }}" role="group" aria-label="Weather" />
+    <twig:Tabler:Selectgroup name="view" items="{{ [
+        {value: 'home', label: 'Home', icon: 'home', checked: true},
+        {value: 'user', label: 'User', icon: 'user'},
+        {value: 'settings', label: 'Settings', icon: 'settings'},
+    ] }}" role="group" aria-label="View" />
+</div>

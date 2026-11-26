@@ -1,0 +1,46 @@
+{#
+    Tabler Kbd — a keyboard key (`<kbd>`), or a shortcut of several keys (`.kbd-group`) (Tabler 1.7+).
+
+    All-in-one:
+        <twig:Tabler:Kbd>Esc</twig:Tabler:Kbd>
+        <twig:Tabler:Kbd keys="ctrl+k" />
+        <twig:Tabler:Kbd keys="{{ ['⌘', '⇧', 'M'] }}" />
+
+    With `keys`, renders a <kbd class="kbd-group"> holding one Kbd:Key per key; a string is split on `+`
+    (pass a list for a shortcut using the `+` key itself). Without it, the content is a single key.
+
+    Composed:
+        <twig:Tabler:Kbd:Group>
+            <twig:Tabler:Kbd:Key>⌘</twig:Tabler:Kbd:Key>
+            <twig:Tabler:Kbd:Key>K</twig:Tabler:Kbd:Key>
+        </twig:Tabler:Kbd:Group>
+
+    Props:
+      keys  — the keys of a shortcut: a string split on `+` (`'ctrl+k'`) or a list (`['⌘', 'K']`)
+#}
+{% apply trim %}
+{% props
+    ## string|list<string>|null The keys of a shortcut, rendered as a `.kbd-group` of `Kbd:Key`: a string split on `+` (`ctrl+k`) or a list.
+    keys = null,
+%}
+
+{% set kbd = html_cva(
+    variants: {
+        group: {true: 'kbd-group', false: ''},
+    },
+) %}
+
+{% set classes = kbd.apply({group: keys is not null}, attributes.render('class')) %}
+<kbd{% if classes is not same as('') %} class="{{ classes }}"{% endif %} {{ attributes.without('class') }}>{## The key, or the `keys` of a shortcut; replace it to compose freely. -#}
+    {%- block content -%}
+        {## The shortcut: a `Kbd:Key` per key of `keys`, when set. -#}
+        {%- block keys -%}
+            {%- if keys is not null -%}
+                {%- for key in keys is iterable ? keys : keys|split('+') -%}
+                    <twig:Tabler:Kbd:Key>{{ key|trim }}</twig:Tabler:Kbd:Key>
+                {%- endfor -%}
+            {%- endif -%}
+        {%- endblock -%}
+    {%- endblock -%}
+</kbd>
+{% endapply ~%}

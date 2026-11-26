@@ -165,5 +165,7 @@ templates/components/Tabler/
 
 Tabler components that require third-party JavaScript libraries are out of scope: Chart, Dropzone, Countup, Inline
 player, Range slider, Vector map, WYSIWYG, Autosize, Datepicker, and the interactive star rating (the read-only
-[StarRating](/components/data/star-rating/) is included). Form controls (OTP input, password strength) are not covered
-yet.
+[StarRating](/components/data/star-rating/) is included). The Forms group covers the controls Tabler styles beyond
+Bootstrap ([NumberInput](/components/forms/number-input/), [InputIcon](/components/forms/input-icon/),
+[Selectgroup](/components/forms/selectgroup/)); plain fields are best rendered by Symfony Form, and the OTP input and
+password strength are not covered yet.

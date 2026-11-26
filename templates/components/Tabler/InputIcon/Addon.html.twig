@@ -1,0 +1,31 @@
+{#
+    Input icon addon — the icon or spinner inside a <twig:Tabler:InputIcon> (`.input-icon-addon`).
+    Placed before the input, it sits at the start of the field; after it, at the end.
+
+    Usage:
+        <twig:Tabler:InputIcon:Addon icon="search" />
+        <twig:Tabler:InputIcon:Addon loader />
+        <twig:Tabler:InputIcon:Addon><span class="text-secondary">@</span></twig:Tabler:InputIcon:Addon>
+
+    Props:
+      icon    — Tabler icon name (or ux-icons name), rendered with <twig:Tabler:Icon>
+      loader  — a small spinner instead of the icon (<twig:Tabler:Spinner size="sm" variant="secondary">)
+#}
+{% apply trim %}
+{% props
+    ## string|null The Tabler icon name, rendered with `Tabler:Icon`.
+    icon = null,
+    ## bool Whether to show a small spinner instead of the icon (`Tabler:Spinner`).
+    loader = false,
+%}
+
+<span {{ attributes.defaults({class: 'input-icon-addon'}) }}>{## The icon: a `Tabler:Spinner` when `loader` is set, else a `Tabler:Icon` named `icon`, when set. -#}
+    {%- block content -%}
+        {%- if loader -%}
+            <twig:Tabler:Spinner size="sm" variant="secondary" />
+        {%- elseif icon is not null -%}
+            <twig:Tabler:Icon name="{{ icon }}" />
+        {%- endif -%}
+    {%- endblock -%}
+</span>
+{% endapply ~%}

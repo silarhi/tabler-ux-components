@@ -1,0 +1,66 @@
+{#
+    Selectgroup item — one option of a <twig:Tabler:Selectgroup>: a hidden radio or checkbox and the
+    label standing in for it (`<label class="form-selectgroup-item">`).
+
+    Usage:
+        <twig:Tabler:Selectgroup:Item name="view" value="grid" label="Grid" icon="layout-grid" checked />
+        <twig:Tabler:Selectgroup:Item name="weather[]" type="checkbox" value="sun" label="Sunny" icon="sun" iconOnly />
+        <twig:Tabler:Selectgroup:Item name="plan" value="pro" check>
+            <strong>Pro</strong> — $29 per month
+        </twig:Tabler:Selectgroup:Item>
+
+    The content replaces the icon and the text (the `content` block); the input and the Selectgroup:Label
+    around it stay. Other attributes go to the root <label>.
+
+    Props:
+      type      — radio (default) | checkbox
+      name      — the `name` of the input
+      value     — the `value` of the input
+      label     — the option text; mirrored by the `content` block
+      icon      — Tabler icon name (or ux-icons name) before the text, rendered with <twig:Tabler:Icon>
+      iconOnly  — show only the icon: the label becomes the input's aria-label
+      checked   — initially selected
+      disabled  — cannot be selected
+      check     — show a check mark before the content (Selectgroup:Check), for boxes
+#}
+{% apply trim %}
+{% props
+    ## 'radio'|'checkbox' The input type.
+    type = 'radio',
+    ## string|null The `name` of the input.
+    name = null,
+    ## string|int|null The `value` of the input.
+    value = null,
+    ## string|null The option text.
+    label = null,
+    ## string|null The Tabler icon name before the text, rendered with `Tabler:Icon`.
+    icon = null,
+    ## bool Whether to show only the icon; the `label` then becomes the `aria-label` of the input.
+    iconOnly = false,
+    ## bool Whether the option is initially selected.
+    checked = false,
+    ## bool Whether the option cannot be selected.
+    disabled = false,
+    ## bool Whether to show a check mark before the content (`Selectgroup:Check`), for boxes.
+    check = false,
+%}
+
+{# Captured so it goes inside Selectgroup:Label. A captured block is already escaped and marked safe: print it as is. #}
+{% set content_html %}{## The option: `icon` and the `label` prop (unless `iconOnly`); replace it to compose freely. #}{% block content %}
+    {## The icon: a `Tabler:Icon` named `icon`, when set. -#}
+    {%- block icon -%}
+        {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="{{ iconOnly or label is null ? '' : 'me-1' }}" />{%- endif -%}
+    {%- endblock -%}
+    {%- if label is not null and not iconOnly %}{{ label }}{% endif -%}
+{% endblock %}{% endset %}
+
+<label class="{{ html_cva(base: 'form-selectgroup-item').apply({}, attributes.render('class')) }}" {{ attributes.without('class') }}>
+    <input type="{{ type }}"
+        {%- if name is not null %} name="{{ name }}"{% endif %}
+        {%- if value is not null %} value="{{ value }}"{% endif %} class="form-selectgroup-input"
+        {%- if checked %} checked{% endif %}
+        {%- if disabled %} disabled{% endif %}
+        {%- if iconOnly and label is not null %} aria-label="{{ label }}"{% endif %}>
+    <twig:Tabler:Selectgroup:Label check="{{ check }}">{{ content_html }}</twig:Tabler:Selectgroup:Label>
+</label>
+{% endapply ~%}

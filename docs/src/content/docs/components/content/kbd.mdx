@@ -1,0 +1,61 @@
+---
+title: Kbd
+description: A keyboard key, or a shortcut of several keys side by side.
+---
+
+import Example from '../../../../components/Example.astro'
+
+A keyboard key rendered as a `<kbd>`, or a shortcut rendered as a `<kbd class="kbd-group">` of keys. Requires Tabler
+1.7+.
+
+<Example name="kbd/all-in-one" />
+
+The content is a single key. `keys` renders a shortcut instead: one `Kbd:Key` per key, with an even gap between them.
+
+## Shortcuts
+
+`keys` takes a string split on `+`, or a list. Use a list for a shortcut with the `+` key itself, or for keys you
+want to keep as they are:
+
+<Example name="kbd/shortcuts" />
+
+## In a button
+
+Tabler spaces a key placed directly in a button or a badge, and gives it the color of its text:
+
+<Example name="kbd/in-button" />
+
+## Composed
+
+`Kbd:Group` holds the keys of a shortcut and `Kbd:Key` renders one of them. A key can hold an icon, which Tabler
+sizes to the key:
+
+<Example name="kbd/composed" />
+
+## Custom keys
+
+Override the `keys` block to render the keys yourself, for example with a `title` on each:
+
+<Example name="kbd/block" />
+
+## Props
+
+| Prop   | Type          | Default | Description                                                                         |
+| ------ | ------------- | ------- | ----------------------------------------------------------------------------------- |
+| `keys` | string\|list? | `null`  | The keys of a shortcut: a string split on `+` (`'ctrl+k'`) or a list (`['⌘', 'K']`) |
+
+Other attributes go to the root `<kbd>`.
+
+## Sub-components
+
+| Component   | Renders                                            |
+| ----------- | -------------------------------------------------- |
+| `Kbd:Group` | `<kbd class="kbd-group">`, around the keys         |
+| `Kbd:Key`   | `<kbd>`, one key of a shortcut: a label or an icon |
+
+## Blocks
+
+| Block     | Default                                                            |
+| --------- | ------------------------------------------------------------------ |
+| `keys`    | A `Kbd:Key` per key of `keys`, when set                            |
+| `content` | `keys`; the tag content replaces it, as a single key or to compose |
