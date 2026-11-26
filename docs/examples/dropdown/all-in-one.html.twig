@@ -1,10 +1,8 @@
-<twig:Tabler:Dropdown>
-    <twig:Tabler:Dropdown:Toggle variant="primary">Actions</twig:Tabler:Dropdown:Toggle>
-    <twig:Tabler:Dropdown:Menu>
-        <twig:Tabler:Dropdown:Header>Invoice #1042</twig:Tabler:Dropdown:Header>
-        <twig:Tabler:Dropdown:Item href="/invoices/1042/edit">Edit</twig:Tabler:Dropdown:Item>
-        <twig:Tabler:Dropdown:Item href="/invoices/1042/duplicate">Duplicate</twig:Tabler:Dropdown:Item>
-        <twig:Tabler:Dropdown:Divider />
-        <twig:Tabler:Dropdown:Item href="/invoices/1042/delete" class="text-danger">Delete</twig:Tabler:Dropdown:Item>
-    </twig:Tabler:Dropdown:Menu>
-</twig:Tabler:Dropdown>
+<twig:Tabler:Dropdown label="Actions" icon="settings" variant="primary" items="{{ [
+    {header: 'Invoice #1042'},
+    {label: 'Edit', href: '/invoices/1042/edit', icon: 'pencil'},
+    {label: 'Comments', href: '/invoices/1042/comments', icon: 'message', badge: 3},
+    {label: 'Send reminder', href: '/invoices/1042/remind', icon: 'mail', disabled: true},
+    {divider: true},
+    {label: 'Delete', href: '/invoices/1042/delete', icon: 'trash'},
+] }}" />

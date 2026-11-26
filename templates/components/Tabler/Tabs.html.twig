@@ -1,6 +1,14 @@
 {#
     Tabler Tabs — the tab bar (nav). Pair with <twig:Tabler:Tabs:Content>.
 
+    All-in-one (`items` is an array of {label, id?, icon?, active?, text?, disabled?}, rendered as the
+    tab bar and its panes; pane ids default to "<id>-<n>"; the first tab is active unless an entry sets `active`):
+        <twig:Tabler:Tabs id="profile" items="{{ [
+            {label: 'Overview', text: 'Jane Cooper is an admin since March 2024.'},
+            {label: 'Activity', icon: 'activity', text: 'Signed in 2 hours ago.'},
+            {label: 'Billing', disabled: true},
+        ] }}" />
+
     Composed:
         <twig:Tabler:Tabs>
             <twig:Tabler:Tabs:Item target="home" active>Home</twig:Tabler:Tabs:Item>
@@ -12,6 +20,10 @@
         </twig:Tabler:Tabs:Content>
 
     Props:
+      id         — DOM id of the tab bar, and the prefix of the generated pane ids; a random one
+                   ("tabs-<n>", not rendered) when unset, so two tab sets never share pane ids
+      items      — optional array of tabs, rendered with Tabs:Item (`content` block) and, after the bar,
+                   Tabs:Content holding a Tabs:Pane with each `text` (`panes` block)
       pills      — pill style (nav-pills) instead of tabs
       underline  — underline style (nav-underline) instead of tabs
       bordered   — bottom border under the whole bar (nav-bordered)
@@ -20,6 +32,10 @@
 #}
 {% apply trim %}
 {% props
+    ## string|null The DOM id of the tab bar and the prefix of the generated pane ids; random when unset.
+    id = null,
+    ## list<array{label:string,id?:string,icon?:string,active?:bool,text?:string,disabled?:bool}>|null The tabs, rendered with `Tabs:Item`, and their panes, rendered with `Tabs:Pane`.
+    items = null,
     ## bool Whether to render pills (`nav-pills`) instead of tabs (`nav-tabs`).
     pills = false,
     ## bool Whether to underline the links (`nav-underline`) instead of tabs; ignored with `pills`.
@@ -42,8 +58,33 @@
     },
 ) %}
 
-<ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}" data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
-    {## The tabs: `Tabs:Item` children. -#}
-    {% block content %}{% endblock %}
+{# The pane id and active state of each entry: until an entry sets `active`, the first tab is selected #}
+{% set prefix = id ?? ('tabs-' ~ random(100000, 999999)) %}
+{% set explicit_active = (items ?? [])|filter(tab => tab.active is defined)|length > 0 %}
+{% set tab_items = [] %}
+{% for tab in items ?? [] %}
+    {% set tab_items = tab_items|merge([tab|merge({
+        id: tab.id ?? (prefix ~ '-' ~ loop.index),
+        active: explicit_active ? (tab.active ?? false) : loop.first,
+    })]) %}
+{% endfor %}
+
+<ul class="{{ tabs.apply({look: pills ? 'pills' : (underline ? 'underline' : 'tabs'), bordered: bordered, fill: fill, card: card}, attributes.render('class')) }}"{% if id is not null %} id="{{ id }}"{% endif %} data-bs-toggle="tabs" role="tablist" {{ attributes.without('class') }}>
+    {## The tabs: a `Tabs:Item` for each entry of `items`. -#}
+    {% block content %}
+        {%- for tab in tab_items -%}
+            <twig:Tabler:Tabs:Item target="{{ tab.id }}" icon="{{ tab.icon ?? null }}" active="{{ tab.active }}" disabled="{{ tab.disabled ?? false }}">{{ tab.label ?? '' }}</twig:Tabler:Tabs:Item>
+        {%- endfor -%}
+    {% endblock %}
 </ul>
+{## The panes, after the bar: `Tabs:Content` with a `Tabs:Pane` holding the `text` of each entry of `items`, when set. -#}
+{% block panes %}
+    {%- if items is not null -%}
+        <twig:Tabler:Tabs:Content>
+            {%- for tab in tab_items -%}
+                <twig:Tabler:Tabs:Pane id="{{ tab.id }}" active="{{ tab.active }}">{{ tab.text ?? '' }}</twig:Tabler:Tabs:Pane>
+            {%- endfor -%}
+        </twig:Tabler:Tabs:Content>
+    {%- endif -%}
+{% endblock %}
 {% endapply ~%}

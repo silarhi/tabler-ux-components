@@ -2,12 +2,14 @@
     Breadcrumb item — one crumb in a <twig:Tabler:Breadcrumb>.
 
     Usage:
-        <twig:Tabler:Breadcrumb:Item href="/">Home</twig:Tabler:Breadcrumb:Item>
+        <twig:Tabler:Breadcrumb:Item href="/" icon="home">Home</twig:Tabler:Breadcrumb:Item>
         <twig:Tabler:Breadcrumb:Item active>Current</twig:Tabler:Breadcrumb:Item>
 
     Props:
       href    — link target; when omitted the crumb is plain text
       active  — marks the current page (no link)
+      icon    — optional leading Tabler icon name (or ux-icons name, `lucide:house`), rendered with
+                <twig:Tabler:Icon> before the label
 #}
 {% apply trim %}
 {% props
@@ -15,6 +17,8 @@
     href = null,
     ## bool Whether the crumb is the current page, rendered without a link (`active`).
     active = false,
+    ## string|null The leading Tabler icon name, rendered with `Tabler:Icon`.
+    icon = null,
 %}
 
 {% set item = html_cva(
@@ -27,7 +31,8 @@
 <li class="{{ item.apply({active: active}, attributes.render('class')) }}"{% if active %} aria-current="page"{% endif %} {{ attributes.without('class', 'href') }}>
     {%- set link = href is not null and not active -%}
     {%- if link %}<a href="{{ href }}">{% endif -%}
-    {## The crumb label, inside the link when there is one. -#}
+    {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="me-1" />{%- endif -%}
+    {## The crumb label, after the `icon`, inside the link when there is one. -#}
     {%- block content %}{% endblock -%}
     {%- if link %}</a>{% endif -%}
 </li>

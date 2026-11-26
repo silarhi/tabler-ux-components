@@ -1,6 +1,24 @@
 {#
     Tabler Dropdown — a Bootstrap dropdown wrapper.
 
+    All-in-one (`items` takes the entries of Dropdown:Menu: {label, href?, icon?, active?, disabled?, badge?}
+    links, {divider: true} separators and {header: '…'} labels):
+        <twig:Tabler:Dropdown label="Actions" icon="settings" variant="primary" items="{{ [
+            {header: 'Invoice #1042'},
+            {label: 'Edit', href: '/invoices/1042/edit', icon: 'pencil'},
+            {label: 'Comments', href: '/invoices/1042/comments', badge: 3},
+            {divider: true},
+            {label: 'Delete', href: '/invoices/1042/delete', disabled: true},
+        ] }}" />
+
+    Every prop has a matching block: override `toggle` or `menu` to keep the other one, e.g. a menu
+    aligned to the end:
+        <twig:Tabler:Dropdown label="Actions">
+            <twig:block name="menu">
+                <twig:Tabler:Dropdown:Menu end items="{{ entries }}" />
+            </twig:block>
+        </twig:Tabler:Dropdown>
+
     Composed:
         <twig:Tabler:Dropdown>
             <twig:Tabler:Dropdown:Toggle variant="primary">Menu</twig:Tabler:Dropdown:Toggle>
@@ -13,11 +31,23 @@
         </twig:Tabler:Dropdown>
 
     Props:
+      label      — toggle label, rendered with Dropdown:Toggle; mirrored by the `toggle` block
+      icon       — Tabler icon name (or ux-icons name, `lucide:settings`) before the toggle label
+      variant    — toggle button color (primary, secondary, …), forwarded to Dropdown:Toggle; a plain `.btn` when unset
+      items      — optional array of menu entries, rendered with Dropdown:Menu; mirrored by the `menu` block
       direction  — down (default) | up | end | start: where the menu opens (dropup / dropend / dropstart).
                    Dropdown:Toggle is a button (.btn), so it cannot be the .dropdown-item trigger of a submenu
 #}
 {% apply trim %}
 {% props
+    ## string|null The toggle label, rendered with `Dropdown:Toggle`.
+    label = null,
+    ## string|null The Tabler icon name before the toggle label, rendered with `Tabler:Icon`.
+    icon = null,
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The toggle color, forwarded to `Dropdown:Toggle`; a plain `.btn` when null.
+    variant = null,
+    ## list<array{label?:string,href?:string,icon?:string,active?:bool,disabled?:bool,badge?:string|int,divider?:bool,header?:string}>|null The menu entries, rendered with `Dropdown:Menu`.
+    items = null,
     ## 'down'|'up'|'end'|'start' Where the menu opens (`dropup`, `dropend`, `dropstart`).
     direction = 'down',
 %}
@@ -30,7 +60,21 @@
 ) %}
 
 <div class="{{ dropdown.apply({direction: direction}, attributes.render('class')) }}" {{ attributes.without('class') }}>
-    {## The toggle and the menu: `Dropdown:Toggle` and `Dropdown:Menu`. -#}
-    {% block content %}{% endblock %}
+    {## The toggle and the menu: the `toggle` and `menu` blocks; replace it to compose freely. -#}
+    {% block content %}
+        {## The toggle: `Dropdown:Toggle` with the `icon` and the `label`, when one of them is set. -#}
+        {% block toggle %}
+            {%- if label is not null or icon is not null -%}
+                <twig:Tabler:Dropdown:Toggle variant="{{ variant }}">
+                    {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="icon" />{%- endif -%}
+                    {{- label -}}
+                </twig:Tabler:Dropdown:Toggle>
+            {%- endif -%}
+        {% endblock %}
+        {## The menu: `Dropdown:Menu` with the `items`, when set. -#}
+        {% block menu %}
+            {%- if items is not null -%}<twig:Tabler:Dropdown:Menu items="{{ items }}" />{%- endif -%}
+        {% endblock %}
+    {% endblock %}
 </div>
 {% endapply ~%}
