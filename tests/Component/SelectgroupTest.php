@@ -40,6 +40,21 @@ final class SelectgroupTest extends ComponentTestCase
         );
     }
 
+    public function testItemInputAttributes(): void
+    {
+        $html = $this->renderComponent(
+            '<twig:Tabler:Selectgroup:Item name="plan" value="pro" label="Pro" class="w-100" title="Pro plan" input:id="plan-pro" input:data-x="1" />',
+        );
+
+        self::assertHtmlSame(
+            '<label class="form-selectgroup-item w-100" title="Pro plan">'
+            . '<input type="radio" name="plan" value="pro" class="form-selectgroup-input" id="plan-pro" data-x="1">'
+            . '<span class="form-selectgroup-label">Pro</span>'
+            . '</label>',
+            $html,
+        );
+    }
+
     public function testCheckboxIconOnly(): void
     {
         $html = $this->renderComponent(<<<'TWIG'

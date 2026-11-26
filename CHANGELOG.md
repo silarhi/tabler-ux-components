@@ -38,6 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ListGroup` takes `size` (`sm`, `lg`) and `selectable`, with `ListGroup:Check`, a checkbox or radio that marks its item active, and `ListGroup:Nested` (`collapse`, `show`) for indented items under a parent. `ListGroup:Actions` takes `tag` (`div`, `span`) for the actions slot. Requires Tabler 1.7+.
 - `Datagrid` takes `horizontal` (`datagrid-horizontal`) and `cols`, a fixed number of columns from 1 to 4 (`datagrid-cols-{n}`). Requires Tabler 1.7+.
 - `Toast` takes `urgent`, for `role="alert"` and `aria-live="assertive"`.
+- Symfony form themes, `@TablerUxComponents/form/tabler_layout.html.twig` and `tabler_horizontal_layout.html.twig`, built on Symfony's Bootstrap 5 themes: Tabler's `form-hint` for `help`, and the widgets of new form options, rendered with the components. Requires `symfony/form`, now suggested:
+    - `icon`, `icon_position` and `loader` on any field: the input in an `InputIcon`.
+    - `stepper` on `IntegerType` and `NumberType`: the input in a `NumberInput` (Tabler 1.7+).
+    - `choice_style` on an expanded `ChoiceType`: a `SegmentedControl` (`segmented`) or a `Selectgroup` (`selectgroup`, `pills`, `boxes`), with `choice_icon` for an icon per choice.
+    - `switch` on `CheckboxType`: a toggle switch (`form-switch`).
+- `SegmentedControl:Option`, a radio or checkbox segment (`nav-link-input` and its `<label class="nav-link">`) for a segmented control that picks a value in a form; the input stays focusable. `SegmentedControl` takes a `role` attribute (`radiogroup`) instead of `tablist`.
+- `Selectgroup:Item` forwards the attributes prefixed with `input:` (`input:id`, `input:required`…) to its input.
 
 ### Changed
 

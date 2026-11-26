@@ -1,0 +1,62 @@
+{#
+    Segmented control option — a radio (or checkbox) segment in a <twig:Tabler:SegmentedControl>,
+    for a segmented control that picks a value in a form instead of switching tabs: an input
+    followed by its `<label class="nav-link">`.
+
+    Usage:
+        <twig:Tabler:SegmentedControl role="radiogroup" aria-label="Period">
+            <twig:Tabler:SegmentedControl:Option id="period-day" name="period" value="day" label="Day" checked />
+            <twig:Tabler:SegmentedControl:Option id="period-week" name="period" value="week" label="Week" />
+            <twig:Tabler:SegmentedControl:Option id="period-month" name="period" value="month" icon="calendar">Month</twig:Tabler:SegmentedControl:Option>
+        </twig:Tabler:SegmentedControl>
+
+    The input keeps Tabler's `nav-link-input` class, which styles the checked segment, plus
+    `btn-check d-block`: Tabler hides `nav-link-input` with `display: none`, which takes the radios
+    out of the keyboard order; `btn-check` hides them visually but keeps them focusable, so the
+    arrow keys move between segments.
+
+    The `class` attribute goes on the label (the visible segment), and so do the attributes
+    prefixed with `label:`; every other attribute (required, data-*, aria-describedby, …) goes on
+    the input.
+
+    Props:
+      id        — input id, referenced by the label's `for` (required)
+      name      — input name, shared by the options of one control
+      value     — input value
+      type      — radio (default) | checkbox
+      checked   — selected state
+      disabled  — inactive state
+      label     — label text; mirrored by the `content` block
+      icon      — Tabler icon name shown before the label (nav-link-icon)
+#}
+{% apply trim %}
+{% props
+    ## string The input id, referenced by the label's `for`.
+    id,
+    ## string|null The input name, shared by the options of one control.
+    name = null,
+    ## string|null The input value.
+    value = null,
+    ## 'radio'|'checkbox' The input type.
+    type = 'radio',
+    ## bool Whether the option is selected.
+    checked = false,
+    ## bool Whether the option is inactive.
+    disabled = false,
+    ## string|null The label text.
+    label = null,
+    ## string|null A Tabler icon name shown before the label (`nav-link-icon`).
+    icon = null,
+%}
+
+<input type="{{ type }}" class="nav-link-input btn-check d-block" id="{{ id }}"{% if name is not null %} name="{{ name }}"{% endif %}{% if value is not null %} value="{{ value }}"{% endif %}{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %} {{ attributes.defaults({autocomplete: 'off'}).without('class', 'type', 'id') }}>
+{% set label_attributes = attributes.nested('label') %}
+<label class="{{ html_cva(base: 'nav-link').apply({}, attributes.render('class'), label_attributes.render('class')) }}" for="{{ id }}" {{ label_attributes.without('class', 'for') }}>
+    {## The icon: a `Tabler:Icon` named `icon`, when set. -#}
+    {%- block icon -%}
+        {%- if icon is not null -%}<twig:Tabler:Icon name="{{ icon }}" class="nav-link-icon" />{%- endif -%}
+    {%- endblock -%}
+    {## The label text: the `label` prop. -#}
+    {%- block content %}{{ label }}{% endblock -%}
+</label>
+{% endapply ~%}

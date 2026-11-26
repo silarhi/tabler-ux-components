@@ -10,7 +10,8 @@
         </twig:Tabler:Selectgroup:Item>
 
     The content replaces the icon and the text (the `content` block); the input and the Selectgroup:Label
-    around it stay. Other attributes go to the root <label>.
+    around it stay. Other attributes go to the root <label>, except those prefixed with `input:`
+    (input:required, input:aria-describedby…), which go to the input.
 
     Props:
       type      — radio (default) | checkbox
@@ -60,7 +61,7 @@
         {%- if value is not null %} value="{{ value }}"{% endif %} class="form-selectgroup-input"
         {%- if checked %} checked{% endif %}
         {%- if disabled %} disabled{% endif %}
-        {%- if iconOnly and label is not null %} aria-label="{{ label }}"{% endif %}>
+        {%- if iconOnly and label is not null %} aria-label="{{ label }}"{% endif %} {{ attributes.nested('input').without('class', 'type', 'name', 'value') }}>
     <twig:Tabler:Selectgroup:Label check="{{ check }}">{{ content_html }}</twig:Tabler:Selectgroup:Label>
 </label>
 {% endapply ~%}

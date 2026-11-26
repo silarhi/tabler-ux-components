@@ -49,6 +49,7 @@
 - **Any icon**: [Tabler Icons](https://tabler.io/icons) from the webfont, or any icon of [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) with a prefixed name (`icon="lucide:circle-check"`)
 - **Attribute forwarding**: extra attributes (`class`, `id`, `data-*`…) are merged onto the root element
 - **Template-only**: anonymous Twig components, no PHP classes to register or configure
+- **Symfony Form themes**: vertical and horizontal themes on top of Bootstrap 5, with `icon`, `stepper`, `choice_style` (segmented control, select group) and `switch` options rendered by the same components
 
 ## Requirements
 

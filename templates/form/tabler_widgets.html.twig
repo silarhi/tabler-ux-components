@@ -1,0 +1,146 @@
+{#
+    Tabler form widgets — the blocks the Tabler form themes add on top of Symfony's Bootstrap 5 themes.
+    Not a theme on its own: `tabler_layout.html.twig` and `tabler_horizontal_layout.html.twig` use it
+    after renaming the Bootstrap blocks it wraps (`bootstrap_form_widget_simple`,
+    `bootstrap_choice_widget_expanded`, `bootstrap_number_widget`, `bootstrap_integer_widget`).
+
+    The options behind these blocks come from the bundle's form type extensions:
+      icon, icon_position, loader  — any field: the input in an InputIcon
+      stepper                      — number and integer fields: the input in a NumberInput
+      choice_style, choice_icon    — expanded choices: a SegmentedControl or a Selectgroup
+      switch                       — checkboxes: a toggle switch (Bootstrap's checkbox-switch)
+#}
+
+{# Widgets #}
+
+{%- block form_widget_simple -%}
+    {%- if type|default('text') != 'hidden' and (tabler_icon|default(null) is not null or tabler_loader|default(false)) -%}
+        {%- set tabler_widget_html %}{{ block('bootstrap_form_widget_simple') }}{% endset -%}
+        {%- component 'Tabler:InputIcon' with {icon: tabler_icon, loader: tabler_loader, position: tabler_icon_position} -%}
+            {%- block content %}{{ tabler_widget_html }}{% endblock -%}
+        {%- endcomponent -%}
+    {%- else -%}
+        {{- block('bootstrap_form_widget_simple') -}}
+    {%- endif -%}
+{%- endblock form_widget_simple %}
+
+{%- block number_widget -%}
+    {%- if tabler_stepper|default(false) -%}
+        {%- set type = type|default('text') -%}
+        {{- block('tabler_number_input') -}}
+    {%- else -%}
+        {{- block('bootstrap_number_widget') -}}
+    {%- endif -%}
+{%- endblock number_widget %}
+
+{%- block integer_widget -%}
+    {%- if tabler_stepper|default(false) -%}
+        {%- set type = type|default('number') -%}
+        {{- block('tabler_number_input') -}}
+    {%- else -%}
+        {{- block('bootstrap_integer_widget') -}}
+    {%- endif -%}
+{%- endblock integer_widget %}
+
+{#- The input of a `stepper` field between the buttons of a NumberInput; no icon, the buttons take its place -#}
+{%- block tabler_number_input -%}
+    {%- set tabler_widget_html %}{{ block('bootstrap_form_widget_simple') }}{% endset -%}
+    {%- component 'Tabler:NumberInput' with {disabled: disabled} -%}
+        {%- block input %}{{ tabler_widget_html }}{% endblock -%}
+    {%- endcomponent -%}
+{%- endblock tabler_number_input %}
+
+{%- block choice_widget_expanded -%}
+    {%- if tabler_choice_style|default(null) == 'segmented' -%}
+        {{- block('tabler_segmented_widget') -}}
+    {%- elseif tabler_choice_style|default(null) is not null -%}
+        {{- block('tabler_selectgroup_widget') -}}
+    {%- else -%}
+        {{- block('bootstrap_choice_widget_expanded') -}}
+    {%- endif -%}
+{%- endblock choice_widget_expanded %}
+
+{#- An expanded choice as a SegmentedControl of SegmentedControl:Option radios (checkboxes when `multiple`) -#}
+{%- block tabler_segmented_widget -%}
+    {#- The choices with their labels translated, built out here: the blocks of a component cannot reach this theme's blocks -#}
+    {%- set tabler_options = [] -%}
+    {%- for child in form -%}
+        {%- set tabler_label_html %}{% with child.vars %}{{ block('form_label_content') }}{% endwith %}{% endset -%}
+        {%- set tabler_options = tabler_options|merge([{
+            vars: child.vars,
+            label: tabler_label_html,
+            icon: tabler_choice_icons[child.vars.value] ?? null,
+        }]) -%}
+    {%- endfor -%}
+    {%- set tabler_container_attr = attr|merge({id: id, role: multiple ? 'group' : 'radiogroup'}) -%}
+    {%- if not valid -%}
+        {%- set tabler_container_attr = tabler_container_attr|merge({class: (tabler_container_attr.class|default('') ~ ' is-invalid')|trim}) -%}
+    {%- endif -%}
+    {%- component 'Tabler:SegmentedControl' with tabler_container_attr -%}
+        {%- block content -%}
+            {%- for option in tabler_options -%}
+                {{- component('Tabler:SegmentedControl:Option', option.vars.attr|merge({
+                    id: option.vars.id,
+                    name: option.vars.full_name,
+                    value: option.vars.value,
+                    type: multiple ? 'checkbox' : 'radio',
+                    checked: option.vars.checked,
+                    disabled: option.vars.disabled,
+                    label: option.label,
+                    icon: option.icon,
+                })|merge(option.vars.required ? {required: true} : {})) -}}
+            {%- endfor -%}
+        {%- endblock -%}
+    {%- endcomponent -%}
+{%- endblock tabler_segmented_widget %}
+
+{#- An expanded choice as a Selectgroup (`selectgroup`, `pills` or `boxes`) of Selectgroup:Item -#}
+{%- block tabler_selectgroup_widget -%}
+    {#- The choices with their labels translated, built out here: the blocks of a component cannot reach this theme's blocks -#}
+    {%- set tabler_options = [] -%}
+    {%- for child in form -%}
+        {%- set tabler_label_html %}{% with child.vars %}{{ block('form_label_content') }}{% endwith %}{% endset -%}
+        {%- set tabler_options = tabler_options|merge([{
+            vars: child.vars,
+            label: tabler_label_html,
+            icon: tabler_choice_icons[child.vars.value] ?? null,
+        }]) -%}
+    {%- endfor -%}
+    {%- set tabler_style = tabler_choice_style -%}
+    {%- set tabler_container_attr = attr|merge({id: id, variant: tabler_style == 'selectgroup' ? null : tabler_style}) -%}
+    {%- if not valid -%}
+        {%- set tabler_container_attr = tabler_container_attr|merge({class: (tabler_container_attr.class|default('') ~ ' is-invalid')|trim}) -%}
+    {%- endif -%}
+    {%- component 'Tabler:Selectgroup' with tabler_container_attr -%}
+        {%- block content -%}
+            {%- for option in tabler_options -%}
+                {%- set tabler_input_attr = {'input:id': option.vars.id} -%}
+                {%- for key, value in option.vars.attr -%}
+                    {%- set tabler_input_attr = tabler_input_attr|merge({('input:' ~ key): value}) -%}
+                {%- endfor -%}
+                {{- component('Tabler:Selectgroup:Item', tabler_input_attr|merge({
+                    type: multiple ? 'checkbox' : 'radio',
+                    name: option.vars.full_name,
+                    value: option.vars.value,
+                    label: option.label,
+                    icon: option.icon,
+                    checked: option.vars.checked,
+                    disabled: option.vars.disabled,
+                    check: tabler_style == 'boxes',
+                })|merge(option.vars.required ? {'input:required': true} : {})) -}}
+            {%- endfor -%}
+        {%- endblock -%}
+    {%- endcomponent -%}
+{%- endblock tabler_selectgroup_widget %}
+
+{# Help #}
+
+{%- block form_help -%}
+    {%- if help -%}
+        {%- set help_class = 'input-group' in row_attr.class|default('') ? 'input-group-text' : 'form-hint' -%}
+        {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' ' ~ help_class)|trim}) -%}
+        <small id="{{ id }}_help"{% with {attr: help_attr} %}{{ block('attributes') }}{% endwith %}>
+            {{- block('form_help_content') -}}
+        </small>
+    {%- endif -%}
+{%- endblock form_help %}
