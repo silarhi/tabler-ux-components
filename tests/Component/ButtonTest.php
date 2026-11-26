@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents\Tests\Component;
 
+use DOMDocument;
+use DOMElement;
 use Silarhi\TablerUxComponents\Tests\ComponentTestCase;
 
 final class ButtonTest extends ComponentTestCase
@@ -101,5 +103,121 @@ final class ButtonTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Button size="xl">Go</twig:Tabler:Button>');
 
         self::assertHtmlSame('<button type="button" class="btn btn-xl btn-primary">Go</button>', $html);
+    }
+
+    public function testLeadingAndTrailingIcons(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-primary"><i class="ti ti-plus icon" aria-hidden="true"></i>New user</button>',
+            $this->renderComponent('<twig:Tabler:Button icon="plus">New user</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<a href="/next" class="btn" role="button">Next<i class="ti ti-arrow-right icon icon-end" aria-hidden="true"></i></a>',
+            $this->renderComponent('<twig:Tabler:Button href="/next" variant="default" iconEnd="arrow-right">Next</twig:Tabler:Button>'),
+        );
+    }
+
+    public function testIconOnlyNeedsNoChildren(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button variant="danger" icon="trash" iconOnly aria-label="Delete" />');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-icon btn-danger" aria-label="Delete"><i class="ti ti-trash icon" aria-hidden="true"></i></button>', $html);
+    }
+
+    public function testIconWithAnimation(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button variant="default" icon="refresh" animateIcon="rotate">Sync</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-animate-icon btn-animate-icon-rotate"><i class="ti ti-refresh icon" aria-hidden="true"></i>Sync</button>', $html);
+    }
+
+    public function testPrefixedIconRendersSvg(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button icon="lucide:circle-check">Done</twig:Tabler:Button>');
+
+        $document = new DOMDocument();
+        self::assertTrue(@$document->loadHTML($html));
+        $svg = $document->getElementsByTagName('svg')->item(0);
+        self::assertInstanceOf(DOMElement::class, $svg);
+        self::assertSame('icon', $svg->getAttribute('class'));
+        self::assertMatchesRegularExpression('#</svg>\s*Done</button>\s*$#', $html);
+    }
+
+    public function testIconBlocksCanBeOverridden(): void
+    {
+        $html = $this->renderComponent(<<<'TWIG'
+            <twig:Tabler:Button icon="plus" iconEnd="x">
+                <twig:block name="icon"><span class="icon">+</span></twig:block>
+                <twig:block name="iconEnd"></twig:block>
+                Add
+            </twig:Tabler:Button>
+            TWIG);
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary"><span class="icon">+</span>Add</button>', $html);
+    }
+
+    public function testModalTrigger(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button modal="confirm">Delete</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirm" aria-controls="confirm">Delete</button>', $html);
+    }
+
+    public function testOffcanvasTriggerOnLink(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button href="#menu" offcanvas="menu">Menu</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<a href="#menu" class="btn btn-primary" role="button" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="menu">Menu</a>', $html);
+    }
+
+    public function testCollapseTrigger(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button collapse="filters">Filters</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filters" aria-controls="filters" aria-expanded="false">Filters</button>', $html);
+    }
+
+    public function testFirstTriggerWins(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button modal="a" offcanvas="b" collapse="c">X</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a" aria-controls="a">X</button>', $html);
+    }
+
+    public function testExplicitAttributesWinOverTriggers(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button collapse="filters" aria-expanded="true" data-bs-target=".filters" data-foo="bar">Filters</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target=".filters" aria-controls="filters" aria-expanded="true" data-foo="bar">Filters</button>', $html);
+    }
+
+    public function testTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" title="Save the draft">Save</button>',
+            $this->renderComponent('<twig:Tabler:Button tooltip="Save the draft">Save</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-icon btn-primary" data-bs-toggle="tooltip" title="Settings" aria-label="Settings"><i class="ti ti-settings icon" aria-hidden="true"></i></button>',
+            $this->renderComponent('<twig:Tabler:Button icon="settings" iconOnly tooltip="Settings" />'),
+        );
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-icon btn-primary" data-bs-toggle="tooltip" title="Settings" aria-label="Open the settings"><i class="ti ti-settings icon" aria-hidden="true"></i></button>',
+            $this->renderComponent('<twig:Tabler:Button icon="settings" iconOnly tooltip="Settings" aria-label="Open the settings" />'),
+        );
+    }
+
+    public function testTriggerTakesPrecedenceOverTooltip(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button modal="confirm" tooltip="Asks first">Delete</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirm" aria-controls="confirm" title="Asks first">Delete</button>', $html);
+    }
+
+    public function testTriggerKeepsDisabledAndClassMerge(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button modal="confirm" icon="trash" class="ms-auto" disabled>Delete</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#confirm" aria-controls="confirm" disabled><i class="ti ti-trash icon" aria-hidden="true"></i>Delete</button>', $html);
     }
 }

@@ -24,6 +24,29 @@
       disabled     — inactive state (attribute on <button>, .disabled class on <a>)
       floating     — pinned to the bottom corner of the viewport (btn-floating)
       animateIcon  — animate the icon on hover: pulse | rotate | shake | tada | move-start (btn-animate-icon-*)
+      icon         — leading icon name (Tabler, or ux-icons with a prefix: `lucide:check`), rendered with
+                     <twig:Tabler:Icon> and the `icon` class; mirrored by the `icon` block
+      iconEnd      — trailing icon name (`icon icon-end`); mirrored by the `iconEnd` block
+      modal        — id of a modal to open (data-bs-toggle="modal", data-bs-target="#id", aria-controls)
+      offcanvas    — id of an offcanvas to open (data-bs-toggle="offcanvas", …)
+      collapse     — id of a collapsible element to toggle (data-bs-toggle="collapse", …, aria-expanded="false")
+      tooltip      — tooltip text (title, data-bs-toggle="tooltip"); an icon-only button also gets it as its
+                     aria-label
+
+    Icons and icon-only buttons:
+        <twig:Tabler:Button icon="plus">New user</twig:Tabler:Button>
+        <twig:Tabler:Button iconEnd="arrow-right" variant="default">Next</twig:Tabler:Button>
+        <twig:Tabler:Button icon="trash" iconOnly variant="danger" aria-label="Delete" />
+
+    Triggers (Bootstrap data API):
+        <twig:Tabler:Button modal="confirm-delete" variant="danger">Delete</twig:Tabler:Button>
+        <twig:Tabler:Button collapse="filters" variant="default">Filters</twig:Tabler:Button>
+        <twig:Tabler:Button icon="settings" iconOnly tooltip="Settings" />
+
+    Bootstrap reads a single `data-bs-toggle`: set one of `modal`, `offcanvas` and `collapse` (the first set
+    wins, in that order). They take precedence over `tooltip`, which then only sets the native `title`; for a
+    Bootstrap tooltip on such a trigger, wrap it in <twig:Tabler:Tooltip>. Explicit attributes
+    (`data-bs-target`, `aria-expanded`, `aria-label`…) win over the generated ones.
 #}
 {% apply trim %}
 {% props
@@ -53,6 +76,18 @@
     floating = false,
     ## 'pulse'|'rotate'|'shake'|'tada'|'move-start'|null The icon animation on hover (`btn-animate-icon-*`).
     animateIcon = null,
+    ## string|null The leading icon name, rendered with `Tabler:Icon` (`icon`).
+    icon = null,
+    ## string|null The trailing icon name, rendered with `Tabler:Icon` (`icon icon-end`).
+    iconEnd = null,
+    ## string|null The id of the modal the button opens (`data-bs-toggle="modal"`).
+    modal = null,
+    ## string|null The id of the offcanvas the button opens (`data-bs-toggle="offcanvas"`).
+    offcanvas = null,
+    ## string|null The id of the element the button collapses and expands (`data-bs-toggle="collapse"`).
+    collapse = null,
+    ## string|null The tooltip text (`title`, and `data-bs-toggle="tooltip"` unless the button is a trigger); the aria-label of an icon-only button.
+    tooltip = null,
 %}
 
 {% set button = html_cva(
@@ -109,8 +144,30 @@
 {% set link = href is not null %}
 {% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: link and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
 {% set tag = link ? 'a' : 'button' %}
-<{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ (link ? attributes.defaults({role: 'button'}) : attributes).without('class', 'href', 'type') }}
-    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>{## The button label. #}
+
+{# Generated attributes, given as defaults so the user's explicit attributes win #}
+{% set defaults = link ? {role: 'button'} : {} %}
+{% set toggle = modal is not null ? 'modal' : (offcanvas is not null ? 'offcanvas' : (collapse is not null ? 'collapse' : null)) %}
+{% if toggle is not null %}
+    {% set target = modal ?? offcanvas ?? collapse %}
+    {% set defaults = defaults|merge({'data-bs-toggle': toggle, 'data-bs-target': '#' ~ target, 'aria-controls': target}) %}
+    {% if toggle == 'collapse' %}
+        {% set defaults = defaults|merge({'aria-expanded': 'false'}) %}
+    {% endif %}
+{% endif %}
+{% if tooltip is not null %}
+    {% set defaults = defaults|merge(toggle is null ? {'data-bs-toggle': 'tooltip', title: tooltip} : {title: tooltip}) %}
+    {% if iconOnly %}
+        {% set defaults = defaults|merge({'aria-label': tooltip}) %}
+    {% endif %}
+{% endif %}
+
+<{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ attributes.defaults(defaults).without('class', 'href', 'type') }}
+    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
+    {%- block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" class="icon" aria-hidden="true" />{% endif %}{% endblock -%}
+    {## The button label. -#}
     {%- block content %}{% endblock -%}
+    {## The trailing icon: a `Tabler:Icon` named `iconEnd`, when set. -#}
+    {%- block iconEnd %}{% if iconEnd is not null %}<twig:Tabler:Icon name="{{ iconEnd }}" class="icon icon-end" aria-hidden="true" />{% endif %}{% endblock -%}
 </{{ tag }}>
 {% endapply ~%}

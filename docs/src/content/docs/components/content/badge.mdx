@@ -50,9 +50,17 @@ A short label next to other content: a status, a counter, a tag.
 
 <Example name="badge/notification" />
 
+## Icons
+
+`icon` adds an icon before the label, rendered with [Icon](/components/content/icon/) (so a prefixed `lucide:…` name
+works with `symfony/ux-icons`) and Tabler's `icon` class, hidden from assistive technology. The `icon` block replaces
+it. With `iconOnly`, the badge needs no children: give it an `aria-label`.
+
+<Example name="badge/icon" />
+
 ## Icon only
 
-`iconOnly` makes a square badge that holds only an icon (`badge-icononly`):
+`iconOnly` makes a square badge that holds only an icon (`badge-icononly`), from the `icon` prop or the children:
 
 <Example name="badge/icon-only" />
 
@@ -61,6 +69,11 @@ A short label next to other content: a status, a counter, a tag.
 `Badge:List` spaces several badges in a row and wraps them on narrow screens (`badge-list`):
 
 <Example name="badge/list" />
+
+Its `items` renders a badge for each entry, an array of Badge props: `text` (the label, escaped), and the optional
+`variant`, `icon`, `light`, `outline`, `pill`, `size` and `href`:
+
+<Example name="badge/list-items" />
 
 ## Links
 
@@ -82,8 +95,15 @@ With `href`, the badge renders as an `<a>`:
 | `notification` | bool    | `false`     | Over the top end corner of its parent (`badge-notification`)                                                |
 | `blink`        | bool    | `false`     | Pulsing animation (`badge-blink`)                                                                           |
 | `href`         | string? | `null`      | Renders an `<a href>` instead of a `<span>`                                                                 |
+| `icon`         | string? | `null`      | Leading icon name, rendered with `Icon` (`icon`)                                                            |
 
 Other attributes go to the root `<span class="badge">` (or `<a>`). Any other `variant` value renders no color class.
+
+`Badge:List`:
+
+| Prop    | Type   | Default | Description                                                                                       |
+| ------- | ------ | ------- | ------------------------------------------------------------------------------------------------- |
+| `items` | array? | `null`  | Badges to render: `{text, variant?, icon?, light?, outline?, pill?, size?, href?}`, `Badge` props |
 
 ## Sub-components
 
@@ -93,6 +113,9 @@ Other attributes go to the root `<span class="badge">` (or `<a>`). Any other `va
 
 ## Blocks
 
-| Block     | Default                        |
-| --------- | ------------------------------ |
-| `content` | Empty: the children, the label |
+| Block     | Default                                                      |
+| --------- | ------------------------------------------------------------ |
+| `icon`    | A `Tabler:Icon` named `icon` with the `icon` class, when set |
+| `content` | Empty: the children, the label                               |
+
+The `content` block of `Badge:List` renders a `Badge` for each entry of `items`; the children replace it.
