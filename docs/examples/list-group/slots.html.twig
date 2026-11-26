@@ -1,0 +1,15 @@
+<twig:Tabler:ListGroup>
+    {% for user in [
+        {name: 'Jane Cooper', role: 'UI designer', avatar: '/examples/avatar-1.jpg', seen: '2 h'},
+        {name: 'Wade Warren', role: 'Frontend developer', avatar: '/examples/avatar-2.jpg', seen: '3 d'},
+    ] %}
+        <twig:Tabler:ListGroup:Item>
+            <twig:Tabler:ListGroup:Media><twig:Tabler:Avatar image="{{ user.avatar }}" /></twig:Tabler:ListGroup:Media>
+            <twig:Tabler:ListGroup:Content title="{{ user.name }}" description="{{ user.role }}" />
+            <twig:Tabler:ListGroup:Meta>{{ user.seen }}</twig:Tabler:ListGroup:Meta>
+            <twig:Tabler:ListGroup:Actions tag="div">
+                <twig:Tabler:Button variant="default" size="sm">Follow</twig:Tabler:Button>
+            </twig:Tabler:ListGroup:Actions>
+        </twig:Tabler:ListGroup:Item>
+    {% endfor %}
+</twig:Tabler:ListGroup>

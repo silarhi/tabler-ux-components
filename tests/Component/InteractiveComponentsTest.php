@@ -63,7 +63,7 @@ final class InteractiveComponentsTest extends ComponentTestCase
             TWIG);
 
         self::assertHtmlSame(
-            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true">'
+            '<div class="toast show" role="status" aria-live="polite" aria-atomic="true">'
             . '<div class="toast-header"><strong class="me-auto">Notice</strong>'
             . '<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>'
             . '<div class="toast-body">Saved.</div>'
@@ -147,7 +147,7 @@ final class InteractiveComponentsTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Toast autohide="{{ false }}"><twig:Tabler:Toast:Body>Saved.</twig:Tabler:Toast:Body></twig:Tabler:Toast>');
 
         self::assertHtmlSame(
-            '<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-bs-autohide="false"><div class="toast-body">Saved.</div></div>',
+            '<div class="toast" role="status" aria-live="polite" aria-atomic="true" data-bs-autohide="false"><div class="toast-body">Saved.</div></div>',
             $html,
         );
     }

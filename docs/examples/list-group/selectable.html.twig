@@ -1,0 +1,14 @@
+<twig:Tabler:ListGroup selectable>
+    {% for user in [
+        {id: 12, name: 'Jane Cooper', role: 'UI designer', checked: true},
+        {id: 27, name: 'Wade Warren', role: 'Frontend developer', checked: false},
+    ] %}
+        <twig:Tabler:ListGroup:Item tag="label" title="{{ user.name }}" description="{{ user.role }}">
+            <twig:block name="media">
+                <twig:Tabler:ListGroup:Media>
+                    <twig:Tabler:ListGroup:Check name="members[]" value="{{ user.id }}" checked="{{ user.checked }}" />
+                </twig:Tabler:ListGroup:Media>
+            </twig:block>
+        </twig:Tabler:ListGroup:Item>
+    {% endfor %}
+</twig:Tabler:ListGroup>

@@ -1,0 +1,66 @@
+---
+title: Hover gallery
+description: Several images in the space of one, switched as the pointer moves across them, for product cards and listings.
+---
+
+import Example from '../../../../components/Example.astro'
+
+Several images in the space of one, for product cards, portfolios and listings. The first image shows; each image is an
+invisible column, and the one under the pointer covers the gallery. No JavaScript, and on touch screens the gallery
+turns into a strip to swipe. Requires Tabler 1.7+.
+
+<Example name="hover-gallery/all-in-one" />
+
+`images` is an array of `{src, alt}`, rendered with `HoverGallery:Item`. `indicators` adds a bar per image at the
+bottom edge, lit for the image on display, on a soft dark gradient that keeps them visible on any photo.
+
+## Aspect ratio
+
+The gallery is a square and the images are cropped to fill it. Set `--tblr-hover-gallery-aspect-ratio` in a `style`
+attribute for another shape:
+
+<Example name="hover-gallery/plain" />
+
+## Composed
+
+Children replace the generated items: place one `HoverGallery:Item` per image, with `src` and `alt`, or your own
+`<img>` (a `srcset`, a `loading` attribute…) as its content. `card-img-top` puts the gallery in place of a card image:
+
+<Example name="hover-gallery/card" />
+
+## Accessibility
+
+Give every image an `alt` saying what this photo shows, not only the product name. Keyboard users only see the first
+image: keep the information of the others elsewhere on the page. In a link, the whole gallery leads to one place.
+
+## Props
+
+| Prop         | Type   | Default | Description                                                                                 |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------------------- |
+| `images`     | array? | `null`  | `{src, alt?}` entries, rendered with `HoverGallery:Item`                                    |
+| `indicators` | bool   | `false` | A bar per image at the bottom edge, lit for the one on display (`hover-gallery-indicators`) |
+
+Other attributes go to the root `<div class="hover-gallery">`.
+
+`HoverGallery:Item`:
+
+| Prop  | Type    | Default | Description                       |
+| ----- | ------- | ------- | --------------------------------- |
+| `src` | string? | `null`  | Image URL, rendered as an `<img>` |
+| `alt` | string  | `''`    | What this photo shows             |
+
+Other attributes go to the `<div class="hover-gallery-item">`.
+
+## Sub-components
+
+| Component           | Renders                                               |
+| ------------------- | ----------------------------------------------------- |
+| `HoverGallery:Item` | `<div class="hover-gallery-item">` around one `<img>` |
+
+## Blocks
+
+| Block     | Default                                                                 |
+| --------- | ----------------------------------------------------------------------- |
+| `content` | A `HoverGallery:Item` for each entry of `images`: replace it to compose |
+
+The `content` block of `HoverGallery:Item` holds the `<img>` of its `src` and `alt` props.

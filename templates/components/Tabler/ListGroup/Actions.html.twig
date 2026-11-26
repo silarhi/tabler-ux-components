@@ -1,24 +1,33 @@
 {#
-    ListGroup actions — a link on the trailing edge of a list group item that
-    appears on hover in a hoverable list group (`.list-group-item-actions`).
+    ListGroup actions — the trailing slot of a list group item (`.list-group-item-actions`):
+    a link that appears on hover in a hoverable list group, or, with tag="div", a slot
+    holding buttons, a switch or other controls (Tabler 1.7+).
 
-    It stays in the tab order while hidden, so never make it the only way to do
-    something; use `show` to keep it visible. Name it with an `aria-label`.
+    In a hoverable list group it stays in the tab order while hidden, so never make it
+    the only way to do something; use `show` to keep it visible. Name an icon-only
+    link with an `aria-label`.
 
     Usage:
         <twig:Tabler:ListGroup:Actions href="/favorites/add" aria-label="Add to favorites">
             <twig:Tabler:Icon name="star" />
         </twig:Tabler:ListGroup:Actions>
 
+        <twig:Tabler:ListGroup:Actions tag="div">
+            <twig:Tabler:Button size="sm">Follow</twig:Tabler:Button>
+        </twig:Tabler:ListGroup:Actions>
+
     Props:
-      href  — link target (defaults to #)
-      show  — always visible (show)
+      tag   — a (default): a link | div | span: a slot for controls (span in a link, button or label item)
+      href  — with tag="a", link target (defaults to #)
+      show  — always visible in a hoverable list group (show)
 #}
 {% apply trim %}
 {% props
-    ## string|null The link target; defaults to `#`.
+    ## 'a'|'div'|'span' The element: a link, or a `div` (a `span` in a link, button or label item) holding controls (Tabler 1.7+).
+    tag = 'a',
+    ## string|null With `tag="a"`, the link target; defaults to `#`.
     href = null,
-    ## bool Whether to keep it visible, not only on hover (`show`).
+    ## bool Whether to keep it visible in a hoverable list group, not only on hover (`show`).
     show = false,
 %}
 
@@ -29,7 +38,7 @@
     },
 ) %}
 
-<a href="{{ href ?? '#' }}" class="{{ actions.apply({show: show}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{## The link content, usually a `Tabler:Icon`. #}
+<{{ tag }}{% if tag == 'a' %} href="{{ href ?? '#' }}"{% endif %} class="{{ actions.apply({show: show}, attributes.render('class')) }}" {{ attributes.without('class', 'href') }}>{## The content: an icon for a link, controls for a slot. #}
     {%- block content %}{% endblock -%}
-</a>
+</{{ tag }}>
 {% endapply ~%}

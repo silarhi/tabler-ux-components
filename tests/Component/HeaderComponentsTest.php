@@ -208,7 +208,7 @@ final class HeaderComponentsTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Toast show title="Backup" time="just now" text="The nightly backup finished." />');
 
         self::assertHtmlSame(
-            '<div class="toast show" role="alert" aria-live="polite" aria-atomic="true">'
+            '<div class="toast show" role="status" aria-live="polite" aria-atomic="true">'
             . '<div class="toast-header"><strong class="me-auto">Backup</strong><small class="text-secondary">just now</small>'
             . '<button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>'
             . '<div class="toast-body">The nightly backup finished.</div>'
@@ -223,7 +223,7 @@ final class HeaderComponentsTest extends ComponentTestCase
         self::assertStringNotContainsString('btn-close', $notDismissible);
 
         $bodyOnly = $this->renderComponent('<twig:Tabler:Toast text="Saved." />');
-        self::assertHtmlSame('<div class="toast" role="alert" aria-live="polite" aria-atomic="true"><div class="toast-body">Saved.</div></div>', $bodyOnly);
+        self::assertHtmlSame('<div class="toast" role="status" aria-live="polite" aria-atomic="true"><div class="toast-body">Saved.</div></div>', $bodyOnly);
     }
 
     public function testToastBodyBlockKeepsHeader(): void

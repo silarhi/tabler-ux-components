@@ -1,0 +1,31 @@
+{#
+    ListGroup check — a checkbox or a radio that gives its item the active look when
+    checked, in a selectable list group (`.list-group-selectable-check`, Tabler 1.7+).
+    No JavaScript: the style comes from `:has(:checked)`.
+
+    Put it in the ListGroup:Media of a `label` item, so a click on the whole row
+    changes the input.
+
+    Usage:
+        <twig:Tabler:ListGroup selectable>
+            <twig:Tabler:ListGroup:Item tag="label" title="Paweł Kuna" description="UI Designer">
+                <twig:block name="media">
+                    <twig:Tabler:ListGroup:Media><twig:Tabler:ListGroup:Check name="users[]" value="1" checked /></twig:Tabler:ListGroup:Media>
+                </twig:block>
+            </twig:Tabler:ListGroup:Item>
+        </twig:Tabler:ListGroup>
+
+    Props:
+      type     — checkbox (default) | radio
+      checked  — checked input (checked)
+#}
+{% apply trim %}
+{% props
+    ## 'checkbox'|'radio' The input type.
+    type = 'checkbox',
+    ## bool Whether the input is checked.
+    checked = false,
+%}
+
+<input type="{{ type }}" {{ attributes.without('type').defaults({class: 'form-check-input list-group-selectable-check m-0'}) }}{% if checked %} checked{% endif %}>
+{% endapply ~%}

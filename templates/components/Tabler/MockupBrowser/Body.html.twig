@@ -1,0 +1,25 @@
+{#
+    MockupBrowser body — the page area of a <twig:Tabler:MockupBrowser>
+    (`.mockup-browser-body`): an image, an iframe or a video fills its width, other
+    content keeps its own layout (add a padding utility such as `p-4`).
+
+    Usage:
+        <twig:Tabler:MockupBrowser:Body src="/screenshots/dashboard.png" alt="Tabler dashboard" />
+        <twig:Tabler:MockupBrowser:Body class="p-4">…</twig:Tabler:MockupBrowser:Body>
+
+    Props:
+      src  — screenshot URL, rendered as an <img>; mirrored by the `content` block
+      alt  — alternative text of the screenshot
+#}
+{% apply trim %}
+{% props
+    ## string|null The screenshot URL, rendered as an `<img>`.
+    src = null,
+    ## string The alternative text of the screenshot: what page it shows.
+    alt = '',
+%}
+
+<div {{ attributes.defaults({class: 'mockup-browser-body'}) }}>{## The page: an `<img>` with the `src` and `alt` props, when `src` is set. #}
+    {%- block content %}{% if src is not null %}<img src="{{ src }}" alt="{{ alt }}">{% endif %}{% endblock -%}
+</div>
+{% endapply ~%}

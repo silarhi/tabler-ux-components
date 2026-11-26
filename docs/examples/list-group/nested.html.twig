@@ -1,0 +1,12 @@
+<twig:Tabler:ListGroup>
+    <twig:Tabler:ListGroup:Item button icon="folder" title="Projects" data-bs-toggle="collapse" data-bs-target="#list-group-projects" aria-expanded="true" aria-controls="list-group-projects">
+        <twig:block name="meta">
+            <twig:Tabler:ListGroup:Meta><twig:Tabler:Icon name="chevron-down" class="list-group-item-toggle" /></twig:Tabler:ListGroup:Meta>
+        </twig:block>
+    </twig:Tabler:ListGroup:Item>
+    <twig:Tabler:ListGroup:Nested id="list-group-projects" collapse show>
+        <twig:Tabler:ListGroup:Item href="#website" label="Website redesign" />
+        <twig:Tabler:ListGroup:Item href="#mobile" label="Mobile app" />
+    </twig:Tabler:ListGroup:Nested>
+    <twig:Tabler:ListGroup:Item href="#settings" icon="settings" title="Settings" />
+</twig:Tabler:ListGroup>

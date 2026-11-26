@@ -1,0 +1,19 @@
+{#
+    ListGroup description — the second line of the content of a list group item, in
+    the secondary color and cut with an ellipsis (`.list-group-item-description`,
+    Tabler 1.7+). Add `text-wrap` for a longer text.
+
+    Usage:
+        <twig:Tabler:ListGroup:Description>UI Designer</twig:Tabler:ListGroup:Description>
+
+    Props:
+      tag  — span (default, valid in a link, a button or a label item too) | div
+#}
+{% apply trim %}
+{% props
+    ## 'span'|'div' The element: a `span`, valid in a link, a button or a label item too.
+    tag = 'span',
+%}
+
+<{{ tag }} {{ attributes.defaults({class: 'list-group-item-description'}) }}>{## The description. #}{%- block content %}{% endblock -%}</{{ tag }}>
+{% endapply ~%}

@@ -1,0 +1,23 @@
+{#
+    MockupBrowser URL — the address of a mockup browser toolbar, plain centered text
+    cut with an ellipsis (`.mockup-browser-url`).
+
+    Usage:
+        <twig:Tabler:MockupBrowser:Url>preview.tabler.io</twig:Tabler:MockupBrowser:Url>
+        <twig:Tabler:MockupBrowser:Url icon="lock">https://preview.tabler.io</twig:Tabler:MockupBrowser:Url>
+
+    Props:
+      icon  — icon before the address, e.g. `lock` for a secure page; mirrored by the `icon` block
+#}
+{% apply trim %}
+{% props
+    ## string|null The icon before the address, e.g. `lock` for a secure page.
+    icon = null,
+%}
+
+<div {{ attributes.defaults({class: 'mockup-browser-url'}) }}>
+    {## The icon: an `Icon` with the `icon` prop, when set. -#}
+    {% block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" />{% endif %}{% endblock -%}
+    <span>{## The address. #}{%- block content %}{% endblock -%}</span>
+</div>
+{% endapply ~%}
