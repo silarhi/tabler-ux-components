@@ -1,0 +1,17 @@
+{#
+    Page wrapper — the column after the navigation of a <twig:Tabler:Page>, holding the page header,
+    the body and the footer. Tabler offsets it by the width of a vertical navbar before it.
+
+    Usage:
+        <twig:Tabler:Page:Wrapper>
+            <div class="container-xl"><twig:Tabler:PageHeader title="Dashboard" /></div>
+            <twig:Tabler:Page:Body>…</twig:Tabler:Page:Body>
+            <twig:Tabler:Footer copyright="Copyright © 2026 Acme" />
+        </twig:Tabler:Page:Wrapper>
+#}
+{% apply trim %}
+<div {{ attributes.defaults({class: 'page-wrapper'}) }}>
+    {## The page header, the `Page:Body` and the `Footer`. -#}
+    {% block content %}{% endblock %}
+</div>
+{% endapply ~%}

@@ -1,0 +1,15 @@
+{#
+    Footer links — a dotted inline list of items in a <twig:Tabler:Footer> (`list-inline-dots`).
+
+    Usage:
+        <twig:Tabler:Footer:Links>
+            <twig:Tabler:Footer:Item href="/docs">Documentation</twig:Tabler:Footer:Item>
+            <twig:Tabler:Footer:Item href="/license">License</twig:Tabler:Footer:Item>
+        </twig:Tabler:Footer:Links>
+#}
+{% apply trim %}
+<ul {{ attributes.defaults({class: 'list-inline list-inline-dots mb-0'}) }}>
+    {## The items: `Footer:Item` components. -#}
+    {% block content %}{% endblock %}
+</ul>
+{% endapply ~%}
