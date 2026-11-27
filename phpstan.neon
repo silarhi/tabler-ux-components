@@ -6,3 +6,11 @@ parameters:
         - src
         - tests
     tmpDir: var/tools/phpstan
+    ignoreErrors:
+        -
+            # Before 3.2 (PHP 8.2 and 8.3), ux-twig-component's runtime takes a Symfony ServiceLocator: the test is skipped there
+            path: tests/Standalone/PlainTwigTest.php
+            identifiers:
+                - argument.type
+                - arguments.count
+            reportUnmatched: false

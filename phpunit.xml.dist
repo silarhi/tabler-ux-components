@@ -16,9 +16,18 @@
     </php>
 
     <testsuites>
-        <testsuite name="Tabler UX Components Test Suite">
+        <testsuite name="unit">
             <directory>tests</directory>
+            <exclude>tests/Component</exclude>
             <exclude>tests/Fixtures</exclude>
+            <exclude>tests/Form</exclude>
+            <exclude>tests/Functional</exclude>
+        </testsuite>
+        <!-- Their kernel needs the framework: the "PHPUnit without the bundle dependencies" CI job leaves them out -->
+        <testsuite name="functional">
+            <directory>tests/Component</directory>
+            <directory>tests/Form</directory>
+            <directory>tests/Functional</directory>
         </testsuite>
     </testsuites>
 

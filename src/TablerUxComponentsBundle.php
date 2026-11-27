@@ -13,14 +13,17 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents;
 
+use Silarhi\TablerUxComponents\DependencyInjection\HtmlExtensionPass;
 use Silarhi\TablerUxComponents\Form\Extension\ChoiceStyleTypeExtension;
 use Silarhi\TablerUxComponents\Form\Extension\InputIconTypeExtension;
 use Silarhi\TablerUxComponents\Form\Extension\NumberStepperTypeExtension;
 use Silarhi\TablerUxComponents\Form\Extension\SwitchTypeExtension;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\Form\FormTypeExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+use Twig\Extra\Html\HtmlExtension;
 
 /**
  * Tabler-flavored Twig UX components for Symfony.
@@ -32,11 +35,24 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
  * so ux-twig-component's anonymous component finder discovers everything
  * under components/Tabler/.
  *
- * With symfony/form, it also registers the form type extensions behind the
- * options of the Tabler form themes (templates/form/).
+ * It registers twig/html-extra's HtmlExtension (`html_cva()`, which the
+ * components use) unless the application already does, as TwigExtraBundle
+ * does. With symfony/form, it also registers the form type extensions behind
+ * the options of the Tabler form themes (templates/form/).
+ *
+ * Only a kernel loads this class: without one, register the templates and the
+ * extensions in a plain Twig environment (see the README).
  */
 final class TablerUxComponentsBundle extends AbstractBundle
 {
+    public function build(ContainerBuilder $container): void
+    {
+        parent::build($container);
+
+        // After the autoconfiguration (100) and before TwigBundle collects the extensions (0)
+        $container->addCompilerPass(new HtmlExtensionPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
+    }
+
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->extension('twig', [
@@ -51,11 +67,14 @@ final class TablerUxComponentsBundle extends AbstractBundle
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+        $services = $container->services();
+        // Removed by HtmlExtensionPass when the application registers one (TwigExtraBundle)
+        $services->set(HtmlExtensionPass::SERVICE_ID, HtmlExtension::class)->tag('twig.extension');
+
         if (!interface_exists(FormTypeExtensionInterface::class)) {
             return;
         }
 
-        $services = $container->services();
         foreach ([
             ChoiceStyleTypeExtension::class,
             InputIconTypeExtension::class,
