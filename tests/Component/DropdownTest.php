@@ -88,6 +88,15 @@ final class DropdownTest extends ComponentTestCase
         );
     }
 
+    public function testButtonItemSubmitsAnotherForm(): void
+    {
+        // A menu outside the form (e.g. bulk actions over a table) submits it through the form* attributes
+        self::assertHtmlSame(
+            '<button type="submit" class="dropdown-item" form="bulk" formaction="/invoices/archive" formmethod="post" name="action" value="archive">Archive</button>',
+            $this->renderComponent('<twig:Tabler:Dropdown:Item tag="button" type="submit" form="bulk" formaction="/invoices/archive" formmethod="post" name="action" value="archive">Archive</twig:Tabler:Dropdown:Item>'),
+        );
+    }
+
     public function testAllInOne(): void
     {
         $html = $this->renderComponent(
