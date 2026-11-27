@@ -220,4 +220,54 @@ final class ButtonTest extends ComponentTestCase
 
         self::assertHtmlSame('<button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#confirm" aria-controls="confirm" disabled><i class="ti ti-trash icon" aria-hidden="true"></i>Delete</button>', $html);
     }
+
+    public function testLabelTagForAFileInput(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button tag="label" icon="upload"><input type="file" name="import" class="visually-hidden">Import</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<label class="btn btn-primary"><i class="ti ti-upload icon" aria-hidden="true"></i><input type="file" name="import" class="visually-hidden">Import</label>', $html);
+    }
+
+    public function testLabelAndSpanTagsGetNoTypeHrefNorRole(): void
+    {
+        self::assertHtmlSame(
+            '<label class="btn btn-secondary">Import</label>',
+            $this->renderComponent('<twig:Tabler:Button tag="label" variant="secondary" type="submit" href="/import">Import</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<span class="btn btn-outline">Draft</span>',
+            $this->renderComponent('<twig:Tabler:Button tag="span" variant="default" appearance="outline">Draft</twig:Tabler:Button>'),
+        );
+    }
+
+    public function testDisabledLabelAndSpanGetClassAndAria(): void
+    {
+        self::assertHtmlSame(
+            '<label class="btn disabled btn-primary" aria-disabled="true">Import</label>',
+            $this->renderComponent('<twig:Tabler:Button tag="label" disabled>Import</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<span class="btn disabled btn-primary" aria-disabled="true">Draft</span>',
+            $this->renderComponent('<twig:Tabler:Button tag="span" disabled>Draft</twig:Tabler:Button>'),
+        );
+    }
+
+    public function testExplicitTagWinsOverHref(): void
+    {
+        self::assertHtmlSame(
+            '<button type="button" class="btn btn-primary">Save</button>',
+            $this->renderComponent('<twig:Tabler:Button tag="button" href="/save">Save</twig:Tabler:Button>'),
+        );
+        self::assertHtmlSame(
+            '<a href="/profile" class="btn disabled btn-primary" role="button" aria-disabled="true" tabindex="-1">Profile</a>',
+            $this->renderComponent('<twig:Tabler:Button tag="a" href="/profile" disabled>Profile</twig:Tabler:Button>'),
+        );
+    }
+
+    public function testLabelTagKeepsTooltipAndAttributes(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Button tag="label" for="avatar" tooltip="PNG or JPEG" class="mb-0">Upload</twig:Tabler:Button>');
+
+        self::assertHtmlSame('<label class="btn btn-primary mb-0" data-bs-toggle="tooltip" title="PNG or JPEG" for="avatar">Upload</label>', $html);
+    }
 }
