@@ -69,6 +69,17 @@ final class HtmlExtensionPassTest extends TestCase
         self::assertTrue($container->hasDefinition(HtmlExtensionPass::SERVICE_ID));
     }
 
+    public function testDoesNothingWithoutTheBundleExtension(): void
+    {
+        $container = new ContainerBuilder();
+        $container->register('twig.extension.html', HtmlExtension::class)->addTag('twig.extension');
+        $definitions = array_keys($container->getDefinitions());
+
+        (new HtmlExtensionPass())->process($container);
+
+        self::assertSame($definitions, array_keys($container->getDefinitions()));
+    }
+
     private function createContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();

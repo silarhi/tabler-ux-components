@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents\Tests\Form;
 
+use function sprintf;
+
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -190,6 +192,21 @@ final class FormThemeTest extends FormThemeTestCase
         self::assertMatches(1, $html, $group . '/label/input[@id="field_0" and @value="day" and @checked and @data-testid="day"]');
         self::assertMatches(1, $html, $group . '/label/span[@class="form-selectgroup-label"]/i[' . self::hasClass('ti-calendar') . ']');
         self::assertMatches(1, $html, $group . '/label/span[@class="form-selectgroup-label" and normalize-space()="Week"]');
+    }
+
+    public function testGroupedChoiceIcons(): void
+    {
+        $html = $this->renderForm($this->createField(ChoiceType::class, [
+            'choices' => ['Short' => ['Day' => 'day', 'Week' => 'week'], 'Long' => ['Month' => 'month']],
+            'expanded' => true,
+            'choice_style' => 'selectgroup',
+            'choice_icon' => ['Day' => 'sun', 'Month' => 'calendar'],
+        ]));
+
+        $label = '//label[@class="form-selectgroup-item"][input[@id="%s"]]/span[@class="form-selectgroup-label"]';
+        self::assertMatches(1, $html, sprintf($label, 'field_0') . '/i[' . self::hasClass('ti-sun') . ']');
+        self::assertMatches(0, $html, sprintf($label, 'field_1') . '/i');
+        self::assertMatches(1, $html, sprintf($label, 'field_2') . '/i[' . self::hasClass('ti-calendar') . ']');
     }
 
     public function testPillsAndBoxes(): void
