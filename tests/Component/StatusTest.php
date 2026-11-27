@@ -66,4 +66,20 @@ final class StatusTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:Status:Indicator />'),
         );
     }
+
+    public function testTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="status status-warning" data-bs-toggle="tooltip" title="Since 14:02"><span class="status-dot"></span>Degraded</span>',
+            $this->renderComponent('<twig:Tabler:Status variant="warning" dot label="Degraded" tooltip="Since 14:02" />'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="status status-primary" data-bs-toggle="popover" title="Details">Live</span>',
+            $this->renderComponent('<twig:Tabler:Status label="Live" tooltip="Since 14:02" data-bs-toggle="popover" title="Details" />'),
+        );
+    }
 }

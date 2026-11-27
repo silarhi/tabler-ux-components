@@ -67,10 +67,18 @@ Avatars are round in Tabler 1.6. `square` switches to rounded corners (`avatar-s
 <Example name="avatar/list" />
 
 Its `items` renders an avatar for each entry, an array of Avatar props: `image`, `name`, `variant`, `color`, `size`,
-`rounded` and `square`, all optional. `text` replaces the initials, e.g. for a counter of the remaining people; it is
+`rounded`, `square` and `tooltip`, all optional. `text` replaces the initials, e.g. for a counter of the remaining people; it is
 escaped:
 
 <Example name="avatar/list-items" />
+
+## Tooltip
+
+`tooltip` sets the `title` and `data-bs-toggle="tooltip"` on the avatar itself, which `tabler.js` turns into a
+Bootstrap tooltip, with no wrapper, so stacked avatars keep overlapping. With a `name`, the tooltip replaces the
+`title` and the name stays the `aria-label`. Attributes you pass yourself (`title`, `data-bs-toggle`) win:
+
+<Example name="avatar/tooltip" />
 
 ## Brand mark
 
@@ -98,17 +106,18 @@ from. Put it in the avatar, with an `image` or with markup such as an icon:
 | `image`   | string? | `null`  | Image URL, set as an inline `background-image` style                                        |
 | `name`    | string? | `null`  | Name of the person: initials without `image`, `role="img"`, `title` and `aria-label`        |
 | `color`   | string? | `null`  | Tabler color of the background (`bg-{color}-lt`), or `auto` to pick it from the `name`      |
+| `tooltip` | string? | `null`  | Tooltip text (`title`, `data-bs-toggle="tooltip"`), replacing the `title` of `name`         |
 
 Other attributes go to the root `<span class="avatar">`. A `style` attribute is merged after the `background-image`,
 so it can still override it.
 
 `Avatar:List`:
 
-| Prop      | Type    | Default | Description                                                                             |
-| --------- | ------- | ------- | --------------------------------------------------------------------------------------- |
-| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                            |
-| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`)         |
-| `items`   | array?  | `null`  | Avatars to render: `{image?, name?, text?, variant?, color?, size?, rounded?, square?}` |
+| Prop      | Type    | Default | Description                                                                                       |
+| --------- | ------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `stacked` | bool    | `false` | Overlaps the avatars (`avatar-list-stacked`)                                                      |
+| `size`    | string? | `null`  | `xxs` `xs` `sm` `md` `lg` `xl` `2xl`: sizes every avatar (`avatar-list-{size}`)                   |
+| `items`   | array?  | `null`  | Avatars to render: `{image?, name?, text?, variant?, color?, size?, rounded?, square?, tooltip?}` |
 
 `Avatar:Brand`:
 

@@ -13,6 +13,9 @@
             Live
         </twig:Tabler:Status>
 
+    With a tooltip, on the status itself (no wrapper):
+        <twig:Tabler:Status variant="warning" dot label="Degraded" tooltip="Since 14:02, 3 incidents" />
+
     Props:
       variant   — primary | secondary | success | danger | warning | info | dark | light | muted,
                   or a palette color: blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
@@ -20,6 +23,8 @@
       animated  — pulse the dot (requires `dot`)
       lite      — transparent background, keeps only the dot and the text (status-lite)
       label     — the status text; mirrored by the `label` block
+      tooltip   — tooltip text (title, data-bs-toggle="tooltip"); explicit `title` / `data-bs-toggle` win.
+                  The label stays the accessible text: put the essential state in it, not only in the tooltip
 #}
 {% apply trim %}
 {% props
@@ -33,6 +38,8 @@
     lite = false,
     ## string|null The status text.
     label = null,
+    ## string|null The tooltip text (`title` and `data-bs-toggle="tooltip"`).
+    tooltip = null,
 %}
 
 {% set status = html_cva(
@@ -65,7 +72,7 @@
     },
 ) %}
 
-<span class="{{ status.apply({variant: variant, lite: lite}, attributes.render('class')) }}" {{ attributes.without('class') }}>{## The whole status content: `dot` and `label`; replace it to compose freely. #}
+<span class="{{ status.apply({variant: variant, lite: lite}, attributes.render('class')) }}" {{ (tooltip is not null ? attributes.defaults({'data-bs-toggle': 'tooltip', title: tooltip}) : attributes).without('class') }}>{## The whole status content: `dot` and `label`; replace it to compose freely. #}
     {%- block content -%}
         {## The dot: `Status:Dot`, animated when `animated`, when `dot` is set. -#}
         {%- block dot -%}

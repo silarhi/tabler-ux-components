@@ -5,6 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - Unreleased
+
+### Added
+
+- `tooltip` prop on `Badge`, `Icon`, `Avatar` and `Status`, like `Button`'s: `title` and `data-bs-toggle="tooltip"` on
+  the component's own root element, with no wrapper (unlike `Tooltip`'s `<span>`), so it fits in button and input
+  groups. A `dot` or `iconOnly` badge also gets it as its `aria-label`; an icon gets `role="img"` and the text as its
+  `aria-label`, unless it is given `aria-hidden`; on an avatar with a `name`, it replaces the `title` and the name stays
+  the `aria-label`. Explicit attributes win over the generated ones.
+- `tooltip` key in the `items` of `Avatar:List` and `Badge:List`.
+
 ## [0.11.0] - 2026-11-27
 
 ### Changed
@@ -214,6 +225,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.12.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.11.0...HEAD
 [0.11.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.8.0...v0.9.0

@@ -32,6 +32,14 @@ variant color (`status-lite`):
 
 <Example name="status/lite" />
 
+## Tooltip
+
+`tooltip` sets the `title` and `data-bs-toggle="tooltip"` on the status itself, with no wrapper. The label stays its
+accessible text, so keep the state in it and the details in the tooltip. Attributes you pass yourself (`title`,
+`data-bs-toggle`) win:
+
+<Example name="status/tooltip" />
+
 ## Indicator
 
 `Status:Indicator` is a larger, standalone marker (`status-indicator`), e.g. next to a service name on an uptime page.
@@ -64,6 +72,7 @@ See [Composition](/getting-started/composition/) for how blocks work.
 | `animated` | bool    | `false`     | Pulses the dot (needs `dot`)                                                                                                                                                                       |
 | `lite`     | bool    | `false`     | Neutral border and text, only the dot keeps the color (`status-lite`)                                                                                                                              |
 | `label`    | string? | `null`      | The status text                                                                                                                                                                                    |
+| `tooltip`  | string? | `null`      | Tooltip text (`title`, `data-bs-toggle="tooltip"`)                                                                                                                                                 |
 
 Other attributes go to the root `<span class="status">`.
 

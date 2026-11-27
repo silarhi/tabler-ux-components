@@ -9,7 +9,7 @@
         </twig:Tabler:Avatar:List>
 
     All-in-one (`items` is an array of Avatar props: {image?, name?, text?, variant?, color?, size?, rounded?,
-    square?}; `text` replaces the initials, e.g. for a "+8" counter):
+    square?, tooltip?}; `text` replaces the initials, e.g. for a "+8" counter):
         <twig:Tabler:Avatar:List stacked items="{{ [
             {name: 'Jane Doe', image: '/avatars/1.jpg'},
             {name: 'Paweł Kuna', color: 'auto'},
@@ -27,7 +27,7 @@
     stacked = false,
     ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl'|null The size of every avatar in the list (`avatar-list-{size}`).
     size = null,
-    ## list<array{image?:string,name?:string,text?:string,variant?:string,color?:string,size?:string,rounded?:bool,square?:bool}>|null The avatars, rendered with `Tabler:Avatar`.
+    ## list<array{image?:string,name?:string,text?:string,variant?:string,color?:string,size?:string,rounded?:bool,square?:bool,tooltip?:string}>|null The avatars, rendered with `Tabler:Avatar`.
     items = null,
 %}
 
@@ -59,6 +59,7 @@
                     size="{{ item.size ?? 'md' }}"
                     rounded="{{ item.rounded ?? false }}"
                     square="{{ item.square ?? false }}"
+                    tooltip="{{ item.tooltip ?? null }}"
                 >{{ item.text }}</twig:Tabler:Avatar>
             {%- else -%}
                 <twig:Tabler:Avatar
@@ -69,6 +70,7 @@
                     size="{{ item.size ?? 'md' }}"
                     rounded="{{ item.rounded ?? false }}"
                     square="{{ item.square ?? false }}"
+                    tooltip="{{ item.tooltip ?? null }}"
                 />
             {%- endif -%}
         {%- endfor -%}
