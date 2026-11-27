@@ -19,6 +19,14 @@ with `text-bg-{variant}`:
 
 <Example name="badge/colors" />
 
+## White
+
+`white` is a white badge with dark text (`text-bg-white`), for a dark or colored background. It is solid only: with
+`light` the badge gets no color class, with `outline` only `badge-outline`, since a white tint or a white border is
+unreadable on a light page.
+
+<Example name="badge/white" />
+
 ## Light
 
 `light` uses a tinted background with colored text (`bg-{variant}-lt`) instead of a filled one:
@@ -98,20 +106,20 @@ With `href`, the badge renders as an `<a>`:
 
 ## Props
 
-| Prop           | Type    | Default     | Description                                                                                                                                                                              |
-| -------------- | ------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`      | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`, or a Tabler color `blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green` `teal` `cyan` |
-| `light`        | bool    | `false`     | Tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`                                                                                                                     |
-| `outline`      | bool    | `false`     | Transparent background and a colored border (`badge-outline text-{variant}`); takes precedence over `light`                                                                              |
-| `pill`         | bool    | `false`     | Fully rounded corners (`badge-pill`)                                                                                                                                                     |
-| `size`         | string  | `'md'`      | `sm` `md` `lg`                                                                                                                                                                           |
-| `dot`          | bool    | `false`     | Small dot with no text (`badge-dot`)                                                                                                                                                     |
-| `iconOnly`     | bool    | `false`     | Square badge holding only an icon (`badge-icononly`)                                                                                                                                     |
-| `notification` | bool    | `false`     | Over the top end corner of its parent (`badge-notification`)                                                                                                                             |
-| `blink`        | bool    | `false`     | Pulsing animation (`badge-blink`)                                                                                                                                                        |
-| `href`         | string? | `null`      | Renders an `<a href>` instead of a `<span>`                                                                                                                                              |
-| `icon`         | string? | `null`      | Leading icon name, rendered with `Icon` (`icon`)                                                                                                                                         |
-| `tooltip`      | string? | `null`      | Tooltip text (`title`, `data-bs-toggle="tooltip"`); the `aria-label` of a `dot` or `iconOnly` badge                                                                                      |
+| Prop           | Type    | Default     | Description                                                                                                                                                                                                    |
+| -------------- | ------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`      | string  | `'primary'` | `primary` `secondary` `success` `danger` `warning` `info` `dark` `light`, a Tabler color `blue` `azure` `indigo` `purple` `pink` `red` `orange` `yellow` `lime` `green` `teal` `cyan`, or `white` (solid only) |
+| `light`        | bool    | `false`     | Tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`                                                                                                                                           |
+| `outline`      | bool    | `false`     | Transparent background and a colored border (`badge-outline text-{variant}`); takes precedence over `light`                                                                                                    |
+| `pill`         | bool    | `false`     | Fully rounded corners (`badge-pill`)                                                                                                                                                                           |
+| `size`         | string  | `'md'`      | `sm` `md` `lg`                                                                                                                                                                                                 |
+| `dot`          | bool    | `false`     | Small dot with no text (`badge-dot`)                                                                                                                                                                           |
+| `iconOnly`     | bool    | `false`     | Square badge holding only an icon (`badge-icononly`)                                                                                                                                                           |
+| `notification` | bool    | `false`     | Over the top end corner of its parent (`badge-notification`)                                                                                                                                                   |
+| `blink`        | bool    | `false`     | Pulsing animation (`badge-blink`)                                                                                                                                                                              |
+| `href`         | string? | `null`      | Renders an `<a href>` instead of a `<span>`                                                                                                                                                                    |
+| `icon`         | string? | `null`      | Leading icon name, rendered with `Icon` (`icon`)                                                                                                                                                               |
+| `tooltip`      | string? | `null`      | Tooltip text (`title`, `data-bs-toggle="tooltip"`); the `aria-label` of a `dot` or `iconOnly` badge                                                                                                            |
 
 Other attributes go to the root `<span class="badge">` (or `<a>`), and win over the generated `title`,
 `data-bs-toggle` and `aria-label`. Any other `variant` value renders no color class.

@@ -9,6 +9,7 @@
         <twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>
         <twig:Tabler:Badge href="/tags/php" variant="info" light>PHP</twig:Tabler:Badge>
         <twig:Tabler:Badge variant="purple" light>Beta</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="white">New</twig:Tabler:Badge>  (on a dark or colored background)
 
     Status dot and notification counter:
         <twig:Tabler:Badge variant="success" dot aria-label="Online" />
@@ -26,7 +27,8 @@
 
     Props:
       variant       — primary | secondary | success | danger | warning | info | dark | light, or a Tabler color:
-                      blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
+                      blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan,
+                      or white (text-bg-white, solid only: with `light` or `outline` it renders no color class)
       light         — soft/tinted variant (bg-{variant}-lt)
       outline       — transparent fill with a colored border (badge-outline, Tabler 1.5+)
       pill          — fully rounded corners
@@ -45,7 +47,7 @@
 #}
 {% apply trim %}
 {% props
-    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan' The badge color: a theme color or a Tabler color.
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|'white' The badge color: a theme color, a Tabler color or `white` (solid only: no color class with `light` or `outline`).
     variant = 'primary',
     ## bool Whether to use a tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`.
     light = false,
@@ -103,6 +105,7 @@
         {light: [false], outline: [false], variant: ['green'], class: 'text-bg-green'},
         {light: [false], outline: [false], variant: ['teal'], class: 'text-bg-teal'},
         {light: [false], outline: [false], variant: ['cyan'], class: 'text-bg-cyan'},
+        {light: [false], outline: [false], variant: ['white'], class: 'text-bg-white'},
         {light: [true], outline: [false], variant: ['primary'], class: 'bg-primary-lt'},
         {light: [true], outline: [false], variant: ['secondary'], class: 'bg-secondary-lt'},
         {light: [true], outline: [false], variant: ['success'], class: 'bg-success-lt'},

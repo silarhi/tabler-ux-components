@@ -219,4 +219,24 @@ final class BadgeTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:Badge:List items="{{ [{text: \'PHP\', tooltip: \'PHP 8.5\'}] }}" />'),
         );
     }
+
+    public function testWhiteIsSolidOnly(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge text-bg-white">New</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="white">New</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge">New</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="white" light>New</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge badge-outline">New</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="white" outline>New</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<div class="badge-list"><span class="badge text-bg-white">PHP</span></div>',
+            $this->renderComponent('<twig:Tabler:Badge:List items="{{ [{text: \'PHP\', variant: \'white\'}] }}" />'),
+        );
+    }
 }
