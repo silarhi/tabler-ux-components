@@ -15,6 +15,9 @@
         <twig:Tabler:Card title="Welcome back" gradient="ocean" gradientDirection="bottom" gradientAnimated />
         <twig:Tabler:Card tag="article" title="Release notes" text="Version 2.0 is out." />
 
+    A link card with a tooltip (`title` is the header, so the hover hint goes through `tooltip`):
+        <twig:Tabler:Card href="/deployments/1842" link title="Deployment #1842" tooltip="Open the deployment logs" />
+
     Collapsible, without JavaScript (a <details> with a <summary> header):
         <twig:Tabler:Card tag="details">
             <twig:Tabler:Card:Header tag="summary" title="Advanced settings" />
@@ -62,6 +65,8 @@
       footer          — optional footer text; mirrored by the `footer` block
       tag             — div (default) | article | section | aside | nav | details: the root element
       href            — when set, renders <a href> instead of the `tag` element
+      tooltip         — tooltip text (title, data-bs-toggle="tooltip") on the card itself, the only way to set
+                        its HTML `title` (the `title` prop is the header); an explicit `data-bs-toggle` wins
 #}
 {% apply trim %}
 {% props
@@ -105,6 +110,8 @@
     tag = 'div',
     ## string|null The link target; renders an `<a href>` instead of the `tag` element when set.
     href = null,
+    ## string|null The tooltip text (`title` and `data-bs-toggle="tooltip"` on the card), e.g. the hover hint of a link card.
+    tooltip = null,
 %}
 
 {% set card = html_cva(
@@ -164,7 +171,7 @@
 }, attributes.render('class')) %}
 {% set element = href is not null ? 'a' : tag %}
 
-<{{ element }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>
+<{{ element }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ (tooltip is not null ? attributes.defaults({'data-bs-toggle': 'tooltip', title: tooltip}) : attributes).without('class', 'href') }}>
     {%- if status is not null -%}
         <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
     {%- endif -%}
