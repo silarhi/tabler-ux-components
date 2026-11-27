@@ -1,7 +1,8 @@
 {#
     Tabler Card — main component, shadcn-style.
 
-    Renders a <div> by default, or an <a> when `href` is set.
+    Renders a <div> by default, the element named by `tag` (article, section, aside, nav, details), or an
+    <a> when `href` is set.
 
     The `content` block wraps the card body (header, body, footer), so composing
     it replaces them — while each named sub-block stays individually overridable.
@@ -12,6 +13,13 @@
         <twig:Tabler:Card title="Invoice #2026-0142" subtitle="Acme Corp" text="$4,320.00" />
         <twig:Tabler:Card title="Revenue" status="success" size="sm" text="$12,400" />
         <twig:Tabler:Card title="Welcome back" gradient="ocean" gradientDirection="bottom" gradientAnimated />
+        <twig:Tabler:Card tag="article" title="Release notes" text="Version 2.0 is out." />
+
+    Collapsible, without JavaScript (a <details> with a <summary> header):
+        <twig:Tabler:Card tag="details">
+            <twig:Tabler:Card:Header tag="summary" title="Advanced settings" />
+            <twig:Tabler:Card:Body>…</twig:Tabler:Card:Body>
+        </twig:Tabler:Card>
 
     Composed (full control):
         <twig:Tabler:Card status="danger">
@@ -52,7 +60,8 @@
       subtitle        — optional subtitle under the title; mirrored by the `header` block
       text            — optional body text; mirrored by the `body` block
       footer          — optional footer text; mirrored by the `footer` block
-      href            — when set, renders <a href> instead of <div>
+      tag             — div (default) | article | section | aside | nav | details: the root element
+      href            — when set, renders <a href> instead of the `tag` element
 #}
 {% apply trim %}
 {% props
@@ -92,7 +101,9 @@
     text = null,
     ## string|null The footer text, rendered with `Card:Footer`.
     footer = null,
-    ## string|null The link target; renders an `<a href>` instead of a `<div>` when set.
+    ## 'div'|'article'|'section'|'aside'|'nav'|'details' The root element.
+    tag = 'div',
+    ## string|null The link target; renders an `<a href>` instead of the `tag` element when set.
     href = null,
 %}
 
@@ -151,9 +162,9 @@
     rotate: rotate ?? '',
     link: link,
 }, attributes.render('class')) %}
-{% set tag = href is not null ? 'a' : 'div' %}
+{% set element = href is not null ? 'a' : tag %}
 
-<{{ tag }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>
+<{{ element }} class="{{ classes }}"{% if href is not null %} href="{{ href }}"{% endif %} {{ attributes.without('class', 'href') }}>
     {%- if status is not null -%}
         <twig:Tabler:Card:Status variant="{{ status }}" position="{{ statusPosition }}" />
     {%- endif -%}
@@ -174,5 +185,5 @@
             {%- if footer is not null -%}<twig:Tabler:Card:Footer>{{ footer }}</twig:Tabler:Card:Footer>{%- endif -%}
         {% endblock %}
     {% endblock %}
-</{{ tag }}>
+</{{ element }}>
 {% endapply ~%}

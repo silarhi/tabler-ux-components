@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `lime`, `green`, `teal` and `cyan`, filled (`text-bg-{color}`), `light` (`bg-{color}-lt`) and `outline`
   (`badge-outline text-{color}`), so in the `items` of `Badge:List` too. `Avatar`'s `variant` takes them as well
   (`bg-{color}-lt`), like its `color`.
+- `tag` prop on `Card`: `div` (the default), `article`, `section`, `aside`, `nav` or `details`; `href` still renders an
+  `<a>`. `Card:Header` takes `tag` too, `div`, `header` or `summary`: a `tag="details"` card with a `tag="summary"`
+  header collapses without JavaScript.
 
 ## [0.12.0] - 2026-11-27
 
