@@ -8,6 +8,7 @@
         <twig:Tabler:Icon name="refresh" animation="rotate" />
         <twig:Tabler:Icon name="star" filled variant="warning" />
         <twig:Tabler:Icon name="lucide:circle-check" variant="success" />   (symfony/ux-icons)
+        <twig:Tabler:Icon name="info-circle" tooltip="Synced every hour" />
 
     Props:
       name       — Tabler icon name (without the `ti-` prefix), or a ux-icons name with its icon set prefix
@@ -18,6 +19,8 @@
                    unset, the icon follows the surrounding font size
       filled     — use the filled variant of the icon (ti-filled ti-filled-{name}); with ux-icons, only for
                    the `tabler:` set, whose filled icons are named `tabler:{name}-filled`
+      tooltip    — tooltip text (title, data-bs-toggle="tooltip"), on the icon itself (no wrapper); the icon then
+                   carries meaning, so it also gets role="img" and the text as its aria-label
 
     Requires the @tabler/icons-webfont stylesheet to be loaded. The filled icons are a
     separate font (@tabler/icons-webfont 3.36.1+): compile its tabler-icons-filled.scss with
@@ -26,6 +29,10 @@
     A prefixed name needs symfony/ux-icons (`composer require symfony/ux-icons`), not the webfont: the
     <svg> gets Tabler's `icon` class, which sizes SVG icons, and the same color, size and animation
     classes. ux-icons hides it from assistive technology unless it has an `aria-label` or a `title`.
+
+    Explicit attributes win over the ones `tooltip` generates: an `aria-label` with more context, or
+    `aria-hidden="true"` when the text next to the icon already says what the tooltip says (the icon then
+    stays decorative: no `role` nor `aria-label`).
 #}
 {% apply trim %}
 {% props
@@ -39,6 +46,8 @@
     size = null,
     ## bool Whether to use the filled variant of the icon (`ti-filled ti-filled-{name}`, or `tabler:{name}-filled` with ux-icons).
     filled = false,
+    ## string|null The tooltip text (`title` and `data-bs-toggle="tooltip"`), also the icon's `aria-label` (`role="img"`).
+    tooltip = null,
 %}
 
 {# `filled` comes first, so its font class (ti or ti-filled) leads the class list #}
@@ -69,14 +78,21 @@
     },
 ) %}
 
+{# Generated attributes, given as defaults so the user's explicit attributes win; an explicit aria-hidden keeps
+   the icon decorative, without a role nor a label #}
+{% set iconAttributes = attributes %}
+{% if tooltip is not null %}
+    {% set iconAttributes = attributes.defaults({'data-bs-toggle': 'tooltip', title: tooltip}|merge(attributes.has('aria-hidden') ? {} : {role: 'img', 'aria-label': tooltip})) %}
+{% endif %}
+
 {% if ':' in name %}
     {# A ux-icons name: an inline <svg>, with Tabler's `icon` class (made for SVG icons) leading the class list #}
     <twig:ux:icon
         name="{{ filled and name starts with 'tabler:' ? name ~ '-filled' : name }}"
         class="{{ html_cva(base: 'icon').apply({}, icon.apply({variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, attributes.render('class'))) }}"
-        {{ ...attributes.without('class').all }}
+        {{ ...iconAttributes.without('class').all }}
     />
 {% else %}
-    <i class="{{ icon.apply({filled: filled, variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, (filled ? 'ti-filled-' : 'ti-') ~ name, attributes.render('class')) }}" {{ attributes.without('class') }}></i>
+    <i class="{{ icon.apply({filled: filled, variant: variant ?? '', animation: animation ?? '', size: size ?? ''}, (filled ? 'ti-filled-' : 'ti-') ~ name, attributes.render('class')) }}" {{ iconAttributes.without('class') }}></i>
 {% endif %}
 {% endapply ~%}

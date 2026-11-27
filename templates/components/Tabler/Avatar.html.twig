@@ -11,6 +11,9 @@
         <twig:Tabler:Avatar name="Jane Doe" color="auto" />
         <twig:Tabler:Avatar name="Jane Doe" image="/avatars/jane.jpg" />
 
+    With a tooltip (`title` and data-bs-toggle="tooltip", on the avatar itself: no wrapper):
+        <twig:Tabler:Avatar name="Jane Doe" tooltip="Jane Doe, project owner" />
+
     Group avatars with <twig:Tabler:Avatar:List stacked> (or its `items`); add a corner mark with
     <twig:Tabler:Avatar:Brand>; an empty slot is <twig:Tabler:Avatar:Upload>.
 
@@ -28,6 +31,8 @@
                  (the sum of the positions of its URL-encoded characters in a fixed alphabet, modulo 12: stable
                  across requests, not a real hash, so different names can share a color); takes precedence
                  over `variant`
+      tooltip  — tooltip text (title, data-bs-toggle="tooltip"); it replaces the `title` that `name` sets, and
+                 the `name` stays the aria-label. Explicit attributes win over the generated ones
 #}
 {% apply trim %}
 {% props
@@ -47,6 +52,8 @@
     name = null,
     ## 'auto'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The tinted background (`bg-{color}-lt`), `auto` to pick it from the `name`; takes precedence over `variant`.
     color = null,
+    ## string|null The tooltip text (`title` and `data-bs-toggle="tooltip"`), replacing the `title` that `name` sets.
+    tooltip = null,
 %}
 
 {% set palette = ['blue', 'azure', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'lime', 'green', 'teal', 'cyan'] %}
@@ -97,7 +104,13 @@
 {% set style = [image is not null ? 'background-image: url(' ~ image ~ ')' : null, attributes.render('style')]|filter(v => v is not empty)|join('; ') %}
 {% set label = name is not null ? name|trim : '' %}
 
-<span class="{{ avatar.apply({size: size, variant: color is null ? variant ?? '' : '', color: color ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ (label is not empty ? attributes.defaults({role: 'img', title: label, 'aria-label': label}) : attributes).without('class', 'style') }}>{## The avatar content: the initials of `name` without an `image`, or the children (initials or an icon). #}
+{# Generated attributes, given as defaults so the user's explicit attributes win #}
+{% set defaults = label is not empty ? {role: 'img', title: label, 'aria-label': label} : {} %}
+{% if tooltip is not null %}
+    {% set defaults = defaults|merge({'data-bs-toggle': 'tooltip', title: tooltip}) %}
+{% endif %}
+
+<span class="{{ avatar.apply({size: size, variant: color is null ? variant ?? '' : '', color: color ?? '', rounded: rounded, square: square, cover: cover}, attributes.render('class')) }}"{% if style %} style="{{ style }}"{% endif %} {{ attributes.defaults(defaults).without('class', 'style') }}>{## The avatar content: the initials of `name` without an `image`, or the children (initials or an icon). #}
     {%- block content -%}
         {%- if label is not empty and image is null -%}
             {{- label|split(' ')|filter(word => word is not empty)|slice(0, 2)|map(word => word|first|upper)|join -}}

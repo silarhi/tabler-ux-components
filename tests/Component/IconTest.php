@@ -91,6 +91,46 @@ final class IconTest extends ComponentTestCase
         self::assertStringContainsString('<circle cx="12" cy="12" r="10">', $html);
     }
 
+    public function testTooltipMakesTheIconAnImage(): void
+    {
+        self::assertHtmlSame(
+            '<i class="ti ti-info-circle" data-bs-toggle="tooltip" title="Synced every hour" role="img" aria-label="Synced every hour"></i>',
+            $this->renderComponent('<twig:Tabler:Icon name="info-circle" tooltip="Synced every hour" />'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<i class="ti ti-info-circle text-muted" data-bs-toggle="tooltip" title="Synced" role="img" aria-label="Synced every hour, last at 14:00"></i>',
+            $this->renderComponent('<twig:Tabler:Icon name="info-circle" tooltip="Synced" class="text-muted" aria-label="Synced every hour, last at 14:00" />'),
+        );
+        // An explicit aria-hidden keeps the icon decorative: no role nor label
+        self::assertHtmlSame(
+            '<i class="ti ti-info-circle" data-bs-toggle="tooltip" title="Synced" aria-hidden="true"></i>',
+            $this->renderComponent('<twig:Tabler:Icon name="info-circle" tooltip="Synced" aria-hidden="true" />'),
+        );
+    }
+
+    public function testTooltipOnAnUxIconsSvg(): void
+    {
+        // The aria-label keeps UX Icons from adding aria-hidden
+        self::assertSame(
+            ['class' => 'icon text-success', 'data-bs-toggle' => 'tooltip', 'title' => 'Synced', 'role' => 'img', 'aria-label' => 'Synced'],
+            $this->svgAttributes(
+                $this->renderComponent('<twig:Tabler:Icon name="tabler:check" variant="success" tooltip="Synced" />'),
+                'class', 'data-bs-toggle', 'title', 'role', 'aria-label', 'aria-hidden',
+            ),
+        );
+        self::assertSame(
+            ['data-bs-toggle' => 'tooltip', 'title' => 'Synced', 'aria-hidden' => 'true'],
+            $this->svgAttributes(
+                $this->renderComponent('<twig:Tabler:Icon name="tabler:check" tooltip="Synced" aria-hidden="true" />'),
+                'data-bs-toggle', 'title', 'role', 'aria-label', 'aria-hidden',
+            ),
+        );
+    }
+
     /**
      * The given attributes of the first <svg>, in the order asked, without the missing ones: UX Icons releases
      * order and add attributes differently (2.17 has no xmlns).

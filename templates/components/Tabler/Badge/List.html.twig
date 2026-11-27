@@ -7,7 +7,7 @@
             <twig:Tabler:Badge variant="success">Symfony</twig:Tabler:Badge>
         </twig:Tabler:Badge:List>
 
-    All-in-one (`items` is an array of Badge props: {text, variant?, icon?, light?, outline?, pill?, size?, href?}):
+    All-in-one (`items` is an array of Badge props: {text, variant?, icon?, light?, outline?, pill?, size?, href?, tooltip?}):
         <twig:Tabler:Badge:List items="{{ [
             {text: 'PHP', variant: 'primary', icon: 'brand-php'},
             {text: 'Symfony', variant: 'success', light: true},
@@ -18,7 +18,7 @@
 #}
 {% apply trim %}
 {% props
-    ## list<array{text:string,variant?:string,icon?:string,light?:bool,outline?:bool,pill?:bool,size?:string,href?:string}>|null The badges, rendered with `Tabler:Badge`.
+    ## list<array{text:string,variant?:string,icon?:string,light?:bool,outline?:bool,pill?:bool,size?:string,href?:string,tooltip?:string}>|null The badges, rendered with `Tabler:Badge`.
     items = null,
 %}
 
@@ -33,6 +33,7 @@
                 pill="{{ item.pill ?? false }}"
                 size="{{ item.size ?? 'md' }}"
                 href="{{ item.href ?? null }}"
+                tooltip="{{ item.tooltip ?? null }}"
             >{{ item.text ?? '' }}</twig:Tabler:Badge>
         {%- endfor -%}
     {%- endblock -%}

@@ -180,4 +180,37 @@ final class AvatarTest extends ComponentTestCase
             $this->renderComponent('<twig:Tabler:Avatar:Brand style="opacity: .5"><i class="ti ti-x"></i></twig:Tabler:Avatar:Brand>'),
         );
     }
+
+    public function testTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar" style="background-image: url(/a.jpg)" data-bs-toggle="tooltip" title="Jane Doe"></span>',
+            $this->renderComponent('<twig:Tabler:Avatar image="/a.jpg" tooltip="Jane Doe" />'),
+        );
+    }
+
+    public function testTooltipReplacesTheTitleOfName(): void
+    {
+        // The name stays the accessible name; the tooltip only replaces the title
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Jane Doe, project owner" aria-label="Jane Doe" data-bs-toggle="tooltip">JD</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" tooltip="Jane Doe, project owner" />'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar" role="img" title="Owner" aria-label="Jane Doe" data-bs-toggle="popover">JD</span>',
+            $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" tooltip="Jane Doe, project owner" title="Owner" data-bs-toggle="popover" />'),
+        );
+    }
+
+    public function testAvatarListItemTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<div class="avatar-list avatar-list-stacked"><span class="avatar" role="img" title="Jane Doe, owner" aria-label="Jane Doe" data-bs-toggle="tooltip">JD</span></div>',
+            $this->renderComponent('<twig:Tabler:Avatar:List stacked items="{{ [{name: \'Jane Doe\', tooltip: \'Jane Doe, owner\'}] }}" />'),
+        );
+    }
 }

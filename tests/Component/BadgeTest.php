@@ -141,4 +141,44 @@ final class BadgeTest extends ComponentTestCase
 
         self::assertHtmlSame('<div class="badge-list"><span class="badge text-bg-primary">&lt;b&gt;x&lt;/b&gt;</span></div>', $html);
     }
+
+    public function testTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge text-bg-success" data-bs-toggle="tooltip" title="Paid on 3 March">Paid</span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="success" tooltip="Paid on 3 March">Paid</twig:Tabler:Badge>'),
+        );
+        self::assertHtmlSame(
+            '<a href="/invoices/42" class="badge text-bg-primary" data-bs-toggle="tooltip" title="Invoice #42">#42</a>',
+            $this->renderComponent('<twig:Tabler:Badge href="/invoices/42" tooltip="Invoice #42">#42</twig:Tabler:Badge>'),
+        );
+    }
+
+    public function testTooltipLabelsADotOrIconOnlyBadge(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge badge-dot text-bg-success" data-bs-toggle="tooltip" title="Online" aria-label="Online"></span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="success" dot tooltip="Online" />'),
+        );
+        self::assertHtmlSame(
+            '<span class="badge badge-icononly text-bg-warning" data-bs-toggle="tooltip" title="Starred" aria-label="Starred"><i class="ti ti-star icon" aria-hidden="true"></i></span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="warning" icon="star" iconOnly tooltip="Starred" />'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<span class="badge badge-icononly text-bg-warning" data-bs-toggle="popover" title="Star" aria-label="Starred project"><i class="ti ti-star icon" aria-hidden="true"></i></span>',
+            $this->renderComponent('<twig:Tabler:Badge variant="warning" icon="star" iconOnly tooltip="Starred" data-bs-toggle="popover" title="Star" aria-label="Starred project" />'),
+        );
+    }
+
+    public function testBadgeListItemTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<div class="badge-list"><span class="badge text-bg-primary" data-bs-toggle="tooltip" title="PHP 8.5">PHP</span></div>',
+            $this->renderComponent('<twig:Tabler:Badge:List items="{{ [{text: \'PHP\', tooltip: \'PHP 8.5\'}] }}" />'),
+        );
+    }
 }

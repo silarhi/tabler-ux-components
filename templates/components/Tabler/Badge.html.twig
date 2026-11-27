@@ -17,6 +17,10 @@
         <twig:Tabler:Badge variant="success" icon="check">Verified</twig:Tabler:Badge>
         <twig:Tabler:Badge variant="warning" icon="star" iconOnly aria-label="Starred" />
 
+    With a tooltip, on the badge itself (no wrapper, so it fits in button and input groups):
+        <twig:Tabler:Badge variant="success" tooltip="Paid on 3 March">Paid</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="success" dot tooltip="Online" />
+
     Several badges side by side: wrap them in <twig:Tabler:Badge:List>, or pass it `items`.
 
     Props:
@@ -32,6 +36,10 @@
       href          — when set, renders <a href> instead of <span>
       icon          — leading icon name (Tabler, or ux-icons with a prefix: `lucide:check`), rendered with
                       <twig:Tabler:Icon> and the `icon` class; mirrored by the `icon` block
+      tooltip       — tooltip text (title, data-bs-toggle="tooltip"); an icon-only or dot badge, which has no
+                      text, also gets it as its aria-label
+
+    Explicit attributes (`title`, `data-bs-toggle`, `aria-label`…) win over the ones `tooltip` generates.
 #}
 {% apply trim %}
 {% props
@@ -57,6 +65,8 @@
     href = null,
     ## string|null The leading icon name, rendered with `Tabler:Icon` (`icon`).
     icon = null,
+    ## string|null The tooltip text (`title` and `data-bs-toggle="tooltip"`); the aria-label of an icon-only or dot badge.
+    tooltip = null,
 %}
 
 {% set badge = html_cva(
@@ -110,7 +120,16 @@
     variant: variant,
 }, attributes.render('class')) %}
 {% set tag = href is not null ? 'a' : 'span' %}
-<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.without('class', 'href') }}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
+
+{# Generated attributes, given as defaults so the user's explicit attributes win #}
+{% set defaults = {} %}
+{% if tooltip is not null %}
+    {% set defaults = {'data-bs-toggle': 'tooltip', title: tooltip} %}
+    {% if iconOnly or dot %}
+        {% set defaults = defaults|merge({'aria-label': tooltip}) %}
+    {% endif %}
+{% endif %}
+<{{ tag }}{% if href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.defaults(defaults).without('class', 'href') }}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
     {%- block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" class="icon" aria-hidden="true" />{% endif %}{% endblock -%}
     {## The badge label. -#}
     {%- block content %}{% endblock -%}
