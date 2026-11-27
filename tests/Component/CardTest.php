@@ -88,6 +88,72 @@ final class CardTest extends ComponentTestCase
             HTML, $html);
     }
 
+    public function testTag(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card tag="article" title="Release notes" text="Version 2.0 is out." />');
+
+        self::assertHtmlSame(<<<HTML
+            <article class="card">
+                <div class="card-header"><h3 class="card-title">Release notes</h3></div>
+                <div class="card-body">Version 2.0 is out.</div>
+            </article>
+            HTML, $html);
+    }
+
+    public function testHrefTakesPrecedenceOverTag(): void
+    {
+        self::assertHtmlSame(
+            '<a class="card card-link" href="/report"><div class="card-body">Report</div></a>',
+            $this->renderComponent('<twig:Tabler:Card tag="section" href="/report" link text="Report" />'),
+        );
+    }
+
+    public function testDetailsCardWithSummaryHeader(): void
+    {
+        $html = $this->renderComponent(<<<'TWIG'
+            <twig:Tabler:Card tag="details" class="mb-3">
+                <twig:Tabler:Card:Header tag="summary" title="Advanced settings" />
+                <twig:Tabler:Card:Body>Hidden until opened.</twig:Tabler:Card:Body>
+            </twig:Tabler:Card>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <details class="card mb-3">
+                <summary class="card-header"><h3 class="card-title">Advanced settings</h3></summary>
+                <div class="card-body">Hidden until opened.</div>
+            </details>
+            HTML, $html);
+    }
+
+    public function testHeaderTagIsNotInheritedFromTheCard(): void
+    {
+        $html = $this->renderComponent(<<<'TWIG'
+            <twig:Tabler:Card tag="section">
+                <twig:Tabler:Card:Header>
+                    <twig:Tabler:Card:Title>Composed</twig:Tabler:Card:Title>
+                </twig:Tabler:Card:Header>
+            </twig:Tabler:Card>
+            TWIG);
+
+        self::assertHtmlSame(<<<HTML
+            <section class="card">
+                <div class="card-header"><h3 class="card-title">Composed</h3></div>
+            </section>
+            HTML, $html);
+        self::assertHtmlSame(
+            '<section class="card"><div class="card-header"><h3 class="card-title">Prop</h3></div></section>',
+            $this->renderComponent('<twig:Tabler:Card tag="section" title="Prop" />'),
+        );
+    }
+
+    public function testHeaderTag(): void
+    {
+        self::assertHtmlSame(
+            '<header class="card-header"><h3 class="card-title">Invoices</h3></header>',
+            $this->renderComponent('<twig:Tabler:Card:Header tag="header" title="Invoices" />'),
+        );
+    }
+
     public function testComposedMode(): void
     {
         $html = $this->renderComponent(<<<TWIG

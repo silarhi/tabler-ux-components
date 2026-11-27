@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Silarhi\TablerUxComponents\Tests\Component;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Silarhi\TablerUxComponents\Tests\ComponentTestCase;
+
+use function sprintf;
 
 final class BadgeTest extends ComponentTestCase
 {
@@ -64,6 +67,41 @@ final class BadgeTest extends ComponentTestCase
         $html = $this->renderComponent('<twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>');
 
         self::assertHtmlSame('<span class="badge badge-outline text-danger">Deprecated</span>', $html);
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function tablerColorProvider(): iterable
+    {
+        foreach (['blue', 'azure', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'lime', 'green', 'teal', 'cyan'] as $color) {
+            yield $color => [$color];
+        }
+    }
+
+    #[DataProvider('tablerColorProvider')]
+    public function testTablerColors(string $color): void
+    {
+        self::assertHtmlSame(
+            sprintf('<span class="badge text-bg-%s">Tag</span>', $color),
+            $this->renderComponent(sprintf('<twig:Tabler:Badge variant="%s">Tag</twig:Tabler:Badge>', $color)),
+        );
+        self::assertHtmlSame(
+            sprintf('<span class="badge bg-%s-lt">Tag</span>', $color),
+            $this->renderComponent(sprintf('<twig:Tabler:Badge variant="%s" light>Tag</twig:Tabler:Badge>', $color)),
+        );
+        self::assertHtmlSame(
+            sprintf('<span class="badge badge-outline text-%s">Tag</span>', $color),
+            $this->renderComponent(sprintf('<twig:Tabler:Badge variant="%s" outline light>Tag</twig:Tabler:Badge>', $color)),
+        );
+    }
+
+    public function testBadgeListItemTablerColor(): void
+    {
+        self::assertHtmlSame(
+            '<div class="badge-list"><span class="badge bg-purple-lt">Beta</span></div>',
+            $this->renderComponent('<twig:Tabler:Badge:List items="{{ [{text: \'Beta\', variant: \'purple\', light: true}] }}" />'),
+        );
     }
 
     public function testDotNotificationBlinkAndIconOnly(): void

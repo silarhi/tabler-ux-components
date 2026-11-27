@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - Unreleased
+
+### Added
+
+- Tabler's colors on `Badge`'s `variant`: `blue`, `azure`, `indigo`, `purple`, `pink`, `red`, `orange`, `yellow`,
+  `lime`, `green`, `teal` and `cyan`, filled (`text-bg-{color}`), `light` (`bg-{color}-lt`) and `outline`
+  (`badge-outline text-{color}`), so in the `items` of `Badge:List` too. `Avatar`'s `variant` takes them as well
+  (`bg-{color}-lt`), like its `color`.
+- `tag` prop on `Card`: `div` (the default), `article`, `section`, `aside`, `nav` or `details`; `href` still renders an
+  `<a>`. `Card:Header` takes `tag` too, `div`, `header` or `summary`: a `tag="details"` card with a `tag="summary"`
+  header collapses without JavaScript.
+
 ## [0.12.0] - 2026-11-27
 
 ### Added
@@ -225,6 +237,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.13.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.12.0...HEAD
 [0.12.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.9.0...v0.10.0
