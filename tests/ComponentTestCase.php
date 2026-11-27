@@ -22,12 +22,11 @@ use Twig\Environment;
  * Renders Twig template strings against the booted test kernel so each test
  * exercises the real component-resolution pipeline (template paths, anonymous
  * component discovery, html_cva, attribute forwarding, …).
- *
- * `assertHtmlSame` collapses all whitespace runs so tests can be readable
- * without obsessing over indentation.
  */
 abstract class ComponentTestCase extends KernelTestCase
 {
+    use AssertsHtmlTrait;
+
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -43,29 +42,5 @@ abstract class ComponentTestCase extends KernelTestCase
         $twig = self::getContainer()->get('twig');
 
         return $twig->createTemplate($template)->render($context);
-    }
-
-    protected static function assertHtmlSame(string $expected, string $actual, string $message = ''): void
-    {
-        self::assertSame(
-            self::normalizeHtml($expected),
-            self::normalizeHtml($actual),
-            $message,
-        );
-    }
-
-    private static function normalizeHtml(string $html): string
-    {
-        // Treat all whitespace adjacent to tags as insignificant (collapse runs,
-        // drop whitespace between/around tag boundaries). Applied to both the
-        // expected and actual strings, so comparisons stay structural without
-        // being sensitive to template indentation or nested-component newlines.
-        $html = preg_replace('/\s+/', ' ', $html) ?? $html;
-        $html = preg_replace('/>\s+</', '><', $html) ?? $html;
-        $html = preg_replace('/\s+(\/?>)/', '$1', $html) ?? $html;
-        $html = preg_replace('/>\s+/', '>', $html) ?? $html;
-        $html = preg_replace('/\s+</', '<', $html) ?? $html;
-
-        return trim($html);
     }
 }

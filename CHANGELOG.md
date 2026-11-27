@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - Unreleased
+
+### Changed
+
+- `symfony/framework-bundle`, `symfony/twig-bundle` and `twig/extra-bundle` are no longer required: the components only
+  need Twig, `twig/html-extra` and UX Twig Component, and from UX Twig Component 3.2 they render in a plain Twig
+  environment, without a kernel nor `symfony/dependency-injection` (see "Without the bundle" in the README). In a
+  kernel, the bundle registers `html_cva()` (twig/html-extra's `HtmlExtension`) itself unless TwigExtraBundle or the
+  app already does, so nothing changes. `conflict` keeps `symfony/config`, `symfony/dependency-injection` and
+  `symfony/http-kernel` at 6.4+, and `symfony/service-contracts` is required, which UX Twig Component's runtime uses
+  without requiring it.
+
 ## [0.10.0] - 2026-11-26
 
 ### Added
@@ -202,6 +214,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.11.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.10.0...HEAD
 [0.10.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.7.1...v0.8.0

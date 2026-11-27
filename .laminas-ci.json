@@ -30,6 +30,14 @@
                 "dependencies": "latest",
                 "command": "php docs/scripts/render-examples.php --check"
             }
+        },
+        {
+            "name": "PHPUnit without the bundle dependencies",
+            "job": {
+                "php": "8.4",
+                "dependencies": "latest",
+                "command": "composer remove --dev --no-interaction symfony/framework-bundle symfony/twig-bundle twig/extra-bundle symfony/ux-icons symfony/config symfony/dependency-injection symfony/http-kernel && ! composer show symfony/framework-bundle 2>/dev/null && ! composer show symfony/twig-bundle 2>/dev/null && ! composer show twig/extra-bundle 2>/dev/null && ! composer show symfony/config 2>/dev/null && ! composer show symfony/dependency-injection 2>/dev/null && ! composer show symfony/http-kernel 2>/dev/null && vendor/bin/phpunit --testsuite unit --exclude-group bundle --fail-on-skipped --no-coverage"
+            }
         }
     ]
 }

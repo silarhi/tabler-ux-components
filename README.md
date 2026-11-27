@@ -54,8 +54,9 @@
 ## Requirements
 
 - PHP 8.2+
-- Symfony 6.4, 7.x or 8.x, with [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) 2.21+ / 3.x
-- Twig 3.15+ / 4.x, with `twig/extra-bundle` and `twig/html-extra` 3.12+ / 4.x
+- Twig 3.15+ / 4.x, with `twig/html-extra` 3.12+ / 4.x, and [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) 2.21+ / 3.x
+- In a Symfony 6.4, 7.x or 8.x app, FrameworkBundle and TwigBundle: the bundle registers `html_cva()` unless
+  TwigExtraBundle does. Without a kernel, see [Without the bundle](#without-the-bundle) (UX Twig Component 3.2+, so PHP 8.4+)
 - [Tabler](https://tabler.io/) 1.6+ on the front-end (1.7+ for the components that say so): its CSS, `tabler.js` for the interactive components, and
   [`@tabler/icons-webfont`](https://tabler.io/icons) for the icons (3.36.1+ for the filled icons)
 - Optional: [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html) 2.17+ / 3.x, for icon names with
@@ -72,6 +73,60 @@ On ux-twig-component v3, `twig_component` needs some configuration: see [Install
 Prefer to own the templates? Copy the components into your app with the
 [Symfony UX Toolkit](https://tabler-ux-components.silarhi.dev/getting-started/installation/#with-the-symfony-ux-toolkit)
 instead: `php bin/console ux:install alert --kit=github.com/silarhi/tabler-ux-kit`.
+
+### Without the bundle
+
+From UX Twig Component 3.2, the components render in a plain Twig environment: no kernel, no
+`symfony/dependency-injection`. Add the bundle's `templates/` directory to the loader, as the bundle does, and wire
+TwigComponent's runtime by hand, with an empty PSR-11 container for the services (the Tabler components are anonymous):
+
+```php
+use Psr\Container\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Contracts\Service\ServiceLocatorTrait;
+use Symfony\UX\TwigComponent\ComponentAttributes;
+use Symfony\UX\TwigComponent\ComponentFactory;
+use Symfony\UX\TwigComponent\ComponentProperties;
+use Symfony\UX\TwigComponent\ComponentRenderer;
+use Symfony\UX\TwigComponent\ComponentStack;
+use Symfony\UX\TwigComponent\ComponentTemplateFinder;
+use Symfony\UX\TwigComponent\Twig\ComponentExtension;
+use Symfony\UX\TwigComponent\Twig\ComponentLexer;
+use Symfony\UX\TwigComponent\Twig\ComponentRuntime;
+use Twig\Environment;
+use Twig\Extra\Html\HtmlExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\Runtime\EscaperRuntime;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
+
+// Your templates, then the bundle's: <twig:Tabler:Alert> is components/Tabler/Alert.html.twig
+$loader = new FilesystemLoader([__DIR__ . '/templates', __DIR__ . '/vendor/silarhi/tabler-ux-components/templates']);
+
+$twig = new Environment($loader, ['cache' => __DIR__ . '/var/cache/twig']);
+$twig->setLexer(new ComponentLexer($twig)); // the <twig:…> syntax
+$twig->addExtension(new ComponentExtension()); // {% component %}, {% props %}, component()
+$twig->addExtension(new HtmlExtension()); // html_cva()
+$twig->getRuntime(EscaperRuntime::class)->addSafeClass(ComponentAttributes::class, ['html']);
+
+$services = new class([]) implements ContainerInterface {
+    use ServiceLocatorTrait;
+};
+$propertyAccessor = PropertyAccess::createPropertyAccessor();
+$dispatcher = new EventDispatcher();
+$stack = new ComponentStack();
+$factory = new ComponentFactory(new ComponentTemplateFinder($loader, 'components'), $services, $propertyAccessor, $dispatcher, [], [], $twig);
+$renderer = new ComponentRenderer($twig, $dispatcher, $factory, new ComponentProperties($propertyAccessor), $stack);
+
+$twig->addRuntimeLoader(new FactoryRuntimeLoader([
+    ComponentRuntime::class => static fn (): ComponentRuntime => new ComponentRuntime($renderer, $services, $stack),
+]));
+```
+
+The anonymous component directory is `components`, the one the bundle's templates use: your own anonymous components go
+in `templates/components/`. Without the bundle, the form themes and their options (`symfony/form`) and the icon names
+with a set prefix (`lucide:check`, which need UX Icons' bundle) are not available. UX Twig Component marks these
+classes `@internal`: this is the wiring of its standalone usage (symfony/ux#3602), which `tests/Standalone/` checks.
 
 ## Quick start
 

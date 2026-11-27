@@ -32,24 +32,30 @@ use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 /**
  * Minimal kernel that boots Framework + Twig + UX TwigComponent + the bundle
  * under test. Used by KernelTestCase to render components and assert HTML.
+ *
+ * The WITHOUT_TWIG_EXTRA_BUNDLE environment leaves TwigExtraBundle out, so
+ * the bundle registers `html_cva()` itself.
  */
 final class TestKernel extends Kernel
 {
     use MicroKernelTrait;
+
+    public const WITHOUT_TWIG_EXTRA_BUNDLE = 'test_without_twig_extra';
 
     /**
      * @return iterable<BundleInterface>
      */
     public function registerBundles(): iterable
     {
-        return [
-            new FrameworkBundle(),
-            new TwigBundle(),
-            new TwigExtraBundle(),
-            new TwigComponentBundle(),
-            new UXIconsBundle(),
-            new TablerUxComponentsBundle(),
-        ];
+        yield new FrameworkBundle();
+        yield new TwigBundle();
+        if (self::WITHOUT_TWIG_EXTRA_BUNDLE !== $this->environment) {
+            yield new TwigExtraBundle();
+        }
+
+        yield new TwigComponentBundle();
+        yield new UXIconsBundle();
+        yield new TablerUxComponentsBundle();
     }
 
     public function getProjectDir(): string

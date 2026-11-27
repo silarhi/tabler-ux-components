@@ -10,11 +10,15 @@ sidebar:
 | Dependency                                                                                    | Version         |
 | --------------------------------------------------------------------------------------------- | --------------- |
 | PHP                                                                                           | 8.2+            |
-| Symfony (`framework-bundle`, `twig-bundle`)                                                   | 6.4 / 7.x / 8.x |
+| Symfony (`framework-bundle`, `twig-bundle`), for the bundle                                   | 6.4 / 7.x / 8.x |
 | [Symfony UX Twig Component](https://symfony.com/bundles/ux-twig-component/current/index.html) | 2.21+ / 3.x     |
 | Twig (`twig/twig`)                                                                            | 3.15+ / 4.x     |
-| Twig extensions (`twig/extra-bundle`, `twig/html-extra`)                                      | 3.12+ / 4.x     |
+| Twig extensions (`twig/html-extra`)                                                           | 3.12+ / 4.x     |
 | [Symfony UX Icons](https://symfony.com/bundles/ux-icons/current/index.html), optional         | 2.17+ / 3.x     |
+
+The bundle registers `html_cva()` (`twig/html-extra`) unless `twig/extra-bundle` already does. An application without
+a Symfony kernel can render the components in a plain Twig environment from UX Twig Component 3.2 (PHP 8.4+): see
+[Without the bundle](https://github.com/silarhi/tabler-ux-components#without-the-bundle) in the README.
 
 ## Installation
 
