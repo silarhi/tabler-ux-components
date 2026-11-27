@@ -71,17 +71,15 @@ final class TablerUxComponentsBundle extends AbstractBundle
         // Removed by HtmlExtensionPass when the application registers one (TwigExtraBundle)
         $services->set(HtmlExtensionPass::SERVICE_ID, HtmlExtension::class)->tag('twig.extension');
 
-        if (!interface_exists(FormTypeExtensionInterface::class)) {
-            return;
-        }
-
-        foreach ([
-            ChoiceStyleTypeExtension::class,
-            InputIconTypeExtension::class,
-            NumberStepperTypeExtension::class,
-            SwitchTypeExtension::class,
-        ] as $extension) {
-            $services->set($extension)->tag('form.type_extension');
+        if (interface_exists(FormTypeExtensionInterface::class)) {
+            foreach ([
+                ChoiceStyleTypeExtension::class,
+                InputIconTypeExtension::class,
+                NumberStepperTypeExtension::class,
+                SwitchTypeExtension::class,
+            ] as $extension) {
+                $services->set($extension)->tag('form.type_extension');
+            }
         }
     }
 }
