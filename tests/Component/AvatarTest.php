@@ -127,6 +127,18 @@ final class AvatarTest extends ComponentTestCase
         );
     }
 
+    public function testTablerColorVariant(): void
+    {
+        self::assertHtmlSame(
+            '<span class="avatar bg-azure-lt">JL</span>',
+            $this->renderComponent('<twig:Tabler:Avatar variant="azure">JL</twig:Tabler:Avatar>'),
+        );
+        self::assertHtmlSame(
+            '<span class="avatar bg-teal-lt">JL</span>',
+            $this->renderComponent('<twig:Tabler:Avatar color="teal" variant="orange">JL</twig:Tabler:Avatar>'),
+        );
+    }
+
     public function testAutoColorIsStable(): void
     {
         $jane = $this->renderComponent('<twig:Tabler:Avatar name="Jane Doe" color="auto" />');

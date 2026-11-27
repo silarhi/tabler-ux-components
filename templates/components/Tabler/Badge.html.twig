@@ -8,6 +8,7 @@
         <twig:Tabler:Badge variant="primary" light pill>3</twig:Tabler:Badge>
         <twig:Tabler:Badge variant="danger" outline>Deprecated</twig:Tabler:Badge>
         <twig:Tabler:Badge href="/tags/php" variant="info" light>PHP</twig:Tabler:Badge>
+        <twig:Tabler:Badge variant="purple" light>Beta</twig:Tabler:Badge>
 
     Status dot and notification counter:
         <twig:Tabler:Badge variant="success" dot aria-label="Online" />
@@ -24,7 +25,8 @@
     Several badges side by side: wrap them in <twig:Tabler:Badge:List>, or pass it `items`.
 
     Props:
-      variant       — primary | secondary | success | danger | warning | info | dark | light
+      variant       — primary | secondary | success | danger | warning | info | dark | light, or a Tabler color:
+                      blue | azure | indigo | purple | pink | red | orange | yellow | lime | green | teal | cyan
       light         — soft/tinted variant (bg-{variant}-lt)
       outline       — transparent fill with a colored border (badge-outline, Tabler 1.5+)
       pill          — fully rounded corners
@@ -43,7 +45,7 @@
 #}
 {% apply trim %}
 {% props
-    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light' The badge color.
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan' The badge color: a theme color or a Tabler color.
     variant = 'primary',
     ## bool Whether to use a tinted background (`bg-{variant}-lt`) instead of `text-bg-{variant}`.
     light = false,
@@ -89,6 +91,18 @@
         {light: [false], outline: [false], variant: ['info'], class: 'text-bg-info'},
         {light: [false], outline: [false], variant: ['dark'], class: 'text-bg-dark'},
         {light: [false], outline: [false], variant: ['light'], class: 'text-bg-light'},
+        {light: [false], outline: [false], variant: ['blue'], class: 'text-bg-blue'},
+        {light: [false], outline: [false], variant: ['azure'], class: 'text-bg-azure'},
+        {light: [false], outline: [false], variant: ['indigo'], class: 'text-bg-indigo'},
+        {light: [false], outline: [false], variant: ['purple'], class: 'text-bg-purple'},
+        {light: [false], outline: [false], variant: ['pink'], class: 'text-bg-pink'},
+        {light: [false], outline: [false], variant: ['red'], class: 'text-bg-red'},
+        {light: [false], outline: [false], variant: ['orange'], class: 'text-bg-orange'},
+        {light: [false], outline: [false], variant: ['yellow'], class: 'text-bg-yellow'},
+        {light: [false], outline: [false], variant: ['lime'], class: 'text-bg-lime'},
+        {light: [false], outline: [false], variant: ['green'], class: 'text-bg-green'},
+        {light: [false], outline: [false], variant: ['teal'], class: 'text-bg-teal'},
+        {light: [false], outline: [false], variant: ['cyan'], class: 'text-bg-cyan'},
         {light: [true], outline: [false], variant: ['primary'], class: 'bg-primary-lt'},
         {light: [true], outline: [false], variant: ['secondary'], class: 'bg-secondary-lt'},
         {light: [true], outline: [false], variant: ['success'], class: 'bg-success-lt'},
@@ -97,6 +111,18 @@
         {light: [true], outline: [false], variant: ['info'], class: 'bg-info-lt'},
         {light: [true], outline: [false], variant: ['dark'], class: 'bg-dark-lt'},
         {light: [true], outline: [false], variant: ['light'], class: 'bg-light-lt'},
+        {light: [true], outline: [false], variant: ['blue'], class: 'bg-blue-lt'},
+        {light: [true], outline: [false], variant: ['azure'], class: 'bg-azure-lt'},
+        {light: [true], outline: [false], variant: ['indigo'], class: 'bg-indigo-lt'},
+        {light: [true], outline: [false], variant: ['purple'], class: 'bg-purple-lt'},
+        {light: [true], outline: [false], variant: ['pink'], class: 'bg-pink-lt'},
+        {light: [true], outline: [false], variant: ['red'], class: 'bg-red-lt'},
+        {light: [true], outline: [false], variant: ['orange'], class: 'bg-orange-lt'},
+        {light: [true], outline: [false], variant: ['yellow'], class: 'bg-yellow-lt'},
+        {light: [true], outline: [false], variant: ['lime'], class: 'bg-lime-lt'},
+        {light: [true], outline: [false], variant: ['green'], class: 'bg-green-lt'},
+        {light: [true], outline: [false], variant: ['teal'], class: 'bg-teal-lt'},
+        {light: [true], outline: [false], variant: ['cyan'], class: 'bg-cyan-lt'},
         {outline: [true], variant: ['primary'], class: 'text-primary'},
         {outline: [true], variant: ['secondary'], class: 'text-secondary'},
         {outline: [true], variant: ['success'], class: 'text-success'},
@@ -105,6 +131,18 @@
         {outline: [true], variant: ['info'], class: 'text-info'},
         {outline: [true], variant: ['dark'], class: 'text-dark'},
         {outline: [true], variant: ['light'], class: 'text-light'},
+        {outline: [true], variant: ['blue'], class: 'text-blue'},
+        {outline: [true], variant: ['azure'], class: 'text-azure'},
+        {outline: [true], variant: ['indigo'], class: 'text-indigo'},
+        {outline: [true], variant: ['purple'], class: 'text-purple'},
+        {outline: [true], variant: ['pink'], class: 'text-pink'},
+        {outline: [true], variant: ['red'], class: 'text-red'},
+        {outline: [true], variant: ['orange'], class: 'text-orange'},
+        {outline: [true], variant: ['yellow'], class: 'text-yellow'},
+        {outline: [true], variant: ['lime'], class: 'text-lime'},
+        {outline: [true], variant: ['green'], class: 'text-green'},
+        {outline: [true], variant: ['teal'], class: 'text-teal'},
+        {outline: [true], variant: ['cyan'], class: 'text-cyan'},
     ],
 ) %}
 

@@ -19,7 +19,8 @@
 
     Props:
       size     — xxs | xs | sm | md (default) | lg | xl | 2xl
-      variant  — tinted background for initials (bg-{variant}-lt)
+      variant  — tinted background for initials (bg-{variant}-lt): primary | secondary | success | danger |
+                 warning | info | dark | light, or a Tabler color (blue, azure… cyan, as for `color`)
       rounded  — circular avatar (rounded-circle)
       square   — rounded corners instead of a circle (avatar-square, Tabler 1.5+)
       cover    — pull the avatar over the element above it, with a ring, e.g. over a Card:Cover (avatar-cover)
@@ -38,7 +39,7 @@
 {% props
     ## 'xxs'|'xs'|'sm'|'md'|'lg'|'xl'|'2xl' The avatar size (`avatar-{size}`).
     size = 'md',
-    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|null The tinted background, for initials (`bg-{variant}-lt`).
+    ## 'primary'|'secondary'|'success'|'danger'|'warning'|'info'|'dark'|'light'|'blue'|'azure'|'indigo'|'purple'|'pink'|'red'|'orange'|'yellow'|'lime'|'green'|'teal'|'cyan'|null The tinted background, for initials (`bg-{variant}-lt`): a theme color or a Tabler color.
     variant = null,
     ## bool Whether to make the avatar a circle (`rounded-circle`).
     rounded = false,
@@ -71,6 +72,18 @@
             info: 'bg-info-lt',
             dark: 'bg-dark-lt',
             light: 'bg-light-lt',
+            blue: 'bg-blue-lt',
+            azure: 'bg-azure-lt',
+            indigo: 'bg-indigo-lt',
+            purple: 'bg-purple-lt',
+            pink: 'bg-pink-lt',
+            red: 'bg-red-lt',
+            orange: 'bg-orange-lt',
+            yellow: 'bg-yellow-lt',
+            lime: 'bg-lime-lt',
+            green: 'bg-green-lt',
+            teal: 'bg-teal-lt',
+            cyan: 'bg-cyan-lt',
         },
         color: {
             blue: 'bg-blue-lt',
