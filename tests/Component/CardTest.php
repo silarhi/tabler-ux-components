@@ -233,4 +233,23 @@ final class CardTest extends ComponentTestCase
             </div>
             HTML, $html);
     }
+
+    public function testTooltip(): void
+    {
+        self::assertHtmlSame(
+            '<a class="card card-link" href="/deployments/1842" data-bs-toggle="tooltip" title="Open the deployment logs"><div class="card-header"><h3 class="card-title">Deployment #1842</h3></div></a>',
+            $this->renderComponent('<twig:Tabler:Card href="/deployments/1842" link title="Deployment #1842" tooltip="Open the deployment logs" />'),
+        );
+        self::assertHtmlSame(
+            '<article class="card" data-bs-toggle="tooltip" title="Updated hourly"><div class="card-body">42 active users</div></article>',
+            $this->renderComponent('<twig:Tabler:Card tag="article" text="42 active users" tooltip="Updated hourly" />'),
+        );
+    }
+
+    public function testExplicitAttributesWinOverTooltip(): void
+    {
+        $html = $this->renderComponent('<twig:Tabler:Card href="/report" text="Report" tooltip="Open the report" data-bs-toggle="popover" data-bs-content="Monthly" />');
+
+        self::assertHtmlSame('<a class="card" href="/report" data-bs-toggle="popover" title="Open the report" data-bs-content="Monthly"><div class="card-body">Report</div></a>', $html);
+    }
 }

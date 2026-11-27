@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - Unreleased
+
+### Added
+
+- `tag` prop on `Button`: `button`, `a`, `label` or `span`, the default `null` keeping an `<a>` with `href` and a
+  `<button>` without. A `label` or a `span` gets no `type`, `href` nor `role`, and `disabled` sets the `disabled` class
+  and `aria-disabled` on it. A `label` is the styled trigger of a file input, which a `<button>` cannot open:
+  `<label class="btn btn-primary"><input type="file" class="visually-hidden">Import</label>`.
+- `white` variant on `Badge` (`text-bg-white`), for a dark or colored background. It is solid only: with `light` it
+  renders no color class, with `outline` only `badge-outline`.
+- `tooltip` prop on `Card`, like `Button`'s and `Badge`'s: `title` and `data-bs-toggle="tooltip"` on the card's root,
+  e.g. the hover hint of a link card, whose HTML `title` the `title` prop (the header) left out of reach. An explicit
+  `data-bs-toggle` wins.
+
 ## [0.13.0] - 2026-11-27
 
 ### Added
@@ -237,6 +251,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 First release: Tabler components as anonymous Symfony UX Twig Components (`<twig:Tabler:…>`), each with an all-in-one form driven by props and sub-components for fine-grained composition. Alert, Avatar, Badge, Breadcrumb, Button, Card, Carousel, Datagrid, Divider, Dropdown, Empty, Icon, Modal, Nav, Navbar, Offcanvas, PageHeader, Pagination, Placeholder, Popover, Progress, Prose, Ribbon, SegmentedControl, Spinner, Status, Step, SwitchIcon, Table, Tabs, Timeline, Toast, Tooltip and Tracking. Requires PHP 8.2+, Symfony 6.4 / 7.x / 8.x, Symfony UX Twig Component 2.21+ / 3.x and Twig 3.12+.
 
+[0.14.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.13.0...HEAD
 [0.13.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/silarhi/tabler-ux-components/compare/v0.10.0...v0.11.0

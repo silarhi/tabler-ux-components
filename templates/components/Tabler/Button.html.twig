@@ -1,12 +1,17 @@
 {#
     Tabler Button — main component, shadcn-style.
 
-    Renders a <button> by default, or an <a> when `href` is set.
+    Renders a <button> by default, an <a> when `href` is set, or the element named by `tag`.
 
     All-in-one:
         <twig:Tabler:Button variant="primary">Save</twig:Tabler:Button>
         <twig:Tabler:Button variant="danger" appearance="outline" size="sm">Delete</twig:Tabler:Button>
         <twig:Tabler:Button href="/profile" variant="secondary" appearance="ghost">Profile</twig:Tabler:Button>
+
+    A file input's trigger (a <label> opens the file picker, a <button> cannot):
+        <twig:Tabler:Button tag="label" icon="upload">
+            <input type="file" name="import" class="visually-hidden"> Import
+        </twig:Tabler:Button>
 
     Props:
       variant      — color: default | primary | secondary | success | danger | warning | info | dark | light
@@ -14,14 +19,17 @@
       appearance   — filled (default) | outline | ghost | link (btn-link) | action (btn-action: quiet icon
                      button for card headers and table rows; give it an aria-label) — link and action ignore `variant`
       size         — sm | md (default) | lg | xl
-      href         — when set, renders <a href> instead of <button>
-      type         — button (default) | submit | reset (ignored for links)
+      href         — when set, renders <a href> instead of <button> (unless `tag` names another element)
+      tag          — button | a | label | span: the root element; null (default) picks <a> with `href`, else
+                     <button>. A label or span gets no `type`, `href` nor `role`
+      type         — button (default) | submit | reset (only on a <button>)
       pill         — fully rounded corners
       square       — remove border radius
       iconOnly     — icon-only button (no label padding)
       loading      — show loading spinner state
       block        — full width (w-100)
-      disabled     — inactive state (attribute on <button>, .disabled class on <a>)
+      disabled     — inactive state (attribute on <button>; .disabled class and aria-disabled on the others,
+                     plus tabindex="-1" on <a>)
       floating     — pinned to the bottom corner of the viewport (btn-floating)
       animateIcon  — animate the icon on hover: pulse | rotate | shake | tada | move-start (btn-animate-icon-*)
       icon         — leading icon name (Tabler, or ux-icons with a prefix: `lucide:check`), rendered with
@@ -58,7 +66,9 @@
     size = 'md',
     ## string|null The link target; renders an `<a>` instead of a `<button>` when set.
     href = null,
-    ## 'button'|'submit'|'reset' The `<button>` type, ignored for links.
+    ## 'button'|'a'|'label'|'span'|null The root element; `null` renders an `<a>` when `href` is set, else a `<button>`. A `label` or a `span` gets no `type`, `href` nor `role`.
+    tag = null,
+    ## 'button'|'submit'|'reset' The `<button>` type, ignored on the other elements.
     type = 'button',
     ## bool Whether to fully round the corners (`btn-pill`).
     pill = false,
@@ -70,7 +80,7 @@
     loading = false,
     ## bool Whether to take the full width (`w-100`).
     block = false,
-    ## bool Whether the button is disabled: the `disabled` attribute on a `<button>`, `aria-disabled` on a link.
+    ## bool Whether the button is disabled: the `disabled` attribute on a `<button>`, the `disabled` class and `aria-disabled` on the other elements.
     disabled = false,
     ## bool Whether to pin the button to the bottom corner of the viewport (`btn-floating`).
     floating = false,
@@ -141,9 +151,9 @@
     ],
 ) %}
 
-{% set link = href is not null %}
-{% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: link and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
-{% set tag = link ? 'a' : 'button' %}
+{% set element = tag ?? (href is not null ? 'a' : 'button') %}
+{% set link = element == 'a' %}
+{% set classes = button.apply({size: size, pill: pill, square: square, iconOnly: iconOnly, loading: loading, block: block, disabled: element != 'button' and disabled, floating: floating, animateIcon: animateIcon ?? '', appearance: appearance, variant: variant}, attributes.render('class')) %}
 
 {# Generated attributes, given as defaults so the user's explicit attributes win #}
 {% set defaults = link ? {role: 'button'} : {} %}
@@ -162,12 +172,12 @@
     {% endif %}
 {% endif %}
 
-<{{ tag }}{% if link %} href="{{ href }}"{% else %} type="{{ type }}"{% endif %} class="{{ classes }}" {{ attributes.defaults(defaults).without('class', 'href', 'type') }}
-    {%- if disabled %}{% if link %} aria-disabled="true" tabindex="-1"{% else %} disabled{% endif %}{% endif %}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
+<{{ element }}{% if element == 'button' %} type="{{ type }}"{% elseif link and href is not null %} href="{{ href }}"{% endif %} class="{{ classes }}" {{ attributes.defaults(defaults).without('class', 'href', 'type') }}
+    {%- if disabled %}{% if element == 'button' %} disabled{% else %} aria-disabled="true"{% if link %} tabindex="-1"{% endif %}{% endif %}{% endif %}>{## The leading icon: a `Tabler:Icon` named `icon`, when set. #}
     {%- block icon %}{% if icon is not null %}<twig:Tabler:Icon name="{{ icon }}" class="icon" aria-hidden="true" />{% endif %}{% endblock -%}
     {## The button label. -#}
     {%- block content %}{% endblock -%}
     {## The trailing icon: a `Tabler:Icon` named `iconEnd`, when set. -#}
     {%- block iconEnd %}{% if iconEnd is not null %}<twig:Tabler:Icon name="{{ iconEnd }}" class="icon icon-end" aria-hidden="true" />{% endif %}{% endblock -%}
-</{{ tag }}>
+</{{ element }}>
 {% endapply ~%}
