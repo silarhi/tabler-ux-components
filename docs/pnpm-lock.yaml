@@ -192,8 +192,8 @@ importers:
         specifier: ^0.10.1
         version: 0.10.1(@astrojs/markdown-satteri@0.4.10)(@astrojs/starlight@0.43.1(astro@7.4.13(@types/node@24.19.2)(sass@1.108.2)(yaml@2.9.1)))(astro@7.4.13(@types/node@24.19.2)(sass@1.108.2)(yaml@2.9.1))
       '@tabler/icons-webfont':
-        specifier: 3.52.0
-        version: 3.52.0
+        specifier: 3.53.0
+        version: 3.53.0
       astro:
         specifier: ^7.4.7
         version: 7.4.13(@types/node@24.19.2)(sass@1.108.2)(yaml@2.9.1)
@@ -1239,11 +1239,11 @@ packages:
       '@astrojs/starlight': '>=0.42.0'
       astro: ^7.2.10
 
-  '@tabler/icons-webfont@3.52.0':
-    resolution: {integrity: sha512-Kdr77t4sXa1YiznEcj8aFsqDTPbCjTNV2V5c3UccXa1hFm6n4qrsnMMXHtEX5puBbXmcrTZcUgJyOVrhk6+u0A==}
+  '@tabler/icons-webfont@3.53.0':
+    resolution: {integrity: sha512-wEQBk30jagN6DrDbD4dmmiL+pdIUJQ9DkLAc3zPIOXGgnOFbG5dJLK9jhzoY0ndWXqdOZhVdkDpk26sBFSV2RA==}
 
-  '@tabler/icons@3.52.0':
-    resolution: {integrity: sha512-dldKlJNfO/gZnGLcIY0X2EFFKIMGwL/rEvTqglvBgAPFiwj9pZOCN5V3Sf0Gyjq6foX4VQmLdOmsS4w5FdWKAw==}
+  '@tabler/icons@3.53.0':
+    resolution: {integrity: sha512-7V77PESErZob7+Ie4ibDs9tjRoMmZyjr3RpxRK3KLJejwggzxrkhVunbQ7xGYewjwdUyPc6dHpMvvft0prkkzQ==}
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -3322,11 +3322,11 @@ snapshots:
       - '@astrojs/markdown-satteri'
       - supports-color
 
-  '@tabler/icons-webfont@3.52.0':
+  '@tabler/icons-webfont@3.53.0':
     dependencies:
-      '@tabler/icons': 3.52.0
+      '@tabler/icons': 3.53.0
 
-  '@tabler/icons@3.52.0': {}
+  '@tabler/icons@3.53.0': {}
 
   '@tybys/wasm-util@0.10.4':
     dependencies:
